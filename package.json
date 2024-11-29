@@ -3,22 +3,26 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "node_modules/.bin/next dev",
+    "dev": "node_modules/.bin/next dev --turbopack",
     "build": "node_modules/.bin/next build",
     "start": "node_modules/.bin/next start",
-    "lint": "node_modules/.bin/next lint"
+    "lint": "node_modules/.bin/next lint",
+    "gen": "npx buf generate"
   },
   "dependencies": {
+    "@bufbuild/protobuf": "^2.2.2",
+    "next": "15.0.3",
     "react": "19.0.0-rc-66855b96-20241106",
-    "react-dom": "19.0.0-rc-66855b96-20241106",
-    "next": "15.0.3"
+    "react-dom": "19.0.0-rc-66855b96-20241106"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@bufbuild/buf": "^1.47.2",
+    "@bufbuild/protoc-gen-es": "^2.2.2",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
-    "eslint-config-next": "15.0.3"
+    "eslint-config-next": "15.0.3",
+    "typescript": "^5"
   }
 }
