@@ -1,0 +1,45 @@
+syntax = "proto3";
+package example;
+
+message Example {
+    string example_id = 1;
+    string example_name = 2;
+    string example_content = 3;
+}
+
+message ListExampleResponse {
+    repeated Example example_list = 1;
+}
+message ListExampleRequest {
+    bool desc = 1;
+    int64 limit = 2;
+    int64 offset = 3;
+}
+message GetExampleResponse {
+    Example example = 1;
+}
+message GetExampleRequest {
+    string example_id = 1;
+}
+message UpdateExampleResponse {
+    Example example = 1;
+}
+message UpdateExampleRequest {
+    string example_id = 1;
+    bool set_example_name = 2;
+    string example_name = 3;
+    bool set_example_content = 4;
+    string example_content = 5;
+}
+message CreateExampleResponse {
+    Example example = 1;
+}
+message CreateExampleRequest {
+    string example_name = 2;
+    string example_content = 3;
+}
+message DeleteExampleResponse {
+}
+message DeleteExampleRequest {
+    string example_id = 1;
+}
