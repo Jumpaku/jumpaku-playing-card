@@ -6,9 +6,10 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - .:/workspace
-      - /workspace/node_modules
+      - ..:/workspace
+      - /workspace/backend/node_modules
     tty: true
+    working_dir: /workspace/backend
     command: [ "sleep", "infinity" ]
     ports:
       - "3000:3000"
