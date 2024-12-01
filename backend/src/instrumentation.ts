@@ -1,5 +1,11 @@
+import {open} from "@/postgres/postgres";
+import {getConfig, loadConfig} from "@/config/config";
+
 export function register() {
     console.log('instrumentation.register')
+    loadConfig()
+    const config = getConfig();
+    open(config.postgres_connection_string)
 }
 
 export function onRequestError(
