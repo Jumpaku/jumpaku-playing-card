@@ -3,6 +3,6 @@ lint:
   use:
     - STANDARD
 modules:
-  - path: .
+  - path: ./protobuf
 deps:
   - buf.build/googleapis/googleapis

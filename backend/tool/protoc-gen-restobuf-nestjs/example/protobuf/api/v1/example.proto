@@ -7,19 +7,19 @@ option go_package = "github.com/jumpaku/jumpaku-protobuf/api/v1";
 
 service ExampleService {
   rpc ListExample(ListExampleRequest) returns (ListExampleResponse) {
-    option (google.api.http) = {get: "/v1/example"};
+    option (google.api.http) = {get: "/v1"};
   }
   rpc GetExample(GetExampleRequest) returns (GetExampleResponse) {
-    option (google.api.http) = {get: "/v1/example/{example_id}"};
+    option (google.api.http) = {get: "/v1/{example_id}"};
   }
   rpc UpdateExample(UpdateExampleRequest) returns (UpdateExampleResponse) {
-    option (google.api.http) = {put: "/v1/example/{example_id}"};
+    option (google.api.http) = {put: "/v1/{example_id}"};
   }
   rpc CreateExample(CreateExampleRequest) returns (CreateExampleResponse) {
-    option (google.api.http) = {post: "/v1/example"};
+    option (google.api.http) = {post: "/v1/{example_id}"};
   }
   rpc DeleteExample(DeleteExampleRequest) returns (DeleteExampleResponse) {
-    option (google.api.http) = {delete: "/v1/example/{example_id}"};
+    option (google.api.http) = {delete: "/v1/{example_id}"};
   }
 }
 message Example {
@@ -68,8 +68,5 @@ message DeleteExampleRequest {
   string example_id = 1;
 }
 
-message Arr {
-repeated string arr = 1;
- double d = 2;
- int32 i = 3;
-}
+message Abc {}
+message AbcSchema {}

@@ -1,0 +1,54 @@
+{
+  "name": "protoc-gen-restobuf-nestjs",
+  "version": "0.0.0",
+  "description": "A protoc plugin to generate REST API server with NestJS from Protocol Buffers",
+  "author": "Jumpaku",
+  "license": "BSD-2-Clause",
+  "repository": {
+    "url": "https://github.com/restocol-buffers/protoc-gen-restobuf-nestjs"
+  },
+  "homepage": "https://github.com/restocol-buffers/protoc-gen-restobuf-nestjs",
+  "keywords": [
+    "Protocol Buffers",
+    "REST",
+    "Nestjs"
+  ],
+  "scripts": {
+    "build": "rm -rf dist/cjs/* && tsc --project tsconfig.json --declaration --module commonjs --verbatimModuleSyntax false --moduleResolution node10 --outDir ./dist/cjs && echo >./dist/cjs/package.json '{\"type\":\"commonjs\"}'"
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "bin": {
+    "protoc-gen-restobuf-nestjs": "bin/protoc-gen-restobuf-nestjs"
+  },
+  "files": [
+    "dist/**",
+    "bin/**"
+  ],
+  "devDependencies": {
+    "@bufbuild/protoc-gen-es": "^2.2.3",
+    "@eslint/js": "^9.10.0",
+    "@jest/globals": "^29.7.0",
+    "@types/eslint__js": "^8.42.3",
+    "@types/jest": "^29.5.13",
+    "eslint": "^9.10.0",
+    "jest": "^29.7.0",
+    "rollup": "^4.21.2",
+    "terser": "^5.32.0",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.2",
+    "typescript-eslint": "^8.5.0"
+  },
+  "jest": {
+    "verbose": true,
+    "testMatch": [
+      "**/__tests__/**/*.js?(x)"
+    ]
+  },
+  "dependencies": {
+    "@bufbuild/protobuf": "^2.2.3",
+    "@bufbuild/protoplugin": "^2.2.3"
+  }
+}
