@@ -11,7 +11,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file api/v1/example/example.proto.
  */
 export const file_api_v1_example_example: GenFile = /*@__PURE__*/
-  fileDesc("ChxhcGkvdjEvZXhhbXBsZS9leGFtcGxlLnByb3RvEgZhcGkudjEiZAoHRXhhbXBsZRISCgpleGFtcGxlX2lkGAEgASgJEhQKDGV4YW1wbGVfbmFtZRgCIAEoCRIXCg9leGFtcGxlX2NvbnRlbnQYAyABKAkaFgoFSW5uZXISDQoFaW5uZXIYASABKAkiPAoTTGlzdEV4YW1wbGVSZXNwb25zZRIlCgxleGFtcGxlX2xpc3QYASADKAsyDy5hcGkudjEuRXhhbXBsZSJBChJMaXN0RXhhbXBsZVJlcXVlc3QSDAoEZGVzYxgBIAEoCBINCgVsaW1pdBgCIAEoAxIOCgZvZmZzZXQYAyABKAMiNgoSR2V0RXhhbXBsZVJlc3BvbnNlEiAKB2V4YW1wbGUYASABKAsyDy5hcGkudjEuRXhhbXBsZSInChFHZXRFeGFtcGxlUmVxdWVzdBISCgpleGFtcGxlX2lkGAEgASgJIjkKFVVwZGF0ZUV4YW1wbGVSZXNwb25zZRIgCgdleGFtcGxlGAEgASgLMg8uYXBpLnYxLkV4YW1wbGUikAEKFFVwZGF0ZUV4YW1wbGVSZXF1ZXN0EhIKCmV4YW1wbGVfaWQYASABKAkSGAoQc2V0X2V4YW1wbGVfbmFtZRgCIAEoCBIUCgxleGFtcGxlX25hbWUYAyABKAkSGwoTc2V0X2V4YW1wbGVfY29udGVudBgEIAEoCBIXCg9leGFtcGxlX2NvbnRlbnQYBSABKAkiOQoVQ3JlYXRlRXhhbXBsZVJlc3BvbnNlEiAKB2V4YW1wbGUYASABKAsyDy5hcGkudjEuRXhhbXBsZSJFChRDcmVhdGVFeGFtcGxlUmVxdWVzdBIUCgxleGFtcGxlX25hbWUYAiABKAkSFwoPZXhhbXBsZV9jb250ZW50GAMgASgJIhcKFURlbGV0ZUV4YW1wbGVSZXNwb25zZSIqChREZWxldGVFeGFtcGxlUmVxdWVzdBISCgpleGFtcGxlX2lkGAEgASgJIigKA0FychILCgNhcnIYASADKAkSCQoBZBgCIAEoARIJCgFpGAMgASgFMpcECg5FeGFtcGxlU2VydmljZRJbCgtMaXN0RXhhbXBsZRIaLmFwaS52MS5MaXN0RXhhbXBsZVJlcXVlc3QaGy5hcGkudjEuTGlzdEV4YW1wbGVSZXNwb25zZSITgtPkkwINEgsvdjEvZXhhbXBsZRJlCgpHZXRFeGFtcGxlEhkuYXBpLnYxLkdldEV4YW1wbGVSZXF1ZXN0GhouYXBpLnYxLkdldEV4YW1wbGVSZXNwb25zZSIggtPkkwIaEhgvdjEvZXhhbXBsZS97ZXhhbXBsZV9pZH0SbgoNVXBkYXRlRXhhbXBsZRIcLmFwaS52MS5VcGRhdGVFeGFtcGxlUmVxdWVzdBodLmFwaS52MS5VcGRhdGVFeGFtcGxlUmVzcG9uc2UiIILT5JMCGhoYL3YxL2V4YW1wbGUve2V4YW1wbGVfaWR9EmEKDUNyZWF0ZUV4YW1wbGUSHC5hcGkudjEuQ3JlYXRlRXhhbXBsZVJlcXVlc3QaHS5hcGkudjEuQ3JlYXRlRXhhbXBsZVJlc3BvbnNlIhOC0+STAg0iCy92MS9leGFtcGxlEm4KDURlbGV0ZUV4YW1wbGUSHC5hcGkudjEuRGVsZXRlRXhhbXBsZVJlcXVlc3QaHS5hcGkudjEuRGVsZXRlRXhhbXBsZVJlc3BvbnNlIiCC0+STAhoqGC92MS9leGFtcGxlL3tleGFtcGxlX2lkfUJ/Cgpjb20uYXBpLnYxQgxFeGFtcGxlUHJvdG9QAVoqZ2l0aHViLmNvbS9qdW1wYWt1L2p1bXBha3UtcHJvdG9idWYvYXBpL3YxogIDQVhYqgIGQXBpLlYxygIGQXBpXFYx4gISQXBpXFYxXEdQQk1ldGFkYXRh6gIHQXBpOjpWMWIGcHJvdG8z", [file_google_api_annotations]);
+  fileDesc("ChxhcGkvdjEvZXhhbXBsZS9leGFtcGxlLnByb3RvEgZhcGkudjEiZAoHRXhhbXBsZRISCgpleGFtcGxlX2lkGAEgASgJEhQKDGV4YW1wbGVfbmFtZRgCIAEoCRIXCg9leGFtcGxlX2NvbnRlbnQYAyABKAkaFgoFSW5uZXISDQoFaW5uZXIYASABKAkiPAoTTGlzdEV4YW1wbGVSZXNwb25zZRIlCgxleGFtcGxlX2xpc3QYASADKAsyDy5hcGkudjEuRXhhbXBsZSJBChJMaXN0RXhhbXBsZVJlcXVlc3QSDAoEZGVzYxgBIAEoCBINCgVsaW1pdBgCIAEoAxIOCgZvZmZzZXQYAyABKAMiNgoSR2V0RXhhbXBsZVJlc3BvbnNlEiAKB2V4YW1wbGUYASABKAsyDy5hcGkudjEuRXhhbXBsZSInChFHZXRFeGFtcGxlUmVxdWVzdBISCgpleGFtcGxlX2lkGAEgASgJIjkKFVVwZGF0ZUV4YW1wbGVSZXNwb25zZRIgCgdleGFtcGxlGAEgASgLMg8uYXBpLnYxLkV4YW1wbGUikAEKFFVwZGF0ZUV4YW1wbGVSZXF1ZXN0EhIKCmV4YW1wbGVfaWQYASABKAkSGAoQc2V0X2V4YW1wbGVfbmFtZRgCIAEoCBIUCgxleGFtcGxlX25hbWUYAyABKAkSGwoTc2V0X2V4YW1wbGVfY29udGVudBgEIAEoCBIXCg9leGFtcGxlX2NvbnRlbnQYBSABKAkiOQoVQ3JlYXRlRXhhbXBsZVJlc3BvbnNlEiAKB2V4YW1wbGUYASABKAsyDy5hcGkudjEuRXhhbXBsZSJFChRDcmVhdGVFeGFtcGxlUmVxdWVzdBIUCgxleGFtcGxlX25hbWUYAiABKAkSFwoPZXhhbXBsZV9jb250ZW50GAMgASgJIhcKFURlbGV0ZUV4YW1wbGVSZXNwb25zZSIqChREZWxldGVFeGFtcGxlUmVxdWVzdBISCgpleGFtcGxlX2lkGAEgASgJMpcECg5FeGFtcGxlU2VydmljZRJbCgtMaXN0RXhhbXBsZRIaLmFwaS52MS5MaXN0RXhhbXBsZVJlcXVlc3QaGy5hcGkudjEuTGlzdEV4YW1wbGVSZXNwb25zZSITgtPkkwINEgsvdjEvZXhhbXBsZRJlCgpHZXRFeGFtcGxlEhkuYXBpLnYxLkdldEV4YW1wbGVSZXF1ZXN0GhouYXBpLnYxLkdldEV4YW1wbGVSZXNwb25zZSIggtPkkwIaEhgvdjEvZXhhbXBsZS97ZXhhbXBsZV9pZH0SbgoNVXBkYXRlRXhhbXBsZRIcLmFwaS52MS5VcGRhdGVFeGFtcGxlUmVxdWVzdBodLmFwaS52MS5VcGRhdGVFeGFtcGxlUmVzcG9uc2UiIILT5JMCGhoYL3YxL2V4YW1wbGUve2V4YW1wbGVfaWR9EmEKDUNyZWF0ZUV4YW1wbGUSHC5hcGkudjEuQ3JlYXRlRXhhbXBsZVJlcXVlc3QaHS5hcGkudjEuQ3JlYXRlRXhhbXBsZVJlc3BvbnNlIhOC0+STAg0iCy92MS9leGFtcGxlEm4KDURlbGV0ZUV4YW1wbGUSHC5hcGkudjEuRGVsZXRlRXhhbXBsZVJlcXVlc3QaHS5hcGkudjEuRGVsZXRlRXhhbXBsZVJlc3BvbnNlIiCC0+STAhoqGC92MS9leGFtcGxlL3tleGFtcGxlX2lkfUJ/Cgpjb20uYXBpLnYxQgxFeGFtcGxlUHJvdG9QAVoqZ2l0aHViLmNvbS9qdW1wYWt1L2p1bXBha3UtcHJvdG9idWYvYXBpL3YxogIDQVhYqgIGQXBpLlYxygIGQXBpXFYx4gISQXBpXFYxXEdQQk1ldGFkYXRh6gIHQXBpOjpWMWIGcHJvdG8z", [file_google_api_annotations]);
 
 /**
  * @generated from message api.v1.Example
@@ -418,53 +418,6 @@ export type DeleteExampleRequestJson = {
  */
 export const DeleteExampleRequestSchema: GenMessage<DeleteExampleRequest, DeleteExampleRequestJson> = /*@__PURE__*/
   messageDesc(file_api_v1_example_example, 10);
-
-/**
- * @generated from message api.v1.Arr
- */
-export type Arr = Message<"api.v1.Arr"> & {
-  /**
-   * @generated from field: repeated string arr = 1;
-   */
-  arr: string[];
-
-  /**
-   * @generated from field: double d = 2;
-   */
-  d: number;
-
-  /**
-   * @generated from field: int32 i = 3;
-   */
-  i: number;
-};
-
-/**
- * @generated from message api.v1.Arr
- */
-export type ArrJson = {
-  /**
-   * @generated from field: repeated string arr = 1;
-   */
-  arr?: string[];
-
-  /**
-   * @generated from field: double d = 2;
-   */
-  d?: number | "NaN" | "Infinity" | "-Infinity";
-
-  /**
-   * @generated from field: int32 i = 3;
-   */
-  i?: number;
-};
-
-/**
- * Describes the message api.v1.Arr.
- * Use `create(ArrSchema)` to create a new message.
- */
-export const ArrSchema: GenMessage<Arr, ArrJson> = /*@__PURE__*/
-  messageDesc(file_api_v1_example_example, 11);
 
 /**
  * @generated from service api.v1.ExampleService

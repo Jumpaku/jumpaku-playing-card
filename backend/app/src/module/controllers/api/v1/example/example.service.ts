@@ -5,7 +5,7 @@ import {
     CreateExampleResponseSchema,
     DeleteExampleRequest,
     DeleteExampleResponse,
-    DeleteExampleResponseSchema,
+    DeleteExampleResponseSchema, ExampleSchema,
     GetExampleRequest,
     GetExampleResponse,
     GetExampleResponseSchema,
@@ -21,7 +21,13 @@ import {create} from "@bufbuild/protobuf";
 
 export class ExampleServiceService extends ExampleServiceServiceBase {
     async handleCreateExample(input: CreateExampleRequest, req: e.Request, res: e.Response): Promise<CreateExampleResponse> {
-        return create(CreateExampleResponseSchema, {});
+        return create(CreateExampleResponseSchema, {
+            example: create(ExampleSchema, {
+                exampleId: "exampleId",
+                exampleName: "exampleName",
+                exampleContent: "exampleContent",
+            }),
+        });
     }
 
     async handleDeleteExample(input: DeleteExampleRequest, req: e.Request, res: e.Response): Promise<DeleteExampleResponse> {
@@ -33,7 +39,15 @@ export class ExampleServiceService extends ExampleServiceServiceBase {
     }
 
     async handleListExample(input: ListExampleRequest, req: e.Request, res: e.Response): Promise<ListExampleResponse> {
-        return create(ListExampleResponseSchema, {});
+        return create(ListExampleResponseSchema, {
+            exampleList: [
+                create(ExampleSchema, {
+                    exampleId: "exampleId",
+                    exampleName: "exampleName",
+                    exampleContent: "exampleContent",
+                }),
+            ],
+        });
     }
 
     async handleUpdateExample(input: UpdateExampleRequest, req: e.Request, res: e.Response): Promise<UpdateExampleResponse> {
