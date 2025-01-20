@@ -12,3 +12,11 @@ migrate: ## make migrate-local
 		-path migration \
 		-database "postgres://postgres:password@postgres:5432/app?sslmode=disable" \
 		up
+
+
+.PHONY: psql
+psql: ## make migrate-local
+	docker compose exec -w /workspace/backend/infra/ work migrate \
+		-path migration \
+		-database "postgres://postgres:password@postgres:5432/app?sslmode=disable" \
+		up
