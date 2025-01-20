@@ -5,10 +5,10 @@ services:
   work:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: ../Dockerfile.work
     volumes:
-      - ..:/workspace
-      - /workspace/backend/node_modules
+      - ../../:/workspace/backend
+      - app-node_modules:/workspace/backend/app/node_modules
     ports:
       - "3000:3000"
     working_dir: /workspace/backend
@@ -19,7 +19,7 @@ services:
     image: postgres:17.2-alpine3.20
     environment:
       - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=main
+      - POSTGRES_DB=app
       - POSTGRES_USER=postgres
     ports:
       - "5432:5432"
@@ -27,3 +27,7 @@ services:
     image: adminer
     ports:
       - "8080:8080"
+
+
+volumes:
+  app-node_modules:
