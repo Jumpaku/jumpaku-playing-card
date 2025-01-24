@@ -4,4 +4,5 @@ package config;
 
 message AppConfig {
     string node_env = 1;
+    string postgres_connection = 2;
 }
