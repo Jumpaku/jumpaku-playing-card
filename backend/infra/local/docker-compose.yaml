@@ -9,8 +9,8 @@ services:
     volumes:
       - ../../:/workspace/backend
       - app-node_modules:/workspace/backend/app/node_modules
-    ports:
-      - "3000:3000"
+    #ports:
+    #  - "3000:3000"
     working_dir: /workspace/backend
     tty: true
     command: [ "sleep", "infinity" ]
