@@ -4,6 +4,7 @@ import {ConfigProvider} from "./config.provider";
 import {RandomProvider, RandomProviderToken} from "./random.provider";
 import {RequestTimeProvider, RequestTimeProviderToken} from "./request_time.provider";
 import {LoggerProvider} from "./logger.provider";
+import {PostgresProvider} from "./postgres.provider";
 
 @Global()
 @Module({
@@ -11,7 +12,7 @@ import {LoggerProvider} from "./logger.provider";
         LoggerProvider,
         {
             provide: ConfigProvider,
-            useFactory: () => ConfigProvider.load(),
+            useFactory: () => ConfigProvider.load("config/local.json"),
         },
         {
             provide: RandomProviderToken,
@@ -21,7 +22,8 @@ import {LoggerProvider} from "./logger.provider";
         {
             provide: RequestTimeProviderToken,
             useClass: RequestTimeProvider,
-        }
+        },
+        PostgresProvider,
     ],
     exports: [
         LoggerProvider,
@@ -29,6 +31,7 @@ import {LoggerProvider} from "./logger.provider";
         RandomProviderToken,
         RequestIdProvider,
         RequestTimeProviderToken,
+        PostgresProvider,
     ],
 })
 export class GlobalModule {

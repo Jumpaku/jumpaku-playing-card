@@ -26,24 +26,27 @@ export class LoggingInterceptor implements NestInterceptor {
             tap((resBody) => {
                 console.log(JSON.stringify({
                     log: 'rpc',
-                    controller,
                     time: new Date(now).toISOString(),
-                    durationSeconds: Number(nowNano() - start) * 1e-9,
-                    request: {
-                        ip: req.ip,
-                        protocol: req.protocol,
-                        method: req.method,
-                        hostname: req.hostname,
-                        path: req.path,
-                        query: req.query,
-                        headers: req.headers,
-                        body: reqBody,
-                    },
-                    response: {
-                        statusCode: res.statusCode,
-                        statusText: res.statusMessage,
-                        headers: res.getHeaders(),
-                        body: JSON.stringify(resBody),
+                    message: 'rpc call',
+                    rpc: {
+                        controller,
+                        durationSeconds: Number(nowNano() - start) * 1e-9,
+                        request: {
+                            ip: req.ip,
+                            protocol: req.protocol,
+                            method: req.method,
+                            hostname: req.hostname,
+                            path: req.path,
+                            query: req.query,
+                            headers: req.headers,
+                            body: reqBody,
+                        },
+                        response: {
+                            statusCode: res.statusCode,
+                            statusText: res.statusMessage,
+                            headers: res.getHeaders(),
+                            body: JSON.stringify(resBody),
+                        },
                     },
                 }))
             }),

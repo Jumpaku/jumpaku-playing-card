@@ -10,3 +10,8 @@ protobuf: ## make protobuf
 	cd ../protobuf && \
 		buf build --output bufimage.txtpb && \
 		buf generate --include-imports --include-wkt bufimage.txtpb
+
+.PHONY: pg-dao
+pg-dao: ## make pg-dao POSTGRES_CONNECTION="postgres://localhost:password@localhost:5432/app?sslmode=disable"
+	cd ../tool/schenerate-pg-dao && \
+		go run main.go "$(POSTGRES_CONNECTION)" ../../app/src/gen/pg/dao

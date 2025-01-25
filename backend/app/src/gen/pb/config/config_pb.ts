@@ -10,7 +10,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file config/config.proto.
  */
 export const file_config_config: GenFile = /*@__PURE__*/
-  fileDesc("ChNjb25maWcvY29uZmlnLnByb3RvEgZjb25maWciHQoJQXBwQ29uZmlnEhAKCG5vZGVfZW52GAEgASgJQlEKCmNvbS5jb25maWdCC0NvbmZpZ1Byb3RvUAGiAgNDWFiqAgZDb25maWfKAgZDb25maWfiAhJDb25maWdcR1BCTWV0YWRhdGHqAgZDb25maWdiBnByb3RvMw");
+  fileDesc("ChNjb25maWcvY29uZmlnLnByb3RvEgZjb25maWciOgoJQXBwQ29uZmlnEhAKCG5vZGVfZW52GAEgASgJEhsKE3Bvc3RncmVzX2Nvbm5lY3Rpb24YAiABKAlCUQoKY29tLmNvbmZpZ0ILQ29uZmlnUHJvdG9QAaICA0NYWKoCBkNvbmZpZ8oCBkNvbmZpZ+ICEkNvbmZpZ1xHUEJNZXRhZGF0YeoCBkNvbmZpZ2IGcHJvdG8z");
 
 /**
  * @generated from message config.AppConfig
@@ -20,6 +20,11 @@ export type AppConfig = Message<"config.AppConfig"> & {
    * @generated from field: string node_env = 1;
    */
   nodeEnv: string;
+
+  /**
+   * @generated from field: string postgres_connection = 2;
+   */
+  postgresConnection: string;
 };
 
 /**
@@ -30,6 +35,11 @@ export type AppConfigJson = {
    * @generated from field: string node_env = 1;
    */
   nodeEnv?: string;
+
+  /**
+   * @generated from field: string postgres_connection = 2;
+   */
+  postgresConnection?: string;
 };
 
 /**

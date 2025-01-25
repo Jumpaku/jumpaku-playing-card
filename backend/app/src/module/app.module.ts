@@ -1,6 +1,6 @@
 import {Module} from '@nestjs/common';
-import {ExampleModule} from "./controllers/api/v1/example/example.module";
-import {PlaygroundModule} from "./controllers/api/debug/playground/playground.module";
+import {ExampleModule} from "./controller/api/v1/example/example.module";
+import {PlaygroundModule} from "./controller/api/debug/playground/playground.module";
 
 @Module({
     imports: [

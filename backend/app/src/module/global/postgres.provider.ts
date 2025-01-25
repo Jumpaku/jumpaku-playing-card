@@ -2,17 +2,27 @@ import {Injectable} from "@nestjs/common";
 import {ConfigProvider} from "./config.provider";
 import {Pool, PoolClient} from "pg";
 import {LoggerProvider} from "./logger.provider";
+import {setTypeParsers} from "../../gen/pg/dao/pg_type_parsers";
+
+export interface PgClient {
+    query(query: string, values: unknown[]): Promise<{ rows: unknown[] }>;
+}
 
 @Injectable()
 export class PostgresProvider {
-    constructor(private readonly config: ConfigProvider, private readonly logger: LoggerProvider) {
-        // open connection
-        this.pool = new Pool({connectionString: ""})
+    constructor(config: ConfigProvider, private readonly logger: LoggerProvider) {
+        logger.log(JSON.stringify({
+            log: 'postgres',
+            time: new Date(),
+            message: 'open postgres pool connection',
+        }));
+        this.pool = new Pool({connectionString: config.get().postgresConnection});
+        setTypeParsers();
     }
 
-    pool: Pool
+    private pool: Pool
 
-    async transaction(fn: (c: any) => Promise<void>) {
+    async transaction(fn: (client: PgClient) => Promise<void>) {
         // https://node-postgres.com/features/transactions#examples
         const client = await this.newClient();
         try {
@@ -28,28 +38,50 @@ export class PostgresProvider {
     }
 
     async close() {
+        this.logger.log(JSON.stringify({
+            log: 'postgres',
+            time: new Date(),
+            message: 'close postgres pool connection',
+        }));
         await this.pool.end()
     }
 
     private async newClient(): Promise<PoolClient> {
+        const logger = this.logger;
         // https://node-postgres.com/guides/project-structure
         const client = await this.pool.connect()
         const query = client.query
         const release = client.release
         // set a timeout of 5 seconds, after which we will log this client's last query
         const timeout = setTimeout(() => {
-            console.error('A client has been checked out for more than 5 seconds!')
-            console.error(`The last executed query on this client was: ${
-                // @ts-ignore
-                client.lastQuery}`)
+            // @ts-ignore
+            const [stmt, params] = client.lastQuery
+            logger.warn(JSON.stringify({
+                log: 'postgres',
+                time: new Date(),
+                message: 'postgres client timeout',
+                postgres: {
+                    stmt, params
+                },
+            }));
         }, 5000)
         // monkey patch the query method to keep track of the last query executed
         // @ts-ignore
         client.query = ((...args: any[]) => {
+            const [stmt, params] = args;
+            logger.debug(JSON.stringify({
+                log: 'postgres',
+                time: new Date(),
+                message: 'execute postgres query',
+                postgres: {
+                    stmt: stmt,
+                    params: params,
+                }
+            }));
             // @ts-ignore
-            client.lastQuery = args
-            // @ts-ignore
-            return query.apply(client, args)
+            client.lastQuery = args;
+
+            return query.apply(client, args);
         });
         client.release = () => {
             // clear our timeout
@@ -61,4 +93,9 @@ export class PostgresProvider {
         }
         return client
     }
+}
+
+export async function selectAll<T>(client: PgClient, stmt: string, params: unknown[]): Promise<T[]> {
+    const {rows} = await client.query(stmt, params)
+    return (rows ?? []) as T[];
 }
