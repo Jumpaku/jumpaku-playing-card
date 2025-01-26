@@ -3,23 +3,21 @@ package api.v1;
 
 import "google/api/annotations.proto";
 
-option go_package = "github.com/jumpaku/jumpaku-protobuf/api/v1";
-
 service ExampleService {
   rpc ListExample(ListExampleRequest) returns (ListExampleResponse) {
-    option (google.api.http) = {get: "/v1/example"};
+    option (google.api.http) = {get: "/api/v1/example"};
   }
   rpc GetExample(GetExampleRequest) returns (GetExampleResponse) {
-    option (google.api.http) = {get: "/v1/example/{example_id}"};
+    option (google.api.http) = {get: "/api/v1/example/{example_id}"};
   }
   rpc UpdateExample(UpdateExampleRequest) returns (UpdateExampleResponse) {
-    option (google.api.http) = {put: "/v1/example/{example_id}"};
+    option (google.api.http) = {put: "/api/v1/example/{example_id}"};
   }
   rpc CreateExample(CreateExampleRequest) returns (CreateExampleResponse) {
-    option (google.api.http) = {post: "/v1/example"};
+    option (google.api.http) = {post: "/api/v1/example"};
   }
   rpc DeleteExample(DeleteExampleRequest) returns (DeleteExampleResponse) {
-    option (google.api.http) = {delete: "/v1/example/{example_id}"};
+    option (google.api.http) = {delete: "/api/v1/example/{example_id}"};
   }
 }
 message Example {

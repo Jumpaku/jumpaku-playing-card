@@ -3,6 +3,7 @@ import {Observable} from 'rxjs';
 import {tap} from 'rxjs/operators';
 import {Request, Response} from "express";
 import * as process from "node:process";
+import {LoggerProvider} from "../module/global/logger.provider";
 
 
 function nowNano(): bigint {
@@ -12,6 +13,9 @@ function nowNano(): bigint {
 
 @Injectable()
 export class LoggingInterceptor implements NestInterceptor {
+    constructor(private readonly logger: LoggerProvider) {
+    }
+
     intercept(ctx: ExecutionContext, next: CallHandler): Observable<any> {
         const now = Date.now();
         const start = nowNano();
@@ -24,7 +28,7 @@ export class LoggingInterceptor implements NestInterceptor {
         const res = http.getResponse<Response>();
         return next.handle().pipe(
             tap((resBody) => {
-                console.log(JSON.stringify({
+                this.logger.log(JSON.stringify({
                     log: 'rpc',
                     time: new Date(now).toISOString(),
                     message: 'rpc call',

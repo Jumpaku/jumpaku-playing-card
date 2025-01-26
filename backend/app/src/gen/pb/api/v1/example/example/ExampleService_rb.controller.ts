@@ -13,7 +13,7 @@ import { CreateExampleRequestSchema, CreateExampleResponseSchema, DeleteExampleR
 export class ExampleServiceController {
   constructor(private service: ExampleServiceService) {}
 
-  @Get('/v1/example')
+  @Get('/api/v1/example')
   async handleListExample(
     @Param() pathParams: {[key: string]: string},
     @Query() queryParams: {[key: string]: string},
@@ -30,7 +30,7 @@ export class ExampleServiceController {
     return toJson(ListExampleResponseSchema, output);
   }
 
-  @Get('/v1/example/:example_id')
+  @Get('/api/v1/example/:example_id')
   async handleGetExample(
     @Param() pathParams: {[key: string]: string},
     @Query() queryParams: {[key: string]: string},
@@ -48,7 +48,7 @@ export class ExampleServiceController {
     return toJson(GetExampleResponseSchema, output);
   }
 
-  @Put('/v1/example/:example_id')
+  @Put('/api/v1/example/:example_id')
   async handleUpdateExample(
     @Param() pathParams: {[key: string]: string},
     @Query() queryParams: {[key: string]: string},
@@ -66,7 +66,7 @@ export class ExampleServiceController {
     return toJson(UpdateExampleResponseSchema, output);
   }
 
-  @Post('/v1/example')
+  @Post('/api/v1/example')
   async handleCreateExample(
     @Param() pathParams: {[key: string]: string},
     @Query() queryParams: {[key: string]: string},
@@ -83,7 +83,7 @@ export class ExampleServiceController {
     return toJson(CreateExampleResponseSchema, output);
   }
 
-  @Delete('/v1/example/:example_id')
+  @Delete('/api/v1/example/:example_id')
   async handleDeleteExample(
     @Param() pathParams: {[key: string]: string},
     @Query() queryParams: {[key: string]: string},

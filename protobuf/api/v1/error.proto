@@ -1,0 +1,14 @@
+syntax = "proto3";
+package api.v1;
+
+import "google/protobuf/timestamp.proto";
+
+message ErrorResponse {
+    enum ErrorCode {
+        UNKNOWN = 0;
+        BAD_REQUEST = 1;
+    }
+    ErrorCode error_code = 1;
+    string error_description = 2;
+    map<string, string> data = 3;
+}
