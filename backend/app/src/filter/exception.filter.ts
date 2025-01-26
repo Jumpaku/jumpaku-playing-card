@@ -4,8 +4,6 @@ import {LoggerProvider} from "../module/global/logger.provider";
 import {AppException} from "../exception/exception";
 import {ErrorResponse_ErrorCode, ErrorResponseJson, ErrorResponseSchema} from "../gen/pb/api/v1/error_pb";
 import {create, toJson} from "@bufbuild/protobuf";
-import {App} from "supertest/types";
-
 
 export type ErrorLogEntry = {
     log: 'error';
