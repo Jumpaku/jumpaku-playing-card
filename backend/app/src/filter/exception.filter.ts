@@ -1,4 +1,4 @@
-import {ExceptionFilter, Catch, ArgumentsHost, HttpException, HttpStatus} from '@nestjs/common';
+import {ExceptionFilter, Catch, ArgumentsHost, HttpStatus, Injectable} from '@nestjs/common';
 import {Request, Response} from 'express';
 import {LoggerProvider} from "../module/global/logger.provider";
 import {AppException} from "../exception/exception";
@@ -25,6 +25,7 @@ export type ErrorLogEntry = {
 }
 
 @Catch(Error)
+@Injectable()
 export class AppExceptionFilter implements ExceptionFilter<AppException> {
     constructor(private readonly logger: LoggerProvider) {
     }

@@ -15,8 +15,16 @@ export type {{.Name}}Pk$ = {
 };
 
 {{$TableName := .Name}}
+{{range .Unique}}
+export type {{$TableName}}_Find{{.Name}}Key$ = {
+    {{range $Index, $Key := .Keys}}
+    {{$Key.Name}}: {{$Key.TsType}};
+    {{end}}
+};
+{{end}}
+
 {{range .Index}}
-export type {{$TableName}}_{{.Name}}Key$ = {
+export type {{$TableName}}_List{{.Name}}Key$ = {
     {{range $Index, $Key := .Keys}}
     {{$Key.Name}}?: {{$Key.TsType}};
     {{end}}
@@ -131,23 +139,48 @@ LIMIT 1`,
         return new {{.Name}}$(res.rows[0] as {{.Name}}Prop$);
     }
 
-{{range .Index}}
-    static async findOn{{.Name}}(client: PgClient, key: {{$TableName}}_{{.Name}}Key$): Promise<{{$TableName}}$[]> {
+{{range .Unique}}
+    static async findBy{{.Name}}(client: PgClient, key: {{$TableName}}_Find{{.Name}}Key$): Promise<{{$TableName}}$ | null> {
         const params: string[] = [];
-        const stmt: string = `SELECT *
+        let stmt: string = `SELECT *
+FROM "{{.Name}}"
+WHERE `;
+    {{range $Index, $Key := .Keys}}
+        params.push(key.{{$Key.Name}});
+        if (params.length > 1) {
+            stmt += " AND ";
+        }
+        stmt += `"{{$Key.Name}}" = $${params.length}`;
+    {{end}}
+        stmt += " LIMIT 1";
+        const res = await client.query(stmt, params);
+        if (res.rows.length === 0) {
+            return null;
+        }
+        return new {{$TableName}}$(res.rows[0] as any);
+    }
+{{end}}
+
+{{range .Index}}
+    static async listBy{{.Name}}(client: PgClient, key: {{$TableName}}_List{{.Name}}Key$): Promise<{{$TableName}}$[]> {
+        const params: string[] = [];
+        let stmt: string = `SELECT *
 FROM "{{.Name}}"
 WHERE `;
     {{range $Index, $Key := .Keys}}
         if (key.{{$Key.Name}} !== undefined) {
-        params.push(key.{{$Key.Name}});
+            params.push(key.{{$Key.Name}});
             if (params.length > 1) {
                 stmt += " AND ";
             }
-            stmt += `"{{$Key.Name}}" = $${values.length}`;
+            stmt += `"{{$Key.Name}}" = $${params.length}`;
         }
     {{end}}
+        if (params.length === 0) {
+            throw new Error("No key provided");
+        }
         const res = await client.query(stmt, params);
-        return res.rows.map((row) => new {{$TableName}}$(row));
+        return res.rows.map((row: any) => new {{$TableName}}$(row));
     }
 {{end}}
 }

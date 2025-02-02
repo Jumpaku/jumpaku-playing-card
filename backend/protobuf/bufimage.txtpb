@@ -1,1461 +1,4 @@
 file: {
-  name: "google/protobuf/timestamp.proto"
-  package: "google.protobuf"
-  message_type: {
-    name: "Timestamp"
-    field: {
-      name: "seconds"
-      number: 1
-      label: LABEL_OPTIONAL
-      type: TYPE_INT64
-      json_name: "seconds"
-    }
-    field: {
-      name: "nanos"
-      number: 2
-      label: LABEL_OPTIONAL
-      type: TYPE_INT32
-      json_name: "nanos"
-    }
-  }
-  options: {
-    java_package: "com.google.protobuf"
-    java_outer_classname: "TimestampProto"
-    java_multiple_files: true
-    go_package: "google.golang.org/protobuf/types/known/timestamppb"
-    cc_enable_arenas: true
-    objc_class_prefix: "GPB"
-    csharp_namespace: "Google.Protobuf.WellKnownTypes"
-  }
-  source_code_info: {
-    location: {
-      span: 30
-      span: 0
-      span: 143
-      span: 1
-    }
-    location: {
-      path: 12
-      span: 30
-      span: 0
-      span: 18
-      leading_detached_comments: " Protocol Buffers - Google's data interchange format\n Copyright 2008 Google Inc.  All rights reserved.\n https://developers.google.com/protocol-buffers/\n\n Redistribution and use in source and binary forms, with or without\n modification, are permitted provided that the following conditions are\n met:\n\n     * Redistributions of source code must retain the above copyright\n notice, this list of conditions and the following disclaimer.\n     * Redistributions in binary form must reproduce the above\n copyright notice, this list of conditions and the following disclaimer\n in the documentation and/or other materials provided with the\n distribution.\n     * Neither the name of Google Inc. nor the names of its\n contributors may be used to endorse or promote products derived from\n this software without specific prior written permission.\n\n THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS\n \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT\n LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR\n A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT\n OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,\n SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT\n LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,\n DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY\n THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT\n (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE\n OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\n"
-    }
-    location: {
-      path: 2
-      span: 32
-      span: 0
-      span: 24
-    }
-    location: {
-      path: 8
-      span: 34
-      span: 0
-      span: 31
-    }
-    location: {
-      path: 8
-      path: 31
-      span: 34
-      span: 0
-      span: 31
-    }
-    location: {
-      path: 8
-      span: 35
-      span: 0
-      span: 73
-    }
-    location: {
-      path: 8
-      path: 11
-      span: 35
-      span: 0
-      span: 73
-    }
-    location: {
-      path: 8
-      span: 36
-      span: 0
-      span: 44
-    }
-    location: {
-      path: 8
-      path: 1
-      span: 36
-      span: 0
-      span: 44
-    }
-    location: {
-      path: 8
-      span: 37
-      span: 0
-      span: 47
-    }
-    location: {
-      path: 8
-      path: 8
-      span: 37
-      span: 0
-      span: 47
-    }
-    location: {
-      path: 8
-      span: 38
-      span: 0
-      span: 34
-    }
-    location: {
-      path: 8
-      path: 10
-      span: 38
-      span: 0
-      span: 34
-    }
-    location: {
-      path: 8
-      span: 39
-      span: 0
-      span: 33
-    }
-    location: {
-      path: 8
-      path: 36
-      span: 39
-      span: 0
-      span: 33
-    }
-    location: {
-      path: 8
-      span: 40
-      span: 0
-      span: 59
-    }
-    location: {
-      path: 8
-      path: 37
-      span: 40
-      span: 0
-      span: 59
-    }
-    location: {
-      path: 4
-      path: 0
-      span: 132
-      span: 0
-      span: 143
-      span: 1
-      leading_comments: " A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are \"smeared\" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(&tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(&ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) << 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is \"{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z\"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The \"Z\" suffix indicates the timezone (\"UTC\"); the timezone\n is required. A proto3 JSON serializer should always use UTC (as indicated by\n \"Z\") when printing the Timestamp type and a proto3 JSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, \"2017-01-15T01:30:15.01Z\" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec '%Y-%m-%dT%H:%M:%S.%fZ'. Likewise, in Java, one can use\n the Joda Time's [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format.\n\n"
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 1
-      span: 132
-      span: 8
-      span: 17
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 0
-      span: 136
-      span: 2
-      span: 20
-      leading_comments: " Represents seconds of UTC time since Unix epoch\n 1970-01-01T00:00:00Z. Must be from 0001-01-01T00:00:00Z to\n 9999-12-31T23:59:59Z inclusive.\n"
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 0
-      path: 5
-      span: 136
-      span: 2
-      span: 7
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 0
-      path: 1
-      span: 136
-      span: 8
-      span: 15
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 0
-      path: 3
-      span: 136
-      span: 18
-      span: 19
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 1
-      span: 142
-      span: 2
-      span: 18
-      leading_comments: " Non-negative fractions of a second at nanosecond resolution. Negative\n second values with fractions must still have non-negative nanos values\n that count forward in time. Must be from 0 to 999,999,999\n inclusive.\n"
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 1
-      path: 5
-      span: 142
-      span: 2
-      span: 7
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 1
-      path: 1
-      span: 142
-      span: 8
-      span: 13
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 1
-      path: 3
-      span: 142
-      span: 16
-      span: 17
-    }
-  }
-  syntax: "proto3"
-  buf_extension: {
-    is_import: true
-    is_syntax_unspecified: false
-  }
-}
-file: {
-  name: "api/v1/error.proto"
-  package: "api.v1"
-  dependency: "google/protobuf/timestamp.proto"
-  message_type: {
-    name: "ErrorResponse"
-    field: {
-      name: "error_code"
-      number: 1
-      label: LABEL_OPTIONAL
-      type: TYPE_ENUM
-      type_name: ".api.v1.ErrorResponse.ErrorCode"
-      json_name: "errorCode"
-    }
-    field: {
-      name: "error_description"
-      number: 2
-      label: LABEL_OPTIONAL
-      type: TYPE_STRING
-      json_name: "errorDescription"
-    }
-    field: {
-      name: "data"
-      number: 3
-      label: LABEL_REPEATED
-      type: TYPE_MESSAGE
-      type_name: ".api.v1.ErrorResponse.DataEntry"
-      json_name: "data"
-    }
-    nested_type: {
-      name: "DataEntry"
-      field: {
-        name: "key"
-        number: 1
-        label: LABEL_OPTIONAL
-        type: TYPE_STRING
-        json_name: "key"
-      }
-      field: {
-        name: "value"
-        number: 2
-        label: LABEL_OPTIONAL
-        type: TYPE_STRING
-        json_name: "value"
-      }
-      options: {
-        map_entry: true
-      }
-    }
-    enum_type: {
-      name: "ErrorCode"
-      value: {
-        name: "UNKNOWN"
-        number: 0
-      }
-      value: {
-        name: "BAD_REQUEST"
-        number: 1
-      }
-    }
-  }
-  source_code_info: {
-    location: {
-      span: 0
-      span: 0
-      span: 13
-      span: 1
-    }
-    location: {
-      path: 12
-      span: 0
-      span: 0
-      span: 18
-    }
-    location: {
-      path: 2
-      span: 1
-      span: 0
-      span: 15
-    }
-    location: {
-      path: 3
-      path: 0
-      span: 3
-      span: 0
-      span: 41
-    }
-    location: {
-      path: 4
-      path: 0
-      span: 5
-      span: 0
-      span: 13
-      span: 1
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 1
-      span: 5
-      span: 8
-      span: 21
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 4
-      path: 0
-      span: 6
-      span: 4
-      span: 9
-      span: 5
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 4
-      path: 0
-      path: 1
-      span: 6
-      span: 9
-      span: 18
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 4
-      path: 0
-      path: 2
-      path: 0
-      span: 7
-      span: 8
-      span: 20
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 4
-      path: 0
-      path: 2
-      path: 0
-      path: 1
-      span: 7
-      span: 8
-      span: 15
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 4
-      path: 0
-      path: 2
-      path: 0
-      path: 2
-      span: 7
-      span: 18
-      span: 19
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 4
-      path: 0
-      path: 2
-      path: 1
-      span: 8
-      span: 8
-      span: 24
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 4
-      path: 0
-      path: 2
-      path: 1
-      path: 1
-      span: 8
-      span: 8
-      span: 19
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 4
-      path: 0
-      path: 2
-      path: 1
-      path: 2
-      span: 8
-      span: 22
-      span: 23
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 0
-      span: 10
-      span: 4
-      span: 29
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 0
-      path: 6
-      span: 10
-      span: 4
-      span: 13
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 0
-      path: 1
-      span: 10
-      span: 14
-      span: 24
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 0
-      path: 3
-      span: 10
-      span: 27
-      span: 28
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 1
-      span: 11
-      span: 4
-      span: 33
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 1
-      path: 5
-      span: 11
-      span: 4
-      span: 10
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 1
-      path: 1
-      span: 11
-      span: 11
-      span: 28
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 1
-      path: 3
-      span: 11
-      span: 31
-      span: 32
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 2
-      span: 12
-      span: 4
-      span: 33
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 2
-      path: 6
-      span: 12
-      span: 4
-      span: 23
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 2
-      path: 1
-      span: 12
-      span: 24
-      span: 28
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 2
-      path: 3
-      span: 12
-      span: 31
-      span: 32
-    }
-  }
-  syntax: "proto3"
-  buf_extension: {
-    is_import: false
-    is_syntax_unspecified: false
-    unused_dependency: 0
-  }
-}
-file: {
-  name: "google/api/http.proto"
-  package: "google.api"
-  message_type: {
-    name: "Http"
-    field: {
-      name: "rules"
-      number: 1
-      label: LABEL_REPEATED
-      type: TYPE_MESSAGE
-      type_name: ".google.api.HttpRule"
-      json_name: "rules"
-    }
-    field: {
-      name: "fully_decode_reserved_expansion"
-      number: 2
-      label: LABEL_OPTIONAL
-      type: TYPE_BOOL
-      json_name: "fullyDecodeReservedExpansion"
-    }
-  }
-  message_type: {
-    name: "HttpRule"
-    field: {
-      name: "selector"
-      number: 1
-      label: LABEL_OPTIONAL
-      type: TYPE_STRING
-      json_name: "selector"
-    }
-    field: {
-      name: "get"
-      number: 2
-      label: LABEL_OPTIONAL
-      type: TYPE_STRING
-      oneof_index: 0
-      json_name: "get"
-    }
-    field: {
-      name: "put"
-      number: 3
-      label: LABEL_OPTIONAL
-      type: TYPE_STRING
-      oneof_index: 0
-      json_name: "put"
-    }
-    field: {
-      name: "post"
-      number: 4
-      label: LABEL_OPTIONAL
-      type: TYPE_STRING
-      oneof_index: 0
-      json_name: "post"
-    }
-    field: {
-      name: "delete"
-      number: 5
-      label: LABEL_OPTIONAL
-      type: TYPE_STRING
-      oneof_index: 0
-      json_name: "delete"
-    }
-    field: {
-      name: "patch"
-      number: 6
-      label: LABEL_OPTIONAL
-      type: TYPE_STRING
-      oneof_index: 0
-      json_name: "patch"
-    }
-    field: {
-      name: "custom"
-      number: 8
-      label: LABEL_OPTIONAL
-      type: TYPE_MESSAGE
-      type_name: ".google.api.CustomHttpPattern"
-      oneof_index: 0
-      json_name: "custom"
-    }
-    field: {
-      name: "body"
-      number: 7
-      label: LABEL_OPTIONAL
-      type: TYPE_STRING
-      json_name: "body"
-    }
-    field: {
-      name: "response_body"
-      number: 12
-      label: LABEL_OPTIONAL
-      type: TYPE_STRING
-      json_name: "responseBody"
-    }
-    field: {
-      name: "additional_bindings"
-      number: 11
-      label: LABEL_REPEATED
-      type: TYPE_MESSAGE
-      type_name: ".google.api.HttpRule"
-      json_name: "additionalBindings"
-    }
-    oneof_decl: {
-      name: "pattern"
-    }
-  }
-  message_type: {
-    name: "CustomHttpPattern"
-    field: {
-      name: "kind"
-      number: 1
-      label: LABEL_OPTIONAL
-      type: TYPE_STRING
-      json_name: "kind"
-    }
-    field: {
-      name: "path"
-      number: 2
-      label: LABEL_OPTIONAL
-      type: TYPE_STRING
-      json_name: "path"
-    }
-  }
-  options: {
-    java_package: "com.google.api"
-    java_outer_classname: "HttpProto"
-    java_multiple_files: true
-    go_package: "google.golang.org/genproto/googleapis/api/annotations;annotations"
-    cc_enable_arenas: true
-    objc_class_prefix: "GAPI"
-  }
-  source_code_info: {
-    location: {
-      span: 14
-      span: 0
-      span: 370
-      span: 1
-    }
-    location: {
-      path: 12
-      span: 14
-      span: 0
-      span: 18
-      leading_detached_comments: " Copyright 2024 Google LLC\n\n Licensed under the Apache License, Version 2.0 (the \"License\");\n you may not use this file except in compliance with the License.\n You may obtain a copy of the License at\n\n     http://www.apache.org/licenses/LICENSE-2.0\n\n Unless required by applicable law or agreed to in writing, software\n distributed under the License is distributed on an \"AS IS\" BASIS,\n WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n See the License for the specific language governing permissions and\n limitations under the License.\n"
-    }
-    location: {
-      path: 2
-      span: 16
-      span: 0
-      span: 19
-    }
-    location: {
-      path: 8
-      span: 18
-      span: 0
-      span: 31
-    }
-    location: {
-      path: 8
-      path: 31
-      span: 18
-      span: 0
-      span: 31
-    }
-    location: {
-      path: 8
-      span: 19
-      span: 0
-      span: 88
-    }
-    location: {
-      path: 8
-      path: 11
-      span: 19
-      span: 0
-      span: 88
-    }
-    location: {
-      path: 8
-      span: 20
-      span: 0
-      span: 34
-    }
-    location: {
-      path: 8
-      path: 10
-      span: 20
-      span: 0
-      span: 34
-    }
-    location: {
-      path: 8
-      span: 21
-      span: 0
-      span: 42
-    }
-    location: {
-      path: 8
-      path: 8
-      span: 21
-      span: 0
-      span: 42
-    }
-    location: {
-      path: 8
-      span: 22
-      span: 0
-      span: 39
-    }
-    location: {
-      path: 8
-      path: 1
-      span: 22
-      span: 0
-      span: 39
-    }
-    location: {
-      path: 8
-      span: 23
-      span: 0
-      span: 34
-    }
-    location: {
-      path: 8
-      path: 36
-      span: 23
-      span: 0
-      span: 34
-    }
-    location: {
-      path: 4
-      path: 0
-      span: 28
-      span: 0
-      span: 41
-      span: 1
-      leading_comments: " Defines the HTTP configuration for an API service. It contains a list of\n [HttpRule][google.api.HttpRule], each specifying the mapping of an RPC method\n to one or more HTTP REST API methods.\n"
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 1
-      span: 28
-      span: 8
-      span: 12
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 0
-      span: 32
-      span: 2
-      span: 30
-      leading_comments: " A list of HTTP configuration rules that apply to individual API methods.\n\n **NOTE:** All service configuration rules follow \"last one wins\" order.\n"
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 0
-      path: 4
-      span: 32
-      span: 2
-      span: 10
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 0
-      path: 6
-      span: 32
-      span: 11
-      span: 19
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 0
-      path: 1
-      span: 32
-      span: 20
-      span: 25
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 0
-      path: 3
-      span: 32
-      span: 28
-      span: 29
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 1
-      span: 40
-      span: 2
-      span: 43
-      leading_comments: " When set to true, URL path parameters will be fully URI-decoded except in\n cases of single segment matches in reserved expansion, where \"%2F\" will be\n left encoded.\n\n The default behavior is to not decode RFC 6570 reserved characters in multi\n segment matches.\n"
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 1
-      path: 5
-      span: 40
-      span: 2
-      span: 6
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 1
-      path: 1
-      span: 40
-      span: 7
-      span: 38
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 1
-      path: 3
-      span: 40
-      span: 41
-      span: 42
-    }
-    location: {
-      path: 4
-      path: 1
-      span: 307
-      span: 0
-      span: 361
-      span: 1
-      leading_comments: " gRPC Transcoding\n\n gRPC Transcoding is a feature for mapping between a gRPC method and one or\n more HTTP REST endpoints. It allows developers to build a single API service\n that supports both gRPC APIs and REST APIs. Many systems, including [Google\n APIs](https://github.com/googleapis/googleapis),\n [Cloud Endpoints](https://cloud.google.com/endpoints), [gRPC\n Gateway](https://github.com/grpc-ecosystem/grpc-gateway),\n and [Envoy](https://github.com/envoyproxy/envoy) proxy support this feature\n and use it for large scale production services.\n\n `HttpRule` defines the schema of the gRPC/REST mapping. The mapping specifies\n how different portions of the gRPC request message are mapped to the URL\n path, URL query parameters, and HTTP request body. It also controls how the\n gRPC response message is mapped to the HTTP response body. `HttpRule` is\n typically specified as an `google.api.http` annotation on the gRPC method.\n\n Each mapping specifies a URL path template and an HTTP method. The path\n template may refer to one or more fields in the gRPC request message, as long\n as each field is a non-repeated field with a primitive (non-message) type.\n The path template controls how fields of the request message are mapped to\n the URL path.\n\n Example:\n\n     service Messaging {\n       rpc GetMessage(GetMessageRequest) returns (Message) {\n         option (google.api.http) = {\n             get: \"/v1/{name=messages/*}\"\n         };\n       }\n     }\n     message GetMessageRequest {\n       string name = 1; // Mapped to URL path.\n     }\n     message Message {\n       string text = 1; // The resource content.\n     }\n\n This enables an HTTP REST to gRPC mapping as below:\n\n - HTTP: `GET /v1/messages/123456`\n - gRPC: `GetMessage(name: \"messages/123456\")`\n\n Any fields in the request message which are not bound by the path template\n automatically become HTTP query parameters if there is no HTTP request body.\n For example:\n\n     service Messaging {\n       rpc GetMessage(GetMessageRequest) returns (Message) {\n         option (google.api.http) = {\n             get:\"/v1/messages/{message_id}\"\n         };\n       }\n     }\n     message GetMessageRequest {\n       message SubMessage {\n         string subfield = 1;\n       }\n       string message_id = 1; // Mapped to URL path.\n       int64 revision = 2;    // Mapped to URL query parameter `revision`.\n       SubMessage sub = 3;    // Mapped to URL query parameter `sub.subfield`.\n     }\n\n This enables a HTTP JSON to RPC mapping as below:\n\n - HTTP: `GET /v1/messages/123456?revision=2&sub.subfield=foo`\n - gRPC: `GetMessage(message_id: \"123456\" revision: 2 sub:\n SubMessage(subfield: \"foo\"))`\n\n Note that fields which are mapped to URL query parameters must have a\n primitive type or a repeated primitive type or a non-repeated message type.\n In the case of a repeated type, the parameter can be repeated in the URL\n as `...?param=A&param=B`. In the case of a message type, each field of the\n message is mapped to a separate parameter, such as\n `...?foo.a=A&foo.b=B&foo.c=C`.\n\n For HTTP methods that allow a request body, the `body` field\n specifies the mapping. Consider a REST update method on the\n message resource collection:\n\n     service Messaging {\n       rpc UpdateMessage(UpdateMessageRequest) returns (Message) {\n         option (google.api.http) = {\n           patch: \"/v1/messages/{message_id}\"\n           body: \"message\"\n         };\n       }\n     }\n     message UpdateMessageRequest {\n       string message_id = 1; // mapped to the URL\n       Message message = 2;   // mapped to the body\n     }\n\n The following HTTP JSON to RPC mapping is enabled, where the\n representation of the JSON in the request body is determined by\n protos JSON encoding:\n\n - HTTP: `PATCH /v1/messages/123456 { \"text\": \"Hi!\" }`\n - gRPC: `UpdateMessage(message_id: \"123456\" message { text: \"Hi!\" })`\n\n The special name `*` can be used in the body mapping to define that\n every field not bound by the path template should be mapped to the\n request body.  This enables the following alternative definition of\n the update method:\n\n     service Messaging {\n       rpc UpdateMessage(Message) returns (Message) {\n         option (google.api.http) = {\n           patch: \"/v1/messages/{message_id}\"\n           body: \"*\"\n         };\n       }\n     }\n     message Message {\n       string message_id = 1;\n       string text = 2;\n     }\n\n\n The following HTTP JSON to RPC mapping is enabled:\n\n - HTTP: `PATCH /v1/messages/123456 { \"text\": \"Hi!\" }`\n - gRPC: `UpdateMessage(message_id: \"123456\" text: \"Hi!\")`\n\n Note that when using `*` in the body mapping, it is not possible to\n have HTTP parameters, as all fields not bound by the path end in\n the body. This makes this option more rarely used in practice when\n defining REST APIs. The common usage of `*` is in custom methods\n which don't use the URL at all for transferring data.\n\n It is possible to define multiple HTTP methods for one RPC by using\n the `additional_bindings` option. Example:\n\n     service Messaging {\n       rpc GetMessage(GetMessageRequest) returns (Message) {\n         option (google.api.http) = {\n           get: \"/v1/messages/{message_id}\"\n           additional_bindings {\n             get: \"/v1/users/{user_id}/messages/{message_id}\"\n           }\n         };\n       }\n     }\n     message GetMessageRequest {\n       string message_id = 1;\n       string user_id = 2;\n     }\n\n This enables the following two alternative HTTP JSON to RPC mappings:\n\n - HTTP: `GET /v1/messages/123456`\n - gRPC: `GetMessage(message_id: \"123456\")`\n\n - HTTP: `GET /v1/users/me/messages/123456`\n - gRPC: `GetMessage(user_id: \"me\" message_id: \"123456\")`\n\n Rules for HTTP mapping\n\n 1. Leaf request fields (recursive expansion nested messages in the request\n    message) are classified into three categories:\n    - Fields referred by the path template. They are passed via the URL path.\n    - Fields referred by the [HttpRule.body][google.api.HttpRule.body]. They\n    are passed via the HTTP\n      request body.\n    - All other fields are passed via the URL query parameters, and the\n      parameter name is the field path in the request message. A repeated\n      field can be represented as multiple query parameters under the same\n      name.\n  2. If [HttpRule.body][google.api.HttpRule.body] is \"*\", there is no URL\n  query parameter, all fields\n     are passed via URL path and HTTP request body.\n  3. If [HttpRule.body][google.api.HttpRule.body] is omitted, there is no HTTP\n  request body, all\n     fields are passed via URL path and URL query parameters.\n\n Path template syntax\n\n     Template = \"/\" Segments [ Verb ] ;\n     Segments = Segment { \"/\" Segment } ;\n     Segment  = \"*\" | \"**\" | LITERAL | Variable ;\n     Variable = \"{\" FieldPath [ \"=\" Segments ] \"}\" ;\n     FieldPath = IDENT { \".\" IDENT } ;\n     Verb     = \":\" LITERAL ;\n\n The syntax `*` matches a single URL path segment. The syntax `**` matches\n zero or more URL path segments, which must be the last part of the URL path\n except the `Verb`.\n\n The syntax `Variable` matches part of the URL path as specified by its\n template. A variable template must not contain other variables. If a variable\n matches a single path segment, its template may be omitted, e.g. `{var}`\n is equivalent to `{var=*}`.\n\n The syntax `LITERAL` matches literal text in the URL path. If the `LITERAL`\n contains any reserved character, such characters should be percent-encoded\n before the matching.\n\n If a variable contains exactly one path segment, such as `\"{var}\"` or\n `\"{var=*}\"`, when such a variable is expanded into a URL path on the client\n side, all characters except `[-_.~0-9a-zA-Z]` are percent-encoded. The\n server side does the reverse decoding. Such variables show up in the\n [Discovery\n Document](https://developers.google.com/discovery/v1/reference/apis) as\n `{var}`.\n\n If a variable contains multiple path segments, such as `\"{var=foo/*}\"`\n or `\"{var=**}\"`, when such a variable is expanded into a URL path on the\n client side, all characters except `[-_.~/0-9a-zA-Z]` are percent-encoded.\n The server side does the reverse decoding, except \"%2F\" and \"%2f\" are left\n unchanged. Such variables show up in the\n [Discovery\n Document](https://developers.google.com/discovery/v1/reference/apis) as\n `{+var}`.\n\n Using gRPC API Service Configuration\n\n gRPC API Service Configuration (service config) is a configuration language\n for configuring a gRPC service to become a user-facing product. The\n service config is simply the YAML representation of the `google.api.Service`\n proto message.\n\n As an alternative to annotating your proto file, you can configure gRPC\n transcoding in your service config YAML files. You do this by specifying a\n `HttpRule` that maps the gRPC method to a REST endpoint, achieving the same\n effect as the proto annotation. This can be particularly useful if you\n have a proto that is reused in multiple services. Note that any transcoding\n specified in the service config will override any matching transcoding\n configuration in the proto.\n\n The following example selects a gRPC method and applies an `HttpRule` to it:\n\n     http:\n       rules:\n         - selector: example.v1.Messaging.GetMessage\n           get: /v1/messages/{message_id}/{sub.subfield}\n\n Special notes\n\n When gRPC Transcoding is used to map a gRPC to JSON REST endpoints, the\n proto to JSON conversion must follow the [proto3\n specification](https://developers.google.com/protocol-buffers/docs/proto3#json).\n\n While the single segment variable follows the semantics of\n [RFC 6570](https://tools.ietf.org/html/rfc6570) Section 3.2.2 Simple String\n Expansion, the multi segment variable **does not** follow RFC 6570 Section\n 3.2.3 Reserved Expansion. The reason is that the Reserved Expansion\n does not expand special characters like `?` and `#`, which would lead\n to invalid URLs. As the result, gRPC Transcoding uses a custom encoding\n for multi segment variables.\n\n The path variables **must not** refer to any repeated or mapped field,\n because client libraries are not capable of handling such variable expansion.\n\n The path variables **must not** capture the leading \"/\" character. The reason\n is that the most common use case \"{var}\" does not capture the leading \"/\"\n character. For consistency, all path variables must share the same behavior.\n\n Repeated message fields must not be mapped to URL query parameters, because\n no client library can support such complicated mapping.\n\n If an API needs to use a JSON array for request or response body, it can map\n the request or response body to a repeated field. However, some gRPC\n Transcoding implementations may not support this feature.\n"
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 1
-      span: 307
-      span: 8
-      span: 16
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 0
-      span: 312
-      span: 2
-      span: 22
-      leading_comments: " Selects a method to which this rule applies.\n\n Refer to [selector][google.api.DocumentationRule.selector] for syntax\n details.\n"
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 0
-      path: 5
-      span: 312
-      span: 2
-      span: 8
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 0
-      path: 1
-      span: 312
-      span: 9
-      span: 17
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 0
-      path: 3
-      span: 312
-      span: 20
-      span: 21
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 8
-      path: 0
-      span: 317
-      span: 2
-      span: 339
-      span: 3
-      leading_comments: " Determines the URL pattern is matched by this rules. This pattern can be\n used with any of the {get|put|post|delete|patch} methods. A custom method\n can be defined using the 'custom' field.\n"
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 8
-      path: 0
-      path: 1
-      span: 317
-      span: 8
-      span: 15
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 1
-      span: 320
-      span: 4
-      span: 19
-      leading_comments: " Maps to HTTP GET. Used for listing and getting information about\n resources.\n"
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 1
-      path: 5
-      span: 320
-      span: 4
-      span: 10
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 1
-      path: 1
-      span: 320
-      span: 11
-      span: 14
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 1
-      path: 3
-      span: 320
-      span: 17
-      span: 18
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 2
-      span: 323
-      span: 4
-      span: 19
-      leading_comments: " Maps to HTTP PUT. Used for replacing a resource.\n"
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 2
-      path: 5
-      span: 323
-      span: 4
-      span: 10
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 2
-      path: 1
-      span: 323
-      span: 11
-      span: 14
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 2
-      path: 3
-      span: 323
-      span: 17
-      span: 18
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 3
-      span: 326
-      span: 4
-      span: 20
-      leading_comments: " Maps to HTTP POST. Used for creating a resource or performing an action.\n"
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 3
-      path: 5
-      span: 326
-      span: 4
-      span: 10
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 3
-      path: 1
-      span: 326
-      span: 11
-      span: 15
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 3
-      path: 3
-      span: 326
-      span: 18
-      span: 19
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 4
-      span: 329
-      span: 4
-      span: 22
-      leading_comments: " Maps to HTTP DELETE. Used for deleting a resource.\n"
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 4
-      path: 5
-      span: 329
-      span: 4
-      span: 10
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 4
-      path: 1
-      span: 329
-      span: 11
-      span: 17
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 4
-      path: 3
-      span: 329
-      span: 20
-      span: 21
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 5
-      span: 332
-      span: 4
-      span: 21
-      leading_comments: " Maps to HTTP PATCH. Used for updating a resource.\n"
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 5
-      path: 5
-      span: 332
-      span: 4
-      span: 10
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 5
-      path: 1
-      span: 332
-      span: 11
-      span: 16
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 5
-      path: 3
-      span: 332
-      span: 19
-      span: 20
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 6
-      span: 338
-      span: 4
-      span: 33
-      leading_comments: " The custom pattern is used for specifying an HTTP method that is not\n included in the `pattern` field, such as HEAD, or \"*\" to leave the\n HTTP method unspecified for this rule. The wild-card rule is useful\n for services that provide content to Web (HTML) clients.\n"
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 6
-      path: 6
-      span: 338
-      span: 4
-      span: 21
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 6
-      path: 1
-      span: 338
-      span: 22
-      span: 28
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 6
-      path: 3
-      span: 338
-      span: 31
-      span: 32
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 7
-      span: 347
-      span: 2
-      span: 18
-      leading_comments: " The name of the request field whose value is mapped to the HTTP request\n body, or `*` for mapping all request fields not captured by the path\n pattern to the HTTP body, or omitted for not having any HTTP request body.\n\n NOTE: the referred field must be present at the top-level of the request\n message type.\n"
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 7
-      path: 5
-      span: 347
-      span: 2
-      span: 8
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 7
-      path: 1
-      span: 347
-      span: 9
-      span: 13
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 7
-      path: 3
-      span: 347
-      span: 16
-      span: 17
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 8
-      span: 355
-      span: 2
-      span: 28
-      leading_comments: " Optional. The name of the response field whose value is mapped to the HTTP\n response body. When omitted, the entire response message will be used\n as the HTTP response body.\n\n NOTE: The referred field must be present at the top-level of the response\n message type.\n"
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 8
-      path: 5
-      span: 355
-      span: 2
-      span: 8
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 8
-      path: 1
-      span: 355
-      span: 9
-      span: 22
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 8
-      path: 3
-      span: 355
-      span: 25
-      span: 27
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 9
-      span: 360
-      span: 2
-      span: 45
-      leading_comments: " Additional HTTP bindings for the selector. Nested bindings must\n not contain an `additional_bindings` field themselves (that is,\n the nesting may only be one level deep).\n"
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 9
-      path: 4
-      span: 360
-      span: 2
-      span: 10
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 9
-      path: 6
-      span: 360
-      span: 11
-      span: 19
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 9
-      path: 1
-      span: 360
-      span: 20
-      span: 39
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 9
-      path: 3
-      span: 360
-      span: 42
-      span: 44
-    }
-    location: {
-      path: 4
-      path: 2
-      span: 364
-      span: 0
-      span: 370
-      span: 1
-      leading_comments: " A custom pattern is used for defining custom HTTP verb.\n"
-    }
-    location: {
-      path: 4
-      path: 2
-      path: 1
-      span: 364
-      span: 8
-      span: 25
-    }
-    location: {
-      path: 4
-      path: 2
-      path: 2
-      path: 0
-      span: 366
-      span: 2
-      span: 18
-      leading_comments: " The name of this custom HTTP verb.\n"
-    }
-    location: {
-      path: 4
-      path: 2
-      path: 2
-      path: 0
-      path: 5
-      span: 366
-      span: 2
-      span: 8
-    }
-    location: {
-      path: 4
-      path: 2
-      path: 2
-      path: 0
-      path: 1
-      span: 366
-      span: 9
-      span: 13
-    }
-    location: {
-      path: 4
-      path: 2
-      path: 2
-      path: 0
-      path: 3
-      span: 366
-      span: 16
-      span: 17
-    }
-    location: {
-      path: 4
-      path: 2
-      path: 2
-      path: 1
-      span: 369
-      span: 2
-      span: 18
-      leading_comments: " The path matched by this custom verb.\n"
-    }
-    location: {
-      path: 4
-      path: 2
-      path: 2
-      path: 1
-      path: 5
-      span: 369
-      span: 2
-      span: 8
-    }
-    location: {
-      path: 4
-      path: 2
-      path: 2
-      path: 1
-      path: 1
-      span: 369
-      span: 9
-      span: 13
-    }
-    location: {
-      path: 4
-      path: 2
-      path: 2
-      path: 1
-      path: 3
-      span: 369
-      span: 16
-      span: 17
-    }
-  }
-  syntax: "proto3"
-  buf_extension: {
-    is_import: true
-    module_info: {
-      name: {
-        remote: "buf.build"
-        owner: "googleapis"
-        repository: "googleapis"
-      }
-      commit: "e93e34f48be043dab55be31b4b47f458"
-    }
-    is_syntax_unspecified: false
-  }
-}
-file: {
   name: "google/protobuf/descriptor.proto"
   package: "google.protobuf"
   message_type: {
@@ -19054,6 +17597,1117 @@ file: {
   }
 }
 file: {
+  name: "api/v1/access_control.proto"
+  package: "api.v1"
+  dependency: "google/protobuf/descriptor.proto"
+  message_type: {
+    name: "AccessControl"
+    field: {
+      name: "scope_path"
+      number: 1
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      json_name: "scopePath"
+    }
+    field: {
+      name: "require"
+      number: 2
+      label: LABEL_REPEATED
+      type: TYPE_STRING
+      json_name: "require"
+    }
+  }
+  extension: {
+    name: "access_control"
+    number: 50000
+    label: LABEL_OPTIONAL
+    type: TYPE_MESSAGE
+    type_name: ".api.v1.AccessControl"
+    extendee: ".google.protobuf.MethodOptions"
+    json_name: "accessControl"
+  }
+  source_code_info: {
+    location: {
+      span: 0
+      span: 0
+      span: 21
+      span: 1
+    }
+    location: {
+      path: 12
+      span: 0
+      span: 0
+      span: 18
+    }
+    location: {
+      path: 2
+      span: 2
+      span: 0
+      span: 15
+    }
+    location: {
+      path: 3
+      path: 0
+      span: 4
+      span: 0
+      span: 42
+    }
+    location: {
+      path: 4
+      path: 0
+      span: 9
+      span: 0
+      span: 17
+      span: 1
+      leading_comments: " AccessControl declares the following requirements:\n - the client must be authenticated.\n - the client must have the all of the required permissions associated with the scope path.\n"
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 1
+      span: 9
+      span: 8
+      span: 21
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 0
+      span: 12
+      span: 2
+      span: 24
+      leading_comments: " Scope path, which should be a dot-separated string, is the indentfier for the group of the required permissions.\n If not specified, \"<package>.<service>.<method>\" is used.\n"
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 0
+      path: 5
+      span: 12
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 0
+      path: 1
+      span: 12
+      span: 9
+      span: 19
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 0
+      path: 3
+      span: 12
+      span: 22
+      span: 23
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 1
+      span: 16
+      span: 2
+      span: 30
+      leading_comments: " Required permissions associated with the requirement.\n Each element, which is should be a string in format \"<resource>:<action>\", specifies a resource and the actions allowed on that resource.\n If not specified, the client may have no permissions.\n"
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 1
+      path: 4
+      span: 16
+      span: 2
+      span: 10
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 1
+      path: 5
+      span: 16
+      span: 11
+      span: 17
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 1
+      path: 1
+      span: 16
+      span: 18
+      span: 25
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 1
+      path: 3
+      span: 16
+      span: 28
+      span: 29
+    }
+    location: {
+      path: 7
+      span: 19
+      span: 0
+      span: 21
+      span: 1
+    }
+    location: {
+      path: 7
+      path: 0
+      span: 20
+      span: 2
+      span: 39
+    }
+    location: {
+      path: 7
+      path: 0
+      path: 2
+      span: 19
+      span: 7
+      span: 36
+    }
+    location: {
+      path: 7
+      path: 0
+      path: 6
+      span: 20
+      span: 2
+      span: 15
+    }
+    location: {
+      path: 7
+      path: 0
+      path: 1
+      span: 20
+      span: 16
+      span: 30
+    }
+    location: {
+      path: 7
+      path: 0
+      path: 3
+      span: 20
+      span: 33
+      span: 38
+    }
+  }
+  syntax: "proto3"
+  buf_extension: {
+    is_import: false
+    is_syntax_unspecified: false
+  }
+}
+file: {
+  name: "google/api/http.proto"
+  package: "google.api"
+  message_type: {
+    name: "Http"
+    field: {
+      name: "rules"
+      number: 1
+      label: LABEL_REPEATED
+      type: TYPE_MESSAGE
+      type_name: ".google.api.HttpRule"
+      json_name: "rules"
+    }
+    field: {
+      name: "fully_decode_reserved_expansion"
+      number: 2
+      label: LABEL_OPTIONAL
+      type: TYPE_BOOL
+      json_name: "fullyDecodeReservedExpansion"
+    }
+  }
+  message_type: {
+    name: "HttpRule"
+    field: {
+      name: "selector"
+      number: 1
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      json_name: "selector"
+    }
+    field: {
+      name: "get"
+      number: 2
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      oneof_index: 0
+      json_name: "get"
+    }
+    field: {
+      name: "put"
+      number: 3
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      oneof_index: 0
+      json_name: "put"
+    }
+    field: {
+      name: "post"
+      number: 4
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      oneof_index: 0
+      json_name: "post"
+    }
+    field: {
+      name: "delete"
+      number: 5
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      oneof_index: 0
+      json_name: "delete"
+    }
+    field: {
+      name: "patch"
+      number: 6
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      oneof_index: 0
+      json_name: "patch"
+    }
+    field: {
+      name: "custom"
+      number: 8
+      label: LABEL_OPTIONAL
+      type: TYPE_MESSAGE
+      type_name: ".google.api.CustomHttpPattern"
+      oneof_index: 0
+      json_name: "custom"
+    }
+    field: {
+      name: "body"
+      number: 7
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      json_name: "body"
+    }
+    field: {
+      name: "response_body"
+      number: 12
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      json_name: "responseBody"
+    }
+    field: {
+      name: "additional_bindings"
+      number: 11
+      label: LABEL_REPEATED
+      type: TYPE_MESSAGE
+      type_name: ".google.api.HttpRule"
+      json_name: "additionalBindings"
+    }
+    oneof_decl: {
+      name: "pattern"
+    }
+  }
+  message_type: {
+    name: "CustomHttpPattern"
+    field: {
+      name: "kind"
+      number: 1
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      json_name: "kind"
+    }
+    field: {
+      name: "path"
+      number: 2
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      json_name: "path"
+    }
+  }
+  options: {
+    java_package: "com.google.api"
+    java_outer_classname: "HttpProto"
+    java_multiple_files: true
+    go_package: "google.golang.org/genproto/googleapis/api/annotations;annotations"
+    cc_enable_arenas: true
+    objc_class_prefix: "GAPI"
+  }
+  source_code_info: {
+    location: {
+      span: 14
+      span: 0
+      span: 370
+      span: 1
+    }
+    location: {
+      path: 12
+      span: 14
+      span: 0
+      span: 18
+      leading_detached_comments: " Copyright 2024 Google LLC\n\n Licensed under the Apache License, Version 2.0 (the \"License\");\n you may not use this file except in compliance with the License.\n You may obtain a copy of the License at\n\n     http://www.apache.org/licenses/LICENSE-2.0\n\n Unless required by applicable law or agreed to in writing, software\n distributed under the License is distributed on an \"AS IS\" BASIS,\n WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n See the License for the specific language governing permissions and\n limitations under the License.\n"
+    }
+    location: {
+      path: 2
+      span: 16
+      span: 0
+      span: 19
+    }
+    location: {
+      path: 8
+      span: 18
+      span: 0
+      span: 31
+    }
+    location: {
+      path: 8
+      path: 31
+      span: 18
+      span: 0
+      span: 31
+    }
+    location: {
+      path: 8
+      span: 19
+      span: 0
+      span: 88
+    }
+    location: {
+      path: 8
+      path: 11
+      span: 19
+      span: 0
+      span: 88
+    }
+    location: {
+      path: 8
+      span: 20
+      span: 0
+      span: 34
+    }
+    location: {
+      path: 8
+      path: 10
+      span: 20
+      span: 0
+      span: 34
+    }
+    location: {
+      path: 8
+      span: 21
+      span: 0
+      span: 42
+    }
+    location: {
+      path: 8
+      path: 8
+      span: 21
+      span: 0
+      span: 42
+    }
+    location: {
+      path: 8
+      span: 22
+      span: 0
+      span: 39
+    }
+    location: {
+      path: 8
+      path: 1
+      span: 22
+      span: 0
+      span: 39
+    }
+    location: {
+      path: 8
+      span: 23
+      span: 0
+      span: 34
+    }
+    location: {
+      path: 8
+      path: 36
+      span: 23
+      span: 0
+      span: 34
+    }
+    location: {
+      path: 4
+      path: 0
+      span: 28
+      span: 0
+      span: 41
+      span: 1
+      leading_comments: " Defines the HTTP configuration for an API service. It contains a list of\n [HttpRule][google.api.HttpRule], each specifying the mapping of an RPC method\n to one or more HTTP REST API methods.\n"
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 1
+      span: 28
+      span: 8
+      span: 12
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 0
+      span: 32
+      span: 2
+      span: 30
+      leading_comments: " A list of HTTP configuration rules that apply to individual API methods.\n\n **NOTE:** All service configuration rules follow \"last one wins\" order.\n"
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 0
+      path: 4
+      span: 32
+      span: 2
+      span: 10
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 0
+      path: 6
+      span: 32
+      span: 11
+      span: 19
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 0
+      path: 1
+      span: 32
+      span: 20
+      span: 25
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 0
+      path: 3
+      span: 32
+      span: 28
+      span: 29
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 1
+      span: 40
+      span: 2
+      span: 43
+      leading_comments: " When set to true, URL path parameters will be fully URI-decoded except in\n cases of single segment matches in reserved expansion, where \"%2F\" will be\n left encoded.\n\n The default behavior is to not decode RFC 6570 reserved characters in multi\n segment matches.\n"
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 1
+      path: 5
+      span: 40
+      span: 2
+      span: 6
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 1
+      path: 1
+      span: 40
+      span: 7
+      span: 38
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 1
+      path: 3
+      span: 40
+      span: 41
+      span: 42
+    }
+    location: {
+      path: 4
+      path: 1
+      span: 307
+      span: 0
+      span: 361
+      span: 1
+      leading_comments: " gRPC Transcoding\n\n gRPC Transcoding is a feature for mapping between a gRPC method and one or\n more HTTP REST endpoints. It allows developers to build a single API service\n that supports both gRPC APIs and REST APIs. Many systems, including [Google\n APIs](https://github.com/googleapis/googleapis),\n [Cloud Endpoints](https://cloud.google.com/endpoints), [gRPC\n Gateway](https://github.com/grpc-ecosystem/grpc-gateway),\n and [Envoy](https://github.com/envoyproxy/envoy) proxy support this feature\n and use it for large scale production services.\n\n `HttpRule` defines the schema of the gRPC/REST mapping. The mapping specifies\n how different portions of the gRPC request message are mapped to the URL\n path, URL query parameters, and HTTP request body. It also controls how the\n gRPC response message is mapped to the HTTP response body. `HttpRule` is\n typically specified as an `google.api.http` annotation on the gRPC method.\n\n Each mapping specifies a URL path template and an HTTP method. The path\n template may refer to one or more fields in the gRPC request message, as long\n as each field is a non-repeated field with a primitive (non-message) type.\n The path template controls how fields of the request message are mapped to\n the URL path.\n\n Example:\n\n     service Messaging {\n       rpc GetMessage(GetMessageRequest) returns (Message) {\n         option (google.api.http) = {\n             get: \"/v1/{name=messages/*}\"\n         };\n       }\n     }\n     message GetMessageRequest {\n       string name = 1; // Mapped to URL path.\n     }\n     message Message {\n       string text = 1; // The resource content.\n     }\n\n This enables an HTTP REST to gRPC mapping as below:\n\n - HTTP: `GET /v1/messages/123456`\n - gRPC: `GetMessage(name: \"messages/123456\")`\n\n Any fields in the request message which are not bound by the path template\n automatically become HTTP query parameters if there is no HTTP request body.\n For example:\n\n     service Messaging {\n       rpc GetMessage(GetMessageRequest) returns (Message) {\n         option (google.api.http) = {\n             get:\"/v1/messages/{message_id}\"\n         };\n       }\n     }\n     message GetMessageRequest {\n       message SubMessage {\n         string subfield = 1;\n       }\n       string message_id = 1; // Mapped to URL path.\n       int64 revision = 2;    // Mapped to URL query parameter `revision`.\n       SubMessage sub = 3;    // Mapped to URL query parameter `sub.subfield`.\n     }\n\n This enables a HTTP JSON to RPC mapping as below:\n\n - HTTP: `GET /v1/messages/123456?revision=2&sub.subfield=foo`\n - gRPC: `GetMessage(message_id: \"123456\" revision: 2 sub:\n SubMessage(subfield: \"foo\"))`\n\n Note that fields which are mapped to URL query parameters must have a\n primitive type or a repeated primitive type or a non-repeated message type.\n In the case of a repeated type, the parameter can be repeated in the URL\n as `...?param=A&param=B`. In the case of a message type, each field of the\n message is mapped to a separate parameter, such as\n `...?foo.a=A&foo.b=B&foo.c=C`.\n\n For HTTP methods that allow a request body, the `body` field\n specifies the mapping. Consider a REST update method on the\n message resource collection:\n\n     service Messaging {\n       rpc UpdateMessage(UpdateMessageRequest) returns (Message) {\n         option (google.api.http) = {\n           patch: \"/v1/messages/{message_id}\"\n           body: \"message\"\n         };\n       }\n     }\n     message UpdateMessageRequest {\n       string message_id = 1; // mapped to the URL\n       Message message = 2;   // mapped to the body\n     }\n\n The following HTTP JSON to RPC mapping is enabled, where the\n representation of the JSON in the request body is determined by\n protos JSON encoding:\n\n - HTTP: `PATCH /v1/messages/123456 { \"text\": \"Hi!\" }`\n - gRPC: `UpdateMessage(message_id: \"123456\" message { text: \"Hi!\" })`\n\n The special name `*` can be used in the body mapping to define that\n every field not bound by the path template should be mapped to the\n request body.  This enables the following alternative definition of\n the update method:\n\n     service Messaging {\n       rpc UpdateMessage(Message) returns (Message) {\n         option (google.api.http) = {\n           patch: \"/v1/messages/{message_id}\"\n           body: \"*\"\n         };\n       }\n     }\n     message Message {\n       string message_id = 1;\n       string text = 2;\n     }\n\n\n The following HTTP JSON to RPC mapping is enabled:\n\n - HTTP: `PATCH /v1/messages/123456 { \"text\": \"Hi!\" }`\n - gRPC: `UpdateMessage(message_id: \"123456\" text: \"Hi!\")`\n\n Note that when using `*` in the body mapping, it is not possible to\n have HTTP parameters, as all fields not bound by the path end in\n the body. This makes this option more rarely used in practice when\n defining REST APIs. The common usage of `*` is in custom methods\n which don't use the URL at all for transferring data.\n\n It is possible to define multiple HTTP methods for one RPC by using\n the `additional_bindings` option. Example:\n\n     service Messaging {\n       rpc GetMessage(GetMessageRequest) returns (Message) {\n         option (google.api.http) = {\n           get: \"/v1/messages/{message_id}\"\n           additional_bindings {\n             get: \"/v1/users/{user_id}/messages/{message_id}\"\n           }\n         };\n       }\n     }\n     message GetMessageRequest {\n       string message_id = 1;\n       string user_id = 2;\n     }\n\n This enables the following two alternative HTTP JSON to RPC mappings:\n\n - HTTP: `GET /v1/messages/123456`\n - gRPC: `GetMessage(message_id: \"123456\")`\n\n - HTTP: `GET /v1/users/me/messages/123456`\n - gRPC: `GetMessage(user_id: \"me\" message_id: \"123456\")`\n\n Rules for HTTP mapping\n\n 1. Leaf request fields (recursive expansion nested messages in the request\n    message) are classified into three categories:\n    - Fields referred by the path template. They are passed via the URL path.\n    - Fields referred by the [HttpRule.body][google.api.HttpRule.body]. They\n    are passed via the HTTP\n      request body.\n    - All other fields are passed via the URL query parameters, and the\n      parameter name is the field path in the request message. A repeated\n      field can be represented as multiple query parameters under the same\n      name.\n  2. If [HttpRule.body][google.api.HttpRule.body] is \"*\", there is no URL\n  query parameter, all fields\n     are passed via URL path and HTTP request body.\n  3. If [HttpRule.body][google.api.HttpRule.body] is omitted, there is no HTTP\n  request body, all\n     fields are passed via URL path and URL query parameters.\n\n Path template syntax\n\n     Template = \"/\" Segments [ Verb ] ;\n     Segments = Segment { \"/\" Segment } ;\n     Segment  = \"*\" | \"**\" | LITERAL | Variable ;\n     Variable = \"{\" FieldPath [ \"=\" Segments ] \"}\" ;\n     FieldPath = IDENT { \".\" IDENT } ;\n     Verb     = \":\" LITERAL ;\n\n The syntax `*` matches a single URL path segment. The syntax `**` matches\n zero or more URL path segments, which must be the last part of the URL path\n except the `Verb`.\n\n The syntax `Variable` matches part of the URL path as specified by its\n template. A variable template must not contain other variables. If a variable\n matches a single path segment, its template may be omitted, e.g. `{var}`\n is equivalent to `{var=*}`.\n\n The syntax `LITERAL` matches literal text in the URL path. If the `LITERAL`\n contains any reserved character, such characters should be percent-encoded\n before the matching.\n\n If a variable contains exactly one path segment, such as `\"{var}\"` or\n `\"{var=*}\"`, when such a variable is expanded into a URL path on the client\n side, all characters except `[-_.~0-9a-zA-Z]` are percent-encoded. The\n server side does the reverse decoding. Such variables show up in the\n [Discovery\n Document](https://developers.google.com/discovery/v1/reference/apis) as\n `{var}`.\n\n If a variable contains multiple path segments, such as `\"{var=foo/*}\"`\n or `\"{var=**}\"`, when such a variable is expanded into a URL path on the\n client side, all characters except `[-_.~/0-9a-zA-Z]` are percent-encoded.\n The server side does the reverse decoding, except \"%2F\" and \"%2f\" are left\n unchanged. Such variables show up in the\n [Discovery\n Document](https://developers.google.com/discovery/v1/reference/apis) as\n `{+var}`.\n\n Using gRPC API Service Configuration\n\n gRPC API Service Configuration (service config) is a configuration language\n for configuring a gRPC service to become a user-facing product. The\n service config is simply the YAML representation of the `google.api.Service`\n proto message.\n\n As an alternative to annotating your proto file, you can configure gRPC\n transcoding in your service config YAML files. You do this by specifying a\n `HttpRule` that maps the gRPC method to a REST endpoint, achieving the same\n effect as the proto annotation. This can be particularly useful if you\n have a proto that is reused in multiple services. Note that any transcoding\n specified in the service config will override any matching transcoding\n configuration in the proto.\n\n The following example selects a gRPC method and applies an `HttpRule` to it:\n\n     http:\n       rules:\n         - selector: example.v1.Messaging.GetMessage\n           get: /v1/messages/{message_id}/{sub.subfield}\n\n Special notes\n\n When gRPC Transcoding is used to map a gRPC to JSON REST endpoints, the\n proto to JSON conversion must follow the [proto3\n specification](https://developers.google.com/protocol-buffers/docs/proto3#json).\n\n While the single segment variable follows the semantics of\n [RFC 6570](https://tools.ietf.org/html/rfc6570) Section 3.2.2 Simple String\n Expansion, the multi segment variable **does not** follow RFC 6570 Section\n 3.2.3 Reserved Expansion. The reason is that the Reserved Expansion\n does not expand special characters like `?` and `#`, which would lead\n to invalid URLs. As the result, gRPC Transcoding uses a custom encoding\n for multi segment variables.\n\n The path variables **must not** refer to any repeated or mapped field,\n because client libraries are not capable of handling such variable expansion.\n\n The path variables **must not** capture the leading \"/\" character. The reason\n is that the most common use case \"{var}\" does not capture the leading \"/\"\n character. For consistency, all path variables must share the same behavior.\n\n Repeated message fields must not be mapped to URL query parameters, because\n no client library can support such complicated mapping.\n\n If an API needs to use a JSON array for request or response body, it can map\n the request or response body to a repeated field. However, some gRPC\n Transcoding implementations may not support this feature.\n"
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 1
+      span: 307
+      span: 8
+      span: 16
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 0
+      span: 312
+      span: 2
+      span: 22
+      leading_comments: " Selects a method to which this rule applies.\n\n Refer to [selector][google.api.DocumentationRule.selector] for syntax\n details.\n"
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 0
+      path: 5
+      span: 312
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 0
+      path: 1
+      span: 312
+      span: 9
+      span: 17
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 0
+      path: 3
+      span: 312
+      span: 20
+      span: 21
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 8
+      path: 0
+      span: 317
+      span: 2
+      span: 339
+      span: 3
+      leading_comments: " Determines the URL pattern is matched by this rules. This pattern can be\n used with any of the {get|put|post|delete|patch} methods. A custom method\n can be defined using the 'custom' field.\n"
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 8
+      path: 0
+      path: 1
+      span: 317
+      span: 8
+      span: 15
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 1
+      span: 320
+      span: 4
+      span: 19
+      leading_comments: " Maps to HTTP GET. Used for listing and getting information about\n resources.\n"
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 1
+      path: 5
+      span: 320
+      span: 4
+      span: 10
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 1
+      path: 1
+      span: 320
+      span: 11
+      span: 14
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 1
+      path: 3
+      span: 320
+      span: 17
+      span: 18
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 2
+      span: 323
+      span: 4
+      span: 19
+      leading_comments: " Maps to HTTP PUT. Used for replacing a resource.\n"
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 2
+      path: 5
+      span: 323
+      span: 4
+      span: 10
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 2
+      path: 1
+      span: 323
+      span: 11
+      span: 14
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 2
+      path: 3
+      span: 323
+      span: 17
+      span: 18
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 3
+      span: 326
+      span: 4
+      span: 20
+      leading_comments: " Maps to HTTP POST. Used for creating a resource or performing an action.\n"
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 3
+      path: 5
+      span: 326
+      span: 4
+      span: 10
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 3
+      path: 1
+      span: 326
+      span: 11
+      span: 15
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 3
+      path: 3
+      span: 326
+      span: 18
+      span: 19
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 4
+      span: 329
+      span: 4
+      span: 22
+      leading_comments: " Maps to HTTP DELETE. Used for deleting a resource.\n"
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 4
+      path: 5
+      span: 329
+      span: 4
+      span: 10
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 4
+      path: 1
+      span: 329
+      span: 11
+      span: 17
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 4
+      path: 3
+      span: 329
+      span: 20
+      span: 21
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 5
+      span: 332
+      span: 4
+      span: 21
+      leading_comments: " Maps to HTTP PATCH. Used for updating a resource.\n"
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 5
+      path: 5
+      span: 332
+      span: 4
+      span: 10
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 5
+      path: 1
+      span: 332
+      span: 11
+      span: 16
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 5
+      path: 3
+      span: 332
+      span: 19
+      span: 20
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 6
+      span: 338
+      span: 4
+      span: 33
+      leading_comments: " The custom pattern is used for specifying an HTTP method that is not\n included in the `pattern` field, such as HEAD, or \"*\" to leave the\n HTTP method unspecified for this rule. The wild-card rule is useful\n for services that provide content to Web (HTML) clients.\n"
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 6
+      path: 6
+      span: 338
+      span: 4
+      span: 21
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 6
+      path: 1
+      span: 338
+      span: 22
+      span: 28
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 6
+      path: 3
+      span: 338
+      span: 31
+      span: 32
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 7
+      span: 347
+      span: 2
+      span: 18
+      leading_comments: " The name of the request field whose value is mapped to the HTTP request\n body, or `*` for mapping all request fields not captured by the path\n pattern to the HTTP body, or omitted for not having any HTTP request body.\n\n NOTE: the referred field must be present at the top-level of the request\n message type.\n"
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 7
+      path: 5
+      span: 347
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 7
+      path: 1
+      span: 347
+      span: 9
+      span: 13
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 7
+      path: 3
+      span: 347
+      span: 16
+      span: 17
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 8
+      span: 355
+      span: 2
+      span: 28
+      leading_comments: " Optional. The name of the response field whose value is mapped to the HTTP\n response body. When omitted, the entire response message will be used\n as the HTTP response body.\n\n NOTE: The referred field must be present at the top-level of the response\n message type.\n"
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 8
+      path: 5
+      span: 355
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 8
+      path: 1
+      span: 355
+      span: 9
+      span: 22
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 8
+      path: 3
+      span: 355
+      span: 25
+      span: 27
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 9
+      span: 360
+      span: 2
+      span: 45
+      leading_comments: " Additional HTTP bindings for the selector. Nested bindings must\n not contain an `additional_bindings` field themselves (that is,\n the nesting may only be one level deep).\n"
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 9
+      path: 4
+      span: 360
+      span: 2
+      span: 10
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 9
+      path: 6
+      span: 360
+      span: 11
+      span: 19
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 9
+      path: 1
+      span: 360
+      span: 20
+      span: 39
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 9
+      path: 3
+      span: 360
+      span: 42
+      span: 44
+    }
+    location: {
+      path: 4
+      path: 2
+      span: 364
+      span: 0
+      span: 370
+      span: 1
+      leading_comments: " A custom pattern is used for defining custom HTTP verb.\n"
+    }
+    location: {
+      path: 4
+      path: 2
+      path: 1
+      span: 364
+      span: 8
+      span: 25
+    }
+    location: {
+      path: 4
+      path: 2
+      path: 2
+      path: 0
+      span: 366
+      span: 2
+      span: 18
+      leading_comments: " The name of this custom HTTP verb.\n"
+    }
+    location: {
+      path: 4
+      path: 2
+      path: 2
+      path: 0
+      path: 5
+      span: 366
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 2
+      path: 2
+      path: 0
+      path: 1
+      span: 366
+      span: 9
+      span: 13
+    }
+    location: {
+      path: 4
+      path: 2
+      path: 2
+      path: 0
+      path: 3
+      span: 366
+      span: 16
+      span: 17
+    }
+    location: {
+      path: 4
+      path: 2
+      path: 2
+      path: 1
+      span: 369
+      span: 2
+      span: 18
+      leading_comments: " The path matched by this custom verb.\n"
+    }
+    location: {
+      path: 4
+      path: 2
+      path: 2
+      path: 1
+      path: 5
+      span: 369
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 2
+      path: 2
+      path: 1
+      path: 1
+      span: 369
+      span: 9
+      span: 13
+    }
+    location: {
+      path: 4
+      path: 2
+      path: 2
+      path: 1
+      path: 3
+      span: 369
+      span: 16
+      span: 17
+    }
+  }
+  syntax: "proto3"
+  buf_extension: {
+    is_import: true
+    module_info: {
+      name: {
+        remote: "buf.build"
+        owner: "googleapis"
+        repository: "googleapis"
+      }
+      commit: "e93e34f48be043dab55be31b4b47f458"
+    }
+    is_syntax_unspecified: false
+  }
+}
+file: {
   name: "google/api/annotations.proto"
   package: "google.api"
   dependency: "google/api/http.proto"
@@ -19236,8 +18890,2585 @@ file: {
   }
 }
 file: {
-  name: "api/v1/example/example.proto"
+  name: "api/v1/app/authentication/service.proto"
+  package: "api.v1.app.authentication"
+  dependency: "api/v1/access_control.proto"
+  dependency: "google/api/annotations.proto"
+  message_type: {
+    name: "TemporaryRegisterRequest"
+  }
+  message_type: {
+    name: "TemporaryRegisterResponse"
+    field: {
+      name: "access_token"
+      number: 1
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      json_name: "accessToken"
+    }
+    field: {
+      name: "refresh_token"
+      number: 2
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      json_name: "refreshToken"
+    }
+  }
+  message_type: {
+    name: "PasswordRegisterRequest"
+    field: {
+      name: "login_id"
+      number: 2
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      json_name: "loginId"
+    }
+    field: {
+      name: "password"
+      number: 3
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      json_name: "password"
+    }
+  }
+  message_type: {
+    name: "PasswordRegisterResponse"
+    field: {
+      name: "access_token"
+      number: 1
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      json_name: "accessToken"
+    }
+    field: {
+      name: "refresh_token"
+      number: 2
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      json_name: "refreshToken"
+    }
+  }
+  message_type: {
+    name: "PasswordLoginRequest"
+    field: {
+      name: "login_id"
+      number: 2
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      json_name: "loginId"
+    }
+    field: {
+      name: "password"
+      number: 3
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      json_name: "password"
+    }
+  }
+  message_type: {
+    name: "PasswordLoginResponse"
+    field: {
+      name: "access_token"
+      number: 1
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      json_name: "accessToken"
+    }
+    field: {
+      name: "refresh_token"
+      number: 2
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      json_name: "refreshToken"
+    }
+  }
+  message_type: {
+    name: "LogoutRequest"
+  }
+  message_type: {
+    name: "LogoutResponse"
+  }
+  message_type: {
+    name: "RefreshRequest"
+  }
+  message_type: {
+    name: "RefreshResponse"
+    field: {
+      name: "access_token"
+      number: 1
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      json_name: "accessToken"
+    }
+    field: {
+      name: "refresh_token"
+      number: 2
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      json_name: "refreshToken"
+    }
+  }
+  service: {
+    name: "AuthenticationService"
+    method: {
+      name: "Logout"
+      input_type: ".api.v1.app.authentication.LogoutRequest"
+      output_type: ".api.v1.app.authentication.LogoutResponse"
+      options: {
+        [api.v1.access_control]: {}
+        [google.api.http]: {
+          put: "/api/v1/app/authentication/logout"
+        }
+      }
+    }
+    method: {
+      name: "Refresh"
+      input_type: ".api.v1.app.authentication.RefreshRequest"
+      output_type: ".api.v1.app.authentication.RefreshResponse"
+      options: {
+        [api.v1.access_control]: {}
+        [google.api.http]: {
+          post: "/api/v1/app/authentication/refresh"
+        }
+      }
+    }
+    method: {
+      name: "TemporaryRegister"
+      input_type: ".api.v1.app.authentication.TemporaryRegisterRequest"
+      output_type: ".api.v1.app.authentication.TemporaryRegisterResponse"
+      options: {
+        [api.v1.access_control]: {}
+        [google.api.http]: {
+          get: "/api/v1/app/authentication/temporary/register"
+        }
+      }
+    }
+    method: {
+      name: "PasswordRegister"
+      input_type: ".api.v1.app.authentication.PasswordRegisterRequest"
+      output_type: ".api.v1.app.authentication.PasswordRegisterResponse"
+      options: {
+        [api.v1.access_control]: {}
+        [google.api.http]: {
+          get: "/api/v1/app/authentication/password/register"
+        }
+      }
+    }
+    method: {
+      name: "PasswordLogin"
+      input_type: ".api.v1.app.authentication.PasswordLoginRequest"
+      output_type: ".api.v1.app.authentication.PasswordLoginResponse"
+      options: {
+        [api.v1.access_control]: {}
+        [google.api.http]: {
+          post: "/api/v1/app/authentication/password/login"
+        }
+      }
+    }
+  }
+  source_code_info: {
+    location: {
+      span: 0
+      span: 0
+      span: 57
+      span: 1
+    }
+    location: {
+      path: 12
+      span: 0
+      span: 0
+      span: 18
+    }
+    location: {
+      path: 2
+      span: 2
+      span: 0
+      span: 34
+    }
+    location: {
+      path: 3
+      path: 0
+      span: 4
+      span: 0
+      span: 37
+    }
+    location: {
+      path: 3
+      path: 1
+      span: 5
+      span: 0
+      span: 38
+    }
+    location: {
+      path: 6
+      path: 0
+      span: 7
+      span: 0
+      span: 28
+      span: 1
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 1
+      span: 7
+      span: 8
+      span: 29
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 0
+      span: 8
+      span: 2
+      span: 11
+      span: 3
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 0
+      path: 1
+      span: 8
+      span: 6
+      span: 12
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 0
+      path: 2
+      span: 8
+      span: 13
+      span: 26
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 0
+      path: 3
+      span: 8
+      span: 37
+      span: 51
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 0
+      path: 4
+      span: 9
+      span: 4
+      span: 74
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 0
+      path: 4
+      path: 72295728
+      span: 9
+      span: 4
+      span: 74
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 0
+      path: 4
+      path: 72295728
+      path: 3
+      span: 9
+      span: 32
+      span: 72
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 0
+      path: 4
+      span: 10
+      span: 4
+      span: 40
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 0
+      path: 4
+      path: 50000
+      span: 10
+      span: 4
+      span: 40
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 1
+      span: 12
+      span: 2
+      span: 15
+      span: 3
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 1
+      path: 1
+      span: 12
+      span: 6
+      span: 13
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 1
+      path: 2
+      span: 12
+      span: 14
+      span: 28
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 1
+      path: 3
+      span: 12
+      span: 39
+      span: 54
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 1
+      path: 4
+      span: 13
+      span: 4
+      span: 76
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 1
+      path: 4
+      path: 72295728
+      span: 13
+      span: 4
+      span: 76
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 1
+      path: 4
+      path: 72295728
+      path: 4
+      span: 13
+      span: 32
+      span: 74
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 1
+      path: 4
+      span: 14
+      span: 4
+      span: 40
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 1
+      path: 4
+      path: 50000
+      span: 14
+      span: 4
+      span: 40
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 2
+      span: 16
+      span: 2
+      span: 19
+      span: 3
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 2
+      path: 1
+      span: 16
+      span: 6
+      span: 23
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 2
+      path: 2
+      span: 16
+      span: 24
+      span: 48
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 2
+      path: 3
+      span: 16
+      span: 59
+      span: 84
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 2
+      path: 4
+      span: 17
+      span: 4
+      span: 86
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 2
+      path: 4
+      path: 72295728
+      span: 17
+      span: 4
+      span: 86
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 2
+      path: 4
+      path: 72295728
+      path: 2
+      span: 17
+      span: 32
+      span: 84
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 2
+      path: 4
+      span: 18
+      span: 4
+      span: 40
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 2
+      path: 4
+      path: 50000
+      span: 18
+      span: 4
+      span: 40
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 3
+      span: 20
+      span: 2
+      span: 23
+      span: 3
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 3
+      path: 1
+      span: 20
+      span: 6
+      span: 22
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 3
+      path: 2
+      span: 20
+      span: 23
+      span: 46
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 3
+      path: 3
+      span: 20
+      span: 57
+      span: 81
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 3
+      path: 4
+      span: 21
+      span: 4
+      span: 85
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 3
+      path: 4
+      path: 72295728
+      span: 21
+      span: 4
+      span: 85
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 3
+      path: 4
+      path: 72295728
+      path: 2
+      span: 21
+      span: 32
+      span: 83
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 3
+      path: 4
+      span: 22
+      span: 4
+      span: 40
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 3
+      path: 4
+      path: 50000
+      span: 22
+      span: 4
+      span: 40
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 4
+      span: 24
+      span: 2
+      span: 27
+      span: 3
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 4
+      path: 1
+      span: 24
+      span: 6
+      span: 19
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 4
+      path: 2
+      span: 24
+      span: 20
+      span: 40
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 4
+      path: 3
+      span: 24
+      span: 51
+      span: 72
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 4
+      path: 4
+      span: 25
+      span: 4
+      span: 83
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 4
+      path: 4
+      path: 72295728
+      span: 25
+      span: 4
+      span: 83
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 4
+      path: 4
+      path: 72295728
+      path: 4
+      span: 25
+      span: 32
+      span: 81
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 4
+      path: 4
+      span: 26
+      span: 4
+      span: 40
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 4
+      path: 4
+      path: 50000
+      span: 26
+      span: 4
+      span: 40
+    }
+    location: {
+      path: 4
+      path: 0
+      span: 30
+      span: 0
+      span: 35
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 1
+      span: 30
+      span: 8
+      span: 32
+    }
+    location: {
+      path: 4
+      path: 1
+      span: 31
+      span: 0
+      span: 34
+      span: 1
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 1
+      span: 31
+      span: 8
+      span: 33
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 0
+      span: 32
+      span: 2
+      span: 26
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 0
+      path: 5
+      span: 32
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 0
+      path: 1
+      span: 32
+      span: 9
+      span: 21
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 0
+      path: 3
+      span: 32
+      span: 24
+      span: 25
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 1
+      span: 33
+      span: 2
+      span: 27
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 1
+      path: 5
+      span: 33
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 1
+      path: 1
+      span: 33
+      span: 9
+      span: 22
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 1
+      path: 3
+      span: 33
+      span: 25
+      span: 26
+    }
+    location: {
+      path: 4
+      path: 2
+      span: 35
+      span: 0
+      span: 38
+      span: 1
+    }
+    location: {
+      path: 4
+      path: 2
+      path: 1
+      span: 35
+      span: 8
+      span: 31
+    }
+    location: {
+      path: 4
+      path: 2
+      path: 2
+      path: 0
+      span: 36
+      span: 2
+      span: 22
+    }
+    location: {
+      path: 4
+      path: 2
+      path: 2
+      path: 0
+      path: 5
+      span: 36
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 2
+      path: 2
+      path: 0
+      path: 1
+      span: 36
+      span: 9
+      span: 17
+    }
+    location: {
+      path: 4
+      path: 2
+      path: 2
+      path: 0
+      path: 3
+      span: 36
+      span: 20
+      span: 21
+    }
+    location: {
+      path: 4
+      path: 2
+      path: 2
+      path: 1
+      span: 37
+      span: 2
+      span: 22
+    }
+    location: {
+      path: 4
+      path: 2
+      path: 2
+      path: 1
+      path: 5
+      span: 37
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 2
+      path: 2
+      path: 1
+      path: 1
+      span: 37
+      span: 9
+      span: 17
+    }
+    location: {
+      path: 4
+      path: 2
+      path: 2
+      path: 1
+      path: 3
+      span: 37
+      span: 20
+      span: 21
+    }
+    location: {
+      path: 4
+      path: 3
+      span: 39
+      span: 0
+      span: 42
+      span: 1
+    }
+    location: {
+      path: 4
+      path: 3
+      path: 1
+      span: 39
+      span: 8
+      span: 32
+    }
+    location: {
+      path: 4
+      path: 3
+      path: 2
+      path: 0
+      span: 40
+      span: 2
+      span: 26
+    }
+    location: {
+      path: 4
+      path: 3
+      path: 2
+      path: 0
+      path: 5
+      span: 40
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 3
+      path: 2
+      path: 0
+      path: 1
+      span: 40
+      span: 9
+      span: 21
+    }
+    location: {
+      path: 4
+      path: 3
+      path: 2
+      path: 0
+      path: 3
+      span: 40
+      span: 24
+      span: 25
+    }
+    location: {
+      path: 4
+      path: 3
+      path: 2
+      path: 1
+      span: 41
+      span: 2
+      span: 27
+    }
+    location: {
+      path: 4
+      path: 3
+      path: 2
+      path: 1
+      path: 5
+      span: 41
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 3
+      path: 2
+      path: 1
+      path: 1
+      span: 41
+      span: 9
+      span: 22
+    }
+    location: {
+      path: 4
+      path: 3
+      path: 2
+      path: 1
+      path: 3
+      span: 41
+      span: 25
+      span: 26
+    }
+    location: {
+      path: 4
+      path: 4
+      span: 43
+      span: 0
+      span: 46
+      span: 1
+    }
+    location: {
+      path: 4
+      path: 4
+      path: 1
+      span: 43
+      span: 8
+      span: 28
+    }
+    location: {
+      path: 4
+      path: 4
+      path: 2
+      path: 0
+      span: 44
+      span: 2
+      span: 22
+    }
+    location: {
+      path: 4
+      path: 4
+      path: 2
+      path: 0
+      path: 5
+      span: 44
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 4
+      path: 2
+      path: 0
+      path: 1
+      span: 44
+      span: 9
+      span: 17
+    }
+    location: {
+      path: 4
+      path: 4
+      path: 2
+      path: 0
+      path: 3
+      span: 44
+      span: 20
+      span: 21
+    }
+    location: {
+      path: 4
+      path: 4
+      path: 2
+      path: 1
+      span: 45
+      span: 2
+      span: 22
+    }
+    location: {
+      path: 4
+      path: 4
+      path: 2
+      path: 1
+      path: 5
+      span: 45
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 4
+      path: 2
+      path: 1
+      path: 1
+      span: 45
+      span: 9
+      span: 17
+    }
+    location: {
+      path: 4
+      path: 4
+      path: 2
+      path: 1
+      path: 3
+      span: 45
+      span: 20
+      span: 21
+    }
+    location: {
+      path: 4
+      path: 5
+      span: 47
+      span: 0
+      span: 50
+      span: 1
+    }
+    location: {
+      path: 4
+      path: 5
+      path: 1
+      span: 47
+      span: 8
+      span: 29
+    }
+    location: {
+      path: 4
+      path: 5
+      path: 2
+      path: 0
+      span: 48
+      span: 2
+      span: 26
+    }
+    location: {
+      path: 4
+      path: 5
+      path: 2
+      path: 0
+      path: 5
+      span: 48
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 5
+      path: 2
+      path: 0
+      path: 1
+      span: 48
+      span: 9
+      span: 21
+    }
+    location: {
+      path: 4
+      path: 5
+      path: 2
+      path: 0
+      path: 3
+      span: 48
+      span: 24
+      span: 25
+    }
+    location: {
+      path: 4
+      path: 5
+      path: 2
+      path: 1
+      span: 49
+      span: 2
+      span: 27
+    }
+    location: {
+      path: 4
+      path: 5
+      path: 2
+      path: 1
+      path: 5
+      span: 49
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 5
+      path: 2
+      path: 1
+      path: 1
+      span: 49
+      span: 9
+      span: 22
+    }
+    location: {
+      path: 4
+      path: 5
+      path: 2
+      path: 1
+      path: 3
+      span: 49
+      span: 25
+      span: 26
+    }
+    location: {
+      path: 4
+      path: 6
+      span: 51
+      span: 0
+      span: 24
+    }
+    location: {
+      path: 4
+      path: 6
+      path: 1
+      span: 51
+      span: 8
+      span: 21
+    }
+    location: {
+      path: 4
+      path: 7
+      span: 52
+      span: 0
+      span: 25
+    }
+    location: {
+      path: 4
+      path: 7
+      path: 1
+      span: 52
+      span: 8
+      span: 22
+    }
+    location: {
+      path: 4
+      path: 8
+      span: 53
+      span: 0
+      span: 25
+    }
+    location: {
+      path: 4
+      path: 8
+      path: 1
+      span: 53
+      span: 8
+      span: 22
+    }
+    location: {
+      path: 4
+      path: 9
+      span: 54
+      span: 0
+      span: 57
+      span: 1
+    }
+    location: {
+      path: 4
+      path: 9
+      path: 1
+      span: 54
+      span: 8
+      span: 23
+    }
+    location: {
+      path: 4
+      path: 9
+      path: 2
+      path: 0
+      span: 55
+      span: 2
+      span: 26
+    }
+    location: {
+      path: 4
+      path: 9
+      path: 2
+      path: 0
+      path: 5
+      span: 55
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 9
+      path: 2
+      path: 0
+      path: 1
+      span: 55
+      span: 9
+      span: 21
+    }
+    location: {
+      path: 4
+      path: 9
+      path: 2
+      path: 0
+      path: 3
+      span: 55
+      span: 24
+      span: 25
+    }
+    location: {
+      path: 4
+      path: 9
+      path: 2
+      path: 1
+      span: 56
+      span: 2
+      span: 27
+    }
+    location: {
+      path: 4
+      path: 9
+      path: 2
+      path: 1
+      path: 5
+      span: 56
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 9
+      path: 2
+      path: 1
+      path: 1
+      span: 56
+      span: 9
+      span: 22
+    }
+    location: {
+      path: 4
+      path: 9
+      path: 2
+      path: 1
+      path: 3
+      span: 56
+      span: 25
+      span: 26
+    }
+  }
+  syntax: "proto3"
+  buf_extension: {
+    is_import: false
+    is_syntax_unspecified: false
+  }
+}
+file: {
+  name: "api/v1/app/user/service.proto"
+  package: "api.v1.app.user"
+  dependency: "google/api/annotations.proto"
+  message_type: {
+    name: "CreateUserRequest"
+  }
+  message_type: {
+    name: "CreateUserResponse"
+    field: {
+      name: "user_id"
+      number: 1
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      json_name: "userId"
+    }
+  }
+  message_type: {
+    name: "GetUserRequest"
+    field: {
+      name: "user_id"
+      number: 1
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      json_name: "userId"
+    }
+  }
+  message_type: {
+    name: "GetUserResponse"
+    field: {
+      name: "user_id"
+      number: 1
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      json_name: "userId"
+    }
+  }
+  message_type: {
+    name: "RegisterUserAuthenticationRequest"
+    field: {
+      name: "user_id"
+      number: 1
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      json_name: "userId"
+    }
+    field: {
+      name: "authentication_id"
+      number: 2
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      json_name: "authenticationId"
+    }
+  }
+  message_type: {
+    name: "RegisterUserAuthenticationResponse"
+  }
+  service: {
+    name: "UserService"
+    method: {
+      name: "CreateUser"
+      input_type: ".api.v1.app.user.CreateUserRequest"
+      output_type: ".api.v1.app.user.CreateUserResponse"
+      options: {
+        [google.api.http]: {
+          post: "/api/v1/app/user"
+        }
+      }
+    }
+    method: {
+      name: "GetUser"
+      input_type: ".api.v1.app.user.GetUserRequest"
+      output_type: ".api.v1.app.user.GetUserResponse"
+      options: {
+        [google.api.http]: {
+          get: "/api/v1/app/user/{user_id}"
+        }
+      }
+    }
+    method: {
+      name: "RegisterUserAuthentication"
+      input_type: ".api.v1.app.user.RegisterUserAuthenticationRequest"
+      output_type: ".api.v1.app.user.RegisterUserAuthenticationResponse"
+      options: {
+        [google.api.http]: {
+          put: "/api/v1/app/user/{user_id}/authentication"
+        }
+      }
+    }
+  }
+  source_code_info: {
+    location: {
+      span: 0
+      span: 0
+      span: 34
+      span: 1
+    }
+    location: {
+      path: 12
+      span: 0
+      span: 0
+      span: 18
+    }
+    location: {
+      path: 2
+      span: 2
+      span: 0
+      span: 24
+    }
+    location: {
+      path: 3
+      path: 0
+      span: 4
+      span: 0
+      span: 38
+    }
+    location: {
+      path: 6
+      path: 0
+      span: 6
+      span: 0
+      span: 16
+      span: 1
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 1
+      span: 6
+      span: 8
+      span: 19
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 0
+      span: 7
+      span: 2
+      span: 9
+      span: 3
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 0
+      path: 1
+      span: 7
+      span: 6
+      span: 16
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 0
+      path: 2
+      span: 7
+      span: 17
+      span: 34
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 0
+      path: 3
+      span: 7
+      span: 45
+      span: 63
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 0
+      path: 4
+      span: 8
+      span: 4
+      span: 58
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 0
+      path: 4
+      path: 72295728
+      span: 8
+      span: 4
+      span: 58
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 0
+      path: 4
+      path: 72295728
+      path: 4
+      span: 8
+      span: 32
+      span: 56
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 1
+      span: 10
+      span: 2
+      span: 12
+      span: 3
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 1
+      path: 1
+      span: 10
+      span: 6
+      span: 13
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 1
+      path: 2
+      span: 10
+      span: 14
+      span: 28
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 1
+      path: 3
+      span: 10
+      span: 39
+      span: 54
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 1
+      path: 4
+      span: 11
+      span: 4
+      span: 67
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 1
+      path: 4
+      path: 72295728
+      span: 11
+      span: 4
+      span: 67
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 1
+      path: 4
+      path: 72295728
+      path: 2
+      span: 11
+      span: 32
+      span: 65
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 2
+      span: 13
+      span: 2
+      span: 15
+      span: 3
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 2
+      path: 1
+      span: 13
+      span: 6
+      span: 32
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 2
+      path: 2
+      span: 13
+      span: 33
+      span: 66
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 2
+      path: 3
+      span: 13
+      span: 77
+      span: 111
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 2
+      path: 4
+      span: 14
+      span: 4
+      span: 82
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 2
+      path: 4
+      path: 72295728
+      span: 14
+      span: 4
+      span: 82
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 2
+      path: 4
+      path: 72295728
+      path: 3
+      span: 14
+      span: 32
+      span: 80
+    }
+    location: {
+      path: 4
+      path: 0
+      span: 18
+      span: 0
+      span: 19
+      span: 1
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 1
+      span: 18
+      span: 8
+      span: 25
+    }
+    location: {
+      path: 4
+      path: 1
+      span: 20
+      span: 0
+      span: 22
+      span: 1
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 1
+      span: 20
+      span: 8
+      span: 26
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 0
+      span: 21
+      span: 2
+      span: 21
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 0
+      path: 5
+      span: 21
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 0
+      path: 1
+      span: 21
+      span: 9
+      span: 16
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 0
+      path: 3
+      span: 21
+      span: 19
+      span: 20
+    }
+    location: {
+      path: 4
+      path: 2
+      span: 23
+      span: 0
+      span: 25
+      span: 1
+    }
+    location: {
+      path: 4
+      path: 2
+      path: 1
+      span: 23
+      span: 8
+      span: 22
+    }
+    location: {
+      path: 4
+      path: 2
+      path: 2
+      path: 0
+      span: 24
+      span: 2
+      span: 21
+    }
+    location: {
+      path: 4
+      path: 2
+      path: 2
+      path: 0
+      path: 5
+      span: 24
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 2
+      path: 2
+      path: 0
+      path: 1
+      span: 24
+      span: 9
+      span: 16
+    }
+    location: {
+      path: 4
+      path: 2
+      path: 2
+      path: 0
+      path: 3
+      span: 24
+      span: 19
+      span: 20
+    }
+    location: {
+      path: 4
+      path: 3
+      span: 26
+      span: 0
+      span: 28
+      span: 1
+    }
+    location: {
+      path: 4
+      path: 3
+      path: 1
+      span: 26
+      span: 8
+      span: 23
+    }
+    location: {
+      path: 4
+      path: 3
+      path: 2
+      path: 0
+      span: 27
+      span: 2
+      span: 21
+    }
+    location: {
+      path: 4
+      path: 3
+      path: 2
+      path: 0
+      path: 5
+      span: 27
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 3
+      path: 2
+      path: 0
+      path: 1
+      span: 27
+      span: 9
+      span: 16
+    }
+    location: {
+      path: 4
+      path: 3
+      path: 2
+      path: 0
+      path: 3
+      span: 27
+      span: 19
+      span: 20
+    }
+    location: {
+      path: 4
+      path: 4
+      span: 29
+      span: 0
+      span: 32
+      span: 1
+    }
+    location: {
+      path: 4
+      path: 4
+      path: 1
+      span: 29
+      span: 8
+      span: 41
+    }
+    location: {
+      path: 4
+      path: 4
+      path: 2
+      path: 0
+      span: 30
+      span: 2
+      span: 21
+    }
+    location: {
+      path: 4
+      path: 4
+      path: 2
+      path: 0
+      path: 5
+      span: 30
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 4
+      path: 2
+      path: 0
+      path: 1
+      span: 30
+      span: 9
+      span: 16
+    }
+    location: {
+      path: 4
+      path: 4
+      path: 2
+      path: 0
+      path: 3
+      span: 30
+      span: 19
+      span: 20
+    }
+    location: {
+      path: 4
+      path: 4
+      path: 2
+      path: 1
+      span: 31
+      span: 2
+      span: 31
+    }
+    location: {
+      path: 4
+      path: 4
+      path: 2
+      path: 1
+      path: 5
+      span: 31
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 4
+      path: 2
+      path: 1
+      path: 1
+      span: 31
+      span: 9
+      span: 26
+    }
+    location: {
+      path: 4
+      path: 4
+      path: 2
+      path: 1
+      path: 3
+      span: 31
+      span: 29
+      span: 30
+    }
+    location: {
+      path: 4
+      path: 5
+      span: 33
+      span: 0
+      span: 34
+      span: 1
+    }
+    location: {
+      path: 4
+      path: 5
+      path: 1
+      span: 33
+      span: 8
+      span: 42
+    }
+  }
+  syntax: "proto3"
+  buf_extension: {
+    is_import: false
+    is_syntax_unspecified: false
+  }
+}
+file: {
+  name: "google/protobuf/timestamp.proto"
+  package: "google.protobuf"
+  message_type: {
+    name: "Timestamp"
+    field: {
+      name: "seconds"
+      number: 1
+      label: LABEL_OPTIONAL
+      type: TYPE_INT64
+      json_name: "seconds"
+    }
+    field: {
+      name: "nanos"
+      number: 2
+      label: LABEL_OPTIONAL
+      type: TYPE_INT32
+      json_name: "nanos"
+    }
+  }
+  options: {
+    java_package: "com.google.protobuf"
+    java_outer_classname: "TimestampProto"
+    java_multiple_files: true
+    go_package: "google.golang.org/protobuf/types/known/timestamppb"
+    cc_enable_arenas: true
+    objc_class_prefix: "GPB"
+    csharp_namespace: "Google.Protobuf.WellKnownTypes"
+  }
+  source_code_info: {
+    location: {
+      span: 30
+      span: 0
+      span: 143
+      span: 1
+    }
+    location: {
+      path: 12
+      span: 30
+      span: 0
+      span: 18
+      leading_detached_comments: " Protocol Buffers - Google's data interchange format\n Copyright 2008 Google Inc.  All rights reserved.\n https://developers.google.com/protocol-buffers/\n\n Redistribution and use in source and binary forms, with or without\n modification, are permitted provided that the following conditions are\n met:\n\n     * Redistributions of source code must retain the above copyright\n notice, this list of conditions and the following disclaimer.\n     * Redistributions in binary form must reproduce the above\n copyright notice, this list of conditions and the following disclaimer\n in the documentation and/or other materials provided with the\n distribution.\n     * Neither the name of Google Inc. nor the names of its\n contributors may be used to endorse or promote products derived from\n this software without specific prior written permission.\n\n THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS\n \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT\n LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR\n A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT\n OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,\n SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT\n LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,\n DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY\n THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT\n (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE\n OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\n"
+    }
+    location: {
+      path: 2
+      span: 32
+      span: 0
+      span: 24
+    }
+    location: {
+      path: 8
+      span: 34
+      span: 0
+      span: 31
+    }
+    location: {
+      path: 8
+      path: 31
+      span: 34
+      span: 0
+      span: 31
+    }
+    location: {
+      path: 8
+      span: 35
+      span: 0
+      span: 73
+    }
+    location: {
+      path: 8
+      path: 11
+      span: 35
+      span: 0
+      span: 73
+    }
+    location: {
+      path: 8
+      span: 36
+      span: 0
+      span: 44
+    }
+    location: {
+      path: 8
+      path: 1
+      span: 36
+      span: 0
+      span: 44
+    }
+    location: {
+      path: 8
+      span: 37
+      span: 0
+      span: 47
+    }
+    location: {
+      path: 8
+      path: 8
+      span: 37
+      span: 0
+      span: 47
+    }
+    location: {
+      path: 8
+      span: 38
+      span: 0
+      span: 34
+    }
+    location: {
+      path: 8
+      path: 10
+      span: 38
+      span: 0
+      span: 34
+    }
+    location: {
+      path: 8
+      span: 39
+      span: 0
+      span: 33
+    }
+    location: {
+      path: 8
+      path: 36
+      span: 39
+      span: 0
+      span: 33
+    }
+    location: {
+      path: 8
+      span: 40
+      span: 0
+      span: 59
+    }
+    location: {
+      path: 8
+      path: 37
+      span: 40
+      span: 0
+      span: 59
+    }
+    location: {
+      path: 4
+      path: 0
+      span: 132
+      span: 0
+      span: 143
+      span: 1
+      leading_comments: " A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are \"smeared\" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(&tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(&ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) << 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is \"{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z\"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The \"Z\" suffix indicates the timezone (\"UTC\"); the timezone\n is required. A proto3 JSON serializer should always use UTC (as indicated by\n \"Z\") when printing the Timestamp type and a proto3 JSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, \"2017-01-15T01:30:15.01Z\" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec '%Y-%m-%dT%H:%M:%S.%fZ'. Likewise, in Java, one can use\n the Joda Time's [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format.\n\n"
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 1
+      span: 132
+      span: 8
+      span: 17
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 0
+      span: 136
+      span: 2
+      span: 20
+      leading_comments: " Represents seconds of UTC time since Unix epoch\n 1970-01-01T00:00:00Z. Must be from 0001-01-01T00:00:00Z to\n 9999-12-31T23:59:59Z inclusive.\n"
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 0
+      path: 5
+      span: 136
+      span: 2
+      span: 7
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 0
+      path: 1
+      span: 136
+      span: 8
+      span: 15
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 0
+      path: 3
+      span: 136
+      span: 18
+      span: 19
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 1
+      span: 142
+      span: 2
+      span: 18
+      leading_comments: " Non-negative fractions of a second at nanosecond resolution. Negative\n second values with fractions must still have non-negative nanos values\n that count forward in time. Must be from 0 to 999,999,999\n inclusive.\n"
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 1
+      path: 5
+      span: 142
+      span: 2
+      span: 7
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 1
+      path: 1
+      span: 142
+      span: 8
+      span: 13
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 1
+      path: 3
+      span: 142
+      span: 16
+      span: 17
+    }
+  }
+  syntax: "proto3"
+  buf_extension: {
+    is_import: true
+    is_syntax_unspecified: false
+  }
+}
+file: {
+  name: "api/v1/error.proto"
   package: "api.v1"
+  dependency: "google/protobuf/timestamp.proto"
+  message_type: {
+    name: "ErrorResponse"
+    field: {
+      name: "error_code"
+      number: 1
+      label: LABEL_OPTIONAL
+      type: TYPE_ENUM
+      type_name: ".api.v1.ErrorResponse.ErrorCode"
+      json_name: "errorCode"
+    }
+    field: {
+      name: "error_description"
+      number: 2
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      json_name: "errorDescription"
+    }
+    field: {
+      name: "data"
+      number: 3
+      label: LABEL_REPEATED
+      type: TYPE_MESSAGE
+      type_name: ".api.v1.ErrorResponse.DataEntry"
+      json_name: "data"
+    }
+    nested_type: {
+      name: "DataEntry"
+      field: {
+        name: "key"
+        number: 1
+        label: LABEL_OPTIONAL
+        type: TYPE_STRING
+        json_name: "key"
+      }
+      field: {
+        name: "value"
+        number: 2
+        label: LABEL_OPTIONAL
+        type: TYPE_STRING
+        json_name: "value"
+      }
+      options: {
+        map_entry: true
+      }
+    }
+    enum_type: {
+      name: "ErrorCode"
+      value: {
+        name: "UNKNOWN"
+        number: 0
+      }
+      value: {
+        name: "BAD_REQUEST"
+        number: 1
+      }
+      value: {
+        name: "UNAUTHORIZED"
+        number: 2
+      }
+    }
+  }
+  source_code_info: {
+    location: {
+      span: 0
+      span: 0
+      span: 15
+      span: 1
+    }
+    location: {
+      path: 12
+      span: 0
+      span: 0
+      span: 18
+    }
+    location: {
+      path: 2
+      span: 2
+      span: 0
+      span: 15
+    }
+    location: {
+      path: 3
+      path: 0
+      span: 4
+      span: 0
+      span: 41
+    }
+    location: {
+      path: 4
+      path: 0
+      span: 6
+      span: 0
+      span: 15
+      span: 1
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 1
+      span: 6
+      span: 8
+      span: 21
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 4
+      path: 0
+      span: 7
+      span: 4
+      span: 11
+      span: 5
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 4
+      path: 0
+      path: 1
+      span: 7
+      span: 9
+      span: 18
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 4
+      path: 0
+      path: 2
+      path: 0
+      span: 8
+      span: 8
+      span: 20
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 4
+      path: 0
+      path: 2
+      path: 0
+      path: 1
+      span: 8
+      span: 8
+      span: 15
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 4
+      path: 0
+      path: 2
+      path: 0
+      path: 2
+      span: 8
+      span: 18
+      span: 19
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 4
+      path: 0
+      path: 2
+      path: 1
+      span: 9
+      span: 8
+      span: 24
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 4
+      path: 0
+      path: 2
+      path: 1
+      path: 1
+      span: 9
+      span: 8
+      span: 19
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 4
+      path: 0
+      path: 2
+      path: 1
+      path: 2
+      span: 9
+      span: 22
+      span: 23
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 4
+      path: 0
+      path: 2
+      path: 2
+      span: 10
+      span: 8
+      span: 25
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 4
+      path: 0
+      path: 2
+      path: 2
+      path: 1
+      span: 10
+      span: 8
+      span: 20
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 4
+      path: 0
+      path: 2
+      path: 2
+      path: 2
+      span: 10
+      span: 23
+      span: 24
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 0
+      span: 12
+      span: 4
+      span: 29
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 0
+      path: 6
+      span: 12
+      span: 4
+      span: 13
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 0
+      path: 1
+      span: 12
+      span: 14
+      span: 24
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 0
+      path: 3
+      span: 12
+      span: 27
+      span: 28
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 1
+      span: 13
+      span: 4
+      span: 33
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 1
+      path: 5
+      span: 13
+      span: 4
+      span: 10
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 1
+      path: 1
+      span: 13
+      span: 11
+      span: 28
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 1
+      path: 3
+      span: 13
+      span: 31
+      span: 32
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 2
+      span: 14
+      span: 4
+      span: 33
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 2
+      path: 6
+      span: 14
+      span: 4
+      span: 23
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 2
+      path: 1
+      span: 14
+      span: 24
+      span: 28
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 2
+      path: 3
+      span: 14
+      span: 31
+      span: 32
+    }
+  }
+  syntax: "proto3"
+  buf_extension: {
+    is_import: false
+    is_syntax_unspecified: false
+    unused_dependency: 0
+  }
+}
+file: {
+  name: "api/v1/example/example.proto"
+  package: "api.v1.example"
   dependency: "google/api/annotations.proto"
   message_type: {
     name: "Example"
@@ -19280,7 +21511,7 @@ file: {
       number: 1
       label: LABEL_REPEATED
       type: TYPE_MESSAGE
-      type_name: ".api.v1.Example"
+      type_name: ".api.v1.example.Example"
       json_name: "exampleList"
     }
   }
@@ -19315,7 +21546,7 @@ file: {
       number: 1
       label: LABEL_OPTIONAL
       type: TYPE_MESSAGE
-      type_name: ".api.v1.Example"
+      type_name: ".api.v1.example.Example"
       json_name: "example"
     }
   }
@@ -19336,7 +21567,7 @@ file: {
       number: 1
       label: LABEL_OPTIONAL
       type: TYPE_MESSAGE
-      type_name: ".api.v1.Example"
+      type_name: ".api.v1.example.Example"
       json_name: "example"
     }
   }
@@ -19385,7 +21616,7 @@ file: {
       number: 1
       label: LABEL_OPTIONAL
       type: TYPE_MESSAGE
-      type_name: ".api.v1.Example"
+      type_name: ".api.v1.example.Example"
       json_name: "example"
     }
   }
@@ -19423,8 +21654,8 @@ file: {
     name: "ExampleService"
     method: {
       name: "ListExample"
-      input_type: ".api.v1.ListExampleRequest"
-      output_type: ".api.v1.ListExampleResponse"
+      input_type: ".api.v1.example.ListExampleRequest"
+      output_type: ".api.v1.example.ListExampleResponse"
       options: {
         [google.api.http]: {
           get: "/api/v1/example"
@@ -19433,8 +21664,8 @@ file: {
     }
     method: {
       name: "GetExample"
-      input_type: ".api.v1.GetExampleRequest"
-      output_type: ".api.v1.GetExampleResponse"
+      input_type: ".api.v1.example.GetExampleRequest"
+      output_type: ".api.v1.example.GetExampleResponse"
       options: {
         [google.api.http]: {
           get: "/api/v1/example/{example_id}"
@@ -19443,8 +21674,8 @@ file: {
     }
     method: {
       name: "UpdateExample"
-      input_type: ".api.v1.UpdateExampleRequest"
-      output_type: ".api.v1.UpdateExampleResponse"
+      input_type: ".api.v1.example.UpdateExampleRequest"
+      output_type: ".api.v1.example.UpdateExampleResponse"
       options: {
         [google.api.http]: {
           put: "/api/v1/example/{example_id}"
@@ -19453,8 +21684,8 @@ file: {
     }
     method: {
       name: "CreateExample"
-      input_type: ".api.v1.CreateExampleRequest"
-      output_type: ".api.v1.CreateExampleResponse"
+      input_type: ".api.v1.example.CreateExampleRequest"
+      output_type: ".api.v1.example.CreateExampleResponse"
       options: {
         [google.api.http]: {
           post: "/api/v1/example"
@@ -19463,8 +21694,8 @@ file: {
     }
     method: {
       name: "DeleteExample"
-      input_type: ".api.v1.DeleteExampleRequest"
-      output_type: ".api.v1.DeleteExampleResponse"
+      input_type: ".api.v1.example.DeleteExampleRequest"
+      output_type: ".api.v1.example.DeleteExampleResponse"
       options: {
         [google.api.http]: {
           delete: "/api/v1/example/{example_id}"
@@ -19489,7 +21720,7 @@ file: {
       path: 2
       span: 1
       span: 0
-      span: 15
+      span: 23
     }
     location: {
       path: 3
@@ -20880,6 +23111,1022 @@ file: {
   }
 }
 file: {
+  name: "api/v1/jwt.proto"
+  package: "api.v1"
+  dependency: "google/api/annotations.proto"
+  message_type: {
+    name: "AccessTokenPayload"
+    field: {
+      name: "iat"
+      number: 6
+      label: LABEL_OPTIONAL
+      type: TYPE_INT64
+      json_name: "iat"
+    }
+    field: {
+      name: "exp"
+      number: 7
+      label: LABEL_OPTIONAL
+      type: TYPE_INT64
+      json_name: "exp"
+    }
+    field: {
+      name: "sub"
+      number: 8
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      json_name: "sub"
+    }
+    field: {
+      name: "iss"
+      number: 9
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      json_name: "iss"
+    }
+    field: {
+      name: "aud"
+      number: 10
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      json_name: "aud"
+    }
+    field: {
+      name: "jti"
+      number: 11
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      json_name: "jti"
+    }
+    field: {
+      name: "session_id"
+      number: 20
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      json_name: "sessionId"
+    }
+    field: {
+      name: "user_id"
+      number: 21
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      json_name: "userId"
+    }
+    field: {
+      name: "authentication_id"
+      number: 22
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      json_name: "authenticationId"
+    }
+    field: {
+      name: "scopes"
+      number: 23
+      label: LABEL_REPEATED
+      type: TYPE_STRING
+      json_name: "scopes"
+    }
+  }
+  message_type: {
+    name: "RefreshTokenPayload"
+    field: {
+      name: "iat"
+      number: 6
+      label: LABEL_OPTIONAL
+      type: TYPE_INT64
+      json_name: "iat"
+    }
+    field: {
+      name: "exp"
+      number: 7
+      label: LABEL_OPTIONAL
+      type: TYPE_INT64
+      json_name: "exp"
+    }
+    field: {
+      name: "sub"
+      number: 8
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      json_name: "sub"
+    }
+    field: {
+      name: "iss"
+      number: 9
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      json_name: "iss"
+    }
+    field: {
+      name: "aud"
+      number: 10
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      json_name: "aud"
+    }
+    field: {
+      name: "jti"
+      number: 11
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      json_name: "jti"
+    }
+    field: {
+      name: "session_id"
+      number: 20
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      json_name: "sessionId"
+    }
+    field: {
+      name: "user_id"
+      number: 21
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      json_name: "userId"
+    }
+    field: {
+      name: "authentication_id"
+      number: 22
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      json_name: "authenticationId"
+    }
+    field: {
+      name: "scopes"
+      number: 23
+      label: LABEL_REPEATED
+      type: TYPE_STRING
+      json_name: "scopes"
+    }
+  }
+  source_code_info: {
+    location: {
+      span: 0
+      span: 0
+      span: 32
+      span: 1
+    }
+    location: {
+      path: 12
+      span: 0
+      span: 0
+      span: 18
+    }
+    location: {
+      path: 2
+      span: 2
+      span: 0
+      span: 15
+    }
+    location: {
+      path: 3
+      path: 0
+      span: 4
+      span: 0
+      span: 38
+    }
+    location: {
+      path: 4
+      path: 0
+      span: 6
+      span: 0
+      span: 18
+      span: 1
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 1
+      span: 6
+      span: 8
+      span: 26
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 0
+      span: 7
+      span: 2
+      span: 16
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 0
+      path: 5
+      span: 7
+      span: 2
+      span: 7
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 0
+      path: 1
+      span: 7
+      span: 8
+      span: 11
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 0
+      path: 3
+      span: 7
+      span: 14
+      span: 15
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 1
+      span: 8
+      span: 2
+      span: 16
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 1
+      path: 5
+      span: 8
+      span: 2
+      span: 7
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 1
+      path: 1
+      span: 8
+      span: 8
+      span: 11
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 1
+      path: 3
+      span: 8
+      span: 14
+      span: 15
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 2
+      span: 9
+      span: 2
+      span: 17
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 2
+      path: 5
+      span: 9
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 2
+      path: 1
+      span: 9
+      span: 9
+      span: 12
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 2
+      path: 3
+      span: 9
+      span: 15
+      span: 16
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 3
+      span: 10
+      span: 2
+      span: 17
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 3
+      path: 5
+      span: 10
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 3
+      path: 1
+      span: 10
+      span: 9
+      span: 12
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 3
+      path: 3
+      span: 10
+      span: 15
+      span: 16
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 4
+      span: 11
+      span: 2
+      span: 18
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 4
+      path: 5
+      span: 11
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 4
+      path: 1
+      span: 11
+      span: 9
+      span: 12
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 4
+      path: 3
+      span: 11
+      span: 15
+      span: 17
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 5
+      span: 12
+      span: 2
+      span: 18
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 5
+      path: 5
+      span: 12
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 5
+      path: 1
+      span: 12
+      span: 9
+      span: 12
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 5
+      path: 3
+      span: 12
+      span: 15
+      span: 17
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 6
+      span: 14
+      span: 2
+      span: 25
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 6
+      path: 5
+      span: 14
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 6
+      path: 1
+      span: 14
+      span: 9
+      span: 19
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 6
+      path: 3
+      span: 14
+      span: 22
+      span: 24
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 7
+      span: 15
+      span: 2
+      span: 22
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 7
+      path: 5
+      span: 15
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 7
+      path: 1
+      span: 15
+      span: 9
+      span: 16
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 7
+      path: 3
+      span: 15
+      span: 19
+      span: 21
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 8
+      span: 16
+      span: 2
+      span: 32
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 8
+      path: 5
+      span: 16
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 8
+      path: 1
+      span: 16
+      span: 9
+      span: 26
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 8
+      path: 3
+      span: 16
+      span: 29
+      span: 31
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 9
+      span: 17
+      span: 2
+      span: 30
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 9
+      path: 4
+      span: 17
+      span: 2
+      span: 10
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 9
+      path: 5
+      span: 17
+      span: 11
+      span: 17
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 9
+      path: 1
+      span: 17
+      span: 18
+      span: 24
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 9
+      path: 3
+      span: 17
+      span: 27
+      span: 29
+    }
+    location: {
+      path: 4
+      path: 1
+      span: 20
+      span: 0
+      span: 32
+      span: 1
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 1
+      span: 20
+      span: 8
+      span: 27
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 0
+      span: 21
+      span: 2
+      span: 16
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 0
+      path: 5
+      span: 21
+      span: 2
+      span: 7
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 0
+      path: 1
+      span: 21
+      span: 8
+      span: 11
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 0
+      path: 3
+      span: 21
+      span: 14
+      span: 15
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 1
+      span: 22
+      span: 2
+      span: 16
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 1
+      path: 5
+      span: 22
+      span: 2
+      span: 7
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 1
+      path: 1
+      span: 22
+      span: 8
+      span: 11
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 1
+      path: 3
+      span: 22
+      span: 14
+      span: 15
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 2
+      span: 23
+      span: 2
+      span: 17
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 2
+      path: 5
+      span: 23
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 2
+      path: 1
+      span: 23
+      span: 9
+      span: 12
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 2
+      path: 3
+      span: 23
+      span: 15
+      span: 16
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 3
+      span: 24
+      span: 2
+      span: 17
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 3
+      path: 5
+      span: 24
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 3
+      path: 1
+      span: 24
+      span: 9
+      span: 12
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 3
+      path: 3
+      span: 24
+      span: 15
+      span: 16
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 4
+      span: 25
+      span: 2
+      span: 18
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 4
+      path: 5
+      span: 25
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 4
+      path: 1
+      span: 25
+      span: 9
+      span: 12
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 4
+      path: 3
+      span: 25
+      span: 15
+      span: 17
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 5
+      span: 26
+      span: 2
+      span: 18
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 5
+      path: 5
+      span: 26
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 5
+      path: 1
+      span: 26
+      span: 9
+      span: 12
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 5
+      path: 3
+      span: 26
+      span: 15
+      span: 17
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 6
+      span: 28
+      span: 2
+      span: 25
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 6
+      path: 5
+      span: 28
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 6
+      path: 1
+      span: 28
+      span: 9
+      span: 19
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 6
+      path: 3
+      span: 28
+      span: 22
+      span: 24
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 7
+      span: 29
+      span: 2
+      span: 22
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 7
+      path: 5
+      span: 29
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 7
+      path: 1
+      span: 29
+      span: 9
+      span: 16
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 7
+      path: 3
+      span: 29
+      span: 19
+      span: 21
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 8
+      span: 30
+      span: 2
+      span: 32
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 8
+      path: 5
+      span: 30
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 8
+      path: 1
+      span: 30
+      span: 9
+      span: 26
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 8
+      path: 3
+      span: 30
+      span: 29
+      span: 31
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 9
+      span: 31
+      span: 2
+      span: 30
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 9
+      path: 4
+      span: 31
+      span: 2
+      span: 10
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 9
+      path: 5
+      span: 31
+      span: 11
+      span: 17
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 9
+      path: 1
+      span: 31
+      span: 18
+      span: 24
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 9
+      path: 3
+      span: 31
+      span: 27
+      span: 29
+    }
+  }
+  syntax: "proto3"
+  buf_extension: {
+    is_import: false
+    is_syntax_unspecified: false
+    unused_dependency: 0
+  }
+}
+file: {
   name: "config/config.proto"
   package: "config"
   message_type: {
@@ -20898,12 +24145,94 @@ file: {
       type: TYPE_STRING
       json_name: "postgresConnection"
     }
+    field: {
+      name: "auth"
+      number: 4
+      label: LABEL_OPTIONAL
+      type: TYPE_MESSAGE
+      type_name: ".config.AppConfig.Authentication"
+      json_name: "auth"
+    }
+    nested_type: {
+      name: "Authentication"
+      field: {
+        name: "secret_key"
+        number: 1
+        label: LABEL_OPTIONAL
+        type: TYPE_STRING
+        json_name: "secretKey"
+      }
+      field: {
+        name: "public_key"
+        number: 2
+        label: LABEL_OPTIONAL
+        type: TYPE_STRING
+        json_name: "publicKey"
+      }
+      field: {
+        name: "issuer"
+        number: 3
+        label: LABEL_OPTIONAL
+        type: TYPE_STRING
+        json_name: "issuer"
+      }
+      field: {
+        name: "password"
+        number: 4
+        label: LABEL_OPTIONAL
+        type: TYPE_MESSAGE
+        type_name: ".config.AppConfig.Authentication.Password"
+        json_name: "password"
+      }
+      field: {
+        name: "temporary"
+        number: 5
+        label: LABEL_OPTIONAL
+        type: TYPE_MESSAGE
+        type_name: ".config.AppConfig.Authentication.Temporary"
+        json_name: "temporary"
+      }
+      nested_type: {
+        name: "Password"
+        field: {
+          name: "access_expire"
+          number: 1
+          label: LABEL_OPTIONAL
+          type: TYPE_STRING
+          json_name: "accessExpire"
+        }
+        field: {
+          name: "refresh_expire"
+          number: 2
+          label: LABEL_OPTIONAL
+          type: TYPE_STRING
+          json_name: "refreshExpire"
+        }
+      }
+      nested_type: {
+        name: "Temporary"
+        field: {
+          name: "access_expire"
+          number: 1
+          label: LABEL_OPTIONAL
+          type: TYPE_STRING
+          json_name: "accessExpire"
+        }
+        field: {
+          name: "refresh_expire"
+          number: 2
+          label: LABEL_OPTIONAL
+          type: TYPE_STRING
+          json_name: "refreshExpire"
+        }
+      }
+    }
   }
   source_code_info: {
     location: {
       span: 0
       span: 0
-      span: 7
+      span: 23
       span: 1
     }
     location: {
@@ -20923,7 +24252,7 @@ file: {
       path: 0
       span: 4
       span: 0
-      span: 7
+      span: 23
       span: 1
     }
     location: {
@@ -21011,6 +24340,568 @@ file: {
       span: 6
       span: 33
       span: 34
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      span: 7
+      span: 4
+      span: 21
+      span: 5
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 1
+      span: 7
+      span: 12
+      span: 26
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 2
+      path: 0
+      span: 8
+      span: 8
+      span: 30
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 2
+      path: 0
+      path: 5
+      span: 8
+      span: 8
+      span: 14
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 2
+      path: 0
+      path: 1
+      span: 8
+      span: 15
+      span: 25
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 2
+      path: 0
+      path: 3
+      span: 8
+      span: 28
+      span: 29
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 2
+      path: 1
+      span: 9
+      span: 8
+      span: 30
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 2
+      path: 1
+      path: 5
+      span: 9
+      span: 8
+      span: 14
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 2
+      path: 1
+      path: 1
+      span: 9
+      span: 15
+      span: 25
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 2
+      path: 1
+      path: 3
+      span: 9
+      span: 28
+      span: 29
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 2
+      path: 2
+      span: 10
+      span: 8
+      span: 26
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 2
+      path: 2
+      path: 5
+      span: 10
+      span: 8
+      span: 14
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 2
+      path: 2
+      path: 1
+      span: 10
+      span: 15
+      span: 21
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 2
+      path: 2
+      path: 3
+      span: 10
+      span: 24
+      span: 25
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 3
+      path: 0
+      span: 11
+      span: 8
+      span: 14
+      span: 9
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 3
+      path: 0
+      path: 1
+      span: 11
+      span: 16
+      span: 24
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 3
+      path: 0
+      path: 2
+      path: 0
+      span: 12
+      span: 12
+      span: 37
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 3
+      path: 0
+      path: 2
+      path: 0
+      path: 5
+      span: 12
+      span: 12
+      span: 18
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 3
+      path: 0
+      path: 2
+      path: 0
+      path: 1
+      span: 12
+      span: 19
+      span: 32
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 3
+      path: 0
+      path: 2
+      path: 0
+      path: 3
+      span: 12
+      span: 35
+      span: 36
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 3
+      path: 0
+      path: 2
+      path: 1
+      span: 13
+      span: 12
+      span: 38
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 3
+      path: 0
+      path: 2
+      path: 1
+      path: 5
+      span: 13
+      span: 12
+      span: 18
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 3
+      path: 0
+      path: 2
+      path: 1
+      path: 1
+      span: 13
+      span: 19
+      span: 33
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 3
+      path: 0
+      path: 2
+      path: 1
+      path: 3
+      span: 13
+      span: 36
+      span: 37
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 2
+      path: 3
+      span: 15
+      span: 8
+      span: 30
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 2
+      path: 3
+      path: 6
+      span: 15
+      span: 8
+      span: 16
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 2
+      path: 3
+      path: 1
+      span: 15
+      span: 17
+      span: 25
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 2
+      path: 3
+      path: 3
+      span: 15
+      span: 28
+      span: 29
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 3
+      path: 1
+      span: 16
+      span: 8
+      span: 19
+      span: 9
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 3
+      path: 1
+      path: 1
+      span: 16
+      span: 16
+      span: 25
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 3
+      path: 1
+      path: 2
+      path: 0
+      span: 17
+      span: 12
+      span: 37
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 3
+      path: 1
+      path: 2
+      path: 0
+      path: 5
+      span: 17
+      span: 12
+      span: 18
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 3
+      path: 1
+      path: 2
+      path: 0
+      path: 1
+      span: 17
+      span: 19
+      span: 32
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 3
+      path: 1
+      path: 2
+      path: 0
+      path: 3
+      span: 17
+      span: 35
+      span: 36
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 3
+      path: 1
+      path: 2
+      path: 1
+      span: 18
+      span: 12
+      span: 38
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 3
+      path: 1
+      path: 2
+      path: 1
+      path: 5
+      span: 18
+      span: 12
+      span: 18
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 3
+      path: 1
+      path: 2
+      path: 1
+      path: 1
+      span: 18
+      span: 19
+      span: 33
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 3
+      path: 1
+      path: 2
+      path: 1
+      path: 3
+      span: 18
+      span: 36
+      span: 37
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 2
+      path: 4
+      span: 20
+      span: 8
+      span: 32
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 2
+      path: 4
+      path: 6
+      span: 20
+      span: 8
+      span: 17
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 2
+      path: 4
+      path: 1
+      span: 20
+      span: 18
+      span: 27
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 2
+      path: 4
+      path: 3
+      span: 20
+      span: 30
+      span: 31
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 2
+      span: 22
+      span: 4
+      span: 28
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 2
+      path: 6
+      span: 22
+      span: 4
+      span: 18
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 2
+      path: 1
+      span: 22
+      span: 19
+      span: 23
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 2
+      path: 3
+      span: 22
+      span: 26
+      span: 27
     }
   }
   syntax: "proto3"

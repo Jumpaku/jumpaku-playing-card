@@ -1,5 +1,5 @@
 import {Injectable} from "@nestjs/common";
-import {assertTrue} from "../../panic";
+import {assertTrue} from "../../lib/panic";
 import * as crypto from "node:crypto";
 import {Random as Random$} from 'random'
 
@@ -9,6 +9,8 @@ export abstract class RandomProviderToken {
     abstract int32(n: number): number;
 
     abstract uuid(): string;
+
+    abstract salt(): string;
 }
 
 export class RandomProvider extends RandomProviderToken {
@@ -21,6 +23,10 @@ export class RandomProvider extends RandomProviderToken {
 
     override uuid(): string {
         return crypto.randomUUID();
+    }
+
+    override salt(): string {
+        return crypto.randomBytes(16).toString('hex');
     }
 }
 
@@ -50,5 +56,14 @@ export class RandomProviderWithSeed extends RandomProviderToken {
         const x = (n: number) => selectAll(n, '0123456789abcdef');
         const y = selectAll(1, '89ab');
         return `${x(4)}${x(4)}-${x(4)}-4${x(3)}-${y}${x(3)}-${x(12)}`;
+    }
+
+    override salt(): string {
+        const size = 16;
+        const array = new Uint8Array(size);
+        for (let i = 0; i < size; i++) {
+            array[i] = this.rng.int(0, 255);
+        }
+        return Buffer.from(array).toString('hex');
     }
 }

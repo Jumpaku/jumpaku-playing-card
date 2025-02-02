@@ -5,4 +5,20 @@ package config;
 message AppConfig {
     string node_env = 1;
     string postgres_connection = 2;
+    message Authentication {
+        string secret_key = 1;
+        string public_key = 2;
+        string issuer = 3;
+        message Password {
+            string access_expire = 1;
+            string refresh_expire = 2;
+        }
+        Password password = 4;
+        message Temporary {
+            string access_expire = 1;
+            string refresh_expire = 2;
+        }
+        Temporary temporary = 5;
+    }
+    Authentication auth = 4;
 }

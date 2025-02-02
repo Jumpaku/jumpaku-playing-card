@@ -19,6 +19,8 @@ export type schema_migrationsPk$ = {
 
 
 
+
+
 export class schema_migrations$ {
     constructor(props: schema_migrationsProp$) {
 
@@ -132,6 +134,8 @@ LIMIT 1`,
         }
         return new schema_migrations$(res.rows[0] as schema_migrationsProp$);
     }
+
+
 
 
 }

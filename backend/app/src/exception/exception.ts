@@ -48,3 +48,20 @@ export function throwBadRequest(description: string, details: string, options?: 
         options?.cause,
     );
 }
+
+export function throwUnauthorized(description: string, details: string, options?: {
+    responseData?: Record<string, string>;
+    cause?: unknown;
+}): never {
+    throw new AppException(
+        HttpStatus.UNAUTHORIZED,
+        'Unauthorized',
+        toJson(ErrorResponseSchema, create(ErrorResponseSchema, {
+            errorCode: ErrorResponse_ErrorCode.UNAUTHORIZED,
+            errorDescription: description,
+            data: options?.responseData,
+        })),
+        details,
+        options?.cause,
+    );
+}

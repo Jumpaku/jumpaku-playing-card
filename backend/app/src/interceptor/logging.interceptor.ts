@@ -22,7 +22,6 @@ export class LoggingInterceptor implements NestInterceptor {
 
         const controller = ctx.getClass().name;
         const http = ctx.switchToHttp();
-
         const req = http.getRequest<Request>();
         const reqBody = JSON.stringify(req.body);
         const res = http.getResponse<Response>();

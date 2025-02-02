@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package api.v1;
+
+import "google/api/annotations.proto";
+
+message AccessTokenPayload {
+  int64 iat = 6;
+  int64 exp = 7;
+  string sub = 8;
+  string iss = 9;
+  string aud = 10;
+  string jti = 11;
+
+  string session_id = 20;
+  string user_id = 21;
+  string authentication_id = 22;
+  repeated string scopes = 23;
+}
+
+message RefreshTokenPayload {
+  int64 iat = 6;
+  int64 exp = 7;
+  string sub = 8;
+  string iss = 9;
+  string aud = 10;
+  string jti = 11;
+
+  string session_id = 20;
+  string user_id = 21;
+  string authentication_id = 22;
+  repeated string scopes = 23;
+}

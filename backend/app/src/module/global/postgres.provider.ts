@@ -22,12 +22,13 @@ export class PostgresProvider {
 
     private pool: Pool
 
-    async transaction(fn: (client: PgClient) => Promise<void>) {
+    async transaction<R>(fn: (client: PgClient) => Promise<R>): Promise<R> {
         // https://node-postgres.com/features/transactions#examples
         const client = await this.newClient();
+        let result: R;
         try {
             await client.query('BEGIN')
-            await fn(client);
+            result = await fn(client);
             await client.query('COMMIT')
         } catch (e) {
             await client.query('ROLLBACK')
@@ -35,6 +36,7 @@ export class PostgresProvider {
         } finally {
             client.release()
         }
+        return result;
     }
 
     async close() {
@@ -98,4 +100,13 @@ export class PostgresProvider {
 export async function selectAll<T>(client: PgClient, stmt: string, params: unknown[]): Promise<T[]> {
     const {rows} = await client.query(stmt, params)
     return (rows ?? []) as T[];
+}
+
+export async function selectOne<T>(client: PgClient, stmt: string, params: unknown[]): Promise<T | null> {
+    const {rows} = await client.query(stmt, params)
+    const rs = (rows ?? []) as T[];
+    if (rs.length === 0) {
+        return null;
+    }
+    return rs[0];
 }

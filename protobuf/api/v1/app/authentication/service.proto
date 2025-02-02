@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+package api.v1.app.authentication;
+
+import "api/v1/access_control.proto";
+import "google/api/annotations.proto";
+
+service AuthenticationService {
+  rpc Logout(LogoutRequest) returns (LogoutResponse) {
+    option (google.api.http) = {put: "/api/v1/app/authentication/logout"};
+    option (api.v1.access_control) = {};
+  }
+  rpc Refresh(RefreshRequest) returns (RefreshResponse) {
+    option (google.api.http) = {post: "/api/v1/app/authentication/refresh"};
+    option (api.v1.access_control) = {};
+  }
+  rpc TemporaryRegister(TemporaryRegisterRequest) returns (TemporaryRegisterResponse) {
+    option (google.api.http) = {get: "/api/v1/app/authentication/temporary/register"};
+    option (api.v1.access_control) = {};
+  }
+  rpc PasswordRegister(PasswordRegisterRequest) returns (PasswordRegisterResponse) {
+    option (google.api.http) = {get: "/api/v1/app/authentication/password/register"};
+    option (api.v1.access_control) = {};
+  }
+  rpc PasswordLogin(PasswordLoginRequest) returns (PasswordLoginResponse) {
+    option (google.api.http) = {post: "/api/v1/app/authentication/password/login"};
+    option (api.v1.access_control) = {};
+  }
+}
+
+message TemporaryRegisterRequest {}
+message TemporaryRegisterResponse {
+  string access_token = 1;
+  string refresh_token = 2;
+}
+message PasswordRegisterRequest {
+  string login_id = 2;
+  string password = 3;
+}
+message PasswordRegisterResponse {
+  string access_token = 1;
+  string refresh_token = 2;
+}
+message PasswordLoginRequest {
+  string login_id = 2;
+  string password = 3;
+}
+message PasswordLoginResponse {
+  string access_token = 1;
+  string refresh_token = 2;
+}
+message LogoutRequest {}
+message LogoutResponse {}
+message RefreshRequest {}
+message RefreshResponse {
+  string access_token = 1;
+  string refresh_token = 2;
+}

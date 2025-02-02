@@ -2,26 +2,31 @@ syntax = "proto3";
 package api.v1;
 
 import "google/api/annotations.proto";
-
-option go_package = "github.com/jumpaku/jumpaku-protobuf/api/v1";
+import "api/v1/access_control.proto";
 
 service ExampleService {
   rpc ListExample(ListExampleRequest) returns (ListExampleResponse) {
     option (google.api.http) = {get: "/v1"};
+    option (api.v1.access_control) = {};
   }
   rpc GetExample(GetExampleRequest) returns (GetExampleResponse) {
     option (google.api.http) = {get: "/v1/{example_id}"};
+    option (api.v1.access_control) = {};
   }
   rpc UpdateExample(UpdateExampleRequest) returns (UpdateExampleResponse) {
     option (google.api.http) = {put: "/v1/{example_id}"};
+    option (api.v1.access_control) = {};
   }
   rpc CreateExample(CreateExampleRequest) returns (CreateExampleResponse) {
     option (google.api.http) = {post: "/v1/{example_id}"};
+    option (api.v1.access_control) = {};
   }
   rpc DeleteExample(DeleteExampleRequest) returns (DeleteExampleResponse) {
     option (google.api.http) = {delete: "/v1/{example_id}"};
+    option (api.v1.access_control) = {};
   }
 }
+
 message Example {
   string example_id = 1;
   string example_name = 2;

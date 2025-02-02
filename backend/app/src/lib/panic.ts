@@ -1,5 +1,3 @@
-import {create} from "@bufbuild/protobuf";
-import {ExampleSchema} from "./gen/pb/api/v1/example/example_pb";
 
 export function panic(message: string): never {
     throw new Error(message);
