@@ -5,6 +5,8 @@
 import type { GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv1";
 import { fileDesc, messageDesc, serviceDesc } from "@bufbuild/protobuf/codegenv1";
 import { file_api_v1_access_control } from "../../access_control_pb.js";
+import type { ClientType, ClientTypeJson } from "../../client_pb.js";
+import { file_api_v1_client } from "../../client_pb.js";
 import { file_google_api_annotations } from "../../../../google/api/annotations_pb.js";
 import type { Message } from "@bufbuild/protobuf";
 
@@ -12,31 +14,39 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file api/v1/app/authentication/service.proto.
  */
 export const file_api_v1_app_authentication_service: GenFile = /*@__PURE__*/
-  fileDesc("CidhcGkvdjEvYXBwL2F1dGhlbnRpY2F0aW9uL3NlcnZpY2UucHJvdG8SGWFwaS52MS5hcHAuYXV0aGVudGljYXRpb24iGgoYVGVtcG9yYXJ5UmVnaXN0ZXJSZXF1ZXN0IkgKGVRlbXBvcmFyeVJlZ2lzdGVyUmVzcG9uc2USFAoMYWNjZXNzX3Rva2VuGAEgASgJEhUKDXJlZnJlc2hfdG9rZW4YAiABKAkiPQoXUGFzc3dvcmRSZWdpc3RlclJlcXVlc3QSEAoIbG9naW5faWQYAiABKAkSEAoIcGFzc3dvcmQYAyABKAkiRwoYUGFzc3dvcmRSZWdpc3RlclJlc3BvbnNlEhQKDGFjY2Vzc190b2tlbhgBIAEoCRIVCg1yZWZyZXNoX3Rva2VuGAIgASgJIjoKFFBhc3N3b3JkTG9naW5SZXF1ZXN0EhAKCGxvZ2luX2lkGAIgASgJEhAKCHBhc3N3b3JkGAMgASgJIkQKFVBhc3N3b3JkTG9naW5SZXNwb25zZRIUCgxhY2Nlc3NfdG9rZW4YASABKAkSFQoNcmVmcmVzaF90b2tlbhgCIAEoCSIPCg1Mb2dvdXRSZXF1ZXN0IhAKDkxvZ291dFJlc3BvbnNlIhAKDlJlZnJlc2hSZXF1ZXN0Ij4KD1JlZnJlc2hSZXNwb25zZRIUCgxhY2Nlc3NfdG9rZW4YASABKAkSFQoNcmVmcmVzaF90b2tlbhgCIAEoCTLZBgoVQXV0aGVudGljYXRpb25TZXJ2aWNlEowBCgZMb2dvdXQSKC5hcGkudjEuYXBwLmF1dGhlbnRpY2F0aW9uLkxvZ291dFJlcXVlc3QaKS5hcGkudjEuYXBwLmF1dGhlbnRpY2F0aW9uLkxvZ291dFJlc3BvbnNlIi2CtRgAgtPkkwIjGiEvYXBpL3YxL2FwcC9hdXRoZW50aWNhdGlvbi9sb2dvdXQSkAEKB1JlZnJlc2gSKS5hcGkudjEuYXBwLmF1dGhlbnRpY2F0aW9uLlJlZnJlc2hSZXF1ZXN0GiouYXBpLnYxLmFwcC5hdXRoZW50aWNhdGlvbi5SZWZyZXNoUmVzcG9uc2UiLoK1GACC0+STAiQiIi9hcGkvdjEvYXBwL2F1dGhlbnRpY2F0aW9uL3JlZnJlc2gSuQEKEVRlbXBvcmFyeVJlZ2lzdGVyEjMuYXBpLnYxLmFwcC5hdXRoZW50aWNhdGlvbi5UZW1wb3JhcnlSZWdpc3RlclJlcXVlc3QaNC5hcGkudjEuYXBwLmF1dGhlbnRpY2F0aW9uLlRlbXBvcmFyeVJlZ2lzdGVyUmVzcG9uc2UiOYK1GACC0+STAi8SLS9hcGkvdjEvYXBwL2F1dGhlbnRpY2F0aW9uL3RlbXBvcmFyeS9yZWdpc3RlchK1AQoQUGFzc3dvcmRSZWdpc3RlchIyLmFwaS52MS5hcHAuYXV0aGVudGljYXRpb24uUGFzc3dvcmRSZWdpc3RlclJlcXVlc3QaMy5hcGkudjEuYXBwLmF1dGhlbnRpY2F0aW9uLlBhc3N3b3JkUmVnaXN0ZXJSZXNwb25zZSI4grUYAILT5JMCLhIsL2FwaS92MS9hcHAvYXV0aGVudGljYXRpb24vcGFzc3dvcmQvcmVnaXN0ZXISqQEKDVBhc3N3b3JkTG9naW4SLy5hcGkudjEuYXBwLmF1dGhlbnRpY2F0aW9uLlBhc3N3b3JkTG9naW5SZXF1ZXN0GjAuYXBpLnYxLmFwcC5hdXRoZW50aWNhdGlvbi5QYXNzd29yZExvZ2luUmVzcG9uc2UiNYK1GACC0+STAisiKS9hcGkvdjEvYXBwL2F1dGhlbnRpY2F0aW9uL3Bhc3N3b3JkL2xvZ2luQrUBCh1jb20uYXBpLnYxLmFwcC5hdXRoZW50aWNhdGlvbkIMU2VydmljZVByb3RvUAGiAgRBVkFBqgIZQXBpLlYxLkFwcC5BdXRoZW50aWNhdGlvbsoCGUFwaVxWMVxBcHBcQXV0aGVudGljYXRpb27iAiVBcGlcVjFcQXBwXEF1dGhlbnRpY2F0aW9uXEdQQk1ldGFkYXRh6gIcQXBpOjpWMTo6QXBwOjpBdXRoZW50aWNhdGlvbmIGcHJvdG8z", [file_api_v1_access_control, file_google_api_annotations]);
+  fileDesc("CidhcGkvdjEvYXBwL2F1dGhlbnRpY2F0aW9uL3NlcnZpY2UucHJvdG8SGWFwaS52MS5hcHAuYXV0aGVudGljYXRpb24iSAodVGVtcG9yYXJ5UmVnaXN0ZXJMb2dpblJlcXVlc3QSJwoLY2xpZW50X3R5cGUYASABKA4yEi5hcGkudjEuQ2xpZW50VHlwZSJNCh5UZW1wb3JhcnlSZWdpc3RlckxvZ2luUmVzcG9uc2USFAoMYWNjZXNzX3Rva2VuGAEgASgJEhUKDXJlZnJlc2hfdG9rZW4YAiABKAkiPQoXUGFzc3dvcmRSZWdpc3RlclJlcXVlc3QSEAoIbG9naW5faWQYAiABKAkSEAoIcGFzc3dvcmQYAyABKAkiGgoYUGFzc3dvcmRSZWdpc3RlclJlc3BvbnNlImMKFFBhc3N3b3JkTG9naW5SZXF1ZXN0EicKC2NsaWVudF90eXBlGAEgASgOMhIuYXBpLnYxLkNsaWVudFR5cGUSEAoIbG9naW5faWQYAiABKAkSEAoIcGFzc3dvcmQYAyABKAkiRAoVUGFzc3dvcmRMb2dpblJlc3BvbnNlEhQKDGFjY2Vzc190b2tlbhgBIAEoCRIVCg1yZWZyZXNoX3Rva2VuGAIgASgJIg8KDUxvZ291dFJlcXVlc3QiEAoOTG9nb3V0UmVzcG9uc2UiOQoOUmVmcmVzaFJlcXVlc3QSJwoLY2xpZW50X3R5cGUYASABKA4yEi5hcGkudjEuQ2xpZW50VHlwZSI+Cg9SZWZyZXNoUmVzcG9uc2USFAoMYWNjZXNzX3Rva2VuGAEgASgJEhUKDXJlZnJlc2hfdG9rZW4YAiABKAky7gYKFUF1dGhlbnRpY2F0aW9uU2VydmljZRKMAQoGTG9nb3V0EiguYXBpLnYxLmFwcC5hdXRoZW50aWNhdGlvbi5Mb2dvdXRSZXF1ZXN0GikuYXBpLnYxLmFwcC5hdXRoZW50aWNhdGlvbi5Mb2dvdXRSZXNwb25zZSItgrUYAILT5JMCIxohL2FwaS92MS9hcHAvYXV0aGVudGljYXRpb24vbG9nb3V0EpABCgdSZWZyZXNoEikuYXBpLnYxLmFwcC5hdXRoZW50aWNhdGlvbi5SZWZyZXNoUmVxdWVzdBoqLmFwaS52MS5hcHAuYXV0aGVudGljYXRpb24uUmVmcmVzaFJlc3BvbnNlIi6CtRgAgtPkkwIkIiIvYXBpL3YxL2FwcC9hdXRoZW50aWNhdGlvbi9yZWZyZXNoEs4BChZUZW1wb3JhcnlSZWdpc3RlckxvZ2luEjguYXBpLnYxLmFwcC5hdXRoZW50aWNhdGlvbi5UZW1wb3JhcnlSZWdpc3RlckxvZ2luUmVxdWVzdBo5LmFwaS52MS5hcHAuYXV0aGVudGljYXRpb24uVGVtcG9yYXJ5UmVnaXN0ZXJMb2dpblJlc3BvbnNlIj+CtRgAgtPkkwI1IjMvYXBpL3YxL2FwcC9hdXRoZW50aWNhdGlvbi90ZW1wb3JhcnkvcmVnaXN0ZXItbG9naW4StQEKEFBhc3N3b3JkUmVnaXN0ZXISMi5hcGkudjEuYXBwLmF1dGhlbnRpY2F0aW9uLlBhc3N3b3JkUmVnaXN0ZXJSZXF1ZXN0GjMuYXBpLnYxLmFwcC5hdXRoZW50aWNhdGlvbi5QYXNzd29yZFJlZ2lzdGVyUmVzcG9uc2UiOIK1GACC0+STAi4iLC9hcGkvdjEvYXBwL2F1dGhlbnRpY2F0aW9uL3Bhc3N3b3JkL3JlZ2lzdGVyEqkBCg1QYXNzd29yZExvZ2luEi8uYXBpLnYxLmFwcC5hdXRoZW50aWNhdGlvbi5QYXNzd29yZExvZ2luUmVxdWVzdBowLmFwaS52MS5hcHAuYXV0aGVudGljYXRpb24uUGFzc3dvcmRMb2dpblJlc3BvbnNlIjWCtRgAgtPkkwIrIikvYXBpL3YxL2FwcC9hdXRoZW50aWNhdGlvbi9wYXNzd29yZC9sb2dpbkK1AQodY29tLmFwaS52MS5hcHAuYXV0aGVudGljYXRpb25CDFNlcnZpY2VQcm90b1ABogIEQVZBQaoCGUFwaS5WMS5BcHAuQXV0aGVudGljYXRpb27KAhlBcGlcVjFcQXBwXEF1dGhlbnRpY2F0aW9u4gIlQXBpXFYxXEFwcFxBdXRoZW50aWNhdGlvblxHUEJNZXRhZGF0YeoCHEFwaTo6VjE6OkFwcDo6QXV0aGVudGljYXRpb25iBnByb3RvMw", [file_api_v1_access_control, file_api_v1_client, file_google_api_annotations]);
 
 /**
- * @generated from message api.v1.app.authentication.TemporaryRegisterRequest
+ * @generated from message api.v1.app.authentication.TemporaryRegisterLoginRequest
  */
-export type TemporaryRegisterRequest = Message<"api.v1.app.authentication.TemporaryRegisterRequest"> & {
+export type TemporaryRegisterLoginRequest = Message<"api.v1.app.authentication.TemporaryRegisterLoginRequest"> & {
+  /**
+   * @generated from field: api.v1.ClientType client_type = 1;
+   */
+  clientType: ClientType;
 };
 
 /**
- * @generated from message api.v1.app.authentication.TemporaryRegisterRequest
+ * @generated from message api.v1.app.authentication.TemporaryRegisterLoginRequest
  */
-export type TemporaryRegisterRequestJson = {
+export type TemporaryRegisterLoginRequestJson = {
+  /**
+   * @generated from field: api.v1.ClientType client_type = 1;
+   */
+  clientType?: ClientTypeJson;
 };
 
 /**
- * Describes the message api.v1.app.authentication.TemporaryRegisterRequest.
- * Use `create(TemporaryRegisterRequestSchema)` to create a new message.
+ * Describes the message api.v1.app.authentication.TemporaryRegisterLoginRequest.
+ * Use `create(TemporaryRegisterLoginRequestSchema)` to create a new message.
  */
-export const TemporaryRegisterRequestSchema: GenMessage<TemporaryRegisterRequest, TemporaryRegisterRequestJson> = /*@__PURE__*/
+export const TemporaryRegisterLoginRequestSchema: GenMessage<TemporaryRegisterLoginRequest, TemporaryRegisterLoginRequestJson> = /*@__PURE__*/
   messageDesc(file_api_v1_app_authentication_service, 0);
 
 /**
- * @generated from message api.v1.app.authentication.TemporaryRegisterResponse
+ * @generated from message api.v1.app.authentication.TemporaryRegisterLoginResponse
  */
-export type TemporaryRegisterResponse = Message<"api.v1.app.authentication.TemporaryRegisterResponse"> & {
+export type TemporaryRegisterLoginResponse = Message<"api.v1.app.authentication.TemporaryRegisterLoginResponse"> & {
   /**
    * @generated from field: string access_token = 1;
    */
@@ -49,9 +59,9 @@ export type TemporaryRegisterResponse = Message<"api.v1.app.authentication.Tempo
 };
 
 /**
- * @generated from message api.v1.app.authentication.TemporaryRegisterResponse
+ * @generated from message api.v1.app.authentication.TemporaryRegisterLoginResponse
  */
-export type TemporaryRegisterResponseJson = {
+export type TemporaryRegisterLoginResponseJson = {
   /**
    * @generated from field: string access_token = 1;
    */
@@ -64,10 +74,10 @@ export type TemporaryRegisterResponseJson = {
 };
 
 /**
- * Describes the message api.v1.app.authentication.TemporaryRegisterResponse.
- * Use `create(TemporaryRegisterResponseSchema)` to create a new message.
+ * Describes the message api.v1.app.authentication.TemporaryRegisterLoginResponse.
+ * Use `create(TemporaryRegisterLoginResponseSchema)` to create a new message.
  */
-export const TemporaryRegisterResponseSchema: GenMessage<TemporaryRegisterResponse, TemporaryRegisterResponseJson> = /*@__PURE__*/
+export const TemporaryRegisterLoginResponseSchema: GenMessage<TemporaryRegisterLoginResponse, TemporaryRegisterLoginResponseJson> = /*@__PURE__*/
   messageDesc(file_api_v1_app_authentication_service, 1);
 
 /**
@@ -111,30 +121,12 @@ export const PasswordRegisterRequestSchema: GenMessage<PasswordRegisterRequest, 
  * @generated from message api.v1.app.authentication.PasswordRegisterResponse
  */
 export type PasswordRegisterResponse = Message<"api.v1.app.authentication.PasswordRegisterResponse"> & {
-  /**
-   * @generated from field: string access_token = 1;
-   */
-  accessToken: string;
-
-  /**
-   * @generated from field: string refresh_token = 2;
-   */
-  refreshToken: string;
 };
 
 /**
  * @generated from message api.v1.app.authentication.PasswordRegisterResponse
  */
 export type PasswordRegisterResponseJson = {
-  /**
-   * @generated from field: string access_token = 1;
-   */
-  accessToken?: string;
-
-  /**
-   * @generated from field: string refresh_token = 2;
-   */
-  refreshToken?: string;
 };
 
 /**
@@ -148,6 +140,11 @@ export const PasswordRegisterResponseSchema: GenMessage<PasswordRegisterResponse
  * @generated from message api.v1.app.authentication.PasswordLoginRequest
  */
 export type PasswordLoginRequest = Message<"api.v1.app.authentication.PasswordLoginRequest"> & {
+  /**
+   * @generated from field: api.v1.ClientType client_type = 1;
+   */
+  clientType: ClientType;
+
   /**
    * @generated from field: string login_id = 2;
    */
@@ -163,6 +160,11 @@ export type PasswordLoginRequest = Message<"api.v1.app.authentication.PasswordLo
  * @generated from message api.v1.app.authentication.PasswordLoginRequest
  */
 export type PasswordLoginRequestJson = {
+  /**
+   * @generated from field: api.v1.ClientType client_type = 1;
+   */
+  clientType?: ClientTypeJson;
+
   /**
    * @generated from field: string login_id = 2;
    */
@@ -260,12 +262,20 @@ export const LogoutResponseSchema: GenMessage<LogoutResponse, LogoutResponseJson
  * @generated from message api.v1.app.authentication.RefreshRequest
  */
 export type RefreshRequest = Message<"api.v1.app.authentication.RefreshRequest"> & {
+  /**
+   * @generated from field: api.v1.ClientType client_type = 1;
+   */
+  clientType: ClientType;
 };
 
 /**
  * @generated from message api.v1.app.authentication.RefreshRequest
  */
 export type RefreshRequestJson = {
+  /**
+   * @generated from field: api.v1.ClientType client_type = 1;
+   */
+  clientType?: ClientTypeJson;
 };
 
 /**
@@ -333,12 +343,12 @@ export const AuthenticationService: GenService<{
     output: typeof RefreshResponseSchema;
   },
   /**
-   * @generated from rpc api.v1.app.authentication.AuthenticationService.TemporaryRegister
+   * @generated from rpc api.v1.app.authentication.AuthenticationService.TemporaryRegisterLogin
    */
-  temporaryRegister: {
+  temporaryRegisterLogin: {
     methodKind: "unary";
-    input: typeof TemporaryRegisterRequestSchema;
-    output: typeof TemporaryRegisterResponseSchema;
+    input: typeof TemporaryRegisterLoginRequestSchema;
+    output: typeof TemporaryRegisterLoginResponseSchema;
   },
   /**
    * @generated from rpc api.v1.app.authentication.AuthenticationService.PasswordRegister

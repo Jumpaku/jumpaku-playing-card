@@ -3,14 +3,14 @@
 /* eslint-disable */
 
 import { Injectable } from "@nestjs/common";
-import type { LogoutRequest, LogoutResponse, PasswordLoginRequest, PasswordLoginResponse, PasswordRegisterRequest, PasswordRegisterResponse, RefreshRequest, RefreshResponse, TemporaryRegisterRequest, TemporaryRegisterResponse } from "../service_pb.js";
+import type { LogoutRequest, LogoutResponse, PasswordLoginRequest, PasswordLoginResponse, PasswordRegisterRequest, PasswordRegisterResponse, RefreshRequest, RefreshResponse, TemporaryRegisterLoginRequest, TemporaryRegisterLoginResponse } from "../service_pb.js";
 import { Request, Response } from "express";
 
 @Injectable() 
 export abstract class AuthenticationServiceService {
   abstract handleLogout(input: LogoutRequest, req: Request, res: Response): Promise<LogoutResponse>;
   abstract handleRefresh(input: RefreshRequest, req: Request, res: Response): Promise<RefreshResponse>;
-  abstract handleTemporaryRegister(input: TemporaryRegisterRequest, req: Request, res: Response): Promise<TemporaryRegisterResponse>;
+  abstract handleTemporaryRegisterLogin(input: TemporaryRegisterLoginRequest, req: Request, res: Response): Promise<TemporaryRegisterLoginResponse>;
   abstract handlePasswordRegister(input: PasswordRegisterRequest, req: Request, res: Response): Promise<PasswordRegisterResponse>;
   abstract handlePasswordLogin(input: PasswordLoginRequest, req: Request, res: Response): Promise<PasswordLoginResponse>;
 }

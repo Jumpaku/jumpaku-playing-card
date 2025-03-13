@@ -1,6 +1,6 @@
 import {Injectable} from "@nestjs/common";
 import {AppConfig, AppConfigSchema} from "../../gen/pb/config/config_pb";
-import {clone, create, JsonObject} from "@bufbuild/protobuf";
+import {clone, create, JsonObject, toJson} from "@bufbuild/protobuf";
 import {overwriteConfigWithEnv, overwriteConfigWithJson} from "../../lib/config";
 import * as fs from "node:fs";
 import * as process from "node:process";
@@ -13,6 +13,7 @@ export class ConfigProvider {
         if (configPath != null) {
             config.reload(configPath);
         }
+        console.log(JSON.stringify(toJson(AppConfigSchema, config.get())));
         return config;
     }
 

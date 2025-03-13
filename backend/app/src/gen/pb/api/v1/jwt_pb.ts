@@ -11,7 +11,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file api/v1/jwt.proto.
  */
 export const file_api_v1_jwt: GenFile = /*@__PURE__*/
-  fileDesc("ChBhcGkvdjEvand0LnByb3RvEgZhcGkudjEisgEKEkFjY2Vzc1Rva2VuUGF5bG9hZBILCgNpYXQYBiABKAMSCwoDZXhwGAcgASgDEgsKA3N1YhgIIAEoCRILCgNpc3MYCSABKAkSCwoDYXVkGAogASgJEgsKA2p0aRgLIAEoCRISCgpzZXNzaW9uX2lkGBQgASgJEg8KB3VzZXJfaWQYFSABKAkSGQoRYXV0aGVudGljYXRpb25faWQYFiABKAkSDgoGc2NvcGVzGBcgAygJIrMBChNSZWZyZXNoVG9rZW5QYXlsb2FkEgsKA2lhdBgGIAEoAxILCgNleHAYByABKAMSCwoDc3ViGAggASgJEgsKA2lzcxgJIAEoCRILCgNhdWQYCiABKAkSCwoDanRpGAsgASgJEhIKCnNlc3Npb25faWQYFCABKAkSDwoHdXNlcl9pZBgVIAEoCRIZChFhdXRoZW50aWNhdGlvbl9pZBgWIAEoCRIOCgZzY29wZXMYFyADKAlCTwoKY29tLmFwaS52MUIISnd0UHJvdG9QAaICA0FYWKoCBkFwaS5WMcoCBkFwaVxWMeICEkFwaVxWMVxHUEJNZXRhZGF0YeoCB0FwaTo6VjFiBnByb3RvMw", [file_google_api_annotations]);
+  fileDesc("ChBhcGkvdjEvand0LnByb3RvEgZhcGkudjEi6QEKEkFjY2Vzc1Rva2VuUGF5bG9hZBILCgNpYXQYBiABKAMSCwoDZXhwGAcgASgDEgsKA3N1YhgIIAEoCRILCgNpc3MYCSABKAkSCwoDYXVkGAogASgJEgsKA2p0aRgLIAEoCRItCgRkYXRhGB4gASgLMh8uYXBpLnYxLkFjY2Vzc1Rva2VuUGF5bG9hZC5EYXRhGlYKBERhdGESEgoKc2Vzc2lvbl9pZBgUIAEoCRIPCgd1c2VyX2lkGBUgASgJEhkKEWF1dGhlbnRpY2F0aW9uX2lkGBYgASgJEg4KBnNjb3BlcxgXIAMoCSK/AQoTUmVmcmVzaFRva2VuUGF5bG9hZBILCgNpYXQYBiABKAMSCwoDZXhwGAcgASgDEgsKA3N1YhgIIAEoCRILCgNpc3MYCSABKAkSCwoDYXVkGAogASgJEgsKA2p0aRgLIAEoCRIuCgRkYXRhGB4gASgLMiAuYXBpLnYxLlJlZnJlc2hUb2tlblBheWxvYWQuRGF0YRoqCgREYXRhEhIKCnNlc3Npb25faWQYFCABKAkSDgoGc2NvcGVzGBcgAygJQk8KCmNvbS5hcGkudjFCCEp3dFByb3RvUAGiAgNBWFiqAgZBcGkuVjHKAgZBcGlcVjHiAhJBcGlcVjFcR1BCTWV0YWRhdGHqAgdBcGk6OlYxYgZwcm90bzM", [file_google_api_annotations]);
 
 /**
  * @generated from message api.v1.AccessTokenPayload
@@ -48,24 +48,9 @@ export type AccessTokenPayload = Message<"api.v1.AccessTokenPayload"> & {
   jti: string;
 
   /**
-   * @generated from field: string session_id = 20;
+   * @generated from field: api.v1.AccessTokenPayload.Data data = 30;
    */
-  sessionId: string;
-
-  /**
-   * @generated from field: string user_id = 21;
-   */
-  userId: string;
-
-  /**
-   * @generated from field: string authentication_id = 22;
-   */
-  authenticationId: string;
-
-  /**
-   * @generated from field: repeated string scopes = 23;
-   */
-  scopes: string[];
+  data?: AccessTokenPayload_Data;
 };
 
 /**
@@ -103,6 +88,48 @@ export type AccessTokenPayloadJson = {
   jti?: string;
 
   /**
+   * @generated from field: api.v1.AccessTokenPayload.Data data = 30;
+   */
+  data?: AccessTokenPayload_DataJson;
+};
+
+/**
+ * Describes the message api.v1.AccessTokenPayload.
+ * Use `create(AccessTokenPayloadSchema)` to create a new message.
+ */
+export const AccessTokenPayloadSchema: GenMessage<AccessTokenPayload, AccessTokenPayloadJson> = /*@__PURE__*/
+  messageDesc(file_api_v1_jwt, 0);
+
+/**
+ * @generated from message api.v1.AccessTokenPayload.Data
+ */
+export type AccessTokenPayload_Data = Message<"api.v1.AccessTokenPayload.Data"> & {
+  /**
+   * @generated from field: string session_id = 20;
+   */
+  sessionId: string;
+
+  /**
+   * @generated from field: string user_id = 21;
+   */
+  userId: string;
+
+  /**
+   * @generated from field: string authentication_id = 22;
+   */
+  authenticationId: string;
+
+  /**
+   * @generated from field: repeated string scopes = 23;
+   */
+  scopes: string[];
+};
+
+/**
+ * @generated from message api.v1.AccessTokenPayload.Data
+ */
+export type AccessTokenPayload_DataJson = {
+  /**
    * @generated from field: string session_id = 20;
    */
   sessionId?: string;
@@ -124,11 +151,11 @@ export type AccessTokenPayloadJson = {
 };
 
 /**
- * Describes the message api.v1.AccessTokenPayload.
- * Use `create(AccessTokenPayloadSchema)` to create a new message.
+ * Describes the message api.v1.AccessTokenPayload.Data.
+ * Use `create(AccessTokenPayload_DataSchema)` to create a new message.
  */
-export const AccessTokenPayloadSchema: GenMessage<AccessTokenPayload, AccessTokenPayloadJson> = /*@__PURE__*/
-  messageDesc(file_api_v1_jwt, 0);
+export const AccessTokenPayload_DataSchema: GenMessage<AccessTokenPayload_Data, AccessTokenPayload_DataJson> = /*@__PURE__*/
+  messageDesc(file_api_v1_jwt, 0, 0);
 
 /**
  * @generated from message api.v1.RefreshTokenPayload
@@ -165,24 +192,9 @@ export type RefreshTokenPayload = Message<"api.v1.RefreshTokenPayload"> & {
   jti: string;
 
   /**
-   * @generated from field: string session_id = 20;
+   * @generated from field: api.v1.RefreshTokenPayload.Data data = 30;
    */
-  sessionId: string;
-
-  /**
-   * @generated from field: string user_id = 21;
-   */
-  userId: string;
-
-  /**
-   * @generated from field: string authentication_id = 22;
-   */
-  authenticationId: string;
-
-  /**
-   * @generated from field: repeated string scopes = 23;
-   */
-  scopes: string[];
+  data?: RefreshTokenPayload_Data;
 };
 
 /**
@@ -220,24 +232,9 @@ export type RefreshTokenPayloadJson = {
   jti?: string;
 
   /**
-   * @generated from field: string session_id = 20;
+   * @generated from field: api.v1.RefreshTokenPayload.Data data = 30;
    */
-  sessionId?: string;
-
-  /**
-   * @generated from field: string user_id = 21;
-   */
-  userId?: string;
-
-  /**
-   * @generated from field: string authentication_id = 22;
-   */
-  authenticationId?: string;
-
-  /**
-   * @generated from field: repeated string scopes = 23;
-   */
-  scopes?: string[];
+  data?: RefreshTokenPayload_DataJson;
 };
 
 /**
@@ -246,4 +243,41 @@ export type RefreshTokenPayloadJson = {
  */
 export const RefreshTokenPayloadSchema: GenMessage<RefreshTokenPayload, RefreshTokenPayloadJson> = /*@__PURE__*/
   messageDesc(file_api_v1_jwt, 1);
+
+/**
+ * @generated from message api.v1.RefreshTokenPayload.Data
+ */
+export type RefreshTokenPayload_Data = Message<"api.v1.RefreshTokenPayload.Data"> & {
+  /**
+   * @generated from field: string session_id = 20;
+   */
+  sessionId: string;
+
+  /**
+   * @generated from field: repeated string scopes = 23;
+   */
+  scopes: string[];
+};
+
+/**
+ * @generated from message api.v1.RefreshTokenPayload.Data
+ */
+export type RefreshTokenPayload_DataJson = {
+  /**
+   * @generated from field: string session_id = 20;
+   */
+  sessionId?: string;
+
+  /**
+   * @generated from field: repeated string scopes = 23;
+   */
+  scopes?: string[];
+};
+
+/**
+ * Describes the message api.v1.RefreshTokenPayload.Data.
+ * Use `create(RefreshTokenPayload_DataSchema)` to create a new message.
+ */
+export const RefreshTokenPayload_DataSchema: GenMessage<RefreshTokenPayload_Data, RefreshTokenPayload_DataJson> = /*@__PURE__*/
+  messageDesc(file_api_v1_jwt, 1, 0);
 

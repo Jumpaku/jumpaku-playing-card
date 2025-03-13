@@ -8,11 +8,7 @@ import {toJson} from "@bufbuild/protobuf";
 import {AppConfigSchema} from "../../../../../gen/pb/config/config_pb";
 import {LoggerProvider} from "../../../../global/logger.provider";
 import {PostgresProvider, selectAll} from "../../../../global/postgres.provider";
-import {throwBadRequest} from "../../../../../exception/exception";
 
-function f(){
-    throw new Error("playground error");
-}
 export class PlaygroundService {
     @Inject() private logger: LoggerProvider;
     @Inject() private config: ConfigProvider;
@@ -22,15 +18,8 @@ export class PlaygroundService {
     @Inject() private postgres: PostgresProvider;
 
     async playground(req: e.Request, res: e.Response): Promise<any> {
-        try {
-            f();
-        } catch (e) {
-            throwBadRequest("bad request", "bad request", {
-                responseData: {"key": "value"},
-                cause: e,
-            })
-        }
-        this.config.reload();
+
+        this.config.reload('config/local.json');
 
         this.logger.debug("playground debug log");
         this.logger.log("playground log log");

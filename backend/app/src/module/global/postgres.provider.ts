@@ -2,7 +2,6 @@ import {Injectable} from "@nestjs/common";
 import {ConfigProvider} from "./config.provider";
 import {Pool, PoolClient} from "pg";
 import {LoggerProvider} from "./logger.provider";
-import {setTypeParsers} from "../../gen/pg/dao/pg_type_parsers";
 
 export interface PgClient {
     query(query: string, values: unknown[]): Promise<{ rows: unknown[] }>;
@@ -17,7 +16,6 @@ export class PostgresProvider {
             message: 'open postgres pool connection',
         }));
         this.pool = new Pool({connectionString: config.get().postgresConnection});
-        setTypeParsers();
     }
 
     private pool: Pool

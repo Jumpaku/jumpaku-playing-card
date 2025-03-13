@@ -1,24 +1,28 @@
 syntax = "proto3";
 package config;
 
-
 message AppConfig {
-    string node_env = 1;
-    string postgres_connection = 2;
+    string node_env = 10;
+    int32 port = 20;
+    string postgres_connection = 30;
     message Authentication {
         string secret_key = 1;
         string public_key = 2;
         string issuer = 3;
+        string audience = 4;
+        string algorithm = 5;
+        int64 access_expire_seconds = 10;
+        int64 refresh_expire_seconds_web = 11;
+        int64 refresh_expire_seconds_mobile = 12;
+
         message Password {
-            string access_expire = 1;
-            string refresh_expire = 2;
+            int32 iterations = 3;
+            int32 hash_size = 4;
         }
-        Password password = 4;
+        Password password = 20;
         message Temporary {
-            string access_expire = 1;
-            string refresh_expire = 2;
         }
-        Temporary temporary = 5;
+        Temporary temporary = 21;
     }
-    Authentication auth = 4;
+    Authentication authentication = 40;
 }

@@ -6,6 +6,8 @@ export type SessionProp$ = {
 
     session_id: string;
 
+    authentication_id: string;
+
     expire_time?: Date | null;
 
     create_time: Date;
@@ -30,6 +32,8 @@ export class Session$ {
 
         this.session_id = props.session_id;
 
+        this.authentication_id = props.authentication_id;
+
         this.expire_time = props.expire_time ?? null;
 
         this.create_time = props.create_time;
@@ -40,6 +44,8 @@ export class Session$ {
 
 
     session_id: string;
+
+    authentication_id: string;
 
     expire_time: Date | null;
 
@@ -52,6 +58,8 @@ export class Session$ {
         const values = models.flatMap((model) => [
 
             model.session_id,
+
+            model.authentication_id,
 
             model.expire_time,
 
@@ -79,6 +87,8 @@ export class Session$ {
 
     "session_id"
 ,
+    "authentication_id"
+,
     "expire_time"
 ,
     "create_time"
@@ -93,6 +103,8 @@ export class Session$ {
     static async update(client: PgClient, model: Session$): Promise<void> {
         const values = [
 
+            model.authentication_id,
+
             model.expire_time,
 
             model.create_time,
@@ -106,14 +118,16 @@ export class Session$ {
         await client.query(
             `UPDATE "Session" SET
 
-    "expire_time" = $${ 0 + 1 }
+    "authentication_id" = $${ 0 + 1 }
 ,
-    "create_time" = $${ 1 + 1 }
+    "expire_time" = $${ 1 + 1 }
 ,
-    "update_time" = $${ 2 + 1 }
+    "create_time" = $${ 2 + 1 }
+,
+    "update_time" = $${ 3 + 1 }
 
 WHERE
-     "session_id" = $${ 0 + 3 + 1 }
+     "session_id" = $${ 0 + 4 + 1 }
 `,
             values);
     }

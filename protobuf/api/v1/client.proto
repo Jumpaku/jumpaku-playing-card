@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package api.v1;
+
+enum ClientType {
+  UNKNOWN = 0;
+  WEB = 1;
+  MOBILE = 2;
+}

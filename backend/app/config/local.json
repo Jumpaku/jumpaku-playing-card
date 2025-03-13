@@ -1,3 +1,18 @@
 {
-  "postgres_connection": "postgres://postgres:password@localhost:5432/app?sslmode=disable"
+  "postgresConnection": "postgres://postgres:password@localhost:5432/app?sslmode=disable",
+  "port": 80,
+  "authentication": {
+    "issuer": "http://localhost",
+    "audience": "jumpaku-playing-card",
+    "algorithm": "RS512",
+    "access_expire_seconds": 3600,
+    "refresh_expire_seconds_web": 1209600,
+    "refresh_expire_seconds_mobile": 126144000,
+    "password": {
+      "iterations": 10000,
+      "hashSize": 64
+    },
+    "temporary": {
+    }
+  }
 }

@@ -19,6 +19,9 @@ export class AccessControlGuard implements CanActivate {
         if (accessControl == null) {
             return true;
         }
+        if (accessControl.require.length === 0) {
+            return true;
+        }
 
         const req = ctx.switchToHttp().getRequest<Request>();
         const a = req.headers.authorization;
@@ -31,9 +34,10 @@ export class AccessControlGuard implements CanActivate {
 
         const jwt = a.slice('Bearer'.length).trim();
         try {
-            verifyJWT(jwt, this.config.get().auth!.publicKey, {
+            verifyJWT(jwt, this.config.get().authentication!.publicKey, {
+                algorithms: [this.config.get().authentication!.algorithm as any],
                 timestamp: this.requestTime.requestTime(''),
-                issuers:[this.config.get().auth!.issuer],
+                issuers: [this.config.get().authentication!.issuer],
             });
         } catch (e) {
             return false;

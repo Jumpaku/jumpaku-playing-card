@@ -6,8 +6,10 @@ import {
     AuthenticationServiceService
 } from "../../../../../../gen/pb/api/v1/app/authentication/service/AuthenticationService_rb.service";
 import {AuthenticationService} from "./authentication.service";
-import {AuthenticationPasswordProvider} from "./password.provider";
-import {AuthenticationTemporaryProvider} from "./temporary.provider";
+import {AuthenticationPasswordProvider} from "./authentication_password.provider";
+import {AuthenticationTemporaryProvider} from "./authentication_temporary.provider";
+import {SessionProvider} from "./session.provider";
+import {JwtProvider} from "./jwt.provider";
 
 @Module({
     controllers: [AuthenticationServiceController],
@@ -18,6 +20,8 @@ import {AuthenticationTemporaryProvider} from "./temporary.provider";
         },
         AuthenticationPasswordProvider,
         AuthenticationTemporaryProvider,
+        SessionProvider,
+        JwtProvider,
     ],
 })
 export class AuthenticationModule {

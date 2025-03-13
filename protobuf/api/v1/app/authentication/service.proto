@@ -3,6 +3,7 @@ syntax = "proto3";
 package api.v1.app.authentication;
 
 import "api/v1/access_control.proto";
+import "api/v1/client.proto";
 import "google/api/annotations.proto";
 
 service AuthenticationService {
@@ -14,12 +15,12 @@ service AuthenticationService {
     option (google.api.http) = {post: "/api/v1/app/authentication/refresh"};
     option (api.v1.access_control) = {};
   }
-  rpc TemporaryRegister(TemporaryRegisterRequest) returns (TemporaryRegisterResponse) {
-    option (google.api.http) = {get: "/api/v1/app/authentication/temporary/register"};
+  rpc TemporaryRegisterLogin(TemporaryRegisterLoginRequest) returns (TemporaryRegisterLoginResponse) {
+    option (google.api.http) = {post: "/api/v1/app/authentication/temporary/register-login"};
     option (api.v1.access_control) = {};
   }
   rpc PasswordRegister(PasswordRegisterRequest) returns (PasswordRegisterResponse) {
-    option (google.api.http) = {get: "/api/v1/app/authentication/password/register"};
+    option (google.api.http) = {post: "/api/v1/app/authentication/password/register"};
     option (api.v1.access_control) = {};
   }
   rpc PasswordLogin(PasswordLoginRequest) returns (PasswordLoginResponse) {
@@ -28,8 +29,10 @@ service AuthenticationService {
   }
 }
 
-message TemporaryRegisterRequest {}
-message TemporaryRegisterResponse {
+message TemporaryRegisterLoginRequest {
+  api.v1.ClientType client_type = 1;
+}
+message TemporaryRegisterLoginResponse {
   string access_token = 1;
   string refresh_token = 2;
 }
@@ -38,10 +41,9 @@ message PasswordRegisterRequest {
   string password = 3;
 }
 message PasswordRegisterResponse {
-  string access_token = 1;
-  string refresh_token = 2;
 }
 message PasswordLoginRequest {
+  api.v1.ClientType client_type = 1;
   string login_id = 2;
   string password = 3;
 }
@@ -51,7 +53,9 @@ message PasswordLoginResponse {
 }
 message LogoutRequest {}
 message LogoutResponse {}
-message RefreshRequest {}
+message RefreshRequest {
+  api.v1.ClientType client_type = 1;
+}
 message RefreshResponse {
   string access_token = 1;
   string refresh_token = 2;

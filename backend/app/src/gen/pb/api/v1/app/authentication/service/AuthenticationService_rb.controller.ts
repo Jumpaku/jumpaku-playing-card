@@ -2,13 +2,13 @@
 // @generated from file api/v1/app/authentication/service.proto (package api.v1.app.authentication, syntax proto3)
 /* eslint-disable */
 
-import { Body, Controller, Get, Param, Post, Put, Query, Req, Res } from "@nestjs/common";
+import { Body, Controller, Param, Post, Put, Query, Req, Res } from "@nestjs/common";
 import { AuthenticationServiceService } from "./AuthenticationService_rb.service";
 import { AccessControl } from "../../../access_control.decorator";
 import type { JsonObject, JsonValue } from "@bufbuild/protobuf";
 import { fromJson, toJson } from "@bufbuild/protobuf";
 import { Request, Response } from "express";
-import { LogoutRequestSchema, LogoutResponseSchema, PasswordLoginRequestSchema, PasswordLoginResponseSchema, PasswordRegisterRequestSchema, PasswordRegisterResponseSchema, RefreshRequestSchema, RefreshResponseSchema, TemporaryRegisterRequestSchema, TemporaryRegisterResponseSchema } from "../service_pb.js";
+import { LogoutRequestSchema, LogoutResponseSchema, PasswordLoginRequestSchema, PasswordLoginResponseSchema, PasswordRegisterRequestSchema, PasswordRegisterResponseSchema, RefreshRequestSchema, RefreshResponseSchema, TemporaryRegisterLoginRequestSchema, TemporaryRegisterLoginResponseSchema } from "../service_pb.js";
 
 @Controller() 
 export class AuthenticationServiceController {
@@ -58,13 +58,13 @@ export class AuthenticationServiceController {
     return toJson(RefreshResponseSchema, output);
   }
 
-  @Get('/api/v1/app/authentication/temporary/register')
+  @Post('/api/v1/app/authentication/temporary/register-login')
   @AccessControl({
-    scopePath: "api.v1.app.authentication.AuthenticationService.TemporaryRegister",
+    scopePath: "api.v1.app.authentication.AuthenticationService.TemporaryRegisterLogin",
     require: [
     ]
   }) 
-  async handleTemporaryRegister(
+  async handleTemporaryRegisterLogin(
     @Param() pathParams: {[key: string]: string},
     @Query() queryParams: {[key: string]: string},
     @Body() body: JsonObject,
@@ -75,12 +75,12 @@ export class AuthenticationServiceController {
     for (const key in queryParams) {
       setMessageField(body, key.split('.'), queryParams[key]);
     }
-    const input = fromJson(TemporaryRegisterRequestSchema, body);
-    const output = await this.service.handleTemporaryRegister(input, req, res);
-    return toJson(TemporaryRegisterResponseSchema, output);
+    const input = fromJson(TemporaryRegisterLoginRequestSchema, body);
+    const output = await this.service.handleTemporaryRegisterLogin(input, req, res);
+    return toJson(TemporaryRegisterLoginResponseSchema, output);
   }
 
-  @Get('/api/v1/app/authentication/password/register')
+  @Post('/api/v1/app/authentication/password/register')
   @AccessControl({
     scopePath: "api.v1.app.authentication.AuthenticationService.PasswordRegister",
     require: [

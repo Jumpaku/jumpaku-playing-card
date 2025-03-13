@@ -51,7 +51,7 @@ export class LoggingInterceptor implements NestInterceptor {
                             body: JSON.stringify(resBody),
                         },
                     },
-                }))
+                }));
             }),
         );
     }
