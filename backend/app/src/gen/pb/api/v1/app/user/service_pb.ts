@@ -4,6 +4,7 @@
 
 import type { GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv1";
 import { fileDesc, messageDesc, serviceDesc } from "@bufbuild/protobuf/codegenv1";
+import { file_api_v1_access_control } from "../../access_control_pb.js";
 import { file_google_api_annotations } from "../../../../google/api/annotations_pb.js";
 import type { Message } from "@bufbuild/protobuf";
 
@@ -11,18 +12,26 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file api/v1/app/user/service.proto.
  */
 export const file_api_v1_app_user_service: GenFile = /*@__PURE__*/
-  fileDesc("Ch1hcGkvdjEvYXBwL3VzZXIvc2VydmljZS5wcm90bxIPYXBpLnYxLmFwcC51c2VyIhMKEUNyZWF0ZVVzZXJSZXF1ZXN0IiUKEkNyZWF0ZVVzZXJSZXNwb25zZRIPCgd1c2VyX2lkGAEgASgJIiEKDkdldFVzZXJSZXF1ZXN0Eg8KB3VzZXJfaWQYASABKAkiIgoPR2V0VXNlclJlc3BvbnNlEg8KB3VzZXJfaWQYASABKAkiTwohUmVnaXN0ZXJVc2VyQXV0aGVudGljYXRpb25SZXF1ZXN0Eg8KB3VzZXJfaWQYASABKAkSGQoRYXV0aGVudGljYXRpb25faWQYAiABKAkiJAoiUmVnaXN0ZXJVc2VyQXV0aGVudGljYXRpb25SZXNwb25zZTKrAwoLVXNlclNlcnZpY2USbwoKQ3JlYXRlVXNlchIiLmFwaS52MS5hcHAudXNlci5DcmVhdGVVc2VyUmVxdWVzdBojLmFwaS52MS5hcHAudXNlci5DcmVhdGVVc2VyUmVzcG9uc2UiGILT5JMCEiIQL2FwaS92MS9hcHAvdXNlchJwCgdHZXRVc2VyEh8uYXBpLnYxLmFwcC51c2VyLkdldFVzZXJSZXF1ZXN0GiAuYXBpLnYxLmFwcC51c2VyLkdldFVzZXJSZXNwb25zZSIigtPkkwIcEhovYXBpL3YxL2FwcC91c2VyL3t1c2VyX2lkfRK4AQoaUmVnaXN0ZXJVc2VyQXV0aGVudGljYXRpb24SMi5hcGkudjEuYXBwLnVzZXIuUmVnaXN0ZXJVc2VyQXV0aGVudGljYXRpb25SZXF1ZXN0GjMuYXBpLnYxLmFwcC51c2VyLlJlZ2lzdGVyVXNlckF1dGhlbnRpY2F0aW9uUmVzcG9uc2UiMYLT5JMCKxopL2FwaS92MS9hcHAvdXNlci97dXNlcl9pZH0vYXV0aGVudGljYXRpb25CgwEKE2NvbS5hcGkudjEuYXBwLnVzZXJCDFNlcnZpY2VQcm90b1ABogIEQVZBVaoCD0FwaS5WMS5BcHAuVXNlcsoCD0FwaVxWMVxBcHBcVXNlcuICG0FwaVxWMVxBcHBcVXNlclxHUEJNZXRhZGF0YeoCEkFwaTo6VjE6OkFwcDo6VXNlcmIGcHJvdG8z", [file_google_api_annotations]);
+  fileDesc("Ch1hcGkvdjEvYXBwL3VzZXIvc2VydmljZS5wcm90bxIPYXBpLnYxLmFwcC51c2VyIikKEUNyZWF0ZVVzZXJSZXF1ZXN0EhQKDGRpc3BsYXlfbmFtZRgBIAEoCSI7ChJDcmVhdGVVc2VyUmVzcG9uc2USDwoHdXNlcl9pZBgBIAEoCRIUCgxkaXNwbGF5X25hbWUYAiABKAkiIQoOR2V0VXNlclJlcXVlc3QSDwoHdXNlcl9pZBgBIAEoCSI4Cg9HZXRVc2VyUmVzcG9uc2USDwoHdXNlcl9pZBgBIAEoCRIUCgxkaXNwbGF5X25hbWUYAiABKAkiTwohUmVnaXN0ZXJVc2VyQXV0aGVudGljYXRpb25SZXF1ZXN0Eg8KB3VzZXJfaWQYASABKAkSGQoRYXV0aGVudGljYXRpb25faWQYAiABKAkiJAoiUmVnaXN0ZXJVc2VyQXV0aGVudGljYXRpb25SZXNwb25zZTK8BQoLVXNlclNlcnZpY2USgAEKCkNyZWF0ZVVzZXISIi5hcGkudjEuYXBwLnVzZXIuQ3JlYXRlVXNlclJlcXVlc3QaIy5hcGkudjEuYXBwLnVzZXIuQ3JlYXRlVXNlclJlc3BvbnNlIimCtRgNEgt1c2VyOmNyZWF0ZYLT5JMCEiIQL2FwaS92MS9hcHAvdXNlchJ+CgdHZXRVc2VyEh8uYXBpLnYxLmFwcC51c2VyLkdldFVzZXJSZXF1ZXN0GiAuYXBpLnYxLmFwcC51c2VyLkdldFVzZXJSZXNwb25zZSIwgrUYChIIdXNlcjpnZXSC0+STAhwSGi9hcGkvdjEvYXBwL3VzZXIve3VzZXJfaWR9EtABChVBZGRVc2VyQXV0aGVudGljYXRpb24SMi5hcGkudjEuYXBwLnVzZXIuUmVnaXN0ZXJVc2VyQXV0aGVudGljYXRpb25SZXF1ZXN0GjMuYXBpLnYxLmFwcC51c2VyLlJlZ2lzdGVyVXNlckF1dGhlbnRpY2F0aW9uUmVzcG9uc2UiToK1GBkSF3VzZXI6YWRkLWF1dGhlbnRpY2F0aW9ugtPkkwIrGikvYXBpL3YxL2FwcC91c2VyL3t1c2VyX2lkfS9hdXRoZW50aWNhdGlvbhLWAQoYUmVtb3ZlVXNlckF1dGhlbnRpY2F0aW9uEjIuYXBpLnYxLmFwcC51c2VyLlJlZ2lzdGVyVXNlckF1dGhlbnRpY2F0aW9uUmVxdWVzdBozLmFwaS52MS5hcHAudXNlci5SZWdpc3RlclVzZXJBdXRoZW50aWNhdGlvblJlc3BvbnNlIlGCtRgcEhp1c2VyOnJlbW92ZS1hdXRoZW50aWNhdGlvboLT5JMCKxopL2FwaS92MS9hcHAvdXNlci97dXNlcl9pZH0vYXV0aGVudGljYXRpb25CgwEKE2NvbS5hcGkudjEuYXBwLnVzZXJCDFNlcnZpY2VQcm90b1ABogIEQVZBVaoCD0FwaS5WMS5BcHAuVXNlcsoCD0FwaVxWMVxBcHBcVXNlcuICG0FwaVxWMVxBcHBcVXNlclxHUEJNZXRhZGF0YeoCEkFwaTo6VjE6OkFwcDo6VXNlcmIGcHJvdG8z", [file_api_v1_access_control, file_google_api_annotations]);
 
 /**
  * @generated from message api.v1.app.user.CreateUserRequest
  */
 export type CreateUserRequest = Message<"api.v1.app.user.CreateUserRequest"> & {
+  /**
+   * @generated from field: string display_name = 1;
+   */
+  displayName: string;
 };
 
 /**
  * @generated from message api.v1.app.user.CreateUserRequest
  */
 export type CreateUserRequestJson = {
+  /**
+   * @generated from field: string display_name = 1;
+   */
+  displayName?: string;
 };
 
 /**
@@ -40,6 +49,11 @@ export type CreateUserResponse = Message<"api.v1.app.user.CreateUserResponse"> &
    * @generated from field: string user_id = 1;
    */
   userId: string;
+
+  /**
+   * @generated from field: string display_name = 2;
+   */
+  displayName: string;
 };
 
 /**
@@ -50,6 +64,11 @@ export type CreateUserResponseJson = {
    * @generated from field: string user_id = 1;
    */
   userId?: string;
+
+  /**
+   * @generated from field: string display_name = 2;
+   */
+  displayName?: string;
 };
 
 /**
@@ -94,6 +113,11 @@ export type GetUserResponse = Message<"api.v1.app.user.GetUserResponse"> & {
    * @generated from field: string user_id = 1;
    */
   userId: string;
+
+  /**
+   * @generated from field: string display_name = 2;
+   */
+  displayName: string;
 };
 
 /**
@@ -104,6 +128,11 @@ export type GetUserResponseJson = {
    * @generated from field: string user_id = 1;
    */
   userId?: string;
+
+  /**
+   * @generated from field: string display_name = 2;
+   */
+  displayName?: string;
 };
 
 /**
@@ -190,9 +219,17 @@ export const UserService: GenService<{
     output: typeof GetUserResponseSchema;
   },
   /**
-   * @generated from rpc api.v1.app.user.UserService.RegisterUserAuthentication
+   * @generated from rpc api.v1.app.user.UserService.AddUserAuthentication
    */
-  registerUserAuthentication: {
+  addUserAuthentication: {
+    methodKind: "unary";
+    input: typeof RegisterUserAuthenticationRequestSchema;
+    output: typeof RegisterUserAuthenticationResponseSchema;
+  },
+  /**
+   * @generated from rpc api.v1.app.user.UserService.RemoveUserAuthentication
+   */
+  removeUserAuthentication: {
     methodKind: "unary";
     input: typeof RegisterUserAuthenticationRequestSchema;
     output: typeof RegisterUserAuthenticationResponseSchema;

@@ -5,7 +5,7 @@ import {Random as Random$} from 'random'
 
 
 @Injectable()
-export abstract class RandomProviderToken {
+export abstract class RandomProvider {
     abstract int32(n: number): number;
 
     abstract uuid(): string;
@@ -13,7 +13,7 @@ export abstract class RandomProviderToken {
     abstract salt(): string;
 }
 
-export class RandomProvider extends RandomProviderToken {
+export class DefaultRandomProvider extends RandomProvider {
     override int32(n: number): number {
         assertTrue(n < 4294967296, "n must be less than 4294967296");
         assertTrue(n > 0, "n must be greater than 0");
@@ -30,7 +30,7 @@ export class RandomProvider extends RandomProviderToken {
     }
 }
 
-export class RandomProviderWithSeed extends RandomProviderToken {
+export class SeedRandomProvider extends RandomProvider {
     constructor(seed: string | number) {
         super();
         this.rng = new Random$(seed);

@@ -3,7 +3,7 @@ import {Observable} from 'rxjs';
 import {tap} from 'rxjs/operators';
 import {Request, Response} from "express";
 import * as process from "node:process";
-import {LoggerProvider} from "../module/global/logger.provider";
+import {LoggerProvider} from "./global/logger.provider";
 
 
 function nowNano(): bigint {

@@ -9,6 +9,7 @@ message ErrorResponse {
         UNKNOWN = 0;
         BAD_REQUEST = 1;
         UNAUTHORIZED = 2;
+        PRECONDITION_FAILED = 3;
     }
     ErrorCode error_code = 1;
     string error_description = 2;

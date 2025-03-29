@@ -9,11 +9,11 @@ import "google/api/annotations.proto";
 service AuthenticationService {
   rpc Logout(LogoutRequest) returns (LogoutResponse) {
     option (google.api.http) = {put: "/api/v1/app/authentication/logout"};
-    option (api.v1.access_control) = {};
+    option (api.v1.access_control) = {require: "session:logout"};
   }
   rpc Refresh(RefreshRequest) returns (RefreshResponse) {
     option (google.api.http) = {post: "/api/v1/app/authentication/refresh"};
-    option (api.v1.access_control) = {};
+    option (api.v1.access_control) = {require: "session:refresh"};
   }
   rpc TemporaryRegisterLogin(TemporaryRegisterLoginRequest) returns (TemporaryRegisterLoginResponse) {
     option (google.api.http) = {post: "/api/v1/app/authentication/temporary/register-login"};
@@ -40,8 +40,7 @@ message PasswordRegisterRequest {
   string login_id = 2;
   string password = 3;
 }
-message PasswordRegisterResponse {
-}
+message PasswordRegisterResponse {}
 message PasswordLoginRequest {
   api.v1.ClientType client_type = 1;
   string login_id = 2;

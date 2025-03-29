@@ -14,6 +14,11 @@ export class AuthenticationPasswordProvider {
         return h.toString('hex');
     }
 
+    async exists(tx: PgClient, loginId: string): Promise<boolean> {
+        const found = await AuthenticationPassword$.findByUk_AuthenticationPassword_LoginId(tx, {login_id: loginId});
+        return found != null;
+    }
+
     async register(tx: PgClient, timestamp: Date, authenticationId: string, loginId: string, salt: string, password: string): Promise<void> {
         const hash = this.hash(password, salt);
         await Authentication$.insert(tx, {

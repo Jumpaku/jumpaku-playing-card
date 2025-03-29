@@ -197,7 +197,7 @@ LIMIT 1`,
     static async findByUk_UserAuthentication(client: PgClient, key: UserAuthentication_FindUk_UserAuthenticationKey$): Promise<UserAuthentication$ | null> {
         const params: string[] = [];
         let stmt: string = `SELECT *
-FROM "Uk_UserAuthentication"
+FROM "UserAuthentication"
 WHERE `;
     
         params.push(key.user_id);
@@ -225,7 +225,7 @@ WHERE `;
     static async listByUk_UserAuthentication(client: PgClient, key: UserAuthentication_ListUk_UserAuthenticationKey$): Promise<UserAuthentication$[]> {
         const params: string[] = [];
         let stmt: string = `SELECT *
-FROM "Uk_UserAuthentication"
+FROM "UserAuthentication"
 WHERE `;
     
         if (key.user_id !== undefined) {

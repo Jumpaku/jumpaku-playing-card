@@ -4,6 +4,7 @@
 
 import { Body, Controller, Get, Param, Post, Put, Query, Req, Res } from "@nestjs/common";
 import { UserServiceService } from "./UserService_rb.service";
+import { AccessControl } from "../../../access_control.decorator";
 import type { JsonObject, JsonValue } from "@bufbuild/protobuf";
 import { fromJson, toJson } from "@bufbuild/protobuf";
 import { Request, Response } from "express";
@@ -14,6 +15,12 @@ export class UserServiceController {
   constructor(private service: UserServiceService) {}
 
   @Post('/api/v1/app/user')
+  @AccessControl({
+    scopePath: "api.v1.app.user.UserService.CreateUser",
+    require: [
+      "user:create",
+    ]
+  }) 
   async handleCreateUser(
     @Param() pathParams: {[key: string]: string},
     @Query() queryParams: {[key: string]: string},
@@ -31,6 +38,12 @@ export class UserServiceController {
   }
 
   @Get('/api/v1/app/user/:user_id')
+  @AccessControl({
+    scopePath: "api.v1.app.user.UserService.GetUser",
+    require: [
+      "user:get",
+    ]
+  }) 
   async handleGetUser(
     @Param() pathParams: {[key: string]: string},
     @Query() queryParams: {[key: string]: string},
@@ -49,7 +62,13 @@ export class UserServiceController {
   }
 
   @Put('/api/v1/app/user/:user_id/authentication')
-  async handleRegisterUserAuthentication(
+  @AccessControl({
+    scopePath: "api.v1.app.user.UserService.AddUserAuthentication",
+    require: [
+      "user:add-authentication",
+    ]
+  }) 
+  async handleAddUserAuthentication(
     @Param() pathParams: {[key: string]: string},
     @Query() queryParams: {[key: string]: string},
     @Body() body: JsonObject,
@@ -62,7 +81,31 @@ export class UserServiceController {
     }
     setMessageField(body, ["user_id"], pathParams['user_id']);
     const input = fromJson(RegisterUserAuthenticationRequestSchema, body);
-    const output = await this.service.handleRegisterUserAuthentication(input, req, res);
+    const output = await this.service.handleAddUserAuthentication(input, req, res);
+    return toJson(RegisterUserAuthenticationResponseSchema, output);
+  }
+
+  @Put('/api/v1/app/user/:user_id/authentication')
+  @AccessControl({
+    scopePath: "api.v1.app.user.UserService.RemoveUserAuthentication",
+    require: [
+      "user:remove-authentication",
+    ]
+  }) 
+  async handleRemoveUserAuthentication(
+    @Param() pathParams: {[key: string]: string},
+    @Query() queryParams: {[key: string]: string},
+    @Body() body: JsonObject,
+    @Req() req: Request,
+    @Res({ passthrough: true}) res: Response,
+  ): Promise<JsonValue> {
+      body ??= {};
+    for (const key in queryParams) {
+      setMessageField(body, key.split('.'), queryParams[key]);
+    }
+    setMessageField(body, ["user_id"], pathParams['user_id']);
+    const input = fromJson(RegisterUserAuthenticationRequestSchema, body);
+    const output = await this.service.handleRemoveUserAuthentication(input, req, res);
     return toJson(RegisterUserAuthenticationResponseSchema, output);
   }
 

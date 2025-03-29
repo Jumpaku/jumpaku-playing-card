@@ -19173,7 +19173,9 @@ file: {
       input_type: ".api.v1.app.authentication.LogoutRequest"
       output_type: ".api.v1.app.authentication.LogoutResponse"
       options: {
-        [api.v1.access_control]: {}
+        [api.v1.access_control]: {
+          require: "session:logout"
+        }
         [google.api.http]: {
           put: "/api/v1/app/authentication/logout"
         }
@@ -19184,7 +19186,9 @@ file: {
       input_type: ".api.v1.app.authentication.RefreshRequest"
       output_type: ".api.v1.app.authentication.RefreshResponse"
       options: {
-        [api.v1.access_control]: {}
+        [api.v1.access_control]: {
+          require: "session:refresh"
+        }
         [google.api.http]: {
           post: "/api/v1/app/authentication/refresh"
         }
@@ -19228,7 +19232,7 @@ file: {
     location: {
       span: 0
       span: 0
-      span: 61
+      span: 60
       span: 1
     }
     location: {
@@ -19361,7 +19365,7 @@ file: {
       path: 4
       span: 11
       span: 4
-      span: 40
+      span: 65
     }
     location: {
       path: 6
@@ -19372,7 +19376,20 @@ file: {
       path: 50000
       span: 11
       span: 4
-      span: 40
+      span: 65
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 0
+      path: 4
+      path: 50000
+      path: 2
+      path: 0
+      span: 11
+      span: 38
+      span: 63
     }
     location: {
       path: 6
@@ -19455,7 +19472,7 @@ file: {
       path: 4
       span: 15
       span: 4
-      span: 40
+      span: 66
     }
     location: {
       path: 6
@@ -19466,7 +19483,20 @@ file: {
       path: 50000
       span: 15
       span: 4
-      span: 40
+      span: 66
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 1
+      path: 4
+      path: 50000
+      path: 2
+      path: 0
+      span: 15
+      span: 38
+      span: 64
     }
     location: {
       path: 6
@@ -19998,8 +20028,7 @@ file: {
       path: 3
       span: 42
       span: 0
-      span: 43
-      span: 1
+      span: 35
     }
     location: {
       path: 4
@@ -20012,16 +20041,16 @@ file: {
     location: {
       path: 4
       path: 4
-      span: 44
+      span: 43
       span: 0
-      span: 48
+      span: 47
       span: 1
     }
     location: {
       path: 4
       path: 4
       path: 1
-      span: 44
+      span: 43
       span: 8
       span: 28
     }
@@ -20030,7 +20059,7 @@ file: {
       path: 4
       path: 2
       path: 0
-      span: 45
+      span: 44
       span: 2
       span: 36
     }
@@ -20040,7 +20069,7 @@ file: {
       path: 2
       path: 0
       path: 6
-      span: 45
+      span: 44
       span: 2
       span: 19
     }
@@ -20050,7 +20079,7 @@ file: {
       path: 2
       path: 0
       path: 1
-      span: 45
+      span: 44
       span: 20
       span: 31
     }
@@ -20060,7 +20089,7 @@ file: {
       path: 2
       path: 0
       path: 3
-      span: 45
+      span: 44
       span: 34
       span: 35
     }
@@ -20069,7 +20098,7 @@ file: {
       path: 4
       path: 2
       path: 1
-      span: 46
+      span: 45
       span: 2
       span: 22
     }
@@ -20079,7 +20108,7 @@ file: {
       path: 2
       path: 1
       path: 5
-      span: 46
+      span: 45
       span: 2
       span: 8
     }
@@ -20089,7 +20118,7 @@ file: {
       path: 2
       path: 1
       path: 1
-      span: 46
+      span: 45
       span: 9
       span: 17
     }
@@ -20099,7 +20128,7 @@ file: {
       path: 2
       path: 1
       path: 3
-      span: 46
+      span: 45
       span: 20
       span: 21
     }
@@ -20108,7 +20137,7 @@ file: {
       path: 4
       path: 2
       path: 2
-      span: 47
+      span: 46
       span: 2
       span: 22
     }
@@ -20118,7 +20147,7 @@ file: {
       path: 2
       path: 2
       path: 5
-      span: 47
+      span: 46
       span: 2
       span: 8
     }
@@ -20128,7 +20157,7 @@ file: {
       path: 2
       path: 2
       path: 1
-      span: 47
+      span: 46
       span: 9
       span: 17
     }
@@ -20138,23 +20167,23 @@ file: {
       path: 2
       path: 2
       path: 3
-      span: 47
+      span: 46
       span: 20
       span: 21
     }
     location: {
       path: 4
       path: 5
-      span: 49
+      span: 48
       span: 0
-      span: 52
+      span: 51
       span: 1
     }
     location: {
       path: 4
       path: 5
       path: 1
-      span: 49
+      span: 48
       span: 8
       span: 29
     }
@@ -20163,7 +20192,7 @@ file: {
       path: 5
       path: 2
       path: 0
-      span: 50
+      span: 49
       span: 2
       span: 26
     }
@@ -20173,7 +20202,7 @@ file: {
       path: 2
       path: 0
       path: 5
-      span: 50
+      span: 49
       span: 2
       span: 8
     }
@@ -20183,7 +20212,7 @@ file: {
       path: 2
       path: 0
       path: 1
-      span: 50
+      span: 49
       span: 9
       span: 21
     }
@@ -20193,7 +20222,7 @@ file: {
       path: 2
       path: 0
       path: 3
-      span: 50
+      span: 49
       span: 24
       span: 25
     }
@@ -20202,7 +20231,7 @@ file: {
       path: 5
       path: 2
       path: 1
-      span: 51
+      span: 50
       span: 2
       span: 27
     }
@@ -20212,7 +20241,7 @@ file: {
       path: 2
       path: 1
       path: 5
-      span: 51
+      span: 50
       span: 2
       span: 8
     }
@@ -20222,7 +20251,7 @@ file: {
       path: 2
       path: 1
       path: 1
-      span: 51
+      span: 50
       span: 9
       span: 22
     }
@@ -20232,14 +20261,14 @@ file: {
       path: 2
       path: 1
       path: 3
-      span: 51
+      span: 50
       span: 25
       span: 26
     }
     location: {
       path: 4
       path: 6
-      span: 53
+      span: 52
       span: 0
       span: 24
     }
@@ -20247,14 +20276,14 @@ file: {
       path: 4
       path: 6
       path: 1
-      span: 53
+      span: 52
       span: 8
       span: 21
     }
     location: {
       path: 4
       path: 7
-      span: 54
+      span: 53
       span: 0
       span: 25
     }
@@ -20262,23 +20291,23 @@ file: {
       path: 4
       path: 7
       path: 1
-      span: 54
+      span: 53
       span: 8
       span: 22
     }
     location: {
       path: 4
       path: 8
-      span: 55
+      span: 54
       span: 0
-      span: 57
+      span: 56
       span: 1
     }
     location: {
       path: 4
       path: 8
       path: 1
-      span: 55
+      span: 54
       span: 8
       span: 22
     }
@@ -20287,7 +20316,7 @@ file: {
       path: 8
       path: 2
       path: 0
-      span: 56
+      span: 55
       span: 2
       span: 36
     }
@@ -20297,7 +20326,7 @@ file: {
       path: 2
       path: 0
       path: 6
-      span: 56
+      span: 55
       span: 2
       span: 19
     }
@@ -20307,7 +20336,7 @@ file: {
       path: 2
       path: 0
       path: 1
-      span: 56
+      span: 55
       span: 20
       span: 31
     }
@@ -20317,23 +20346,23 @@ file: {
       path: 2
       path: 0
       path: 3
-      span: 56
+      span: 55
       span: 34
       span: 35
     }
     location: {
       path: 4
       path: 9
-      span: 58
+      span: 57
       span: 0
-      span: 61
+      span: 60
       span: 1
     }
     location: {
       path: 4
       path: 9
       path: 1
-      span: 58
+      span: 57
       span: 8
       span: 23
     }
@@ -20342,7 +20371,7 @@ file: {
       path: 9
       path: 2
       path: 0
-      span: 59
+      span: 58
       span: 2
       span: 26
     }
@@ -20352,7 +20381,7 @@ file: {
       path: 2
       path: 0
       path: 5
-      span: 59
+      span: 58
       span: 2
       span: 8
     }
@@ -20362,7 +20391,7 @@ file: {
       path: 2
       path: 0
       path: 1
-      span: 59
+      span: 58
       span: 9
       span: 21
     }
@@ -20372,7 +20401,7 @@ file: {
       path: 2
       path: 0
       path: 3
-      span: 59
+      span: 58
       span: 24
       span: 25
     }
@@ -20381,7 +20410,7 @@ file: {
       path: 9
       path: 2
       path: 1
-      span: 60
+      span: 59
       span: 2
       span: 27
     }
@@ -20391,7 +20420,7 @@ file: {
       path: 2
       path: 1
       path: 5
-      span: 60
+      span: 59
       span: 2
       span: 8
     }
@@ -20401,7 +20430,7 @@ file: {
       path: 2
       path: 1
       path: 1
-      span: 60
+      span: 59
       span: 9
       span: 22
     }
@@ -20411,7 +20440,7 @@ file: {
       path: 2
       path: 1
       path: 3
-      span: 60
+      span: 59
       span: 25
       span: 26
     }
@@ -20425,9 +20454,17 @@ file: {
 file: {
   name: "api/v1/app/user/service.proto"
   package: "api.v1.app.user"
+  dependency: "api/v1/access_control.proto"
   dependency: "google/api/annotations.proto"
   message_type: {
     name: "CreateUserRequest"
+    field: {
+      name: "display_name"
+      number: 1
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      json_name: "displayName"
+    }
   }
   message_type: {
     name: "CreateUserResponse"
@@ -20437,6 +20474,13 @@ file: {
       label: LABEL_OPTIONAL
       type: TYPE_STRING
       json_name: "userId"
+    }
+    field: {
+      name: "display_name"
+      number: 2
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      json_name: "displayName"
     }
   }
   message_type: {
@@ -20457,6 +20501,13 @@ file: {
       label: LABEL_OPTIONAL
       type: TYPE_STRING
       json_name: "userId"
+    }
+    field: {
+      name: "display_name"
+      number: 2
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      json_name: "displayName"
     }
   }
   message_type: {
@@ -20486,6 +20537,9 @@ file: {
       input_type: ".api.v1.app.user.CreateUserRequest"
       output_type: ".api.v1.app.user.CreateUserResponse"
       options: {
+        [api.v1.access_control]: {
+          require: "user:create"
+        }
         [google.api.http]: {
           post: "/api/v1/app/user"
         }
@@ -20496,16 +20550,35 @@ file: {
       input_type: ".api.v1.app.user.GetUserRequest"
       output_type: ".api.v1.app.user.GetUserResponse"
       options: {
+        [api.v1.access_control]: {
+          require: "user:get"
+        }
         [google.api.http]: {
           get: "/api/v1/app/user/{user_id}"
         }
       }
     }
     method: {
-      name: "RegisterUserAuthentication"
+      name: "AddUserAuthentication"
       input_type: ".api.v1.app.user.RegisterUserAuthenticationRequest"
       output_type: ".api.v1.app.user.RegisterUserAuthenticationResponse"
       options: {
+        [api.v1.access_control]: {
+          require: "user:add-authentication"
+        }
+        [google.api.http]: {
+          put: "/api/v1/app/user/{user_id}/authentication"
+        }
+      }
+    }
+    method: {
+      name: "RemoveUserAuthentication"
+      input_type: ".api.v1.app.user.RegisterUserAuthenticationRequest"
+      output_type: ".api.v1.app.user.RegisterUserAuthenticationResponse"
+      options: {
+        [api.v1.access_control]: {
+          require: "user:remove-authentication"
+        }
         [google.api.http]: {
           put: "/api/v1/app/user/{user_id}/authentication"
         }
@@ -20516,8 +20589,8 @@ file: {
     location: {
       span: 0
       span: 0
-      span: 34
-      span: 1
+      span: 44
+      span: 45
     }
     location: {
       path: 12
@@ -20536,21 +20609,28 @@ file: {
       path: 0
       span: 4
       span: 0
+      span: 37
+    }
+    location: {
+      path: 3
+      path: 1
+      span: 5
+      span: 0
       span: 38
     }
     location: {
       path: 6
       path: 0
-      span: 6
+      span: 7
       span: 0
-      span: 16
+      span: 24
       span: 1
     }
     location: {
       path: 6
       path: 0
       path: 1
-      span: 6
+      span: 7
       span: 8
       span: 19
     }
@@ -20559,9 +20639,9 @@ file: {
       path: 0
       path: 2
       path: 0
-      span: 7
+      span: 8
       span: 2
-      span: 9
+      span: 11
       span: 3
     }
     location: {
@@ -20570,7 +20650,7 @@ file: {
       path: 2
       path: 0
       path: 1
-      span: 7
+      span: 8
       span: 6
       span: 16
     }
@@ -20580,7 +20660,7 @@ file: {
       path: 2
       path: 0
       path: 2
-      span: 7
+      span: 8
       span: 17
       span: 34
     }
@@ -20590,7 +20670,7 @@ file: {
       path: 2
       path: 0
       path: 3
-      span: 7
+      span: 8
       span: 45
       span: 63
     }
@@ -20600,7 +20680,7 @@ file: {
       path: 2
       path: 0
       path: 4
-      span: 8
+      span: 9
       span: 4
       span: 58
     }
@@ -20611,7 +20691,7 @@ file: {
       path: 0
       path: 4
       path: 72295728
-      span: 8
+      span: 9
       span: 4
       span: 58
     }
@@ -20623,7 +20703,7 @@ file: {
       path: 4
       path: 72295728
       path: 4
-      span: 8
+      span: 9
       span: 32
       span: 56
     }
@@ -20631,10 +20711,44 @@ file: {
       path: 6
       path: 0
       path: 2
-      path: 1
+      path: 0
+      path: 4
       span: 10
-      span: 2
+      span: 4
+      span: 62
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 0
+      path: 4
+      path: 50000
+      span: 10
+      span: 4
+      span: 62
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 0
+      path: 4
+      path: 50000
+      path: 2
+      path: 0
+      span: 10
+      span: 38
+      span: 60
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 1
       span: 12
+      span: 2
+      span: 15
       span: 3
     }
     location: {
@@ -20643,7 +20757,7 @@ file: {
       path: 2
       path: 1
       path: 1
-      span: 10
+      span: 12
       span: 6
       span: 13
     }
@@ -20653,7 +20767,7 @@ file: {
       path: 2
       path: 1
       path: 2
-      span: 10
+      span: 12
       span: 14
       span: 28
     }
@@ -20663,7 +20777,7 @@ file: {
       path: 2
       path: 1
       path: 3
-      span: 10
+      span: 12
       span: 39
       span: 54
     }
@@ -20673,7 +20787,7 @@ file: {
       path: 2
       path: 1
       path: 4
-      span: 11
+      span: 13
       span: 4
       span: 67
     }
@@ -20684,7 +20798,7 @@ file: {
       path: 1
       path: 4
       path: 72295728
-      span: 11
+      span: 13
       span: 4
       span: 67
     }
@@ -20696,7 +20810,7 @@ file: {
       path: 4
       path: 72295728
       path: 2
-      span: 11
+      span: 13
       span: 32
       span: 65
     }
@@ -20704,10 +20818,44 @@ file: {
       path: 6
       path: 0
       path: 2
+      path: 1
+      path: 4
+      span: 14
+      span: 4
+      span: 59
+    }
+    location: {
+      path: 6
+      path: 0
       path: 2
-      span: 13
+      path: 1
+      path: 4
+      path: 50000
+      span: 14
+      span: 4
+      span: 59
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 1
+      path: 4
+      path: 50000
+      path: 2
+      path: 0
+      span: 14
+      span: 38
+      span: 57
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 2
+      span: 16
       span: 2
-      span: 15
+      span: 19
       span: 3
     }
     location: {
@@ -20716,9 +20864,9 @@ file: {
       path: 2
       path: 2
       path: 1
-      span: 13
+      span: 16
       span: 6
-      span: 32
+      span: 27
     }
     location: {
       path: 6
@@ -20726,9 +20874,9 @@ file: {
       path: 2
       path: 2
       path: 2
-      span: 13
-      span: 33
-      span: 66
+      span: 16
+      span: 28
+      span: 61
     }
     location: {
       path: 6
@@ -20736,9 +20884,9 @@ file: {
       path: 2
       path: 2
       path: 3
-      span: 13
-      span: 77
-      span: 111
+      span: 16
+      span: 72
+      span: 106
     }
     location: {
       path: 6
@@ -20746,7 +20894,7 @@ file: {
       path: 2
       path: 2
       path: 4
-      span: 14
+      span: 17
       span: 4
       span: 82
     }
@@ -20757,7 +20905,7 @@ file: {
       path: 2
       path: 4
       path: 72295728
-      span: 14
+      span: 17
       span: 4
       span: 82
     }
@@ -20769,139 +20917,154 @@ file: {
       path: 4
       path: 72295728
       path: 3
-      span: 14
+      span: 17
       span: 32
       span: 80
     }
     location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 2
       path: 4
+      span: 18
+      span: 4
+      span: 74
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 2
+      path: 4
+      path: 50000
+      span: 18
+      span: 4
+      span: 74
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 2
+      path: 4
+      path: 50000
+      path: 2
       path: 0
       span: 18
-      span: 0
-      span: 19
-      span: 1
+      span: 38
+      span: 72
     }
     location: {
-      path: 4
+      path: 6
       path: 0
-      path: 1
-      span: 18
-      span: 8
-      span: 25
-    }
-    location: {
-      path: 4
-      path: 1
-      span: 20
-      span: 0
-      span: 22
-      span: 1
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 1
-      span: 20
-      span: 8
-      span: 26
-    }
-    location: {
-      path: 4
-      path: 1
       path: 2
-      path: 0
-      span: 21
-      span: 2
-      span: 21
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 0
-      path: 5
-      span: 21
-      span: 2
-      span: 8
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 0
-      path: 1
-      span: 21
-      span: 9
-      span: 16
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 0
       path: 3
-      span: 21
-      span: 19
       span: 20
-    }
-    location: {
-      path: 4
-      path: 2
+      span: 2
       span: 23
-      span: 0
-      span: 25
-      span: 1
+      span: 3
     }
     location: {
-      path: 4
-      path: 2
-      path: 1
-      span: 23
-      span: 8
-      span: 22
-    }
-    location: {
-      path: 4
-      path: 2
-      path: 2
+      path: 6
       path: 0
-      span: 24
-      span: 2
-      span: 21
-    }
-    location: {
-      path: 4
       path: 2
-      path: 2
-      path: 0
-      path: 5
-      span: 24
-      span: 2
-      span: 8
-    }
-    location: {
-      path: 4
-      path: 2
-      path: 2
-      path: 0
-      path: 1
-      span: 24
-      span: 9
-      span: 16
-    }
-    location: {
-      path: 4
-      path: 2
-      path: 2
-      path: 0
       path: 3
-      span: 24
-      span: 19
+      path: 1
       span: 20
+      span: 6
+      span: 30
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 3
+      path: 2
+      span: 20
+      span: 31
+      span: 64
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 3
+      path: 3
+      span: 20
+      span: 75
+      span: 109
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 3
+      path: 4
+      span: 21
+      span: 4
+      span: 82
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 3
+      path: 4
+      path: 72295728
+      span: 21
+      span: 4
+      span: 82
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 3
+      path: 4
+      path: 72295728
+      path: 3
+      span: 21
+      span: 32
+      span: 80
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 3
+      path: 4
+      span: 22
+      span: 4
+      span: 77
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 3
+      path: 4
+      path: 50000
+      span: 22
+      span: 4
+      span: 77
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 3
+      path: 4
+      path: 50000
+      path: 2
+      path: 0
+      span: 22
+      span: 38
+      span: 75
     }
     location: {
       path: 4
-      path: 3
+      path: 0
       span: 26
       span: 0
       span: 28
@@ -20909,24 +21072,24 @@ file: {
     }
     location: {
       path: 4
-      path: 3
+      path: 0
       path: 1
       span: 26
       span: 8
-      span: 23
+      span: 25
     }
     location: {
       path: 4
-      path: 3
+      path: 0
       path: 2
       path: 0
       span: 27
       span: 2
-      span: 21
+      span: 26
     }
     location: {
       path: 4
-      path: 3
+      path: 0
       path: 2
       path: 0
       path: 5
@@ -20936,11 +21099,215 @@ file: {
     }
     location: {
       path: 4
-      path: 3
+      path: 0
       path: 2
       path: 0
       path: 1
       span: 27
+      span: 9
+      span: 21
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 0
+      path: 3
+      span: 27
+      span: 24
+      span: 25
+    }
+    location: {
+      path: 4
+      path: 1
+      span: 29
+      span: 0
+      span: 32
+      span: 1
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 1
+      span: 29
+      span: 8
+      span: 26
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 0
+      span: 30
+      span: 2
+      span: 21
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 0
+      path: 5
+      span: 30
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 0
+      path: 1
+      span: 30
+      span: 9
+      span: 16
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 0
+      path: 3
+      span: 30
+      span: 19
+      span: 20
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 1
+      span: 31
+      span: 2
+      span: 26
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 1
+      path: 5
+      span: 31
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 1
+      path: 1
+      span: 31
+      span: 9
+      span: 21
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 1
+      path: 3
+      span: 31
+      span: 24
+      span: 25
+    }
+    location: {
+      path: 4
+      path: 2
+      span: 33
+      span: 0
+      span: 35
+      span: 1
+    }
+    location: {
+      path: 4
+      path: 2
+      path: 1
+      span: 33
+      span: 8
+      span: 22
+    }
+    location: {
+      path: 4
+      path: 2
+      path: 2
+      path: 0
+      span: 34
+      span: 2
+      span: 21
+    }
+    location: {
+      path: 4
+      path: 2
+      path: 2
+      path: 0
+      path: 5
+      span: 34
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 2
+      path: 2
+      path: 0
+      path: 1
+      span: 34
+      span: 9
+      span: 16
+    }
+    location: {
+      path: 4
+      path: 2
+      path: 2
+      path: 0
+      path: 3
+      span: 34
+      span: 19
+      span: 20
+    }
+    location: {
+      path: 4
+      path: 3
+      span: 36
+      span: 0
+      span: 39
+      span: 1
+    }
+    location: {
+      path: 4
+      path: 3
+      path: 1
+      span: 36
+      span: 8
+      span: 23
+    }
+    location: {
+      path: 4
+      path: 3
+      path: 2
+      path: 0
+      span: 37
+      span: 2
+      span: 21
+    }
+    location: {
+      path: 4
+      path: 3
+      path: 2
+      path: 0
+      path: 5
+      span: 37
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 3
+      path: 2
+      path: 0
+      path: 1
+      span: 37
       span: 9
       span: 16
     }
@@ -20950,23 +21317,62 @@ file: {
       path: 2
       path: 0
       path: 3
-      span: 27
+      span: 37
       span: 19
       span: 20
     }
     location: {
       path: 4
+      path: 3
+      path: 2
+      path: 1
+      span: 38
+      span: 2
+      span: 26
+    }
+    location: {
       path: 4
-      span: 29
+      path: 3
+      path: 2
+      path: 1
+      path: 5
+      span: 38
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 3
+      path: 2
+      path: 1
+      path: 1
+      span: 38
+      span: 9
+      span: 21
+    }
+    location: {
+      path: 4
+      path: 3
+      path: 2
+      path: 1
+      path: 3
+      span: 38
+      span: 24
+      span: 25
+    }
+    location: {
+      path: 4
+      path: 4
+      span: 40
       span: 0
-      span: 32
+      span: 43
       span: 1
     }
     location: {
       path: 4
       path: 4
       path: 1
-      span: 29
+      span: 40
       span: 8
       span: 41
     }
@@ -20975,7 +21381,7 @@ file: {
       path: 4
       path: 2
       path: 0
-      span: 30
+      span: 41
       span: 2
       span: 21
     }
@@ -20985,7 +21391,7 @@ file: {
       path: 2
       path: 0
       path: 5
-      span: 30
+      span: 41
       span: 2
       span: 8
     }
@@ -20995,7 +21401,7 @@ file: {
       path: 2
       path: 0
       path: 1
-      span: 30
+      span: 41
       span: 9
       span: 16
     }
@@ -21005,7 +21411,7 @@ file: {
       path: 2
       path: 0
       path: 3
-      span: 30
+      span: 41
       span: 19
       span: 20
     }
@@ -21014,7 +21420,7 @@ file: {
       path: 4
       path: 2
       path: 1
-      span: 31
+      span: 42
       span: 2
       span: 31
     }
@@ -21024,7 +21430,7 @@ file: {
       path: 2
       path: 1
       path: 5
-      span: 31
+      span: 42
       span: 2
       span: 8
     }
@@ -21034,7 +21440,7 @@ file: {
       path: 2
       path: 1
       path: 1
-      span: 31
+      span: 42
       span: 9
       span: 26
     }
@@ -21044,23 +21450,22 @@ file: {
       path: 2
       path: 1
       path: 3
-      span: 31
+      span: 42
       span: 29
       span: 30
     }
     location: {
       path: 4
       path: 5
-      span: 33
+      span: 44
       span: 0
-      span: 34
-      span: 1
+      span: 45
     }
     location: {
       path: 4
       path: 5
       path: 1
-      span: 33
+      span: 44
       span: 8
       span: 42
     }
@@ -21378,13 +21783,17 @@ file: {
         name: "UNAUTHORIZED"
         number: 2
       }
+      value: {
+        name: "PRECONDITION_FAILED"
+        number: 3
+      }
     }
   }
   source_code_info: {
     location: {
       span: 0
       span: 0
-      span: 15
+      span: 16
       span: 1
     }
     location: {
@@ -21411,7 +21820,7 @@ file: {
       path: 0
       span: 6
       span: 0
-      span: 15
+      span: 16
       span: 1
     }
     location: {
@@ -21429,7 +21838,7 @@ file: {
       path: 0
       span: 7
       span: 4
-      span: 11
+      span: 12
       span: 5
     }
     location: {
@@ -21550,9 +21959,44 @@ file: {
     location: {
       path: 4
       path: 0
+      path: 4
+      path: 0
+      path: 2
+      path: 3
+      span: 11
+      span: 8
+      span: 32
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 4
+      path: 0
+      path: 2
+      path: 3
+      path: 1
+      span: 11
+      span: 8
+      span: 27
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 4
+      path: 0
+      path: 2
+      path: 3
+      path: 2
+      span: 11
+      span: 30
+      span: 31
+    }
+    location: {
+      path: 4
+      path: 0
       path: 2
       path: 0
-      span: 12
+      span: 13
       span: 4
       span: 29
     }
@@ -21562,7 +22006,7 @@ file: {
       path: 2
       path: 0
       path: 6
-      span: 12
+      span: 13
       span: 4
       span: 13
     }
@@ -21572,7 +22016,7 @@ file: {
       path: 2
       path: 0
       path: 1
-      span: 12
+      span: 13
       span: 14
       span: 24
     }
@@ -21582,7 +22026,7 @@ file: {
       path: 2
       path: 0
       path: 3
-      span: 12
+      span: 13
       span: 27
       span: 28
     }
@@ -21591,7 +22035,7 @@ file: {
       path: 0
       path: 2
       path: 1
-      span: 13
+      span: 14
       span: 4
       span: 33
     }
@@ -21601,7 +22045,7 @@ file: {
       path: 2
       path: 1
       path: 5
-      span: 13
+      span: 14
       span: 4
       span: 10
     }
@@ -21611,7 +22055,7 @@ file: {
       path: 2
       path: 1
       path: 1
-      span: 13
+      span: 14
       span: 11
       span: 28
     }
@@ -21621,7 +22065,7 @@ file: {
       path: 2
       path: 1
       path: 3
-      span: 13
+      span: 14
       span: 31
       span: 32
     }
@@ -21630,7 +22074,7 @@ file: {
       path: 0
       path: 2
       path: 2
-      span: 14
+      span: 15
       span: 4
       span: 33
     }
@@ -21640,7 +22084,7 @@ file: {
       path: 2
       path: 2
       path: 6
-      span: 14
+      span: 15
       span: 4
       span: 23
     }
@@ -21650,7 +22094,7 @@ file: {
       path: 2
       path: 2
       path: 1
-      span: 14
+      span: 15
       span: 24
       span: 28
     }
@@ -21660,7 +22104,7 @@ file: {
       path: 2
       path: 2
       path: 3
-      span: 14
+      span: 15
       span: 31
       span: 32
     }

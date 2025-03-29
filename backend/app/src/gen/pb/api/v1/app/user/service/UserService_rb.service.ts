@@ -10,5 +10,6 @@ import { Request, Response } from "express";
 export abstract class UserServiceService {
   abstract handleCreateUser(input: CreateUserRequest, req: Request, res: Response): Promise<CreateUserResponse>;
   abstract handleGetUser(input: GetUserRequest, req: Request, res: Response): Promise<GetUserResponse>;
-  abstract handleRegisterUserAuthentication(input: RegisterUserAuthenticationRequest, req: Request, res: Response): Promise<RegisterUserAuthenticationResponse>;
+  abstract handleAddUserAuthentication(input: RegisterUserAuthenticationRequest, req: Request, res: Response): Promise<RegisterUserAuthenticationResponse>;
+  abstract handleRemoveUserAuthentication(input: RegisterUserAuthenticationRequest, req: Request, res: Response): Promise<RegisterUserAuthenticationResponse>;
 }

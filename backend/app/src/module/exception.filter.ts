@@ -1,6 +1,6 @@
 import {ExceptionFilter, Catch, ArgumentsHost, HttpStatus, Injectable} from '@nestjs/common';
 import {Request, Response} from 'express';
-import {LoggerProvider} from "../module/global/logger.provider";
+import {LoggerProvider} from "./global/logger.provider";
 import {AppException} from "../exception/exception";
 import {ErrorResponse_ErrorCode, ErrorResponseJson, ErrorResponseSchema} from "../gen/pb/api/v1/error_pb";
 import {create, toJson} from "@bufbuild/protobuf";

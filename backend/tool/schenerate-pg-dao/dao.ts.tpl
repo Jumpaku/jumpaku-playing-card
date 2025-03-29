@@ -143,7 +143,7 @@ LIMIT 1`,
     static async findBy{{.Name}}(client: PgClient, key: {{$TableName}}_Find{{.Name}}Key$): Promise<{{$TableName}}$ | null> {
         const params: string[] = [];
         let stmt: string = `SELECT *
-FROM "{{.Name}}"
+FROM "{{$TableName}}"
 WHERE `;
     {{range $Index, $Key := .Keys}}
         params.push(key.{{$Key.Name}});
@@ -165,7 +165,7 @@ WHERE `;
     static async listBy{{.Name}}(client: PgClient, key: {{$TableName}}_List{{.Name}}Key$): Promise<{{$TableName}}$[]> {
         const params: string[] = [];
         let stmt: string = `SELECT *
-FROM "{{.Name}}"
+FROM "{{$TableName}}"
 WHERE `;
     {{range $Index, $Key := .Keys}}
         if (key.{{$Key.Name}} !== undefined) {

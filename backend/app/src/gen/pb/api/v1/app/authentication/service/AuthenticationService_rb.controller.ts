@@ -18,6 +18,7 @@ export class AuthenticationServiceController {
   @AccessControl({
     scopePath: "api.v1.app.authentication.AuthenticationService.Logout",
     require: [
+      "session:logout",
     ]
   }) 
   async handleLogout(
@@ -40,6 +41,7 @@ export class AuthenticationServiceController {
   @AccessControl({
     scopePath: "api.v1.app.authentication.AuthenticationService.Refresh",
     require: [
+      "session:refresh",
     ]
   }) 
   async handleRefresh(
