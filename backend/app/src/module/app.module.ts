@@ -7,7 +7,7 @@ import {APP_FILTER, APP_GUARD, APP_INTERCEPTOR} from "@nestjs/core";
 import {AccessControlGuard} from "./access_control.guard";
 import {LoggingInterceptor} from "./logging.interceptor";
 import {AppExceptionFilter} from "./exception.filter";
-import {RequestInterceptor} from "./request.interceptor";
+import {UserModule} from "./controller/api/v1/app/user/user.module";
 
 @Module({
     imports: [
@@ -15,15 +15,12 @@ import {RequestInterceptor} from "./request.interceptor";
         PlaygroundModule,
         ExampleModule,
         AuthenticationModule,
+        UserModule,
     ],
     providers: [
         {
             provide: APP_GUARD,
             useClass: AccessControlGuard,
-        },
-        {
-            provide: APP_INTERCEPTOR,
-            useClass: RequestInterceptor,
         },
         {
             provide: APP_INTERCEPTOR,

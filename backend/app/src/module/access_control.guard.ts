@@ -1,11 +1,11 @@
-import {Injectable, CanActivate, ExecutionContext, Inject} from '@nestjs/common';
+import {Injectable, CanActivate, ExecutionContext} from '@nestjs/common';
 import {extractAccessControl} from "../gen/pb/api/v1/access_control.decorator";
 import {Request} from "express";
 import {ConfigProvider} from "./global/config.provider";
 import {verifyJWT} from "../lib/jwt";
 import {RequestTimeProvider} from "./global/request_time.provider";
 import {Observable} from "rxjs";
-import {AccessTokenPayloadJson} from "../gen/pb/api/v1/jwt_pb";
+import {JwtPayloadJson} from "../gen/pb/api/v1/jwt_pb";
 
 @Injectable()
 export class AccessControlGuard implements CanActivate {
@@ -28,10 +28,10 @@ export class AccessControlGuard implements CanActivate {
         }
         const jwt = a.slice('Bearer'.length).trim();
 
-        let accessToken: AccessTokenPayloadJson;
+        let payload: JwtPayloadJson;
         const configAuth = this.config.get().authentication!;
         try {
-            accessToken = verifyJWT<AccessTokenPayloadJson>(jwt, configAuth.publicKey, {
+            payload = verifyJWT<JwtPayloadJson>(jwt, configAuth.publicKey, {
                 algorithms: [configAuth.algorithm as any],
                 timestamp: this.requestTime.extract(req),
                 issuers: [configAuth.issuer],
@@ -41,12 +41,16 @@ export class AccessControlGuard implements CanActivate {
             return false;
         }
 
-        const scopes = accessToken.data?.scopes ?? [];
+        const scopes = (payload.kind === "JWT_KIND_ACCESS") ? (payload.accessData?.scopes ?? []) :
+            (payload.kind === "JWT_KIND_REFRESH") ? (payload.refreshData?.scopes ?? []) :
+                [];
         for (const r of accessControl.require) {
             if (!scopes.some(s => s === r || r.startsWith(`${s}:`))) {
                 return false;
             }
         }
+
+        (req as any).jwtPayload = payload;
 
         return true;
     }

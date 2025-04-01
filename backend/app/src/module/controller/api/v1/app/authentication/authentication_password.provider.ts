@@ -6,9 +6,6 @@ import {AuthenticationPassword$} from "../../../../../../gen/pg/dao/dao_Authenti
 
 @Injectable()
 export class AuthenticationPasswordProvider {
-    constructor() {
-    }
-
     private hash(password: string, salt: string): string {
         const h = pbkdf2Sync(password, salt, 10000, 64, 'sha512');
         return h.toString('hex');

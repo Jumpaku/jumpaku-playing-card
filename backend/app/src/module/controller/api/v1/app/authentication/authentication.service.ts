@@ -1,4 +1,4 @@
-import e from "express";
+import {Request,Response} from "express";
 import {
     LogoutRequest,
     LogoutResponse,
@@ -26,17 +26,19 @@ import {create, fromJson} from "@bufbuild/protobuf";
 import {AuthenticationPasswordProvider} from "./authentication_password.provider";
 import {ConfigProvider} from "../../../../../global/config.provider";
 import {AuthenticationTemporaryProvider} from "./authentication_temporary.provider";
-import {extractJWT, JwtProvider} from "./jwt.provider";
+import {JwtProvider} from "./jwt.provider";
 import {throwPreconditionFailed, throwUnauthorized} from "../../../../../../exception/exception";
 import {Session$} from "../../../../../../gen/pg/dao/dao_Session";
 import {
-    AccessTokenPayload_Data, AccessTokenPayload_DataSchema,
-    RefreshTokenPayload_Data, RefreshTokenPayload_DataSchema
+    JwtPayload_AccessDataSchema,
+    JwtPayload_RefreshDataSchema
 } from "../../../../../../gen/pb/api/v1/jwt_pb";
-import {SessionProvider} from "./session.provider";
+import {SessionRepository} from "./session.repository";
 import {ClientType} from "../../../../../../gen/pb/api/v1/client_pb";
 import {RandomProvider} from "../../../../../global/random.provider";
 import {date, duration, instant} from "../../../../../../lib/temporal";
+import {SessionProvider} from "../../../../../shared/session/session.provider";
+import {RequestSessionProvider} from "../../../../../global/request_session.provider";
 
 @Injectable()
 export class AuthenticationService extends AuthenticationServiceService {
@@ -44,6 +46,8 @@ export class AuthenticationService extends AuthenticationServiceService {
         private readonly config: ConfigProvider,
         private readonly postgres: PostgresProvider,
         private readonly requestTime: RequestTimeProvider,
+        private readonly requestSession: RequestSessionProvider,
+        private readonly authSession: SessionRepository,
         private readonly session: SessionProvider,
         private readonly password: AuthenticationPasswordProvider,
         private readonly temporary: AuthenticationTemporaryProvider,
@@ -53,7 +57,7 @@ export class AuthenticationService extends AuthenticationServiceService {
         super();
     }
 
-    async handleTemporaryRegisterLogin(input: TemporaryRegisterLoginRequest, req: e.Request, res: e.Response): Promise<TemporaryRegisterLoginResponse> {
+    async handleTemporaryRegisterLogin(input: TemporaryRegisterLoginRequest, req: Request, res: Response): Promise<TemporaryRegisterLoginResponse> {
         const t = this.requestTime.extract(req);
         const configAuth = this.config.get().authentication!;
         const seconds = input.clientType === ClientType.MOBILE ?
@@ -67,7 +71,7 @@ export class AuthenticationService extends AuthenticationServiceService {
 
             // Create a new session
             const sessionId = this.random.uuid();
-            await this.session.create(tx, sessionId, authenticationId, expireTime, t);
+            await this.authSession.create(tx, sessionId, authenticationId, expireTime, t);
 
             // Issue an access token and a refresh token
             const {at, rt} = this.issueTokens(sessionId, t, expireTime);
@@ -77,18 +81,18 @@ export class AuthenticationService extends AuthenticationServiceService {
     }
 
     private issueTokens(sessionId: string, t: Date, expireTime: Date) {
-        const at = this.jwt.issueAccessToken(create(AccessTokenPayload_DataSchema, {
+        const at = this.jwt.issueAccessToken(create(JwtPayload_AccessDataSchema, {
             sessionId,
             scopes: ["user", "session:logout"],
         }), t);
-        const rt = this.jwt.issueRefreshToken(fromJson(RefreshTokenPayload_DataSchema, {
+        const rt = this.jwt.issueRefreshToken(fromJson(JwtPayload_RefreshDataSchema, {
             sessionId,
             scopes: ["session:refresh"],
         }), expireTime, t);
         return {at, rt};
     }
 
-    async handlePasswordLogin(input: PasswordLoginRequest, req: e.Request, res: e.Response): Promise<PasswordLoginResponse> {
+    async handlePasswordLogin(input: PasswordLoginRequest, req: Request, res: Response): Promise<PasswordLoginResponse> {
         const t = this.requestTime.extract(req);
         const configAuth = this.config.get().authentication!;
         const seconds = input.clientType === ClientType.MOBILE ?
@@ -104,7 +108,7 @@ export class AuthenticationService extends AuthenticationServiceService {
 
             // Create a new session
             const sessionId = this.random.uuid();
-            await this.session.create(tx, sessionId, authenticationId, expireTime, t);
+            await this.authSession.create(tx, sessionId, authenticationId, expireTime, t);
 
             // Issue an access token and a refresh token
             const {at, rt} = this.issueTokens(sessionId, t, expireTime);
@@ -113,7 +117,7 @@ export class AuthenticationService extends AuthenticationServiceService {
         });
     }
 
-    async handlePasswordRegister(input: PasswordRegisterRequest, req: e.Request, res: e.Response): Promise<PasswordRegisterResponse> {
+    async handlePasswordRegister(input: PasswordRegisterRequest, req: Request, res: Response): Promise<PasswordRegisterResponse> {
         const t = this.requestTime.extract(req);
         return await this.postgres.transaction(async (tx) => {
             // Check if the login ID is already registered
@@ -128,52 +132,29 @@ export class AuthenticationService extends AuthenticationServiceService {
         });
     }
 
-    async handleLogout(input: LogoutRequest, req: e.Request, res: e.Response): Promise<LogoutResponse> {
-        const t = this.requestTime.extract(req);
-        const accessToken = extractJWT(req);
-        if (accessToken == null) {
-            throwUnauthorized('access token not found', 'access token not found');
-        }
-        let payload: AccessTokenPayload_Data;
-        try {
-            payload = this.jwt.verifyAccessToken(accessToken, t);
-        } catch (e) {
-            throwUnauthorized('access token invalid', 'access token invalid', {cause: e});
-        }
-        const sessionId = payload.sessionId;
-        if (sessionId === "") {
-            throwUnauthorized('session_id not found', 'session_id not found in refresh token');
-        }
+    async handleLogout(input: LogoutRequest, req: Request, res: Response): Promise<LogoutResponse> {
+        const sessionId = this.requestSession.mustExtract(req);
+
         await this.postgres.transaction(async (tx) => {
-            await Session$.delete(tx, {session_id: sessionId});
+            await this.authSession.delete(tx, sessionId);
         });
+
         return Promise.resolve(create(LogoutResponseSchema, {}));
     }
 
-    async handleRefresh(input: RefreshRequest, req: e.Request, res: e.Response): Promise<RefreshResponse> {
+    async handleRefresh(input: RefreshRequest, req: Request, res: Response): Promise<RefreshResponse> {
         const t = this.requestTime.extract(req);
-        const refreshToken = extractJWT(req);
-        if (refreshToken == null) {
-            throwUnauthorized('refresh token not found', 'refresh token not found');
-        }
-        let payload: RefreshTokenPayload_Data;
-        try {
-            payload = this.jwt.verifyRefreshToken(refreshToken, t);
-        } catch (e) {
-            throwUnauthorized('refresh token invalid', 'refresh token invalid', {cause: e});
-        }
-        if (payload.sessionId === '') {
-            throwUnauthorized('session_id not found', 'session_id not found in refresh token');
-        }
+        const sessionId = this.requestSession.mustExtract(req);
         const configAuth = this.config.get().authentication!;
         const seconds = input.clientType === ClientType.MOBILE ?
             configAuth.refreshExpireSecondsMobile : configAuth.refreshExpireSecondsWeb;
         const expireTime = date(instant(t).add(duration(seconds)));
         return await this.postgres.transaction(async (tx) => {
-            const session = await this.session.findValid(tx, payload.sessionId, t);
+            const session = await this.session.findValid(tx, sessionId, t);
             if (session == null) {
                 throwUnauthorized('session not found', 'valid session not found');
             }
+            
             session.expire_time = expireTime;
             session.update_time = t;
             await Session$.update(tx, session);

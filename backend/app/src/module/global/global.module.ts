@@ -6,6 +6,7 @@ import {RealRequestTimeProvider, RequestTimeProvider} from "./request_time.provi
 import {LoggerProvider} from "./logger.provider";
 import {PostgresProvider} from "./postgres.provider";
 import {mustGetEnv} from "../../lib/env";
+import {RequestSessionProvider} from "./request_session.provider";
 
 @Global()
 @Module({
@@ -25,6 +26,7 @@ import {mustGetEnv} from "../../lib/env";
             useClass: RealRequestTimeProvider,
         },
         PostgresProvider,
+        RequestSessionProvider,
     ],
     exports: [
         LoggerProvider,
@@ -33,6 +35,7 @@ import {mustGetEnv} from "../../lib/env";
         RequestIdProvider,
         RequestTimeProvider,
         PostgresProvider,
+        RequestSessionProvider,
     ],
 })
 export class GlobalModule {

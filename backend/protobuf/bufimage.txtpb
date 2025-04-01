@@ -23765,7 +23765,7 @@ file: {
   package: "api.v1"
   dependency: "google/api/annotations.proto"
   message_type: {
-    name: "AccessTokenPayload"
+    name: "JwtPayload"
     field: {
       name: "iat"
       number: 6
@@ -23809,15 +23809,31 @@ file: {
       json_name: "jti"
     }
     field: {
-      name: "data"
+      name: "kind"
+      number: 20
+      label: LABEL_OPTIONAL
+      type: TYPE_ENUM
+      type_name: ".api.v1.JwtPayload.JwtKind"
+      json_name: "kind"
+    }
+    field: {
+      name: "access_data"
       number: 30
       label: LABEL_OPTIONAL
       type: TYPE_MESSAGE
-      type_name: ".api.v1.AccessTokenPayload.Data"
-      json_name: "data"
+      type_name: ".api.v1.JwtPayload.AccessData"
+      json_name: "accessData"
+    }
+    field: {
+      name: "refresh_data"
+      number: 31
+      label: LABEL_OPTIONAL
+      type: TYPE_MESSAGE
+      type_name: ".api.v1.JwtPayload.RefreshData"
+      json_name: "refreshData"
     }
     nested_type: {
-      name: "Data"
+      name: "AccessData"
       field: {
         name: "session_id"
         number: 20
@@ -23840,68 +23856,22 @@ file: {
         json_name: "authenticationId"
       }
       field: {
-        name: "scopes"
+        name: "role"
         number: 23
+        label: LABEL_OPTIONAL
+        type: TYPE_STRING
+        json_name: "role"
+      }
+      field: {
+        name: "scopes"
+        number: 24
         label: LABEL_REPEATED
         type: TYPE_STRING
         json_name: "scopes"
       }
     }
-  }
-  message_type: {
-    name: "RefreshTokenPayload"
-    field: {
-      name: "iat"
-      number: 6
-      label: LABEL_OPTIONAL
-      type: TYPE_INT64
-      json_name: "iat"
-    }
-    field: {
-      name: "exp"
-      number: 7
-      label: LABEL_OPTIONAL
-      type: TYPE_INT64
-      json_name: "exp"
-    }
-    field: {
-      name: "sub"
-      number: 8
-      label: LABEL_OPTIONAL
-      type: TYPE_STRING
-      json_name: "sub"
-    }
-    field: {
-      name: "iss"
-      number: 9
-      label: LABEL_OPTIONAL
-      type: TYPE_STRING
-      json_name: "iss"
-    }
-    field: {
-      name: "aud"
-      number: 10
-      label: LABEL_OPTIONAL
-      type: TYPE_STRING
-      json_name: "aud"
-    }
-    field: {
-      name: "jti"
-      number: 11
-      label: LABEL_OPTIONAL
-      type: TYPE_STRING
-      json_name: "jti"
-    }
-    field: {
-      name: "data"
-      number: 30
-      label: LABEL_OPTIONAL
-      type: TYPE_MESSAGE
-      type_name: ".api.v1.RefreshTokenPayload.Data"
-      json_name: "data"
-    }
     nested_type: {
-      name: "Data"
+      name: "RefreshData"
       field: {
         name: "session_id"
         number: 20
@@ -23917,12 +23887,27 @@ file: {
         json_name: "scopes"
       }
     }
+    enum_type: {
+      name: "JwtKind"
+      value: {
+        name: "JWT_KIND_UNSPECIFIED"
+        number: 0
+      }
+      value: {
+        name: "JWT_KIND_ACCESS"
+        number: 20
+      }
+      value: {
+        name: "JWT_KIND_REFRESH"
+        number: 21
+      }
+    }
   }
   source_code_info: {
     location: {
       span: 0
       span: 0
-      span: 36
+      span: 35
       span: 1
     }
     location: {
@@ -23949,7 +23934,7 @@ file: {
       path: 0
       span: 6
       span: 0
-      span: 21
+      span: 35
       span: 1
     }
     location: {
@@ -23958,250 +23943,414 @@ file: {
       path: 1
       span: 6
       span: 8
+      span: 18
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 0
+      span: 7
+      span: 2
+      span: 16
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 0
+      path: 5
+      span: 7
+      span: 2
+      span: 7
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 0
+      path: 1
+      span: 7
+      span: 8
+      span: 11
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 0
+      path: 3
+      span: 7
+      span: 14
+      span: 15
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 1
+      span: 8
+      span: 2
+      span: 16
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 1
+      path: 5
+      span: 8
+      span: 2
+      span: 7
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 1
+      path: 1
+      span: 8
+      span: 8
+      span: 11
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 1
+      path: 3
+      span: 8
+      span: 14
+      span: 15
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 2
+      span: 9
+      span: 2
+      span: 17
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 2
+      path: 5
+      span: 9
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 2
+      path: 1
+      span: 9
+      span: 9
+      span: 12
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 2
+      path: 3
+      span: 9
+      span: 15
+      span: 16
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 3
+      span: 10
+      span: 2
+      span: 17
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 3
+      path: 5
+      span: 10
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 3
+      path: 1
+      span: 10
+      span: 9
+      span: 12
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 3
+      path: 3
+      span: 10
+      span: 15
+      span: 16
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 4
+      span: 11
+      span: 2
+      span: 18
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 4
+      path: 5
+      span: 11
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 4
+      path: 1
+      span: 11
+      span: 9
+      span: 12
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 4
+      path: 3
+      span: 11
+      span: 15
+      span: 17
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 5
+      span: 12
+      span: 2
+      span: 18
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 5
+      path: 5
+      span: 12
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 5
+      path: 1
+      span: 12
+      span: 9
+      span: 12
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 5
+      path: 3
+      span: 12
+      span: 15
+      span: 17
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 4
+      path: 0
+      span: 14
+      span: 2
+      span: 18
+      span: 3
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 4
+      path: 0
+      path: 1
+      span: 14
+      span: 7
+      span: 14
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 4
+      path: 0
+      path: 2
+      path: 0
+      span: 15
+      span: 4
+      span: 29
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 4
+      path: 0
+      path: 2
+      path: 0
+      path: 1
+      span: 15
+      span: 4
+      span: 24
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 4
+      path: 0
+      path: 2
+      path: 0
+      path: 2
+      span: 15
+      span: 27
+      span: 28
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 4
+      path: 0
+      path: 2
+      path: 1
+      span: 16
+      span: 4
+      span: 25
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 4
+      path: 0
+      path: 2
+      path: 1
+      path: 1
+      span: 16
+      span: 4
+      span: 19
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 4
+      path: 0
+      path: 2
+      path: 1
+      path: 2
+      span: 16
+      span: 22
+      span: 24
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 4
+      path: 0
+      path: 2
+      path: 2
+      span: 17
+      span: 4
       span: 26
     }
     location: {
       path: 4
       path: 0
-      path: 2
-      path: 0
-      span: 7
-      span: 2
-      span: 16
-    }
-    location: {
       path: 4
       path: 0
       path: 2
-      path: 0
-      path: 5
-      span: 7
-      span: 2
-      span: 7
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 0
-      path: 1
-      span: 7
-      span: 8
-      span: 11
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 0
-      path: 3
-      span: 7
-      span: 14
-      span: 15
-    }
-    location: {
-      path: 4
-      path: 0
       path: 2
       path: 1
-      span: 8
-      span: 2
-      span: 16
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 1
-      path: 5
-      span: 8
-      span: 2
-      span: 7
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 1
-      path: 1
-      span: 8
-      span: 8
-      span: 11
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 1
-      path: 3
-      span: 8
-      span: 14
-      span: 15
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 2
-      span: 9
-      span: 2
       span: 17
+      span: 4
+      span: 20
     }
     location: {
       path: 4
       path: 0
-      path: 2
-      path: 2
-      path: 5
-      span: 9
-      span: 2
-      span: 8
-    }
-    location: {
       path: 4
       path: 0
       path: 2
       path: 2
-      path: 1
-      span: 9
-      span: 9
-      span: 12
-    }
-    location: {
-      path: 4
-      path: 0
       path: 2
-      path: 2
-      path: 3
-      span: 9
-      span: 15
-      span: 16
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 3
-      span: 10
-      span: 2
       span: 17
+      span: 23
+      span: 25
     }
     location: {
       path: 4
       path: 0
       path: 2
-      path: 3
-      path: 5
-      span: 10
-      span: 2
-      span: 8
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 3
-      path: 1
-      span: 10
-      span: 9
-      span: 12
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 3
-      path: 3
-      span: 10
-      span: 15
-      span: 16
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 4
-      span: 11
-      span: 2
-      span: 18
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 4
-      path: 5
-      span: 11
-      span: 2
-      span: 8
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 4
-      path: 1
-      span: 11
-      span: 9
-      span: 12
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 4
-      path: 3
-      span: 11
-      span: 15
-      span: 17
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 5
-      span: 12
-      span: 2
-      span: 18
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 5
-      path: 5
-      span: 12
-      span: 2
-      span: 8
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 5
-      path: 1
-      span: 12
-      span: 9
-      span: 12
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 5
-      path: 3
-      span: 12
-      span: 15
-      span: 17
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 3
-      path: 0
-      span: 14
-      span: 2
+      path: 6
       span: 19
+      span: 2
+      span: 20
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 6
+      path: 6
+      span: 19
+      span: 2
+      span: 9
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 6
+      path: 1
+      span: 19
+      span: 10
+      span: 14
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 6
+      path: 3
+      span: 19
+      span: 17
+      span: 19
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      span: 21
+      span: 2
+      span: 27
       span: 3
     }
     location: {
@@ -24210,9 +24359,9 @@ file: {
       path: 3
       path: 0
       path: 1
-      span: 14
+      span: 21
       span: 10
-      span: 14
+      span: 20
     }
     location: {
       path: 4
@@ -24221,7 +24370,7 @@ file: {
       path: 0
       path: 2
       path: 0
-      span: 15
+      span: 22
       span: 4
       span: 27
     }
@@ -24233,7 +24382,7 @@ file: {
       path: 2
       path: 0
       path: 5
-      span: 15
+      span: 22
       span: 4
       span: 10
     }
@@ -24245,7 +24394,7 @@ file: {
       path: 2
       path: 0
       path: 1
-      span: 15
+      span: 22
       span: 11
       span: 21
     }
@@ -24257,7 +24406,7 @@ file: {
       path: 2
       path: 0
       path: 3
-      span: 15
+      span: 22
       span: 24
       span: 26
     }
@@ -24268,7 +24417,7 @@ file: {
       path: 0
       path: 2
       path: 1
-      span: 16
+      span: 23
       span: 4
       span: 24
     }
@@ -24280,7 +24429,7 @@ file: {
       path: 2
       path: 1
       path: 5
-      span: 16
+      span: 23
       span: 4
       span: 10
     }
@@ -24292,7 +24441,7 @@ file: {
       path: 2
       path: 1
       path: 1
-      span: 16
+      span: 23
       span: 11
       span: 18
     }
@@ -24304,7 +24453,7 @@ file: {
       path: 2
       path: 1
       path: 3
-      span: 16
+      span: 23
       span: 21
       span: 23
     }
@@ -24315,7 +24464,7 @@ file: {
       path: 0
       path: 2
       path: 2
-      span: 17
+      span: 24
       span: 4
       span: 34
     }
@@ -24327,7 +24476,7 @@ file: {
       path: 2
       path: 2
       path: 5
-      span: 17
+      span: 24
       span: 4
       span: 10
     }
@@ -24339,7 +24488,7 @@ file: {
       path: 2
       path: 2
       path: 1
-      span: 17
+      span: 24
       span: 11
       span: 28
     }
@@ -24351,7 +24500,7 @@ file: {
       path: 2
       path: 2
       path: 3
-      span: 17
+      span: 24
       span: 31
       span: 33
     }
@@ -24362,21 +24511,9 @@ file: {
       path: 0
       path: 2
       path: 3
-      span: 18
+      span: 25
       span: 4
-      span: 32
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 3
-      path: 0
-      path: 2
-      path: 3
-      path: 4
-      span: 18
-      span: 4
-      span: 12
+      span: 21
     }
     location: {
       path: 4
@@ -24386,7 +24523,66 @@ file: {
       path: 2
       path: 3
       path: 5
+      span: 25
+      span: 4
+      span: 10
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 2
+      path: 3
+      path: 1
+      span: 25
+      span: 11
+      span: 15
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 2
+      path: 3
+      path: 3
+      span: 25
       span: 18
+      span: 20
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 2
+      path: 4
+      span: 26
+      span: 4
+      span: 32
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 2
+      path: 4
+      path: 4
+      span: 26
+      span: 4
+      span: 12
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 2
+      path: 4
+      path: 5
+      span: 26
       span: 13
       span: 19
     }
@@ -24396,9 +24592,9 @@ file: {
       path: 3
       path: 0
       path: 2
-      path: 3
+      path: 4
       path: 1
-      span: 18
+      span: 26
       span: 20
       span: 26
     }
@@ -24408,9 +24604,9 @@ file: {
       path: 3
       path: 0
       path: 2
+      path: 4
       path: 3
-      path: 3
-      span: 18
+      span: 26
       span: 29
       span: 31
     }
@@ -24418,455 +24614,205 @@ file: {
       path: 4
       path: 0
       path: 2
+      path: 7
+      span: 28
+      span: 2
+      span: 30
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 7
       path: 6
-      span: 20
+      span: 28
       span: 2
-      span: 17
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 6
-      path: 6
-      span: 20
-      span: 2
-      span: 6
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 6
-      path: 1
-      span: 20
-      span: 7
-      span: 11
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 6
-      path: 3
-      span: 20
-      span: 14
-      span: 16
-    }
-    location: {
-      path: 4
-      path: 1
-      span: 23
-      span: 0
-      span: 36
-      span: 1
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 1
-      span: 23
-      span: 8
-      span: 27
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 0
-      span: 24
-      span: 2
-      span: 16
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 0
-      path: 5
-      span: 24
-      span: 2
-      span: 7
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 0
-      path: 1
-      span: 24
-      span: 8
-      span: 11
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 0
-      path: 3
-      span: 24
-      span: 14
-      span: 15
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 1
-      span: 25
-      span: 2
-      span: 16
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 1
-      path: 5
-      span: 25
-      span: 2
-      span: 7
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 1
-      path: 1
-      span: 25
-      span: 8
-      span: 11
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 1
-      path: 3
-      span: 25
-      span: 14
-      span: 15
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 2
-      span: 26
-      span: 2
-      span: 17
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 2
-      path: 5
-      span: 26
-      span: 2
-      span: 8
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 2
-      path: 1
-      span: 26
-      span: 9
       span: 12
     }
     location: {
       path: 4
-      path: 1
-      path: 2
-      path: 2
-      path: 3
-      span: 26
-      span: 15
-      span: 16
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 3
-      span: 27
-      span: 2
-      span: 17
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 3
-      path: 5
-      span: 27
-      span: 2
-      span: 8
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 3
-      path: 1
-      span: 27
-      span: 9
-      span: 12
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 3
-      path: 3
-      span: 27
-      span: 15
-      span: 16
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 4
-      span: 28
-      span: 2
-      span: 18
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 4
-      path: 5
-      span: 28
-      span: 2
-      span: 8
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 4
-      path: 1
-      span: 28
-      span: 9
-      span: 12
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 4
-      path: 3
-      span: 28
-      span: 15
-      span: 17
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 5
-      span: 29
-      span: 2
-      span: 18
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 5
-      path: 5
-      span: 29
-      span: 2
-      span: 8
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 5
-      path: 1
-      span: 29
-      span: 9
-      span: 12
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 5
-      path: 3
-      span: 29
-      span: 15
-      span: 17
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 3
       path: 0
-      span: 31
+      path: 2
+      path: 7
+      path: 1
+      span: 28
+      span: 13
+      span: 24
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 7
+      path: 3
+      span: 28
+      span: 27
+      span: 29
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 1
+      span: 30
       span: 2
-      span: 34
+      span: 33
       span: 3
     }
     location: {
       path: 4
-      path: 1
-      path: 3
       path: 0
+      path: 3
       path: 1
-      span: 31
+      path: 1
+      span: 30
       span: 10
-      span: 14
+      span: 21
     }
     location: {
       path: 4
-      path: 1
-      path: 3
       path: 0
+      path: 3
+      path: 1
       path: 2
       path: 0
-      span: 32
+      span: 31
       span: 4
       span: 27
     }
     location: {
       path: 4
-      path: 1
-      path: 3
       path: 0
+      path: 3
+      path: 1
       path: 2
       path: 0
       path: 5
-      span: 32
+      span: 31
       span: 4
       span: 10
     }
     location: {
       path: 4
-      path: 1
-      path: 3
       path: 0
+      path: 3
+      path: 1
       path: 2
       path: 0
       path: 1
-      span: 32
+      span: 31
       span: 11
       span: 21
     }
     location: {
       path: 4
-      path: 1
-      path: 3
       path: 0
+      path: 3
+      path: 1
       path: 2
       path: 0
       path: 3
-      span: 32
+      span: 31
       span: 24
       span: 26
     }
     location: {
       path: 4
-      path: 1
-      path: 3
       path: 0
+      path: 3
+      path: 1
       path: 2
       path: 1
-      span: 33
+      span: 32
       span: 4
       span: 32
     }
     location: {
       path: 4
-      path: 1
-      path: 3
       path: 0
+      path: 3
+      path: 1
       path: 2
       path: 1
       path: 4
-      span: 33
+      span: 32
       span: 4
       span: 12
     }
     location: {
       path: 4
-      path: 1
-      path: 3
       path: 0
+      path: 3
+      path: 1
       path: 2
       path: 1
       path: 5
-      span: 33
+      span: 32
       span: 13
       span: 19
     }
     location: {
       path: 4
-      path: 1
-      path: 3
       path: 0
+      path: 3
+      path: 1
       path: 2
       path: 1
       path: 1
-      span: 33
+      span: 32
       span: 20
       span: 26
     }
     location: {
       path: 4
-      path: 1
-      path: 3
       path: 0
+      path: 3
+      path: 1
       path: 2
       path: 1
       path: 3
-      span: 33
+      span: 32
       span: 29
       span: 31
     }
     location: {
       path: 4
-      path: 1
+      path: 0
       path: 2
-      path: 6
-      span: 35
+      path: 8
+      span: 34
       span: 2
-      span: 17
+      span: 32
     }
     location: {
       path: 4
-      path: 1
+      path: 0
       path: 2
+      path: 8
       path: 6
-      path: 6
-      span: 35
+      span: 34
       span: 2
-      span: 6
+      span: 13
     }
     location: {
       path: 4
-      path: 1
+      path: 0
       path: 2
-      path: 6
+      path: 8
       path: 1
-      span: 35
-      span: 7
-      span: 11
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 6
-      path: 3
-      span: 35
+      span: 34
       span: 14
-      span: 16
+      span: 26
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 8
+      path: 3
+      span: 34
+      span: 29
+      span: 31
     }
   }
   syntax: "proto3"

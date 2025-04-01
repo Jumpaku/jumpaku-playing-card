@@ -6,6 +6,8 @@ export type UserProp$ = {
 
     user_id: string;
 
+    display_name: string;
+
     create_time: Date;
 
     update_time: Date;
@@ -28,6 +30,8 @@ export class User$ {
 
         this.user_id = props.user_id;
 
+        this.display_name = props.display_name;
+
         this.create_time = props.create_time;
 
         this.update_time = props.update_time;
@@ -36,6 +40,8 @@ export class User$ {
 
 
     user_id: string;
+
+    display_name: string;
 
     create_time: Date;
 
@@ -46,6 +52,8 @@ export class User$ {
         const values = models.flatMap((model) => [
 
             model.user_id,
+
+            model.display_name,
 
             model.create_time,
 
@@ -71,6 +79,8 @@ export class User$ {
 
     "user_id"
 ,
+    "display_name"
+,
     "create_time"
 ,
     "update_time"
@@ -83,6 +93,8 @@ export class User$ {
     static async update(client: PgClient, model: User$): Promise<void> {
         const values = [
 
+            model.display_name,
+
             model.create_time,
 
             model.update_time,
@@ -94,12 +106,14 @@ export class User$ {
         await client.query(
             `UPDATE "User" SET
 
-    "create_time" = $${ 0 + 1 }
+    "display_name" = $${ 0 + 1 }
 ,
-    "update_time" = $${ 1 + 1 }
+    "create_time" = $${ 1 + 1 }
+,
+    "update_time" = $${ 2 + 1 }
 
 WHERE
-     "user_id" = $${ 0 + 2 + 1 }
+     "user_id" = $${ 0 + 3 + 1 }
 `,
             values);
     }

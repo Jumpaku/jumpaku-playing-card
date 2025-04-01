@@ -8,8 +8,9 @@ import {
 import {AuthenticationService} from "./authentication.service";
 import {AuthenticationPasswordProvider} from "./authentication_password.provider";
 import {AuthenticationTemporaryProvider} from "./authentication_temporary.provider";
-import {SessionProvider} from "./session.provider";
+import {SessionRepository} from "./session.repository";
 import {JwtProvider} from "./jwt.provider";
+import {SessionModule} from "../../../../../shared/session/session.module";
 
 @Module({
     controllers: [AuthenticationServiceController],
@@ -20,8 +21,11 @@ import {JwtProvider} from "./jwt.provider";
         },
         AuthenticationPasswordProvider,
         AuthenticationTemporaryProvider,
-        SessionProvider,
+        SessionRepository,
         JwtProvider,
+    ],
+    imports: [
+        SessionModule,
     ],
 })
 export class AuthenticationModule {

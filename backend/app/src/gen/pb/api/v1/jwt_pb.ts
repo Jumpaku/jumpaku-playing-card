@@ -2,8 +2,8 @@
 // @generated from file api/v1/jwt.proto (package api.v1, syntax proto3)
 /* eslint-disable */
 
-import type { GenFile, GenMessage } from "@bufbuild/protobuf/codegenv1";
-import { fileDesc, messageDesc } from "@bufbuild/protobuf/codegenv1";
+import type { GenEnum, GenFile, GenMessage } from "@bufbuild/protobuf/codegenv1";
+import { enumDesc, fileDesc, messageDesc } from "@bufbuild/protobuf/codegenv1";
 import { file_google_api_annotations } from "../../google/api/annotations_pb.js";
 import type { Message } from "@bufbuild/protobuf";
 
@@ -11,12 +11,12 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file api/v1/jwt.proto.
  */
 export const file_api_v1_jwt: GenFile = /*@__PURE__*/
-  fileDesc("ChBhcGkvdjEvand0LnByb3RvEgZhcGkudjEi6QEKEkFjY2Vzc1Rva2VuUGF5bG9hZBILCgNpYXQYBiABKAMSCwoDZXhwGAcgASgDEgsKA3N1YhgIIAEoCRILCgNpc3MYCSABKAkSCwoDYXVkGAogASgJEgsKA2p0aRgLIAEoCRItCgRkYXRhGB4gASgLMh8uYXBpLnYxLkFjY2Vzc1Rva2VuUGF5bG9hZC5EYXRhGlYKBERhdGESEgoKc2Vzc2lvbl9pZBgUIAEoCRIPCgd1c2VyX2lkGBUgASgJEhkKEWF1dGhlbnRpY2F0aW9uX2lkGBYgASgJEg4KBnNjb3BlcxgXIAMoCSK/AQoTUmVmcmVzaFRva2VuUGF5bG9hZBILCgNpYXQYBiABKAMSCwoDZXhwGAcgASgDEgsKA3N1YhgIIAEoCRILCgNpc3MYCSABKAkSCwoDYXVkGAogASgJEgsKA2p0aRgLIAEoCRIuCgRkYXRhGB4gASgLMiAuYXBpLnYxLlJlZnJlc2hUb2tlblBheWxvYWQuRGF0YRoqCgREYXRhEhIKCnNlc3Npb25faWQYFCABKAkSDgoGc2NvcGVzGBcgAygJQk8KCmNvbS5hcGkudjFCCEp3dFByb3RvUAGiAgNBWFiqAgZBcGkuVjHKAgZBcGlcVjHiAhJBcGlcVjFcR1BCTWV0YWRhdGHqAgdBcGk6OlYxYgZwcm90bzM", [file_google_api_annotations]);
+  fileDesc("ChBhcGkvdjEvand0LnByb3RvEgZhcGkudjEi3QMKCkp3dFBheWxvYWQSCwoDaWF0GAYgASgDEgsKA2V4cBgHIAEoAxILCgNzdWIYCCABKAkSCwoDaXNzGAkgASgJEgsKA2F1ZBgKIAEoCRILCgNqdGkYCyABKAkSKAoEa2luZBgUIAEoDjIaLmFwaS52MS5Kd3RQYXlsb2FkLkp3dEtpbmQSMgoLYWNjZXNzX2RhdGEYHiABKAsyHS5hcGkudjEuSnd0UGF5bG9hZC5BY2Nlc3NEYXRhEjQKDHJlZnJlc2hfZGF0YRgfIAEoCzIeLmFwaS52MS5Kd3RQYXlsb2FkLlJlZnJlc2hEYXRhGmoKCkFjY2Vzc0RhdGESEgoKc2Vzc2lvbl9pZBgUIAEoCRIPCgd1c2VyX2lkGBUgASgJEhkKEWF1dGhlbnRpY2F0aW9uX2lkGBYgASgJEgwKBHJvbGUYFyABKAkSDgoGc2NvcGVzGBggAygJGjEKC1JlZnJlc2hEYXRhEhIKCnNlc3Npb25faWQYFCABKAkSDgoGc2NvcGVzGBcgAygJIk4KB0p3dEtpbmQSGAoUSldUX0tJTkRfVU5TUEVDSUZJRUQQABITCg9KV1RfS0lORF9BQ0NFU1MQFBIUChBKV1RfS0lORF9SRUZSRVNIEBVCTwoKY29tLmFwaS52MUIISnd0UHJvdG9QAaICA0FYWKoCBkFwaS5WMcoCBkFwaVxWMeICEkFwaVxWMVxHUEJNZXRhZGF0YeoCB0FwaTo6VjFiBnByb3RvMw", [file_google_api_annotations]);
 
 /**
- * @generated from message api.v1.AccessTokenPayload
+ * @generated from message api.v1.JwtPayload
  */
-export type AccessTokenPayload = Message<"api.v1.AccessTokenPayload"> & {
+export type JwtPayload = Message<"api.v1.JwtPayload"> & {
   /**
    * @generated from field: int64 iat = 6;
    */
@@ -48,15 +48,25 @@ export type AccessTokenPayload = Message<"api.v1.AccessTokenPayload"> & {
   jti: string;
 
   /**
-   * @generated from field: api.v1.AccessTokenPayload.Data data = 30;
+   * @generated from field: api.v1.JwtPayload.JwtKind kind = 20;
    */
-  data?: AccessTokenPayload_Data;
+  kind: JwtPayload_JwtKind;
+
+  /**
+   * @generated from field: api.v1.JwtPayload.AccessData access_data = 30;
+   */
+  accessData?: JwtPayload_AccessData;
+
+  /**
+   * @generated from field: api.v1.JwtPayload.RefreshData refresh_data = 31;
+   */
+  refreshData?: JwtPayload_RefreshData;
 };
 
 /**
- * @generated from message api.v1.AccessTokenPayload
+ * @generated from message api.v1.JwtPayload
  */
-export type AccessTokenPayloadJson = {
+export type JwtPayloadJson = {
   /**
    * @generated from field: int64 iat = 6;
    */
@@ -88,22 +98,32 @@ export type AccessTokenPayloadJson = {
   jti?: string;
 
   /**
-   * @generated from field: api.v1.AccessTokenPayload.Data data = 30;
+   * @generated from field: api.v1.JwtPayload.JwtKind kind = 20;
    */
-  data?: AccessTokenPayload_DataJson;
+  kind?: JwtPayload_JwtKindJson;
+
+  /**
+   * @generated from field: api.v1.JwtPayload.AccessData access_data = 30;
+   */
+  accessData?: JwtPayload_AccessDataJson;
+
+  /**
+   * @generated from field: api.v1.JwtPayload.RefreshData refresh_data = 31;
+   */
+  refreshData?: JwtPayload_RefreshDataJson;
 };
 
 /**
- * Describes the message api.v1.AccessTokenPayload.
- * Use `create(AccessTokenPayloadSchema)` to create a new message.
+ * Describes the message api.v1.JwtPayload.
+ * Use `create(JwtPayloadSchema)` to create a new message.
  */
-export const AccessTokenPayloadSchema: GenMessage<AccessTokenPayload, AccessTokenPayloadJson> = /*@__PURE__*/
+export const JwtPayloadSchema: GenMessage<JwtPayload, JwtPayloadJson> = /*@__PURE__*/
   messageDesc(file_api_v1_jwt, 0);
 
 /**
- * @generated from message api.v1.AccessTokenPayload.Data
+ * @generated from message api.v1.JwtPayload.AccessData
  */
-export type AccessTokenPayload_Data = Message<"api.v1.AccessTokenPayload.Data"> & {
+export type JwtPayload_AccessData = Message<"api.v1.JwtPayload.AccessData"> & {
   /**
    * @generated from field: string session_id = 20;
    */
@@ -120,15 +140,20 @@ export type AccessTokenPayload_Data = Message<"api.v1.AccessTokenPayload.Data"> 
   authenticationId: string;
 
   /**
-   * @generated from field: repeated string scopes = 23;
+   * @generated from field: string role = 23;
+   */
+  role: string;
+
+  /**
+   * @generated from field: repeated string scopes = 24;
    */
   scopes: string[];
 };
 
 /**
- * @generated from message api.v1.AccessTokenPayload.Data
+ * @generated from message api.v1.JwtPayload.AccessData
  */
-export type AccessTokenPayload_DataJson = {
+export type JwtPayload_AccessDataJson = {
   /**
    * @generated from field: string session_id = 20;
    */
@@ -145,109 +170,27 @@ export type AccessTokenPayload_DataJson = {
   authenticationId?: string;
 
   /**
-   * @generated from field: repeated string scopes = 23;
+   * @generated from field: string role = 23;
+   */
+  role?: string;
+
+  /**
+   * @generated from field: repeated string scopes = 24;
    */
   scopes?: string[];
 };
 
 /**
- * Describes the message api.v1.AccessTokenPayload.Data.
- * Use `create(AccessTokenPayload_DataSchema)` to create a new message.
+ * Describes the message api.v1.JwtPayload.AccessData.
+ * Use `create(JwtPayload_AccessDataSchema)` to create a new message.
  */
-export const AccessTokenPayload_DataSchema: GenMessage<AccessTokenPayload_Data, AccessTokenPayload_DataJson> = /*@__PURE__*/
+export const JwtPayload_AccessDataSchema: GenMessage<JwtPayload_AccessData, JwtPayload_AccessDataJson> = /*@__PURE__*/
   messageDesc(file_api_v1_jwt, 0, 0);
 
 /**
- * @generated from message api.v1.RefreshTokenPayload
+ * @generated from message api.v1.JwtPayload.RefreshData
  */
-export type RefreshTokenPayload = Message<"api.v1.RefreshTokenPayload"> & {
-  /**
-   * @generated from field: int64 iat = 6;
-   */
-  iat: bigint;
-
-  /**
-   * @generated from field: int64 exp = 7;
-   */
-  exp: bigint;
-
-  /**
-   * @generated from field: string sub = 8;
-   */
-  sub: string;
-
-  /**
-   * @generated from field: string iss = 9;
-   */
-  iss: string;
-
-  /**
-   * @generated from field: string aud = 10;
-   */
-  aud: string;
-
-  /**
-   * @generated from field: string jti = 11;
-   */
-  jti: string;
-
-  /**
-   * @generated from field: api.v1.RefreshTokenPayload.Data data = 30;
-   */
-  data?: RefreshTokenPayload_Data;
-};
-
-/**
- * @generated from message api.v1.RefreshTokenPayload
- */
-export type RefreshTokenPayloadJson = {
-  /**
-   * @generated from field: int64 iat = 6;
-   */
-  iat?: string;
-
-  /**
-   * @generated from field: int64 exp = 7;
-   */
-  exp?: string;
-
-  /**
-   * @generated from field: string sub = 8;
-   */
-  sub?: string;
-
-  /**
-   * @generated from field: string iss = 9;
-   */
-  iss?: string;
-
-  /**
-   * @generated from field: string aud = 10;
-   */
-  aud?: string;
-
-  /**
-   * @generated from field: string jti = 11;
-   */
-  jti?: string;
-
-  /**
-   * @generated from field: api.v1.RefreshTokenPayload.Data data = 30;
-   */
-  data?: RefreshTokenPayload_DataJson;
-};
-
-/**
- * Describes the message api.v1.RefreshTokenPayload.
- * Use `create(RefreshTokenPayloadSchema)` to create a new message.
- */
-export const RefreshTokenPayloadSchema: GenMessage<RefreshTokenPayload, RefreshTokenPayloadJson> = /*@__PURE__*/
-  messageDesc(file_api_v1_jwt, 1);
-
-/**
- * @generated from message api.v1.RefreshTokenPayload.Data
- */
-export type RefreshTokenPayload_Data = Message<"api.v1.RefreshTokenPayload.Data"> & {
+export type JwtPayload_RefreshData = Message<"api.v1.JwtPayload.RefreshData"> & {
   /**
    * @generated from field: string session_id = 20;
    */
@@ -260,9 +203,9 @@ export type RefreshTokenPayload_Data = Message<"api.v1.RefreshTokenPayload.Data"
 };
 
 /**
- * @generated from message api.v1.RefreshTokenPayload.Data
+ * @generated from message api.v1.JwtPayload.RefreshData
  */
-export type RefreshTokenPayload_DataJson = {
+export type JwtPayload_RefreshDataJson = {
   /**
    * @generated from field: string session_id = 20;
    */
@@ -275,9 +218,40 @@ export type RefreshTokenPayload_DataJson = {
 };
 
 /**
- * Describes the message api.v1.RefreshTokenPayload.Data.
- * Use `create(RefreshTokenPayload_DataSchema)` to create a new message.
+ * Describes the message api.v1.JwtPayload.RefreshData.
+ * Use `create(JwtPayload_RefreshDataSchema)` to create a new message.
  */
-export const RefreshTokenPayload_DataSchema: GenMessage<RefreshTokenPayload_Data, RefreshTokenPayload_DataJson> = /*@__PURE__*/
-  messageDesc(file_api_v1_jwt, 1, 0);
+export const JwtPayload_RefreshDataSchema: GenMessage<JwtPayload_RefreshData, JwtPayload_RefreshDataJson> = /*@__PURE__*/
+  messageDesc(file_api_v1_jwt, 0, 1);
+
+/**
+ * @generated from enum api.v1.JwtPayload.JwtKind
+ */
+export enum JwtPayload_JwtKind {
+  /**
+   * @generated from enum value: JWT_KIND_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
+   * @generated from enum value: JWT_KIND_ACCESS = 20;
+   */
+  ACCESS = 20,
+
+  /**
+   * @generated from enum value: JWT_KIND_REFRESH = 21;
+   */
+  REFRESH = 21,
+}
+
+/**
+ * @generated from enum api.v1.JwtPayload.JwtKind
+ */
+export type JwtPayload_JwtKindJson = "JWT_KIND_UNSPECIFIED" | "JWT_KIND_ACCESS" | "JWT_KIND_REFRESH";
+
+/**
+ * Describes the enum api.v1.JwtPayload.JwtKind.
+ */
+export const JwtPayload_JwtKindSchema: GenEnum<JwtPayload_JwtKind, JwtPayload_JwtKindJson> = /*@__PURE__*/
+  enumDesc(file_api_v1_jwt, 0, 0);
 
