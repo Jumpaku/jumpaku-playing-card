@@ -154,7 +154,7 @@ export class AuthenticationService extends AuthenticationServiceService {
             if (session == null) {
                 throwUnauthorized('session not found', 'valid session not found');
             }
-            
+
             session.expire_time = expireTime;
             session.update_time = t;
             await Session$.update(tx, session);

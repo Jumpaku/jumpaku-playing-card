@@ -4,7 +4,7 @@ package api.v1;
 
 import "google/api/annotations.proto";
 
-message AccessTokenPayload {
+message JwtPayload {
   int64 iat = 6;
   int64 exp = 7;
   string sub = 8;
@@ -12,26 +12,25 @@ message AccessTokenPayload {
   string aud = 10;
   string jti = 11;
 
-  message Data {
+  enum JwtKind {
+    JWT_KIND_UNSPECIFIED = 0;
+    JWT_KIND_ACCESS = 20;
+    JWT_KIND_REFRESH = 21;
+  }
+  JwtKind kind = 20;
+
+  message AccessData {
     string session_id = 20;
     string user_id = 21;
     string authentication_id = 22;
-    repeated string scopes = 23;
+    string role = 23;
+    repeated string scopes = 24;
   }
-  Data data = 30;
-}
+  AccessData access_data = 30;
 
-message RefreshTokenPayload {
-  int64 iat = 6;
-  int64 exp = 7;
-  string sub = 8;
-  string iss = 9;
-  string aud = 10;
-  string jti = 11;
-
-  message Data {
+  message RefreshData {
     string session_id = 20;
     repeated string scopes = 23;
   }
-  Data data = 30;
+  RefreshData refresh_data = 31;
 }
