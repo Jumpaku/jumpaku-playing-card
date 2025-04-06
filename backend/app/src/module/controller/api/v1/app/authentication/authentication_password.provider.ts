@@ -1,52 +1,26 @@
 import {Injectable} from "@nestjs/common";
 import {pbkdf2Sync} from "node:crypto";
-import {PgClient, selectOne} from "../../../../../global/postgres.provider";
-import {Authentication$} from "../../../../../../gen/pg/dao/dao_Authentication";
+import {PgClient} from "../../../../../global/postgres.provider";
 import {AuthenticationPassword$} from "../../../../../../gen/pg/dao/dao_AuthenticationPassword";
+import {AuthenticationPasswordRepository} from "./authentication_password.repository";
 
 @Injectable()
 export class AuthenticationPasswordProvider {
-    private hash(password: string, salt: string): string {
-        const h = pbkdf2Sync(password, salt, 10000, 64, 'sha512');
-        return h.toString('hex');
+    constructor(private readonly authenticationRepository: AuthenticationPasswordRepository) {
     }
 
     async exists(tx: PgClient, loginId: string): Promise<boolean> {
-        const found = await AuthenticationPassword$.findByUk_AuthenticationPassword_LoginId(tx, {login_id: loginId});
+        const found = this.authenticationRepository.findByLoginId(tx, loginId);
         return found != null;
     }
 
     async register(tx: PgClient, timestamp: Date, authenticationId: string, loginId: string, salt: string, password: string): Promise<void> {
         const hash = this.hash(password, salt);
-        await Authentication$.insert(tx, {
-            authentication_id: authenticationId,
-            auth_method: 'password',
-            create_time: timestamp,
-            update_time: timestamp,
-        });
-        await AuthenticationPassword$.insert(tx, {
-            authentication_id: authenticationId,
-            login_id: loginId,
-            password_hash: hash,
-            password_salt: salt,
-            create_time: timestamp,
-            update_time: timestamp,
-        });
+        await this.authenticationRepository.create(tx, timestamp, authenticationId, loginId, salt, hash);
     }
 
-    async verify(tx: PgClient, loginId: string, password: string): Promise<Authentication$ | null> {
-        const ap = await selectOne<Authentication$ & {
-            password_hash: string,
-            password_salt: string
-        }>(tx, `SELECT a.*,
-                       ap."password_hash",
-                       ap."password_salt"
-                FROM "AuthenticationPassword" AS ap
-                         JOIN "Authentication" AS a
-                              ON ap."authentication_id" = a."authentication_id"
-                WHERE ap."login_id" = $1
-                  AND a."auth_method" = 'password'
-                LIMIT 1`, [loginId]);
+    async verify(tx: PgClient, loginId: string, password: string): Promise<AuthenticationPassword$ | null> {
+        const ap = await this.authenticationRepository.findByLoginId(tx, loginId);
         if (ap == null) {
             return null;
         }
@@ -56,4 +30,10 @@ export class AuthenticationPasswordProvider {
 
         return ap;
     }
+
+    private hash(password: string, salt: string): string {
+        const h = pbkdf2Sync(password, salt, 10000, 64, 'sha512');
+        return h.toString('hex');
+    }
+
 }

@@ -47,7 +47,7 @@ export class AuthenticationService extends AuthenticationServiceService {
         private readonly postgres: PostgresProvider,
         private readonly requestTime: RequestTimeProvider,
         private readonly requestSession: RequestSessionProvider,
-        private readonly authSession: SessionRepository,
+        private readonly sessionRepository: SessionRepository,
         private readonly session: SessionProvider,
         private readonly password: AuthenticationPasswordProvider,
         private readonly temporary: AuthenticationTemporaryProvider,
@@ -71,25 +71,13 @@ export class AuthenticationService extends AuthenticationServiceService {
 
             // Create a new session
             const sessionId = this.random.uuid();
-            await this.authSession.create(tx, sessionId, authenticationId, expireTime, t);
+            await this.sessionRepository.create(tx, sessionId, authenticationId, expireTime, t);
 
             // Issue an access token and a refresh token
             const {at, rt} = this.issueTokens(sessionId, t, expireTime);
 
             return create(TemporaryRegisterLoginResponseSchema, {accessToken: at, refreshToken: rt});
         });
-    }
-
-    private issueTokens(sessionId: string, t: Date, expireTime: Date) {
-        const at = this.jwt.issueAccessToken(create(JwtPayload_AccessDataSchema, {
-            sessionId,
-            scopes: ["user", "session:logout"],
-        }), t);
-        const rt = this.jwt.issueRefreshToken(fromJson(JwtPayload_RefreshDataSchema, {
-            sessionId,
-            scopes: ["session:refresh"],
-        }), expireTime, t);
-        return {at, rt};
     }
 
     async handlePasswordLogin(input: PasswordLoginRequest, req: Request, res: Response): Promise<PasswordLoginResponse> {
@@ -108,7 +96,7 @@ export class AuthenticationService extends AuthenticationServiceService {
 
             // Create a new session
             const sessionId = this.random.uuid();
-            await this.authSession.create(tx, sessionId, authenticationId, expireTime, t);
+            await this.sessionRepository.create(tx, sessionId, authenticationId, expireTime, t);
 
             // Issue an access token and a refresh token
             const {at, rt} = this.issueTokens(sessionId, t, expireTime);
@@ -136,7 +124,7 @@ export class AuthenticationService extends AuthenticationServiceService {
         const sessionId = this.requestSession.mustExtract(req);
 
         await this.postgres.transaction(async (tx) => {
-            await this.authSession.delete(tx, sessionId);
+            await this.sessionRepository.delete(tx, sessionId);
         });
 
         return Promise.resolve(create(LogoutResponseSchema, {}));
@@ -162,5 +150,17 @@ export class AuthenticationService extends AuthenticationServiceService {
             const {at, rt} = this.issueTokens(session.session_id, t, expireTime);
             return create(RefreshResponseSchema, {accessToken: at, refreshToken: rt});
         });
+    }
+
+    private issueTokens(sessionId: string, t: Date, expireTime: Date) {
+        const at = this.jwt.issueAccessToken(create(JwtPayload_AccessDataSchema, {
+            sessionId,
+            scopes: ["user", "session:logout"],
+        }), t);
+        const rt = this.jwt.issueRefreshToken(fromJson(JwtPayload_RefreshDataSchema, {
+            sessionId,
+            scopes: ["session:refresh"],
+        }), expireTime, t);
+        return {at, rt};
     }
 }

@@ -11,6 +11,8 @@ import {AuthenticationTemporaryProvider} from "./authentication_temporary.provid
 import {SessionRepository} from "./session.repository";
 import {JwtProvider} from "./jwt.provider";
 import {SessionModule} from "../../../../../shared/session/session.module";
+import {AuthenticationPasswordRepository} from "./authentication_password.repository";
+import {AuthenticationTemporaryRepository} from "./authentication_temporary.repository";
 
 @Module({
     controllers: [AuthenticationServiceController],
@@ -20,7 +22,9 @@ import {SessionModule} from "../../../../../shared/session/session.module";
             useClass: AuthenticationService,
         },
         AuthenticationPasswordProvider,
+        AuthenticationPasswordRepository,
         AuthenticationTemporaryProvider,
+        AuthenticationTemporaryRepository,
         SessionRepository,
         JwtProvider,
     ],
