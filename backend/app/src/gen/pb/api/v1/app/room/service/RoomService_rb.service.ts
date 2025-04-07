@@ -3,11 +3,15 @@
 /* eslint-disable */
 
 import { Injectable } from "@nestjs/common";
-import type { CreateRoomRequest, CreateRoomResponse, GetRoomRequest, GetRoomResponse } from "../service_pb.js";
+import type { BanMemberRequest, BanMemberResponse, CreateRequest, CreateResponse, EnterRequest, EnterResponse, GetRequest, GetResponse, LeaveSeatRequest, LeaveSeatResponse, TakeSeatRequest, TakeSeatResponse } from "../service_pb.js";
 import { Request, Response } from "express";
 
 @Injectable() 
 export abstract class RoomServiceService {
-  abstract handleCreateRoom(input: CreateRoomRequest, req: Request, res: Response): Promise<CreateRoomResponse>;
-  abstract handleGetRoom(input: GetRoomRequest, req: Request, res: Response): Promise<GetRoomResponse>;
+  abstract handleCreate(input: CreateRequest, req: Request, res: Response): Promise<CreateResponse>;
+  abstract handleGet(input: GetRequest, req: Request, res: Response): Promise<GetResponse>;
+  abstract handleEnter(input: EnterRequest, req: Request, res: Response): Promise<EnterResponse>;
+  abstract handleTakeSeat(input: TakeSeatRequest, req: Request, res: Response): Promise<TakeSeatResponse>;
+  abstract handleLeaveSeat(input: LeaveSeatRequest, req: Request, res: Response): Promise<LeaveSeatResponse>;
+  abstract handleBanMember(input: BanMemberRequest, req: Request, res: Response): Promise<BanMemberResponse>;
 }

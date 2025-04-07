@@ -2,13 +2,13 @@
 // @generated from file api/v1/app/room/service.proto (package api.v1.app.room, syntax proto3)
 /* eslint-disable */
 
-import { Body, Controller, Get, Param, Post, Query, Req, Res } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Put, Query, Req, Res } from "@nestjs/common";
 import { RoomServiceService } from "./RoomService_rb.service";
 import { AccessControl } from "../../../access_control.decorator";
 import type { JsonObject, JsonValue } from "@bufbuild/protobuf";
 import { fromJson, toJson } from "@bufbuild/protobuf";
 import { Request, Response } from "express";
-import { CreateRoomRequestSchema, CreateRoomResponseSchema, GetRoomRequestSchema, GetRoomResponseSchema } from "../service_pb.js";
+import { BanMemberRequestSchema, BanMemberResponseSchema, CreateRequestSchema, CreateResponseSchema, EnterRequestSchema, EnterResponseSchema, GetRequestSchema, GetResponseSchema, LeaveSeatRequestSchema, LeaveSeatResponseSchema, TakeSeatRequestSchema, TakeSeatResponseSchema } from "../service_pb.js";
 
 @Controller() 
 export class RoomServiceController {
@@ -16,12 +16,12 @@ export class RoomServiceController {
 
   @Post('/api/v1/app/room')
   @AccessControl({
-    scopePath: "api.v1.app.room.RoomService.CreateRoom",
+    scopePath: "api.v1.app.room.RoomService.Create",
     require: [
       "room:create",
     ]
   }) 
-  async handleCreateRoom(
+  async handleCreate(
     @Param() pathParams: {[key: string]: string},
     @Query() queryParams: {[key: string]: string},
     @Body() body: JsonObject,
@@ -32,19 +32,19 @@ export class RoomServiceController {
     for (const key in queryParams) {
       setMessageField(body, key.split('.'), queryParams[key]);
     }
-    const input = fromJson(CreateRoomRequestSchema, body);
-    const output = await this.service.handleCreateRoom(input, req, res);
-    return toJson(CreateRoomResponseSchema, output);
+    const input = fromJson(CreateRequestSchema, body);
+    const output = await this.service.handleCreate(input, req, res);
+    return toJson(CreateResponseSchema, output);
   }
 
   @Get('/api/v1/app/room/:room_id')
   @AccessControl({
-    scopePath: "api.v1.app.room.RoomService.GetRoom",
+    scopePath: "api.v1.app.room.RoomService.Get",
     require: [
       "room:get",
     ]
   }) 
-  async handleGetRoom(
+  async handleGet(
     @Param() pathParams: {[key: string]: string},
     @Query() queryParams: {[key: string]: string},
     @Body() body: JsonObject,
@@ -56,9 +56,108 @@ export class RoomServiceController {
       setMessageField(body, key.split('.'), queryParams[key]);
     }
     setMessageField(body, ["room_id"], pathParams['room_id']);
-    const input = fromJson(GetRoomRequestSchema, body);
-    const output = await this.service.handleGetRoom(input, req, res);
-    return toJson(GetRoomResponseSchema, output);
+    const input = fromJson(GetRequestSchema, body);
+    const output = await this.service.handleGet(input, req, res);
+    return toJson(GetResponseSchema, output);
+  }
+
+  @Put('/api/v1/app/room/:room_id/enter')
+  @AccessControl({
+    scopePath: "api.v1.app.room.RoomService.Enter",
+    require: [
+      "room:enter",
+    ]
+  }) 
+  async handleEnter(
+    @Param() pathParams: {[key: string]: string},
+    @Query() queryParams: {[key: string]: string},
+    @Body() body: JsonObject,
+    @Req() req: Request,
+    @Res({ passthrough: true}) res: Response,
+  ): Promise<JsonValue> {
+      body ??= {};
+    for (const key in queryParams) {
+      setMessageField(body, key.split('.'), queryParams[key]);
+    }
+    setMessageField(body, ["room_id"], pathParams['room_id']);
+    const input = fromJson(EnterRequestSchema, body);
+    const output = await this.service.handleEnter(input, req, res);
+    return toJson(EnterResponseSchema, output);
+  }
+
+  @Put('/api/v1/app/room/:room_id/seat/:seat_id/take')
+  @AccessControl({
+    scopePath: "api.v1.app.room.RoomService.TakeSeat",
+    require: [
+      "room:seat",
+    ]
+  }) 
+  async handleTakeSeat(
+    @Param() pathParams: {[key: string]: string},
+    @Query() queryParams: {[key: string]: string},
+    @Body() body: JsonObject,
+    @Req() req: Request,
+    @Res({ passthrough: true}) res: Response,
+  ): Promise<JsonValue> {
+      body ??= {};
+    for (const key in queryParams) {
+      setMessageField(body, key.split('.'), queryParams[key]);
+    }
+    setMessageField(body, ["room_id"], pathParams['room_id']);
+    setMessageField(body, ["seat_id"], pathParams['seat_id']);
+    const input = fromJson(TakeSeatRequestSchema, body);
+    const output = await this.service.handleTakeSeat(input, req, res);
+    return toJson(TakeSeatResponseSchema, output);
+  }
+
+  @Put('/api/v1/app/room/:room_id/seat/:seat_id/leave')
+  @AccessControl({
+    scopePath: "api.v1.app.room.RoomService.LeaveSeat",
+    require: [
+      "room:seat",
+    ]
+  }) 
+  async handleLeaveSeat(
+    @Param() pathParams: {[key: string]: string},
+    @Query() queryParams: {[key: string]: string},
+    @Body() body: JsonObject,
+    @Req() req: Request,
+    @Res({ passthrough: true}) res: Response,
+  ): Promise<JsonValue> {
+      body ??= {};
+    for (const key in queryParams) {
+      setMessageField(body, key.split('.'), queryParams[key]);
+    }
+    setMessageField(body, ["room_id"], pathParams['room_id']);
+    setMessageField(body, ["seat_id"], pathParams['seat_id']);
+    const input = fromJson(LeaveSeatRequestSchema, body);
+    const output = await this.service.handleLeaveSeat(input, req, res);
+    return toJson(LeaveSeatResponseSchema, output);
+  }
+
+  @Put('/api/v1/app/room/:room_id/member/:member_id/ban')
+  @AccessControl({
+    scopePath: "api.v1.app.room.RoomService.BanMember",
+    require: [
+      "room:member",
+    ]
+  }) 
+  async handleBanMember(
+    @Param() pathParams: {[key: string]: string},
+    @Query() queryParams: {[key: string]: string},
+    @Body() body: JsonObject,
+    @Req() req: Request,
+    @Res({ passthrough: true}) res: Response,
+  ): Promise<JsonValue> {
+      body ??= {};
+    for (const key in queryParams) {
+      setMessageField(body, key.split('.'), queryParams[key]);
+    }
+    setMessageField(body, ["room_id"], pathParams['room_id']);
+    setMessageField(body, ["member_id"], pathParams['member_id']);
+    const input = fromJson(BanMemberRequestSchema, body);
+    const output = await this.service.handleBanMember(input, req, res);
+    return toJson(BanMemberResponseSchema, output);
   }
 
 }

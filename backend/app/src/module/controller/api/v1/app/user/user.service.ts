@@ -21,6 +21,7 @@ import {UserRepository} from "./user.repository";
 import {UserAuthentication$} from "../../../../../../gen/pg/dao/dao_UserAuthentication";
 import {RequestSessionProvider} from "../../../../../global/request_session.provider";
 import {SessionProvider} from "../../../../../shared/session/session.provider";
+import {UserProvider} from "../../../../../shared/user/user.provider";
 
 @Injectable()
 export class UserService extends UserServiceService {
@@ -30,7 +31,8 @@ export class UserService extends UserServiceService {
         private readonly requestTime: RequestTimeProvider,
         private readonly requestSession: RequestSessionProvider,
         private readonly session: SessionProvider,
-        private readonly user: UserRepository,
+        private readonly userRepository: UserRepository,
+        private readonly user: UserProvider,
     ) {
         super();
     }
@@ -49,19 +51,7 @@ export class UserService extends UserServiceService {
             }
 
             const userId = this.random.uuid();
-            await User$.insert(tx, {
-                user_id: userId,
-                display_name: input.displayName,
-                create_time: t,
-                update_time: t,
-            });
-            await UserAuthentication$.insert(tx, {
-                user_authentication_id: this.random.uuid(),
-                user_id: userId,
-                authentication_id: session?.authentication_id,
-                create_time: t,
-                update_time: t,
-            });
+            await this.userRepository.create(tx, userId, input.displayName, this.random.uuid(), session?.authentication_id, t);
             return create(CreateUserResponseSchema, {
                 userId: userId,
                 displayName: input.displayName,

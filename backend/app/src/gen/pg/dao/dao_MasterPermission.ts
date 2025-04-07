@@ -149,7 +149,7 @@ LIMIT 1`,
 
 
     static async findByuk_masterpermission_name(client: PgClient, key: MasterPermission_Finduk_masterpermission_nameKey$): Promise<MasterPermission$ | null> {
-        const params: string[] = [];
+        const params: unknown[] = [];
         let stmt: string = `SELECT *
 FROM "MasterPermission"
 WHERE `;
@@ -171,7 +171,7 @@ WHERE `;
 
 
     static async listByuk_masterpermission_name(client: PgClient, key: MasterPermission_Listuk_masterpermission_nameKey$): Promise<MasterPermission$[]> {
-        const params: string[] = [];
+        const params: unknown[] = [];
         let stmt: string = `SELECT *
 FROM "MasterPermission"
 WHERE `;

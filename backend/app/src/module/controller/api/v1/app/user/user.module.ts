@@ -4,6 +4,7 @@ import {UserServiceService} from "../../../../../../gen/pb/api/v1/app/user/servi
 import {UserService} from "./user.service";
 import {UserRepository} from "./user.repository";
 import {SessionModule} from "../../../../../shared/session/session.module";
+import {UserModule as SharedUserModule} from "../../../../../shared/user/user.module";
 
 @Module({
     controllers: [UserServiceController],
@@ -16,6 +17,7 @@ import {SessionModule} from "../../../../../shared/session/session.module";
     ],
     imports: [
         SessionModule,
+        SharedUserModule,
     ],
 })
 export class UserModule {

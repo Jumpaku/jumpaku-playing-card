@@ -149,7 +149,7 @@ LIMIT 1`,
 
 
     static async findByuk_masterrole_name(client: PgClient, key: MasterRole_Finduk_masterrole_nameKey$): Promise<MasterRole$ | null> {
-        const params: string[] = [];
+        const params: unknown[] = [];
         let stmt: string = `SELECT *
 FROM "MasterRole"
 WHERE `;
@@ -171,7 +171,7 @@ WHERE `;
 
 
     static async listByuk_masterrole_name(client: PgClient, key: MasterRole_Listuk_masterrole_nameKey$): Promise<MasterRole$[]> {
-        const params: string[] = [];
+        const params: unknown[] = [];
         let stmt: string = `SELECT *
 FROM "MasterRole"
 WHERE `;

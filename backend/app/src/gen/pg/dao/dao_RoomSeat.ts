@@ -10,6 +10,8 @@ export type RoomSeatProp$ = {
 
     room_seat_name: string;
 
+    room_member_id?: string | null;
+
     create_time: Date;
 
     update_time: Date;
@@ -24,7 +26,23 @@ export type RoomSeatPk$ = {
 
 
 
+export type RoomSeat_FindUq_RoomSeat_RoomMemberKey$ = {
+    
+    room_id: string;
+    
+    room_member_id: string | null;
+    
+};
 
+
+
+export type RoomSeat_ListUq_RoomSeat_RoomMemberKey$ = {
+    
+    room_id?: string;
+    
+    room_member_id?: string | null;
+    
+};
 
 
 export class RoomSeat$ {
@@ -35,6 +53,8 @@ export class RoomSeat$ {
         this.room_id = props.room_id;
 
         this.room_seat_name = props.room_seat_name;
+
+        this.room_member_id = props.room_member_id ?? null;
 
         this.create_time = props.create_time;
 
@@ -49,6 +69,8 @@ export class RoomSeat$ {
 
     room_seat_name: string;
 
+    room_member_id: string | null;
+
     create_time: Date;
 
     update_time: Date;
@@ -62,6 +84,8 @@ export class RoomSeat$ {
             model.room_id,
 
             model.room_seat_name,
+
+            model.room_member_id,
 
             model.create_time,
 
@@ -91,6 +115,8 @@ export class RoomSeat$ {
 ,
     "room_seat_name"
 ,
+    "room_member_id"
+,
     "create_time"
 ,
     "update_time"
@@ -107,6 +133,8 @@ export class RoomSeat$ {
 
             model.room_seat_name,
 
+            model.room_member_id,
+
             model.create_time,
 
             model.update_time,
@@ -122,12 +150,14 @@ export class RoomSeat$ {
 ,
     "room_seat_name" = $${ 1 + 1 }
 ,
-    "create_time" = $${ 2 + 1 }
+    "room_member_id" = $${ 2 + 1 }
 ,
-    "update_time" = $${ 3 + 1 }
+    "create_time" = $${ 3 + 1 }
+,
+    "update_time" = $${ 4 + 1 }
 
 WHERE
-     "room_seat_id" = $${ 0 + 4 + 1 }
+     "room_seat_id" = $${ 0 + 5 + 1 }
 `,
             values);
     }
@@ -178,6 +208,61 @@ LIMIT 1`,
     }
 
 
+    static async findByUq_RoomSeat_RoomMember(client: PgClient, key: RoomSeat_FindUq_RoomSeat_RoomMemberKey$): Promise<RoomSeat$ | null> {
+        const params: unknown[] = [];
+        let stmt: string = `SELECT *
+FROM "RoomSeat"
+WHERE `;
+    
+        params.push(key.room_id);
+        if (params.length > 1) {
+            stmt += " AND ";
+        }
+        stmt += `"room_id" = $${params.length}`;
+    
+        params.push(key.room_member_id);
+        if (params.length > 1) {
+            stmt += " AND ";
+        }
+        stmt += `"room_member_id" = $${params.length}`;
+    
+        stmt += " LIMIT 1";
+        const res = await client.query(stmt, params);
+        if (res.rows.length === 0) {
+            return null;
+        }
+        return new RoomSeat$(res.rows[0] as any);
+    }
 
+
+
+    static async listByUq_RoomSeat_RoomMember(client: PgClient, key: RoomSeat_ListUq_RoomSeat_RoomMemberKey$): Promise<RoomSeat$[]> {
+        const params: unknown[] = [];
+        let stmt: string = `SELECT *
+FROM "RoomSeat"
+WHERE `;
+    
+        if (key.room_id !== undefined) {
+            params.push(key.room_id);
+            if (params.length > 1) {
+                stmt += " AND ";
+            }
+            stmt += `"room_id" = $${params.length}`;
+        }
+    
+        if (key.room_member_id !== undefined) {
+            params.push(key.room_member_id);
+            if (params.length > 1) {
+                stmt += " AND ";
+            }
+            stmt += `"room_member_id" = $${params.length}`;
+        }
+    
+        if (params.length === 0) {
+            throw new Error("No key provided");
+        }
+        const res = await client.query(stmt, params);
+        return res.rows.map((row: any) => new RoomSeat$(row));
+    }
 
 }
