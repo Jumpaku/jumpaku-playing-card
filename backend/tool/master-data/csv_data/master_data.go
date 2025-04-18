@@ -1,6 +1,6 @@
 package csv_data
 
-type MasterData struct {
+type MasterDataTable struct {
 	Name    string
 	Headers []string
 	Records [][]string

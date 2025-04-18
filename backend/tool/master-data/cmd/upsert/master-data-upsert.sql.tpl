@@ -11,4 +11,4 @@ ON CONFLICT ({{range $Index, $Key := .PrimaryKey}}{{if $Index}}, {{end}}"{{$Key}
 ;
 {{- else -}}
 -- No data found for {{.TableName}}.
-{{- end -}}
+{{- end}}

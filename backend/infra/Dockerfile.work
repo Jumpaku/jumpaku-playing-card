@@ -2,6 +2,7 @@ FROM --platform=linux/amd64 node:22-bookworm-slim
 
 RUN DEBIAN_FRONTEND=noninteractive apt update -y \
     && DEBIAN_FRONTEND=noninteractive apt install -y npm git curl
+
 RUN npx -y n 22.11.0 \
     && npm install -g npm@11.0.0
 RUN curl -L -o migrate.linux-amd64.tar.gz https://github.com/golang-migrate/migrate/releases/download/v4.18.1/migrate.linux-amd64.tar.gz \
@@ -9,4 +10,9 @@ RUN curl -L -o migrate.linux-amd64.tar.gz https://github.com/golang-migrate/migr
     && mv migrate /usr/local/bin/migrate \
     && rm migrate.linux-amd64.tar.gz
 RUN npm i -g @nestjs/cli@10.4.9
+
+RUN curl -L -o go1.24.2.linux-amd64.tar.gz 'https://go.dev/dl/go1.24.2.linux-amd64.tar.gz' \
+    && tar -C /usr/local -xzf go1.24.2.linux-amd64.tar.gz
+ENV PATH="/usr/local/go/bin:${PATH}"
+
 WORKDIR /workspace

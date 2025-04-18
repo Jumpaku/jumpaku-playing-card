@@ -4,11 +4,10 @@ import (
 	"context"
 	_ "embed"
 	"fmt"
-	"github.com/Jumpaku/jumpaku-playing-card/backend/tool/schenerate-pg-master-data/csv_data"
-	"github.com/Jumpaku/jumpaku-playing-card/backend/tool/schenerate-pg-master-data/pg_type"
+	"github.com/Jumpaku/jumpaku-playing-card/backend/tool/master-data/csv_data"
+	"github.com/Jumpaku/jumpaku-playing-card/backend/tool/master-data/pg_type"
 	"github.com/Jumpaku/schenerate/files"
 	"github.com/Jumpaku/schenerate/postgres"
-	"github.com/davecgh/go-spew/spew"
 	"github.com/samber/lo"
 	"os"
 	"path/filepath"
@@ -23,6 +22,7 @@ func main() {
 	postgresConnectionString := os.Args[1]
 	masterDataDir := os.Args[2]
 	outputDir := os.Args[3]
+
 	ctx := context.Background()
 	q, err := postgres.Open(postgresConnectionString)
 	if err != nil {
@@ -45,7 +45,7 @@ func main() {
 		panic(fmt.Sprintf("%+v", err))
 	}
 
-	masterData := map[string]*csv_data.MasterData{}
+	masterData := map[string]*csv_data.MasterDataTable{}
 	for tableName, csvFile := range csvFiles {
 		for _, f := range csvFile {
 			h, r, err := csv_data.ReadRecords(f)
@@ -55,13 +55,12 @@ func main() {
 
 			m, ok := masterData[tableName]
 			if !ok {
-				m = &csv_data.MasterData{Name: tableName, Headers: h}
+				m = &csv_data.MasterDataTable{Name: tableName, Headers: h}
 			}
 			m.Records = append(m.Records, r...)
 			masterData[tableName] = m
 		}
 	}
-	spew.Dump(masterData)
 
 	err = postgres.GenerateWithSchema(ctx, q,
 		masterTableNames,
@@ -74,7 +73,7 @@ func main() {
 	}
 }
 
-func generateSQL(w *files.Writer, schemas postgres.Schemas, masterData map[string]*csv_data.MasterData, outputDir string) error {
+func generateSQL(w *files.Writer, schemas postgres.Schemas, masterData map[string]*csv_data.MasterDataTable, outputDir string) error {
 	for _, schema := range schemas {
 		w.Add(filepath.Join(outputDir, "upsert_"+schema.Name+".sql"))
 		data := UpsertData{
@@ -103,7 +102,7 @@ type UpsertData struct {
 	Columns       []postgres.Column
 	PrimaryKey    []string
 	NonPrimaryKey []string
-	MasterData    *csv_data.MasterData
+	MasterData    *csv_data.MasterDataTable
 }
 
 func (d UpsertData) DataExists() bool {
