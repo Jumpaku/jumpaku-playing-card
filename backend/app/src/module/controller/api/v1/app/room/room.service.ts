@@ -7,11 +7,9 @@ import {throwPreconditionFailed} from "../../../../../../exception/exception";
 import {create} from "@bufbuild/protobuf";
 import {RoomRepository} from "./room.repository";
 import {RequestSessionProvider} from "../../../../../global/request_session.provider";
-import {SessionProvider} from "../../../../../shared/session/session.provider";
 import {
     BanMemberRequest,
     BanMemberResponse,
-    BanMemberResponseSchema,
     CreateRequest,
     CreateResponse,
     CreateResponseSchema,
@@ -31,11 +29,8 @@ import {
     TakeSeatResponseSchema
 } from "../../../../../../gen/pb/api/v1/app/room/service_pb";
 import {RoomServiceService} from "../../../../../../gen/pb/api/v1/app/room/service/RoomService_rb.service";
-import {Room$} from "../../../../../../gen/pg/dao/dao_Room";
-import {RoomMember$} from "../../../../../../gen/pg/dao/dao_RoomMember";
 import {UserProvider} from "../../../../../shared/user/user.provider";
-import {RoomSeat$} from "../../../../../../gen/pg/dao/dao_RoomSeat";
-import {RoomBan$} from "../../../../../../gen/pg/dao/dao_RoomBan";
+import {range} from "../../../../../../lib/array";
 
 @Injectable()
 export class RoomService extends RoomServiceService {
@@ -44,7 +39,6 @@ export class RoomService extends RoomServiceService {
         private readonly postgres: PostgresProvider,
         private readonly requestTime: RequestTimeProvider,
         private readonly requestSession: RequestSessionProvider,
-        private readonly session: SessionProvider,
         private readonly room: RoomRepository,
         private readonly user: UserProvider,
     ) {
@@ -65,47 +59,30 @@ export class RoomService extends RoomServiceService {
                 throwPreconditionFailed("User not found", "User not found");
             }
 
+            await this.room.create(tx, room_id, input.roomName, t);
+
+            const seats = range(Number(input.seatCount)).map((i) =>
+                this.room.createSeat(tx, room_id, this.random.uuid(), `${i + 1}`, null, t));
+            await Promise.all(seats);
+
             const memberId = this.random.uuid();
+            await this.room.createMember(tx, room_id, u.user_id, memberId, "1", t);
 
-            await Room$.insert(tx, {
-                room_id: room_id,
-                room_name: input.roomName,
-                create_time: t,
-                update_time: t,
-            });
-            await RoomMember$.insert(tx, {
-                room_member_id: memberId,
-                room_id: room_id,
-                user_id: u!.user_id,
-                role_id: "1",
-                create_time: t,
-                update_time: t,
-            });
-            const seats = Array.from({length: Number(input.seatCount)}, (_, i) => (new RoomSeat$({
-                room_seat_id: this.random.uuid(),
-                room_id: room_id,
-                room_seat_name: `${i + 1}`,
-                create_time: t,
-                update_time: t,
-            })));
-            await RoomSeat$.insert(tx, ...seats);
-
+            const {room, seatList, memberList} = (await this.room.find(tx, room_id))!;
             return create(CreateResponseSchema, {
-                roomId: room_id,
-                roomName: input.roomName,
-                seatList: seats.map((s) => (create(RoomSeatSchema, {
+                roomId: room.room_id,
+                roomName: room.room_name,
+                seatList: seatList.map((s) => create(RoomSeatSchema, {
                     seatId: s.room_seat_id,
                     seatName: s.room_seat_name,
-                    memberExists: false,
-                }))),
-                memberList: [
-                    create(RoomMemberSchema, {
-                        memberId: memberId,
-                        memberRole: "1",
-                        userId: u.user_id,
-                        userName: u.display_name,
-                    })
-                ],
+                    memberExists: s.room_member_id != null,
+                    memberId: s.room_member_id ?? undefined,
+                })),
+                memberList: memberList.map((m) => create(RoomMemberSchema, {
+                    memberId: m.room_member_id,
+                    memberRole: m.role_id,
+                    userId: m.user_id,
+                }))
             });
         });
     }
@@ -117,31 +94,25 @@ export class RoomService extends RoomServiceService {
         }
 
         return await this.postgres.transaction(async (tx) => {
-            const r = await Room$.find(tx, {room_id: input.roomId});
-            if (r == null) {
+            const found = await this.room.find(tx, input.roomId);
+            if (found == null) {
                 throwPreconditionFailed("Room not found", "Room not found");
             }
-            const seats = await RoomSeat$.listByUq_RoomSeat_RoomMember(tx, {
-                room_id: input.roomId,
-            });
-            const members = await RoomMember$.listByUq_RoomMember_RoomUser(tx, {
-                room_id: input.roomId,
-            });
-
+            const {room, seatList, memberList} = found;
             return create(GetResponseSchema, {
-                roomId: r.room_id,
-                roomName: r.room_name,
-                seatList: seats.map((s) => create(RoomSeatSchema, {
+                roomId: room.room_id,
+                roomName: room.room_name,
+                seatList: seatList.map((s) => create(RoomSeatSchema, {
                     seatId: s.room_seat_id,
                     seatName: s.room_seat_name,
                     memberExists: s.room_member_id != null,
                     memberId: s.room_member_id ?? undefined,
                 })),
-                memberList: members.map((m) => (create(RoomMemberSchema, {
+                memberList: memberList.map((m) => create(RoomMemberSchema, {
                     memberId: m.room_member_id,
                     memberRole: m.role_id,
                     userId: m.user_id,
-                }))),
+                }))
             });
         });
     }
@@ -154,30 +125,19 @@ export class RoomService extends RoomServiceService {
         }
 
         return await this.postgres.transaction(async (tx) => {
-            const r = await Room$.find(tx, {room_id: input.roomId});
-            if (r == null) {
-                throwPreconditionFailed("Room not found", "Room not found");
-            }
             const u = await this.user.findUserBySessionId(tx, sessionId);
             if (u == null) {
                 throwPreconditionFailed("User not found", "User not found");
             }
-            let member = await RoomMember$.findByUq_RoomMember_RoomUser(tx, {
-                room_id: input.roomId,
-                user_id: u!.user_id,
-            });
+            if (!await this.room.exists(tx, input.roomId)) {
+                throwPreconditionFailed("Room not found", "Room not found");
+            }
+            let member = await this.room.findMemberByUserId(tx, input.roomId, u!.user_id);
             if (member != null) {
                 return create(EnterResponseSchema, {memberId: member.room_member_id});
             }
             const memberId = this.random.uuid();
-            await RoomMember$.upsert(tx, {
-                room_member_id: memberId,
-                room_id: input.roomId,
-                user_id: u!.user_id,
-                role_id: "2",
-                create_time: t,
-                update_time: t,
-            });
+            await this.room.createMember(tx, input.roomId, u.user_id, memberId, "2", t);
 
             return create(EnterResponseSchema, {memberId: memberId});
         });
@@ -191,29 +151,21 @@ export class RoomService extends RoomServiceService {
         }
 
         return await this.postgres.transaction(async (tx) => {
-            const r = await Room$.find(tx, {room_id: input.roomId});
-            if (r == null) {
-                throwPreconditionFailed("Room not found", "Room not found");
-            }
             const u = await this.user.findUserBySessionId(tx, sessionId);
             if (u == null) {
                 throwPreconditionFailed("User not found", "User not found");
             }
-            const m = await RoomMember$.findByUq_RoomMember_RoomUser(tx, {
-                room_id: input.roomId,
-                user_id: u!.user_id,
-            });
+            if (!await this.room.exists(tx, input.roomId)) {
+                throwPreconditionFailed("Room not found", "Room not found");
+            }
+            let m = await this.room.findMemberByUserId(tx, input.roomId, u!.user_id);
             if (m == null) {
                 throwPreconditionFailed("Not in room", "Not in room");
             }
-
-            const s = await RoomSeat$.find(tx, {room_seat_id: input.seatId});
-            if (s == null) {
+            if (!await this.room.existsSeat(tx, input.roomId, input.seatId)) {
                 throwPreconditionFailed("Seat not found", "Seat not found");
             }
-            s.room_member_id = m.room_member_id;
-            s.update_time = t;
-            await RoomSeat$.upsert(tx, s);
+            await this.room.updateSeatMember(tx, input.roomId, input.seatId, m.room_member_id, t);
 
             return create(TakeSeatResponseSchema);
         });
@@ -227,68 +179,27 @@ export class RoomService extends RoomServiceService {
         }
 
         return await this.postgres.transaction(async (tx) => {
-            const r = await Room$.find(tx, {room_id: input.roomId});
-            if (r == null) {
-                throwPreconditionFailed("Room not found", "Room not found");
-            }
             const u = await this.user.findUserBySessionId(tx, sessionId);
             if (u == null) {
                 throwPreconditionFailed("User not found", "User not found");
             }
-            const m = await RoomMember$.findByUq_RoomMember_RoomUser(tx, {
-                room_id: input.roomId,
-                user_id: u!.user_id,
-            });
+            if (!await this.room.exists(tx, input.roomId)) {
+                throwPreconditionFailed("Room not found", "Room not found");
+            }
+            let m = await this.room.findMemberByUserId(tx, input.roomId, u!.user_id);
             if (m == null) {
                 throwPreconditionFailed("Not in room", "Not in room");
             }
-            const s = await RoomSeat$.find(tx, {room_seat_id: input.seatId});
-            if (s == null) {
+            if (!await this.room.existsSeat(tx, input.roomId, input.seatId)) {
                 throwPreconditionFailed("Seat not found", "Seat not found");
             }
-            s.room_member_id = null;
-            s.update_time = t;
-            await RoomSeat$.upsert(tx, s);
+            await this.room.updateSeatMember(tx, input.roomId, input.seatId, null, t);
 
             return create(LeaveSeatResponseSchema);
         });
     }
 
     override async handleBanMember(input: BanMemberRequest, req: Request, res: Response): Promise<BanMemberResponse> {
-        const t = this.requestTime.extract(req);
-        const sessionId = this.requestSession.extract(req);
-        if (sessionId == null) {
-            throwPreconditionFailed("Session not found", "Session not found");
-        }
-
-        return await this.postgres.transaction(async (tx) => {
-            const r = await Room$.find(tx, {room_id: input.roomId});
-            if (r == null) {
-                throwPreconditionFailed("Room not found", "Room not found");
-            }
-            const m = await RoomMember$.find(tx, {room_member_id: input.memberId});
-            if (m == null) {
-                throwPreconditionFailed("Not in room", "Not in room");
-            }
-            const s = await RoomSeat$.findByUq_RoomSeat_RoomMember(tx, {
-                room_id: input.roomId,
-                room_member_id: m.room_member_id,
-            });
-            if (s != null) {
-                s.room_member_id = null;
-                s.update_time = t;
-                await RoomSeat$.upsert(tx, s);
-            }
-            await RoomMember$.delete(tx, {room_member_id: m.room_member_id});
-            await RoomBan$.upsert(tx, {
-                room_ban_id: this.random.uuid(),
-                room_id: input.roomId,
-                ban_user_id: m.user_id,
-                create_time: t,
-                update_time: t,
-            });
-
-            return create(BanMemberResponseSchema);
-        });
+        throw new Error("Method not implemented.");
     }
 }
