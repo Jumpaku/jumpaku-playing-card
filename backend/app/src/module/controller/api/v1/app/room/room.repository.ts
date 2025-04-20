@@ -1,5 +1,5 @@
 import {Injectable} from "@nestjs/common";
-import {PgClient, selectAll} from "../../../../../global/postgres.provider";
+import {PgClient} from "../../../../../global/postgres.provider";
 import {Room$} from "../../../../../../gen/pg/dao/dao_Room";
 import {RoomSeat$} from "../../../../../../gen/pg/dao/dao_RoomSeat";
 import {RoomMember$} from "../../../../../../gen/pg/dao/dao_RoomMember";
@@ -30,20 +30,8 @@ export class RoomRepository {
         if (room == null) {
             return null;
         }
-        const seatList = await selectAll<RoomSeat$>(tx,
-            `SELECT *
-             FROM "RoomSeat"
-             WHERE "room_id" = $1
-             ORDER BY "room_seat_id"`,
-            [roomId],
-        );
-        const memberList = await selectAll<RoomMember$>(tx,
-            `SELECT *
-             FROM "RoomMember"
-             WHERE "room_id" = $1
-             ORDER BY "room_member_id"`,
-            [roomId],
-        );
+        const seatList = await RoomSeat$.listByUq_RoomSeat_RoomMember(tx, {room_id: roomId});
+        const memberList = await RoomMember$.listByUq_RoomMember_RoomUser(tx, {room_id: roomId});
         return {room, seatList, memberList};
     }
 

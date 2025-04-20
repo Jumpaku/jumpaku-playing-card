@@ -36,6 +36,14 @@ export type RoomMember_FindUq_RoomMember_RoomUserKey$ = {
 
 
 
+export type RoomMember_ListIdx_RoomMember_RoomIdAndMemberIdKey$ = {
+    
+    room_id?: string;
+    
+    room_member_id?: string;
+    
+};
+
 export type RoomMember_ListUq_RoomMember_RoomUserKey$ = {
     
     room_id?: string;
@@ -235,6 +243,35 @@ WHERE `;
     }
 
 
+
+    static async listByIdx_RoomMember_RoomIdAndMemberId(client: PgClient, key: RoomMember_ListIdx_RoomMember_RoomIdAndMemberIdKey$): Promise<RoomMember$[]> {
+        const params: unknown[] = [];
+        let stmt: string = `SELECT *
+FROM "RoomMember"
+WHERE `;
+    
+        if (key.room_id !== undefined) {
+            params.push(key.room_id);
+            if (params.length > 1) {
+                stmt += " AND ";
+            }
+            stmt += `"room_id" = $${params.length}`;
+        }
+    
+        if (key.room_member_id !== undefined) {
+            params.push(key.room_member_id);
+            if (params.length > 1) {
+                stmt += " AND ";
+            }
+            stmt += `"room_member_id" = $${params.length}`;
+        }
+    
+        if (params.length === 0) {
+            throw new Error("No key provided");
+        }
+        const res = await client.query(stmt, params);
+        return res.rows.map((row: any) => new RoomMember$(row));
+    }
 
     static async listByUq_RoomMember_RoomUser(client: PgClient, key: RoomMember_ListUq_RoomMember_RoomUserKey$): Promise<RoomMember$[]> {
         const params: unknown[] = [];
