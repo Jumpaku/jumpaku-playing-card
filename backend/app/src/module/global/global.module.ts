@@ -1,10 +1,12 @@
 import {Global, Module} from '@nestjs/common';
 import {RequestIdProvider} from "./request_id.provider";
 import {ConfigProvider} from "./config.provider";
-import {RandomProvider, RandomProviderToken} from "./random.provider";
-import {RequestTimeProvider, RequestTimeProviderToken} from "./request_time.provider";
+import {DefaultRandomProvider, RandomProvider} from "./random.provider";
+import {RealRequestTimeProvider, RequestTimeProvider} from "./request_time.provider";
 import {LoggerProvider} from "./logger.provider";
 import {PostgresProvider} from "./postgres.provider";
+import {mustGetEnv} from "../../lib/env";
+import {RequestSessionProvider} from "./request_session.provider";
 
 @Global()
 @Module({
@@ -12,26 +14,28 @@ import {PostgresProvider} from "./postgres.provider";
         LoggerProvider,
         {
             provide: ConfigProvider,
-            useFactory: () => ConfigProvider.load("config/local.json"),
+            useFactory: () => ConfigProvider.load(mustGetEnv("CONFIG_PATH")),
         },
         {
-            provide: RandomProviderToken,
-            useClass: RandomProvider,
+            provide: RandomProvider,
+            useClass: DefaultRandomProvider,
         },
         RequestIdProvider,
         {
-            provide: RequestTimeProviderToken,
-            useClass: RequestTimeProvider,
+            provide: RequestTimeProvider,
+            useClass: RealRequestTimeProvider,
         },
         PostgresProvider,
+        RequestSessionProvider,
     ],
     exports: [
         LoggerProvider,
         ConfigProvider,
-        RandomProviderToken,
+        RandomProvider,
         RequestIdProvider,
-        RequestTimeProviderToken,
+        RequestTimeProvider,
         PostgresProvider,
+        RequestSessionProvider,
     ],
 })
 export class GlobalModule {

@@ -5,6 +5,7 @@ import {
 } from "@bufbuild/protoplugin";
 import {findHttpRule, HttpRuleExt} from "./http_rule.js";
 import {safeObjectProperty} from "@bufbuild/protobuf/reflect";
+import {findAccessControl} from "./access_control";
 
 function extractPathVars(httpRule: HttpRuleExt): {
     path: string;
@@ -42,7 +43,7 @@ function extractMethodDecorator(httpRule: HttpRuleExt): string {
 export const protocGenRestobufNestjs = createEcmaScriptPlugin({
     name: "protoc-gen-restobuf-nestjs",
     version: "v1",
-    generateTs(schema: Schema) {
+    generateTs: (schema: Schema) => {
         // Loop through all Protobuf files in the schema
         for (const file of schema.files) {
             for (const service of file.services) {
@@ -57,7 +58,8 @@ export const protocGenRestobufNestjs = createEcmaScriptPlugin({
                         f.print("  abstract ", methodName, "(input: ", f.importShape(method.input),
                             ", req: ", f.import("Request", "express"),
                             ", res: ", f.import("Response", "express"),
-                            "): Promise<", f.importShape(method.output), ">;");
+                            "): Promise<", f.importShape(method.output), ">;",
+                        );
                     }
                     f.print("}");
                 }
@@ -81,17 +83,29 @@ export const protocGenRestobufNestjs = createEcmaScriptPlugin({
                         let {path, pathParams} = extractPathVars(httpRule);
                         const atMethod = extractMethodDecorator(httpRule);
 
+                        const accessControl = findAccessControl(method);
+
                         const inputSchema = f.importSchema(method.input);
                         const outputSchema = f.importSchema(method.output);
                         const methodName = safeIdentifier("handle" + method.name);
                         f.print("  @", f.import(atMethod, "@nestjs/common"), "(", "'", path, "')");
+                        if (accessControl != null) {
+                            f.print("  @", f.import("AccessControl", "./api/v1/access_control.decorator"), "", "({");
+                            f.print("    scopePath: ", f.string(accessControl.scopePath || service.typeName + "." + method.name), ",");
+                            f.print("    require: [");
+                            for (const p of accessControl.require) {
+                                f.print("      ", f.string(p), ",");
+                            }
+                            f.print("    ]");
+                            f.print("  }) ");
+                        }
                         f.print("  async ", methodName, "(",);
                         f.print("    @", f.import("Param", "@nestjs/common"), "() pathParams: {[key: string]: string},");
                         f.print("    @", f.import("Query", "@nestjs/common"), "() queryParams: {[key: string]: string},");
                         f.print("    @", f.import("Body", "@nestjs/common"), "() body: ", JsonObject, ",");
                         f.print("    @", f.import("Req", "@nestjs/common"), "() req: ", f.import("Request", "express"), ",");
                         f.print("    @", f.import("Res", "@nestjs/common"), "({ passthrough: true}) res: ", f.import("Response", "express"), ",");
-                        f.print("  ): Promise<", JsonObject, "> {");
+                        f.print("  ): Promise<", JsonValue, "> {");
                         f.print("      body ??= {};");
                         f.print("    for (const key in queryParams) {");
                         f.print("      setMessageField(body, key.split('.'), queryParams[key]);");
@@ -100,7 +114,7 @@ export const protocGenRestobufNestjs = createEcmaScriptPlugin({
                             f.print("    setMessageField(body, [", fieldPath.map((s) => `"${s}"`), "], pathParams['", pathParam, "']);");
                         }
                         f.print("    const input = ", fromJson, "(", inputSchema, ", body);");
-                        f.print("    const output = await this.service.", safeObjectProperty("handle" + method.name), "(input, req, res);");
+                        f.print("    const output = await this.service.", safeObjectProperty("handle" + method.name), "(", "input, req, res);");
                         f.print("    return ", toJson, "(", outputSchema, ", output)", ";");
                         f.print("  }");
                         f.print("");
@@ -122,6 +136,23 @@ export const protocGenRestobufNestjs = createEcmaScriptPlugin({
     }
 }`);
                 }
+            }
+            if (file.name === "api/v1/access_control") {
+                const f = schema.generateFile("api/v1/access_control.decorator.ts");
+                f.preamble(file);
+                f.print(`
+export const AccessControl = `, f.import("Reflector", "@nestjs/core"), `.createDecorator<{
+    scopePath: string;
+    require: string[];
+}>();
+
+export function extractAccessControl(ctx: `, f.import("ExecutionContext", "@nestjs/common"), `): {
+    scopePath: string;
+    require: string[];
+} | undefined{
+    return new Reflector().get(AccessControl, ctx.getHandler());
+}
+            `);
             }
         }
     },

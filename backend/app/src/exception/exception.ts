@@ -48,3 +48,37 @@ export function throwBadRequest(description: string, details: string, options?: 
         options?.cause,
     );
 }
+
+export function throwUnauthorized(description: string, details: string, options?: {
+    responseData?: Record<string, string>;
+    cause?: unknown;
+}): never {
+    throw new AppException(
+        HttpStatus.UNAUTHORIZED,
+        'Unauthorized',
+        toJson(ErrorResponseSchema, create(ErrorResponseSchema, {
+            errorCode: ErrorResponse_ErrorCode.UNAUTHORIZED,
+            errorDescription: description,
+            data: options?.responseData,
+        })),
+        details,
+        options?.cause,
+    );
+}
+
+export function throwPreconditionFailed(description: string, details: string, options?: {
+    responseData?: Record<string, string>;
+    cause?: unknown;
+}): never {
+    throw new AppException(
+        HttpStatus.PRECONDITION_FAILED,
+        'Precondition failed',
+        toJson(ErrorResponseSchema, create(ErrorResponseSchema, {
+            errorCode: ErrorResponse_ErrorCode.PRECONDITION_FAILED,
+            errorDescription: description,
+            data: options?.responseData,
+        })),
+        details,
+        options?.cause,
+    );
+}

@@ -2,7 +2,6 @@ import {Injectable} from "@nestjs/common";
 import {ConfigProvider} from "./config.provider";
 import {Pool, PoolClient} from "pg";
 import {LoggerProvider} from "./logger.provider";
-import {setTypeParsers} from "../../gen/pg/dao/pg_type_parsers";
 
 export interface PgClient {
     query(query: string, values: unknown[]): Promise<{ rows: unknown[] }>;
@@ -10,24 +9,26 @@ export interface PgClient {
 
 @Injectable()
 export class PostgresProvider {
-    constructor(config: ConfigProvider, private readonly logger: LoggerProvider) {
+    constructor(private readonly config: ConfigProvider, private readonly logger: LoggerProvider) {
         logger.log(JSON.stringify({
             log: 'postgres',
             time: new Date(),
             message: 'open postgres pool connection',
         }));
-        this.pool = new Pool({connectionString: config.get().postgresConnection});
-        setTypeParsers();
+        this.pool = new Pool({
+            connectionString: config.get().postgresConnection,
+        });
     }
 
     private pool: Pool
 
-    async transaction(fn: (client: PgClient) => Promise<void>) {
+    async transaction<R>(fn: (client: PgClient) => Promise<R>): Promise<R> {
         // https://node-postgres.com/features/transactions#examples
         const client = await this.newClient();
+        let result: R;
         try {
             await client.query('BEGIN')
-            await fn(client);
+            result = await fn(client);
             await client.query('COMMIT')
         } catch (e) {
             await client.query('ROLLBACK')
@@ -35,6 +36,7 @@ export class PostgresProvider {
         } finally {
             client.release()
         }
+        return result;
     }
 
     async close() {
@@ -64,7 +66,7 @@ export class PostgresProvider {
                     stmt, params
                 },
             }));
-        }, 5000)
+        }, 1000 * this.config.get().postgresTimeoutSeconds);
         // monkey patch the query method to keep track of the last query executed
         // @ts-ignore
         client.query = ((...args: any[]) => {
@@ -98,4 +100,13 @@ export class PostgresProvider {
 export async function selectAll<T>(client: PgClient, stmt: string, params: unknown[]): Promise<T[]> {
     const {rows} = await client.query(stmt, params)
     return (rows ?? []) as T[];
+}
+
+export async function selectOne<T>(client: PgClient, stmt: string, params: unknown[]): Promise<T | null> {
+    const {rows} = await client.query(stmt, params)
+    const rs = (rows ?? []) as T[];
+    if (rs.length === 0) {
+        return null;
+    }
+    return rs[0];
 }

@@ -11,7 +11,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file api/v1/error.proto.
  */
 export const file_api_v1_error: GenFile = /*@__PURE__*/
-  fileDesc("ChJhcGkvdjEvZXJyb3IucHJvdG8SBmFwaS52MSLmAQoNRXJyb3JSZXNwb25zZRIzCgplcnJvcl9jb2RlGAEgASgOMh8uYXBpLnYxLkVycm9yUmVzcG9uc2UuRXJyb3JDb2RlEhkKEWVycm9yX2Rlc2NyaXB0aW9uGAIgASgJEi0KBGRhdGEYAyADKAsyHy5hcGkudjEuRXJyb3JSZXNwb25zZS5EYXRhRW50cnkaKwoJRGF0YUVudHJ5EgsKA2tleRgBIAEoCRINCgV2YWx1ZRgCIAEoCToCOAEiKQoJRXJyb3JDb2RlEgsKB1VOS05PV04QABIPCgtCQURfUkVRVUVTVBABQlEKCmNvbS5hcGkudjFCCkVycm9yUHJvdG9QAaICA0FYWKoCBkFwaS5WMcoCBkFwaVxWMeICEkFwaVxWMVxHUEJNZXRhZGF0YeoCB0FwaTo6VjFiBnByb3RvMw", [file_google_protobuf_timestamp]);
+  fileDesc("ChJhcGkvdjEvZXJyb3IucHJvdG8SBmFwaS52MSKRAgoNRXJyb3JSZXNwb25zZRIzCgplcnJvcl9jb2RlGAEgASgOMh8uYXBpLnYxLkVycm9yUmVzcG9uc2UuRXJyb3JDb2RlEhkKEWVycm9yX2Rlc2NyaXB0aW9uGAIgASgJEi0KBGRhdGEYAyADKAsyHy5hcGkudjEuRXJyb3JSZXNwb25zZS5EYXRhRW50cnkaKwoJRGF0YUVudHJ5EgsKA2tleRgBIAEoCRINCgV2YWx1ZRgCIAEoCToCOAEiVAoJRXJyb3JDb2RlEgsKB1VOS05PV04QABIPCgtCQURfUkVRVUVTVBABEhAKDFVOQVVUSE9SSVpFRBACEhcKE1BSRUNPTkRJVElPTl9GQUlMRUQQA0JRCgpjb20uYXBpLnYxQgpFcnJvclByb3RvUAGiAgNBWFiqAgZBcGkuVjHKAgZBcGlcVjHiAhJBcGlcVjFcR1BCTWV0YWRhdGHqAgdBcGk6OlYxYgZwcm90bzM", [file_google_protobuf_timestamp]);
 
 /**
  * @generated from message api.v1.ErrorResponse
@@ -73,12 +73,22 @@ export enum ErrorResponse_ErrorCode {
    * @generated from enum value: BAD_REQUEST = 1;
    */
   BAD_REQUEST = 1,
+
+  /**
+   * @generated from enum value: UNAUTHORIZED = 2;
+   */
+  UNAUTHORIZED = 2,
+
+  /**
+   * @generated from enum value: PRECONDITION_FAILED = 3;
+   */
+  PRECONDITION_FAILED = 3,
 }
 
 /**
  * @generated from enum api.v1.ErrorResponse.ErrorCode
  */
-export type ErrorResponse_ErrorCodeJson = "UNKNOWN" | "BAD_REQUEST";
+export type ErrorResponse_ErrorCodeJson = "UNKNOWN" | "BAD_REQUEST" | "UNAUTHORIZED" | "PRECONDITION_FAILED";
 
 /**
  * Describes the enum api.v1.ErrorResponse.ErrorCode.

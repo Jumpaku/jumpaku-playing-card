@@ -13,6 +13,7 @@ export class ConfigProvider {
         if (configPath != null) {
             config.reload(configPath);
         }
+
         return config;
     }
 

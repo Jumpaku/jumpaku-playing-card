@@ -1,17 +1,19 @@
 import {Injectable} from "@nestjs/common";
-import {assertTrue} from "../../panic";
+import {assertTrue} from "../../lib/panic";
 import * as crypto from "node:crypto";
 import {Random as Random$} from 'random'
 
 
 @Injectable()
-export abstract class RandomProviderToken {
+export abstract class RandomProvider {
     abstract int32(n: number): number;
 
     abstract uuid(): string;
+
+    abstract salt(): string;
 }
 
-export class RandomProvider extends RandomProviderToken {
+export class DefaultRandomProvider extends RandomProvider {
     override int32(n: number): number {
         assertTrue(n < 4294967296, "n must be less than 4294967296");
         assertTrue(n > 0, "n must be greater than 0");
@@ -22,9 +24,13 @@ export class RandomProvider extends RandomProviderToken {
     override uuid(): string {
         return crypto.randomUUID();
     }
+
+    override salt(): string {
+        return crypto.randomBytes(16).toString('hex');
+    }
 }
 
-export class RandomProviderWithSeed extends RandomProviderToken {
+export class SeedRandomProvider extends RandomProvider {
     constructor(seed: string | number) {
         super();
         this.rng = new Random$(seed);
@@ -50,5 +56,14 @@ export class RandomProviderWithSeed extends RandomProviderToken {
         const x = (n: number) => selectAll(n, '0123456789abcdef');
         const y = selectAll(1, '89ab');
         return `${x(4)}${x(4)}-${x(4)}-4${x(3)}-${y}${x(3)}-${x(12)}`;
+    }
+
+    override salt(): string {
+        const size = 16;
+        const array = new Uint8Array(size);
+        for (let i = 0; i < size; i++) {
+            array[i] = this.rng.int(0, 255);
+        }
+        return Buffer.from(array).toString('hex');
     }
 }

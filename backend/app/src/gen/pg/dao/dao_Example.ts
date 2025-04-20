@@ -8,11 +8,11 @@ export type ExampleProp$ = {
 
     name: string;
 
+    content: string;
+
     create_time: Date;
 
     update_time: Date;
-
-    content: string;
 
 };
 
@@ -25,6 +25,8 @@ export type ExamplePk$ = {
 
 
 
+
+
 export class Example$ {
     constructor(props: ExampleProp$) {
 
@@ -32,11 +34,11 @@ export class Example$ {
 
         this.name = props.name;
 
+        this.content = props.content;
+
         this.create_time = props.create_time;
 
         this.update_time = props.update_time;
-
-        this.content = props.content;
 
     }
 
@@ -45,11 +47,11 @@ export class Example$ {
 
     name: string;
 
+    content: string;
+
     create_time: Date;
 
     update_time: Date;
-
-    content: string;
 
 
     static async insert(client: PgClient, ...models: Example$[]): Promise<void> {
@@ -59,11 +61,11 @@ export class Example$ {
 
             model.name,
 
+            model.content,
+
             model.create_time,
 
             model.update_time,
-
-            model.content,
 
         ]);
         const cols = values.length / models.length;
@@ -87,11 +89,11 @@ export class Example$ {
 ,
     "name"
 ,
+    "content"
+,
     "create_time"
 ,
     "update_time"
-,
-    "content"
 
 ) VALUES ${params}`,
             values,
@@ -103,11 +105,11 @@ export class Example$ {
 
             model.name,
 
+            model.content,
+
             model.create_time,
 
             model.update_time,
-
-            model.content,
 
 
             model.example_id,
@@ -118,11 +120,11 @@ export class Example$ {
 
     "name" = $${ 0 + 1 }
 ,
-    "create_time" = $${ 1 + 1 }
+    "content" = $${ 1 + 1 }
 ,
-    "update_time" = $${ 2 + 1 }
+    "create_time" = $${ 2 + 1 }
 ,
-    "content" = $${ 3 + 1 }
+    "update_time" = $${ 3 + 1 }
 
 WHERE
      "example_id" = $${ 0 + 4 + 1 }
@@ -174,6 +176,8 @@ LIMIT 1`,
         }
         return new Example$(res.rows[0] as ExampleProp$);
     }
+
+
 
 
 }

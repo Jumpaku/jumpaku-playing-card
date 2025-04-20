@@ -4,7 +4,8 @@
 
 import { Body, Controller, Delete, Get, Param, Post, Put, Query, Req, Res } from "@nestjs/common";
 import { ExampleServiceService } from "./ExampleService_rb.service";
-import type { JsonValue } from "@bufbuild/protobuf";
+import { AccessControl } from "../access_control.decorator";
+import type { JsonObject, JsonValue } from "@bufbuild/protobuf";
 import { fromJson, toJson } from "@bufbuild/protobuf";
 import { Request, Response } from "express";
 import { CreateExampleRequestSchema, CreateExampleResponseSchema, DeleteExampleRequestSchema, DeleteExampleResponseSchema, GetExampleRequestSchema, GetExampleResponseSchema, ListExampleRequestSchema, ListExampleResponseSchema, UpdateExampleRequestSchema, UpdateExampleResponseSchema } from "../example_pb.js";
@@ -14,13 +15,19 @@ export class ExampleServiceController {
   constructor(private service: ExampleServiceService) {}
 
   @Get('/v1')
+  @AccessControl({
+    scopePath: "api.v1.ExampleService.ListExample",
+    require: [
+    ]
+  }) 
   async handleListExample(
-    @Param() pathParams: string,
+    @Param() pathParams: {[key: string]: string},
     @Query() queryParams: {[key: string]: string},
-    @Body() body: JsonValue,
+    @Body() body: JsonObject,
     @Req() req: Request,
     @Res({ passthrough: true}) res: Response,
   ): Promise<JsonValue> {
+      body ??= {};
     for (const key in queryParams) {
       setMessageField(body, key.split('.'), queryParams[key]);
     }
@@ -30,68 +37,92 @@ export class ExampleServiceController {
   }
 
   @Get('/v1/:example_id')
+  @AccessControl({
+    scopePath: "api.v1.ExampleService.GetExample",
+    require: [
+    ]
+  }) 
   async handleGetExample(
-    @Param() pathParams: string,
+    @Param() pathParams: {[key: string]: string},
     @Query() queryParams: {[key: string]: string},
-    @Body() body: JsonValue,
+    @Body() body: JsonObject,
     @Req() req: Request,
     @Res({ passthrough: true}) res: Response,
   ): Promise<JsonValue> {
+      body ??= {};
     for (const key in queryParams) {
       setMessageField(body, key.split('.'), queryParams[key]);
     }
-    setMessageField(body, ["example_id"], pathParams[0]);
+    setMessageField(body, ["example_id"], pathParams['example_id']);
     const input = fromJson(GetExampleRequestSchema, body);
     const output = await this.service.handleGetExample(input, req, res);
     return toJson(GetExampleResponseSchema, output);
   }
 
   @Put('/v1/:example_id')
+  @AccessControl({
+    scopePath: "api.v1.ExampleService.UpdateExample",
+    require: [
+    ]
+  }) 
   async handleUpdateExample(
-    @Param() pathParams: string,
+    @Param() pathParams: {[key: string]: string},
     @Query() queryParams: {[key: string]: string},
-    @Body() body: JsonValue,
+    @Body() body: JsonObject,
     @Req() req: Request,
     @Res({ passthrough: true}) res: Response,
   ): Promise<JsonValue> {
+      body ??= {};
     for (const key in queryParams) {
       setMessageField(body, key.split('.'), queryParams[key]);
     }
-    setMessageField(body, ["example_id"], pathParams[0]);
+    setMessageField(body, ["example_id"], pathParams['example_id']);
     const input = fromJson(UpdateExampleRequestSchema, body);
     const output = await this.service.handleUpdateExample(input, req, res);
     return toJson(UpdateExampleResponseSchema, output);
   }
 
   @Post('/v1/:example_id')
+  @AccessControl({
+    scopePath: "api.v1.ExampleService.CreateExample",
+    require: [
+    ]
+  }) 
   async handleCreateExample(
-    @Param() pathParams: string,
+    @Param() pathParams: {[key: string]: string},
     @Query() queryParams: {[key: string]: string},
-    @Body() body: JsonValue,
+    @Body() body: JsonObject,
     @Req() req: Request,
     @Res({ passthrough: true}) res: Response,
   ): Promise<JsonValue> {
+      body ??= {};
     for (const key in queryParams) {
       setMessageField(body, key.split('.'), queryParams[key]);
     }
-    setMessageField(body, ["example_id"], pathParams[0]);
+    setMessageField(body, ["example_id"], pathParams['example_id']);
     const input = fromJson(CreateExampleRequestSchema, body);
     const output = await this.service.handleCreateExample(input, req, res);
     return toJson(CreateExampleResponseSchema, output);
   }
 
   @Delete('/v1/:example_id')
+  @AccessControl({
+    scopePath: "api.v1.ExampleService.DeleteExample",
+    require: [
+    ]
+  }) 
   async handleDeleteExample(
-    @Param() pathParams: string,
+    @Param() pathParams: {[key: string]: string},
     @Query() queryParams: {[key: string]: string},
-    @Body() body: JsonValue,
+    @Body() body: JsonObject,
     @Req() req: Request,
     @Res({ passthrough: true}) res: Response,
   ): Promise<JsonValue> {
+      body ??= {};
     for (const key in queryParams) {
       setMessageField(body, key.split('.'), queryParams[key]);
     }
-    setMessageField(body, ["example_id"], pathParams[0]);
+    setMessageField(body, ["example_id"], pathParams['example_id']);
     const input = fromJson(DeleteExampleRequestSchema, body);
     const output = await this.service.handleDeleteExample(input, req, res);
     return toJson(DeleteExampleResponseSchema, output);
@@ -99,7 +130,7 @@ export class ExampleServiceController {
 
 }
 
-function setMessageField(message: JsonValue, fieldPath: string[], value: string): JsonValue {
+function setMessageField(message: JsonObject, fieldPath: string[], value: string): JsonValue {
     if(fieldPath.length === 0) {
         throw new Error("fieldPath must not be empty");
     }
@@ -109,6 +140,6 @@ function setMessageField(message: JsonValue, fieldPath: string[], value: string)
         return message;
     }else {
         message[field] ??= {};
-        return setMessageField(message[field], rest, value);
+        return setMessageField(message[field] as JsonObject , rest, value);
     }
 }

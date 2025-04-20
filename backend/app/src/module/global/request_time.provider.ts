@@ -1,34 +1,37 @@
-import {Injectable, Scope} from "@nestjs/common";
+import {Injectable} from "@nestjs/common";
+import {Request} from "express";
 
-@Injectable({scope: Scope.REQUEST})
-export abstract class RequestTimeProviderToken {
-    abstract requestTime(modificationId: string): Date
+@Injectable()
+export abstract class RequestTimeProvider {
+    abstract extract(req: Request): Date
 }
 
-@Injectable({scope: Scope.REQUEST})
-export class RequestTimeProvider extends RequestTimeProviderToken {
-    private readonly _requestTime: Date;
-
-    constructor() {
-        super();
-        this._requestTime = new Date();
-    }
-
-    override requestTime(modificationId: string): Date {
-        return this._requestTime;
+@Injectable()
+export class RealRequestTimeProvider extends RequestTimeProvider {
+    override extract(req: Request): Date {
+        let got = (req as any).requestTime;
+        if (got == null) {
+            got = (req as any).requestTime = new Date();
+        }
+        return got;
     }
 }
 
-@Injectable({scope: Scope.REQUEST})
-export class ModifiedRequestTimeProvider extends RequestTimeProviderToken {
-    private readonly _requestTime: Date;
-
-    constructor() {
+@Injectable()
+export class ModifiableRequestTimeProvider extends RequestTimeProvider {
+    constructor(private readonly base: RequestTimeProvider) {
         super();
-        this._requestTime = new Date();
     }
+    override extract(req: Request): Date {
+        const debugId = req.cookies[COOKIE_NAME_DEBUG_ID];
+        if (debugId == null) {
+            return this.base.extract(req);
+        }
 
-    override requestTime(modificationId: string): Date {
-        return this._requestTime;
+        let got = (req as any).requestTime;
+        if (got == null) {
+            got = (req as any).requestTime = new Date();
+        }
+        return got;
     }
 }

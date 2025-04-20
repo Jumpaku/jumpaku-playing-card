@@ -10,21 +10,36 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file config/config.proto.
  */
 export const file_config_config: GenFile = /*@__PURE__*/
-  fileDesc("ChNjb25maWcvY29uZmlnLnByb3RvEgZjb25maWciOgoJQXBwQ29uZmlnEhAKCG5vZGVfZW52GAEgASgJEhsKE3Bvc3RncmVzX2Nvbm5lY3Rpb24YAiABKAlCUQoKY29tLmNvbmZpZ0ILQ29uZmlnUHJvdG9QAaICA0NYWKoCBkNvbmZpZ8oCBkNvbmZpZ+ICEkNvbmZpZ1xHUEJNZXRhZGF0YeoCBkNvbmZpZ2IGcHJvdG8z");
+  fileDesc("ChNjb25maWcvY29uZmlnLnByb3RvEgZjb25maWciugQKCUFwcENvbmZpZxIQCghub2RlX2VudhgKIAEoCRIMCgRwb3J0GBQgASgFEhsKE3Bvc3RncmVzX2Nvbm5lY3Rpb24YHiABKAkSIAoYcG9zdGdyZXNfdGltZW91dF9zZWNvbmRzGB8gASgFEjgKDmF1dGhlbnRpY2F0aW9uGCggASgLMiAuY29uZmlnLkFwcENvbmZpZy5BdXRoZW50aWNhdGlvbhqTAwoOQXV0aGVudGljYXRpb24SEgoKc2VjcmV0X2tleRgBIAEoCRISCgpwdWJsaWNfa2V5GAIgASgJEg4KBmlzc3VlchgDIAEoCRIQCghhdWRpZW5jZRgEIAEoCRIRCglhbGdvcml0aG0YBSABKAkSHQoVYWNjZXNzX2V4cGlyZV9zZWNvbmRzGAogASgDEiIKGnJlZnJlc2hfZXhwaXJlX3NlY29uZHNfd2ViGAsgASgDEiUKHXJlZnJlc2hfZXhwaXJlX3NlY29uZHNfbW9iaWxlGAwgASgDEjsKCHBhc3N3b3JkGBQgASgLMikuY29uZmlnLkFwcENvbmZpZy5BdXRoZW50aWNhdGlvbi5QYXNzd29yZBI9Cgl0ZW1wb3JhcnkYFSABKAsyKi5jb25maWcuQXBwQ29uZmlnLkF1dGhlbnRpY2F0aW9uLlRlbXBvcmFyeRoxCghQYXNzd29yZBISCgppdGVyYXRpb25zGAMgASgFEhEKCWhhc2hfc2l6ZRgEIAEoBRoLCglUZW1wb3JhcnlCUQoKY29tLmNvbmZpZ0ILQ29uZmlnUHJvdG9QAaICA0NYWKoCBkNvbmZpZ8oCBkNvbmZpZ+ICEkNvbmZpZ1xHUEJNZXRhZGF0YeoCBkNvbmZpZ2IGcHJvdG8z");
 
 /**
  * @generated from message config.AppConfig
  */
 export type AppConfig = Message<"config.AppConfig"> & {
   /**
-   * @generated from field: string node_env = 1;
+   * @generated from field: string node_env = 10;
    */
   nodeEnv: string;
 
   /**
-   * @generated from field: string postgres_connection = 2;
+   * @generated from field: int32 port = 20;
+   */
+  port: number;
+
+  /**
+   * @generated from field: string postgres_connection = 30;
    */
   postgresConnection: string;
+
+  /**
+   * @generated from field: int32 postgres_timeout_seconds = 31;
+   */
+  postgresTimeoutSeconds: number;
+
+  /**
+   * @generated from field: config.AppConfig.Authentication authentication = 40;
+   */
+  authentication?: AppConfig_Authentication;
 };
 
 /**
@@ -32,14 +47,29 @@ export type AppConfig = Message<"config.AppConfig"> & {
  */
 export type AppConfigJson = {
   /**
-   * @generated from field: string node_env = 1;
+   * @generated from field: string node_env = 10;
    */
   nodeEnv?: string;
 
   /**
-   * @generated from field: string postgres_connection = 2;
+   * @generated from field: int32 port = 20;
+   */
+  port?: number;
+
+  /**
+   * @generated from field: string postgres_connection = 30;
    */
   postgresConnection?: string;
+
+  /**
+   * @generated from field: int32 postgres_timeout_seconds = 31;
+   */
+  postgresTimeoutSeconds?: number;
+
+  /**
+   * @generated from field: config.AppConfig.Authentication authentication = 40;
+   */
+  authentication?: AppConfig_AuthenticationJson;
 };
 
 /**
@@ -48,4 +78,177 @@ export type AppConfigJson = {
  */
 export const AppConfigSchema: GenMessage<AppConfig, AppConfigJson> = /*@__PURE__*/
   messageDesc(file_config_config, 0);
+
+/**
+ * @generated from message config.AppConfig.Authentication
+ */
+export type AppConfig_Authentication = Message<"config.AppConfig.Authentication"> & {
+  /**
+   * @generated from field: string secret_key = 1;
+   */
+  secretKey: string;
+
+  /**
+   * @generated from field: string public_key = 2;
+   */
+  publicKey: string;
+
+  /**
+   * @generated from field: string issuer = 3;
+   */
+  issuer: string;
+
+  /**
+   * @generated from field: string audience = 4;
+   */
+  audience: string;
+
+  /**
+   * @generated from field: string algorithm = 5;
+   */
+  algorithm: string;
+
+  /**
+   * @generated from field: int64 access_expire_seconds = 10;
+   */
+  accessExpireSeconds: bigint;
+
+  /**
+   * @generated from field: int64 refresh_expire_seconds_web = 11;
+   */
+  refreshExpireSecondsWeb: bigint;
+
+  /**
+   * @generated from field: int64 refresh_expire_seconds_mobile = 12;
+   */
+  refreshExpireSecondsMobile: bigint;
+
+  /**
+   * @generated from field: config.AppConfig.Authentication.Password password = 20;
+   */
+  password?: AppConfig_Authentication_Password;
+
+  /**
+   * @generated from field: config.AppConfig.Authentication.Temporary temporary = 21;
+   */
+  temporary?: AppConfig_Authentication_Temporary;
+};
+
+/**
+ * @generated from message config.AppConfig.Authentication
+ */
+export type AppConfig_AuthenticationJson = {
+  /**
+   * @generated from field: string secret_key = 1;
+   */
+  secretKey?: string;
+
+  /**
+   * @generated from field: string public_key = 2;
+   */
+  publicKey?: string;
+
+  /**
+   * @generated from field: string issuer = 3;
+   */
+  issuer?: string;
+
+  /**
+   * @generated from field: string audience = 4;
+   */
+  audience?: string;
+
+  /**
+   * @generated from field: string algorithm = 5;
+   */
+  algorithm?: string;
+
+  /**
+   * @generated from field: int64 access_expire_seconds = 10;
+   */
+  accessExpireSeconds?: string;
+
+  /**
+   * @generated from field: int64 refresh_expire_seconds_web = 11;
+   */
+  refreshExpireSecondsWeb?: string;
+
+  /**
+   * @generated from field: int64 refresh_expire_seconds_mobile = 12;
+   */
+  refreshExpireSecondsMobile?: string;
+
+  /**
+   * @generated from field: config.AppConfig.Authentication.Password password = 20;
+   */
+  password?: AppConfig_Authentication_PasswordJson;
+
+  /**
+   * @generated from field: config.AppConfig.Authentication.Temporary temporary = 21;
+   */
+  temporary?: AppConfig_Authentication_TemporaryJson;
+};
+
+/**
+ * Describes the message config.AppConfig.Authentication.
+ * Use `create(AppConfig_AuthenticationSchema)` to create a new message.
+ */
+export const AppConfig_AuthenticationSchema: GenMessage<AppConfig_Authentication, AppConfig_AuthenticationJson> = /*@__PURE__*/
+  messageDesc(file_config_config, 0, 0);
+
+/**
+ * @generated from message config.AppConfig.Authentication.Password
+ */
+export type AppConfig_Authentication_Password = Message<"config.AppConfig.Authentication.Password"> & {
+  /**
+   * @generated from field: int32 iterations = 3;
+   */
+  iterations: number;
+
+  /**
+   * @generated from field: int32 hash_size = 4;
+   */
+  hashSize: number;
+};
+
+/**
+ * @generated from message config.AppConfig.Authentication.Password
+ */
+export type AppConfig_Authentication_PasswordJson = {
+  /**
+   * @generated from field: int32 iterations = 3;
+   */
+  iterations?: number;
+
+  /**
+   * @generated from field: int32 hash_size = 4;
+   */
+  hashSize?: number;
+};
+
+/**
+ * Describes the message config.AppConfig.Authentication.Password.
+ * Use `create(AppConfig_Authentication_PasswordSchema)` to create a new message.
+ */
+export const AppConfig_Authentication_PasswordSchema: GenMessage<AppConfig_Authentication_Password, AppConfig_Authentication_PasswordJson> = /*@__PURE__*/
+  messageDesc(file_config_config, 0, 0, 0);
+
+/**
+ * @generated from message config.AppConfig.Authentication.Temporary
+ */
+export type AppConfig_Authentication_Temporary = Message<"config.AppConfig.Authentication.Temporary"> & {
+};
+
+/**
+ * @generated from message config.AppConfig.Authentication.Temporary
+ */
+export type AppConfig_Authentication_TemporaryJson = {
+};
+
+/**
+ * Describes the message config.AppConfig.Authentication.Temporary.
+ * Use `create(AppConfig_Authentication_TemporarySchema)` to create a new message.
+ */
+export const AppConfig_Authentication_TemporarySchema: GenMessage<AppConfig_Authentication_Temporary, AppConfig_Authentication_TemporaryJson> = /*@__PURE__*/
+  messageDesc(file_config_config, 0, 0, 1);
 

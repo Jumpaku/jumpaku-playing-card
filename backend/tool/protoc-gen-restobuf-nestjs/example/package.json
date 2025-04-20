@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "protobuf": "buf generate bufimage.txtpb",
+    "protobuf": "buf build -o bufimage.txtpb && buf generate bufimage.txtpb --include-imports",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",

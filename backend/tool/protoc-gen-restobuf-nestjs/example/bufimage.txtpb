@@ -1,899 +1,4 @@
 file: {
-  name: "google/api/http.proto"
-  package: "google.api"
-  message_type: {
-    name: "Http"
-    field: {
-      name: "rules"
-      number: 1
-      label: LABEL_REPEATED
-      type: TYPE_MESSAGE
-      type_name: ".google.api.HttpRule"
-      json_name: "rules"
-    }
-    field: {
-      name: "fully_decode_reserved_expansion"
-      number: 2
-      label: LABEL_OPTIONAL
-      type: TYPE_BOOL
-      json_name: "fullyDecodeReservedExpansion"
-    }
-  }
-  message_type: {
-    name: "HttpRule"
-    field: {
-      name: "selector"
-      number: 1
-      label: LABEL_OPTIONAL
-      type: TYPE_STRING
-      json_name: "selector"
-    }
-    field: {
-      name: "get"
-      number: 2
-      label: LABEL_OPTIONAL
-      type: TYPE_STRING
-      oneof_index: 0
-      json_name: "get"
-    }
-    field: {
-      name: "put"
-      number: 3
-      label: LABEL_OPTIONAL
-      type: TYPE_STRING
-      oneof_index: 0
-      json_name: "put"
-    }
-    field: {
-      name: "post"
-      number: 4
-      label: LABEL_OPTIONAL
-      type: TYPE_STRING
-      oneof_index: 0
-      json_name: "post"
-    }
-    field: {
-      name: "delete"
-      number: 5
-      label: LABEL_OPTIONAL
-      type: TYPE_STRING
-      oneof_index: 0
-      json_name: "delete"
-    }
-    field: {
-      name: "patch"
-      number: 6
-      label: LABEL_OPTIONAL
-      type: TYPE_STRING
-      oneof_index: 0
-      json_name: "patch"
-    }
-    field: {
-      name: "custom"
-      number: 8
-      label: LABEL_OPTIONAL
-      type: TYPE_MESSAGE
-      type_name: ".google.api.CustomHttpPattern"
-      oneof_index: 0
-      json_name: "custom"
-    }
-    field: {
-      name: "body"
-      number: 7
-      label: LABEL_OPTIONAL
-      type: TYPE_STRING
-      json_name: "body"
-    }
-    field: {
-      name: "response_body"
-      number: 12
-      label: LABEL_OPTIONAL
-      type: TYPE_STRING
-      json_name: "responseBody"
-    }
-    field: {
-      name: "additional_bindings"
-      number: 11
-      label: LABEL_REPEATED
-      type: TYPE_MESSAGE
-      type_name: ".google.api.HttpRule"
-      json_name: "additionalBindings"
-    }
-    oneof_decl: {
-      name: "pattern"
-    }
-  }
-  message_type: {
-    name: "CustomHttpPattern"
-    field: {
-      name: "kind"
-      number: 1
-      label: LABEL_OPTIONAL
-      type: TYPE_STRING
-      json_name: "kind"
-    }
-    field: {
-      name: "path"
-      number: 2
-      label: LABEL_OPTIONAL
-      type: TYPE_STRING
-      json_name: "path"
-    }
-  }
-  options: {
-    java_package: "com.google.api"
-    java_outer_classname: "HttpProto"
-    java_multiple_files: true
-    go_package: "google.golang.org/genproto/googleapis/api/annotations;annotations"
-    cc_enable_arenas: true
-    objc_class_prefix: "GAPI"
-  }
-  source_code_info: {
-    location: {
-      span: 14
-      span: 0
-      span: 370
-      span: 1
-    }
-    location: {
-      path: 12
-      span: 14
-      span: 0
-      span: 18
-      leading_detached_comments: " Copyright 2024 Google LLC\n\n Licensed under the Apache License, Version 2.0 (the \"License\");\n you may not use this file except in compliance with the License.\n You may obtain a copy of the License at\n\n     http://www.apache.org/licenses/LICENSE-2.0\n\n Unless required by applicable law or agreed to in writing, software\n distributed under the License is distributed on an \"AS IS\" BASIS,\n WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n See the License for the specific language governing permissions and\n limitations under the License.\n"
-    }
-    location: {
-      path: 2
-      span: 16
-      span: 0
-      span: 19
-    }
-    location: {
-      path: 8
-      span: 18
-      span: 0
-      span: 31
-    }
-    location: {
-      path: 8
-      path: 31
-      span: 18
-      span: 0
-      span: 31
-    }
-    location: {
-      path: 8
-      span: 19
-      span: 0
-      span: 88
-    }
-    location: {
-      path: 8
-      path: 11
-      span: 19
-      span: 0
-      span: 88
-    }
-    location: {
-      path: 8
-      span: 20
-      span: 0
-      span: 34
-    }
-    location: {
-      path: 8
-      path: 10
-      span: 20
-      span: 0
-      span: 34
-    }
-    location: {
-      path: 8
-      span: 21
-      span: 0
-      span: 42
-    }
-    location: {
-      path: 8
-      path: 8
-      span: 21
-      span: 0
-      span: 42
-    }
-    location: {
-      path: 8
-      span: 22
-      span: 0
-      span: 39
-    }
-    location: {
-      path: 8
-      path: 1
-      span: 22
-      span: 0
-      span: 39
-    }
-    location: {
-      path: 8
-      span: 23
-      span: 0
-      span: 34
-    }
-    location: {
-      path: 8
-      path: 36
-      span: 23
-      span: 0
-      span: 34
-    }
-    location: {
-      path: 4
-      path: 0
-      span: 28
-      span: 0
-      span: 41
-      span: 1
-      leading_comments: " Defines the HTTP configuration for an API service. It contains a list of\n [HttpRule][google.api.HttpRule], each specifying the mapping of an RPC method\n to one or more HTTP REST API methods.\n"
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 1
-      span: 28
-      span: 8
-      span: 12
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 0
-      span: 32
-      span: 2
-      span: 30
-      leading_comments: " A list of HTTP configuration rules that apply to individual API methods.\n\n **NOTE:** All service configuration rules follow \"last one wins\" order.\n"
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 0
-      path: 4
-      span: 32
-      span: 2
-      span: 10
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 0
-      path: 6
-      span: 32
-      span: 11
-      span: 19
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 0
-      path: 1
-      span: 32
-      span: 20
-      span: 25
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 0
-      path: 3
-      span: 32
-      span: 28
-      span: 29
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 1
-      span: 40
-      span: 2
-      span: 43
-      leading_comments: " When set to true, URL path parameters will be fully URI-decoded except in\n cases of single segment matches in reserved expansion, where \"%2F\" will be\n left encoded.\n\n The default behavior is to not decode RFC 6570 reserved characters in multi\n segment matches.\n"
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 1
-      path: 5
-      span: 40
-      span: 2
-      span: 6
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 1
-      path: 1
-      span: 40
-      span: 7
-      span: 38
-    }
-    location: {
-      path: 4
-      path: 0
-      path: 2
-      path: 1
-      path: 3
-      span: 40
-      span: 41
-      span: 42
-    }
-    location: {
-      path: 4
-      path: 1
-      span: 307
-      span: 0
-      span: 361
-      span: 1
-      leading_comments: " gRPC Transcoding\n\n gRPC Transcoding is a feature for mapping between a gRPC method and one or\n more HTTP REST endpoints. It allows developers to build a single API service\n that supports both gRPC APIs and REST APIs. Many systems, including [Google\n APIs](https://github.com/googleapis/googleapis),\n [Cloud Endpoints](https://cloud.google.com/endpoints), [gRPC\n Gateway](https://github.com/grpc-ecosystem/grpc-gateway),\n and [Envoy](https://github.com/envoyproxy/envoy) proxy support this feature\n and use it for large scale production services.\n\n `HttpRule` defines the schema of the gRPC/REST mapping. The mapping specifies\n how different portions of the gRPC request message are mapped to the URL\n path, URL query parameters, and HTTP request body. It also controls how the\n gRPC response message is mapped to the HTTP response body. `HttpRule` is\n typically specified as an `google.api.http` annotation on the gRPC method.\n\n Each mapping specifies a URL path template and an HTTP method. The path\n template may refer to one or more fields in the gRPC request message, as long\n as each field is a non-repeated field with a primitive (non-message) type.\n The path template controls how fields of the request message are mapped to\n the URL path.\n\n Example:\n\n     service Messaging {\n       rpc GetMessage(GetMessageRequest) returns (Message) {\n         option (google.api.http) = {\n             get: \"/v1/{name=messages/*}\"\n         };\n       }\n     }\n     message GetMessageRequest {\n       string name = 1; // Mapped to URL path.\n     }\n     message Message {\n       string text = 1; // The resource content.\n     }\n\n This enables an HTTP REST to gRPC mapping as below:\n\n - HTTP: `GET /v1/messages/123456`\n - gRPC: `GetMessage(name: \"messages/123456\")`\n\n Any fields in the request message which are not bound by the path template\n automatically become HTTP query parameters if there is no HTTP request body.\n For example:\n\n     service Messaging {\n       rpc GetMessage(GetMessageRequest) returns (Message) {\n         option (google.api.http) = {\n             get:\"/v1/messages/{message_id}\"\n         };\n       }\n     }\n     message GetMessageRequest {\n       message SubMessage {\n         string subfield = 1;\n       }\n       string message_id = 1; // Mapped to URL path.\n       int64 revision = 2;    // Mapped to URL query parameter `revision`.\n       SubMessage sub = 3;    // Mapped to URL query parameter `sub.subfield`.\n     }\n\n This enables a HTTP JSON to RPC mapping as below:\n\n - HTTP: `GET /v1/messages/123456?revision=2&sub.subfield=foo`\n - gRPC: `GetMessage(message_id: \"123456\" revision: 2 sub:\n SubMessage(subfield: \"foo\"))`\n\n Note that fields which are mapped to URL query parameters must have a\n primitive type or a repeated primitive type or a non-repeated message type.\n In the case of a repeated type, the parameter can be repeated in the URL\n as `...?param=A&param=B`. In the case of a message type, each field of the\n message is mapped to a separate parameter, such as\n `...?foo.a=A&foo.b=B&foo.c=C`.\n\n For HTTP methods that allow a request body, the `body` field\n specifies the mapping. Consider a REST update method on the\n message resource collection:\n\n     service Messaging {\n       rpc UpdateMessage(UpdateMessageRequest) returns (Message) {\n         option (google.api.http) = {\n           patch: \"/v1/messages/{message_id}\"\n           body: \"message\"\n         };\n       }\n     }\n     message UpdateMessageRequest {\n       string message_id = 1; // mapped to the URL\n       Message message = 2;   // mapped to the body\n     }\n\n The following HTTP JSON to RPC mapping is enabled, where the\n representation of the JSON in the request body is determined by\n protos JSON encoding:\n\n - HTTP: `PATCH /v1/messages/123456 { \"text\": \"Hi!\" }`\n - gRPC: `UpdateMessage(message_id: \"123456\" message { text: \"Hi!\" })`\n\n The special name `*` can be used in the body mapping to define that\n every field not bound by the path template should be mapped to the\n request body.  This enables the following alternative definition of\n the update method:\n\n     service Messaging {\n       rpc UpdateMessage(Message) returns (Message) {\n         option (google.api.http) = {\n           patch: \"/v1/messages/{message_id}\"\n           body: \"*\"\n         };\n       }\n     }\n     message Message {\n       string message_id = 1;\n       string text = 2;\n     }\n\n\n The following HTTP JSON to RPC mapping is enabled:\n\n - HTTP: `PATCH /v1/messages/123456 { \"text\": \"Hi!\" }`\n - gRPC: `UpdateMessage(message_id: \"123456\" text: \"Hi!\")`\n\n Note that when using `*` in the body mapping, it is not possible to\n have HTTP parameters, as all fields not bound by the path end in\n the body. This makes this option more rarely used in practice when\n defining REST APIs. The common usage of `*` is in custom methods\n which don't use the URL at all for transferring data.\n\n It is possible to define multiple HTTP methods for one RPC by using\n the `additional_bindings` option. Example:\n\n     service Messaging {\n       rpc GetMessage(GetMessageRequest) returns (Message) {\n         option (google.api.http) = {\n           get: \"/v1/messages/{message_id}\"\n           additional_bindings {\n             get: \"/v1/users/{user_id}/messages/{message_id}\"\n           }\n         };\n       }\n     }\n     message GetMessageRequest {\n       string message_id = 1;\n       string user_id = 2;\n     }\n\n This enables the following two alternative HTTP JSON to RPC mappings:\n\n - HTTP: `GET /v1/messages/123456`\n - gRPC: `GetMessage(message_id: \"123456\")`\n\n - HTTP: `GET /v1/users/me/messages/123456`\n - gRPC: `GetMessage(user_id: \"me\" message_id: \"123456\")`\n\n Rules for HTTP mapping\n\n 1. Leaf request fields (recursive expansion nested messages in the request\n    message) are classified into three categories:\n    - Fields referred by the path template. They are passed via the URL path.\n    - Fields referred by the [HttpRule.body][google.api.HttpRule.body]. They\n    are passed via the HTTP\n      request body.\n    - All other fields are passed via the URL query parameters, and the\n      parameter name is the field path in the request message. A repeated\n      field can be represented as multiple query parameters under the same\n      name.\n  2. If [HttpRule.body][google.api.HttpRule.body] is \"*\", there is no URL\n  query parameter, all fields\n     are passed via URL path and HTTP request body.\n  3. If [HttpRule.body][google.api.HttpRule.body] is omitted, there is no HTTP\n  request body, all\n     fields are passed via URL path and URL query parameters.\n\n Path template syntax\n\n     Template = \"/\" Segments [ Verb ] ;\n     Segments = Segment { \"/\" Segment } ;\n     Segment  = \"*\" | \"**\" | LITERAL | Variable ;\n     Variable = \"{\" FieldPath [ \"=\" Segments ] \"}\" ;\n     FieldPath = IDENT { \".\" IDENT } ;\n     Verb     = \":\" LITERAL ;\n\n The syntax `*` matches a single URL path segment. The syntax `**` matches\n zero or more URL path segments, which must be the last part of the URL path\n except the `Verb`.\n\n The syntax `Variable` matches part of the URL path as specified by its\n template. A variable template must not contain other variables. If a variable\n matches a single path segment, its template may be omitted, e.g. `{var}`\n is equivalent to `{var=*}`.\n\n The syntax `LITERAL` matches literal text in the URL path. If the `LITERAL`\n contains any reserved character, such characters should be percent-encoded\n before the matching.\n\n If a variable contains exactly one path segment, such as `\"{var}\"` or\n `\"{var=*}\"`, when such a variable is expanded into a URL path on the client\n side, all characters except `[-_.~0-9a-zA-Z]` are percent-encoded. The\n server side does the reverse decoding. Such variables show up in the\n [Discovery\n Document](https://developers.google.com/discovery/v1/reference/apis) as\n `{var}`.\n\n If a variable contains multiple path segments, such as `\"{var=foo/*}\"`\n or `\"{var=**}\"`, when such a variable is expanded into a URL path on the\n client side, all characters except `[-_.~/0-9a-zA-Z]` are percent-encoded.\n The server side does the reverse decoding, except \"%2F\" and \"%2f\" are left\n unchanged. Such variables show up in the\n [Discovery\n Document](https://developers.google.com/discovery/v1/reference/apis) as\n `{+var}`.\n\n Using gRPC API Service Configuration\n\n gRPC API Service Configuration (service config) is a configuration language\n for configuring a gRPC service to become a user-facing product. The\n service config is simply the YAML representation of the `google.api.Service`\n proto message.\n\n As an alternative to annotating your proto file, you can configure gRPC\n transcoding in your service config YAML files. You do this by specifying a\n `HttpRule` that maps the gRPC method to a REST endpoint, achieving the same\n effect as the proto annotation. This can be particularly useful if you\n have a proto that is reused in multiple services. Note that any transcoding\n specified in the service config will override any matching transcoding\n configuration in the proto.\n\n The following example selects a gRPC method and applies an `HttpRule` to it:\n\n     http:\n       rules:\n         - selector: example.v1.Messaging.GetMessage\n           get: /v1/messages/{message_id}/{sub.subfield}\n\n Special notes\n\n When gRPC Transcoding is used to map a gRPC to JSON REST endpoints, the\n proto to JSON conversion must follow the [proto3\n specification](https://developers.google.com/protocol-buffers/docs/proto3#json).\n\n While the single segment variable follows the semantics of\n [RFC 6570](https://tools.ietf.org/html/rfc6570) Section 3.2.2 Simple String\n Expansion, the multi segment variable **does not** follow RFC 6570 Section\n 3.2.3 Reserved Expansion. The reason is that the Reserved Expansion\n does not expand special characters like `?` and `#`, which would lead\n to invalid URLs. As the result, gRPC Transcoding uses a custom encoding\n for multi segment variables.\n\n The path variables **must not** refer to any repeated or mapped field,\n because client libraries are not capable of handling such variable expansion.\n\n The path variables **must not** capture the leading \"/\" character. The reason\n is that the most common use case \"{var}\" does not capture the leading \"/\"\n character. For consistency, all path variables must share the same behavior.\n\n Repeated message fields must not be mapped to URL query parameters, because\n no client library can support such complicated mapping.\n\n If an API needs to use a JSON array for request or response body, it can map\n the request or response body to a repeated field. However, some gRPC\n Transcoding implementations may not support this feature.\n"
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 1
-      span: 307
-      span: 8
-      span: 16
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 0
-      span: 312
-      span: 2
-      span: 22
-      leading_comments: " Selects a method to which this rule applies.\n\n Refer to [selector][google.api.DocumentationRule.selector] for syntax\n details.\n"
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 0
-      path: 5
-      span: 312
-      span: 2
-      span: 8
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 0
-      path: 1
-      span: 312
-      span: 9
-      span: 17
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 0
-      path: 3
-      span: 312
-      span: 20
-      span: 21
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 8
-      path: 0
-      span: 317
-      span: 2
-      span: 339
-      span: 3
-      leading_comments: " Determines the URL pattern is matched by this rules. This pattern can be\n used with any of the {get|put|post|delete|patch} methods. A custom method\n can be defined using the 'custom' field.\n"
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 8
-      path: 0
-      path: 1
-      span: 317
-      span: 8
-      span: 15
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 1
-      span: 320
-      span: 4
-      span: 19
-      leading_comments: " Maps to HTTP GET. Used for listing and getting information about\n resources.\n"
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 1
-      path: 5
-      span: 320
-      span: 4
-      span: 10
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 1
-      path: 1
-      span: 320
-      span: 11
-      span: 14
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 1
-      path: 3
-      span: 320
-      span: 17
-      span: 18
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 2
-      span: 323
-      span: 4
-      span: 19
-      leading_comments: " Maps to HTTP PUT. Used for replacing a resource.\n"
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 2
-      path: 5
-      span: 323
-      span: 4
-      span: 10
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 2
-      path: 1
-      span: 323
-      span: 11
-      span: 14
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 2
-      path: 3
-      span: 323
-      span: 17
-      span: 18
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 3
-      span: 326
-      span: 4
-      span: 20
-      leading_comments: " Maps to HTTP POST. Used for creating a resource or performing an action.\n"
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 3
-      path: 5
-      span: 326
-      span: 4
-      span: 10
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 3
-      path: 1
-      span: 326
-      span: 11
-      span: 15
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 3
-      path: 3
-      span: 326
-      span: 18
-      span: 19
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 4
-      span: 329
-      span: 4
-      span: 22
-      leading_comments: " Maps to HTTP DELETE. Used for deleting a resource.\n"
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 4
-      path: 5
-      span: 329
-      span: 4
-      span: 10
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 4
-      path: 1
-      span: 329
-      span: 11
-      span: 17
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 4
-      path: 3
-      span: 329
-      span: 20
-      span: 21
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 5
-      span: 332
-      span: 4
-      span: 21
-      leading_comments: " Maps to HTTP PATCH. Used for updating a resource.\n"
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 5
-      path: 5
-      span: 332
-      span: 4
-      span: 10
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 5
-      path: 1
-      span: 332
-      span: 11
-      span: 16
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 5
-      path: 3
-      span: 332
-      span: 19
-      span: 20
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 6
-      span: 338
-      span: 4
-      span: 33
-      leading_comments: " The custom pattern is used for specifying an HTTP method that is not\n included in the `pattern` field, such as HEAD, or \"*\" to leave the\n HTTP method unspecified for this rule. The wild-card rule is useful\n for services that provide content to Web (HTML) clients.\n"
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 6
-      path: 6
-      span: 338
-      span: 4
-      span: 21
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 6
-      path: 1
-      span: 338
-      span: 22
-      span: 28
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 6
-      path: 3
-      span: 338
-      span: 31
-      span: 32
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 7
-      span: 347
-      span: 2
-      span: 18
-      leading_comments: " The name of the request field whose value is mapped to the HTTP request\n body, or `*` for mapping all request fields not captured by the path\n pattern to the HTTP body, or omitted for not having any HTTP request body.\n\n NOTE: the referred field must be present at the top-level of the request\n message type.\n"
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 7
-      path: 5
-      span: 347
-      span: 2
-      span: 8
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 7
-      path: 1
-      span: 347
-      span: 9
-      span: 13
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 7
-      path: 3
-      span: 347
-      span: 16
-      span: 17
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 8
-      span: 355
-      span: 2
-      span: 28
-      leading_comments: " Optional. The name of the response field whose value is mapped to the HTTP\n response body. When omitted, the entire response message will be used\n as the HTTP response body.\n\n NOTE: The referred field must be present at the top-level of the response\n message type.\n"
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 8
-      path: 5
-      span: 355
-      span: 2
-      span: 8
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 8
-      path: 1
-      span: 355
-      span: 9
-      span: 22
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 8
-      path: 3
-      span: 355
-      span: 25
-      span: 27
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 9
-      span: 360
-      span: 2
-      span: 45
-      leading_comments: " Additional HTTP bindings for the selector. Nested bindings must\n not contain an `additional_bindings` field themselves (that is,\n the nesting may only be one level deep).\n"
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 9
-      path: 4
-      span: 360
-      span: 2
-      span: 10
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 9
-      path: 6
-      span: 360
-      span: 11
-      span: 19
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 9
-      path: 1
-      span: 360
-      span: 20
-      span: 39
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 9
-      path: 3
-      span: 360
-      span: 42
-      span: 44
-    }
-    location: {
-      path: 4
-      path: 2
-      span: 364
-      span: 0
-      span: 370
-      span: 1
-      leading_comments: " A custom pattern is used for defining custom HTTP verb.\n"
-    }
-    location: {
-      path: 4
-      path: 2
-      path: 1
-      span: 364
-      span: 8
-      span: 25
-    }
-    location: {
-      path: 4
-      path: 2
-      path: 2
-      path: 0
-      span: 366
-      span: 2
-      span: 18
-      leading_comments: " The name of this custom HTTP verb.\n"
-    }
-    location: {
-      path: 4
-      path: 2
-      path: 2
-      path: 0
-      path: 5
-      span: 366
-      span: 2
-      span: 8
-    }
-    location: {
-      path: 4
-      path: 2
-      path: 2
-      path: 0
-      path: 1
-      span: 366
-      span: 9
-      span: 13
-    }
-    location: {
-      path: 4
-      path: 2
-      path: 2
-      path: 0
-      path: 3
-      span: 366
-      span: 16
-      span: 17
-    }
-    location: {
-      path: 4
-      path: 2
-      path: 2
-      path: 1
-      span: 369
-      span: 2
-      span: 18
-      leading_comments: " The path matched by this custom verb.\n"
-    }
-    location: {
-      path: 4
-      path: 2
-      path: 2
-      path: 1
-      path: 5
-      span: 369
-      span: 2
-      span: 8
-    }
-    location: {
-      path: 4
-      path: 2
-      path: 2
-      path: 1
-      path: 1
-      span: 369
-      span: 9
-      span: 13
-    }
-    location: {
-      path: 4
-      path: 2
-      path: 2
-      path: 1
-      path: 3
-      span: 369
-      span: 16
-      span: 17
-    }
-  }
-  syntax: "proto3"
-  buf_extension: {
-    is_import: true
-    module_info: {
-      name: {
-        remote: "buf.build"
-        owner: "googleapis"
-        repository: "googleapis"
-      }
-      commit: "e93e34f48be043dab55be31b4b47f458"
-    }
-    is_syntax_unspecified: false
-  }
-}
-file: {
   name: "google/protobuf/descriptor.proto"
   package: "google.protobuf"
   message_type: {
@@ -18492,6 +17597,1117 @@ file: {
   }
 }
 file: {
+  name: "api/v1/access_control.proto"
+  package: "api.v1"
+  dependency: "google/protobuf/descriptor.proto"
+  message_type: {
+    name: "AccessControl"
+    field: {
+      name: "scope_path"
+      number: 1
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      json_name: "scopePath"
+    }
+    field: {
+      name: "require"
+      number: 2
+      label: LABEL_REPEATED
+      type: TYPE_STRING
+      json_name: "require"
+    }
+  }
+  extension: {
+    name: "access_control"
+    number: 50000
+    label: LABEL_OPTIONAL
+    type: TYPE_MESSAGE
+    type_name: ".api.v1.AccessControl"
+    extendee: ".google.protobuf.MethodOptions"
+    json_name: "accessControl"
+  }
+  source_code_info: {
+    location: {
+      span: 0
+      span: 0
+      span: 21
+      span: 1
+    }
+    location: {
+      path: 12
+      span: 0
+      span: 0
+      span: 18
+    }
+    location: {
+      path: 2
+      span: 2
+      span: 0
+      span: 15
+    }
+    location: {
+      path: 3
+      path: 0
+      span: 4
+      span: 0
+      span: 42
+    }
+    location: {
+      path: 4
+      path: 0
+      span: 9
+      span: 0
+      span: 17
+      span: 1
+      leading_comments: " AccessControl declares the following requirements:\n - the client must be authenticated.\n - the client must have the all of the required permissions associated with the scope path.\n"
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 1
+      span: 9
+      span: 8
+      span: 21
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 0
+      span: 12
+      span: 2
+      span: 24
+      leading_comments: " Scope path, which should be a dot-separated string, is the indentfier for the group of the required permissions.\n If not specified, \"<package>.<service>.<method>\" is used.\n"
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 0
+      path: 5
+      span: 12
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 0
+      path: 1
+      span: 12
+      span: 9
+      span: 19
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 0
+      path: 3
+      span: 12
+      span: 22
+      span: 23
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 1
+      span: 16
+      span: 2
+      span: 30
+      leading_comments: " Required permissions associated with the requirement.\n Each element, which is should be a string in format \"<resource>:<action>\", specifies a resource and the actions allowed on that resource.\n If not specified, the client may have no permissions.\n"
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 1
+      path: 4
+      span: 16
+      span: 2
+      span: 10
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 1
+      path: 5
+      span: 16
+      span: 11
+      span: 17
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 1
+      path: 1
+      span: 16
+      span: 18
+      span: 25
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 1
+      path: 3
+      span: 16
+      span: 28
+      span: 29
+    }
+    location: {
+      path: 7
+      span: 19
+      span: 0
+      span: 21
+      span: 1
+    }
+    location: {
+      path: 7
+      path: 0
+      span: 20
+      span: 2
+      span: 39
+    }
+    location: {
+      path: 7
+      path: 0
+      path: 2
+      span: 19
+      span: 7
+      span: 36
+    }
+    location: {
+      path: 7
+      path: 0
+      path: 6
+      span: 20
+      span: 2
+      span: 15
+    }
+    location: {
+      path: 7
+      path: 0
+      path: 1
+      span: 20
+      span: 16
+      span: 30
+    }
+    location: {
+      path: 7
+      path: 0
+      path: 3
+      span: 20
+      span: 33
+      span: 38
+    }
+  }
+  syntax: "proto3"
+  buf_extension: {
+    is_import: false
+    is_syntax_unspecified: false
+  }
+}
+file: {
+  name: "google/api/http.proto"
+  package: "google.api"
+  message_type: {
+    name: "Http"
+    field: {
+      name: "rules"
+      number: 1
+      label: LABEL_REPEATED
+      type: TYPE_MESSAGE
+      type_name: ".google.api.HttpRule"
+      json_name: "rules"
+    }
+    field: {
+      name: "fully_decode_reserved_expansion"
+      number: 2
+      label: LABEL_OPTIONAL
+      type: TYPE_BOOL
+      json_name: "fullyDecodeReservedExpansion"
+    }
+  }
+  message_type: {
+    name: "HttpRule"
+    field: {
+      name: "selector"
+      number: 1
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      json_name: "selector"
+    }
+    field: {
+      name: "get"
+      number: 2
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      oneof_index: 0
+      json_name: "get"
+    }
+    field: {
+      name: "put"
+      number: 3
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      oneof_index: 0
+      json_name: "put"
+    }
+    field: {
+      name: "post"
+      number: 4
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      oneof_index: 0
+      json_name: "post"
+    }
+    field: {
+      name: "delete"
+      number: 5
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      oneof_index: 0
+      json_name: "delete"
+    }
+    field: {
+      name: "patch"
+      number: 6
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      oneof_index: 0
+      json_name: "patch"
+    }
+    field: {
+      name: "custom"
+      number: 8
+      label: LABEL_OPTIONAL
+      type: TYPE_MESSAGE
+      type_name: ".google.api.CustomHttpPattern"
+      oneof_index: 0
+      json_name: "custom"
+    }
+    field: {
+      name: "body"
+      number: 7
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      json_name: "body"
+    }
+    field: {
+      name: "response_body"
+      number: 12
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      json_name: "responseBody"
+    }
+    field: {
+      name: "additional_bindings"
+      number: 11
+      label: LABEL_REPEATED
+      type: TYPE_MESSAGE
+      type_name: ".google.api.HttpRule"
+      json_name: "additionalBindings"
+    }
+    oneof_decl: {
+      name: "pattern"
+    }
+  }
+  message_type: {
+    name: "CustomHttpPattern"
+    field: {
+      name: "kind"
+      number: 1
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      json_name: "kind"
+    }
+    field: {
+      name: "path"
+      number: 2
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      json_name: "path"
+    }
+  }
+  options: {
+    java_package: "com.google.api"
+    java_outer_classname: "HttpProto"
+    java_multiple_files: true
+    go_package: "google.golang.org/genproto/googleapis/api/annotations;annotations"
+    cc_enable_arenas: true
+    objc_class_prefix: "GAPI"
+  }
+  source_code_info: {
+    location: {
+      span: 14
+      span: 0
+      span: 370
+      span: 1
+    }
+    location: {
+      path: 12
+      span: 14
+      span: 0
+      span: 18
+      leading_detached_comments: " Copyright 2024 Google LLC\n\n Licensed under the Apache License, Version 2.0 (the \"License\");\n you may not use this file except in compliance with the License.\n You may obtain a copy of the License at\n\n     http://www.apache.org/licenses/LICENSE-2.0\n\n Unless required by applicable law or agreed to in writing, software\n distributed under the License is distributed on an \"AS IS\" BASIS,\n WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n See the License for the specific language governing permissions and\n limitations under the License.\n"
+    }
+    location: {
+      path: 2
+      span: 16
+      span: 0
+      span: 19
+    }
+    location: {
+      path: 8
+      span: 18
+      span: 0
+      span: 31
+    }
+    location: {
+      path: 8
+      path: 31
+      span: 18
+      span: 0
+      span: 31
+    }
+    location: {
+      path: 8
+      span: 19
+      span: 0
+      span: 88
+    }
+    location: {
+      path: 8
+      path: 11
+      span: 19
+      span: 0
+      span: 88
+    }
+    location: {
+      path: 8
+      span: 20
+      span: 0
+      span: 34
+    }
+    location: {
+      path: 8
+      path: 10
+      span: 20
+      span: 0
+      span: 34
+    }
+    location: {
+      path: 8
+      span: 21
+      span: 0
+      span: 42
+    }
+    location: {
+      path: 8
+      path: 8
+      span: 21
+      span: 0
+      span: 42
+    }
+    location: {
+      path: 8
+      span: 22
+      span: 0
+      span: 39
+    }
+    location: {
+      path: 8
+      path: 1
+      span: 22
+      span: 0
+      span: 39
+    }
+    location: {
+      path: 8
+      span: 23
+      span: 0
+      span: 34
+    }
+    location: {
+      path: 8
+      path: 36
+      span: 23
+      span: 0
+      span: 34
+    }
+    location: {
+      path: 4
+      path: 0
+      span: 28
+      span: 0
+      span: 41
+      span: 1
+      leading_comments: " Defines the HTTP configuration for an API service. It contains a list of\n [HttpRule][google.api.HttpRule], each specifying the mapping of an RPC method\n to one or more HTTP REST API methods.\n"
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 1
+      span: 28
+      span: 8
+      span: 12
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 0
+      span: 32
+      span: 2
+      span: 30
+      leading_comments: " A list of HTTP configuration rules that apply to individual API methods.\n\n **NOTE:** All service configuration rules follow \"last one wins\" order.\n"
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 0
+      path: 4
+      span: 32
+      span: 2
+      span: 10
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 0
+      path: 6
+      span: 32
+      span: 11
+      span: 19
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 0
+      path: 1
+      span: 32
+      span: 20
+      span: 25
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 0
+      path: 3
+      span: 32
+      span: 28
+      span: 29
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 1
+      span: 40
+      span: 2
+      span: 43
+      leading_comments: " When set to true, URL path parameters will be fully URI-decoded except in\n cases of single segment matches in reserved expansion, where \"%2F\" will be\n left encoded.\n\n The default behavior is to not decode RFC 6570 reserved characters in multi\n segment matches.\n"
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 1
+      path: 5
+      span: 40
+      span: 2
+      span: 6
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 1
+      path: 1
+      span: 40
+      span: 7
+      span: 38
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 1
+      path: 3
+      span: 40
+      span: 41
+      span: 42
+    }
+    location: {
+      path: 4
+      path: 1
+      span: 307
+      span: 0
+      span: 361
+      span: 1
+      leading_comments: " gRPC Transcoding\n\n gRPC Transcoding is a feature for mapping between a gRPC method and one or\n more HTTP REST endpoints. It allows developers to build a single API service\n that supports both gRPC APIs and REST APIs. Many systems, including [Google\n APIs](https://github.com/googleapis/googleapis),\n [Cloud Endpoints](https://cloud.google.com/endpoints), [gRPC\n Gateway](https://github.com/grpc-ecosystem/grpc-gateway),\n and [Envoy](https://github.com/envoyproxy/envoy) proxy support this feature\n and use it for large scale production services.\n\n `HttpRule` defines the schema of the gRPC/REST mapping. The mapping specifies\n how different portions of the gRPC request message are mapped to the URL\n path, URL query parameters, and HTTP request body. It also controls how the\n gRPC response message is mapped to the HTTP response body. `HttpRule` is\n typically specified as an `google.api.http` annotation on the gRPC method.\n\n Each mapping specifies a URL path template and an HTTP method. The path\n template may refer to one or more fields in the gRPC request message, as long\n as each field is a non-repeated field with a primitive (non-message) type.\n The path template controls how fields of the request message are mapped to\n the URL path.\n\n Example:\n\n     service Messaging {\n       rpc GetMessage(GetMessageRequest) returns (Message) {\n         option (google.api.http) = {\n             get: \"/v1/{name=messages/*}\"\n         };\n       }\n     }\n     message GetMessageRequest {\n       string name = 1; // Mapped to URL path.\n     }\n     message Message {\n       string text = 1; // The resource content.\n     }\n\n This enables an HTTP REST to gRPC mapping as below:\n\n - HTTP: `GET /v1/messages/123456`\n - gRPC: `GetMessage(name: \"messages/123456\")`\n\n Any fields in the request message which are not bound by the path template\n automatically become HTTP query parameters if there is no HTTP request body.\n For example:\n\n     service Messaging {\n       rpc GetMessage(GetMessageRequest) returns (Message) {\n         option (google.api.http) = {\n             get:\"/v1/messages/{message_id}\"\n         };\n       }\n     }\n     message GetMessageRequest {\n       message SubMessage {\n         string subfield = 1;\n       }\n       string message_id = 1; // Mapped to URL path.\n       int64 revision = 2;    // Mapped to URL query parameter `revision`.\n       SubMessage sub = 3;    // Mapped to URL query parameter `sub.subfield`.\n     }\n\n This enables a HTTP JSON to RPC mapping as below:\n\n - HTTP: `GET /v1/messages/123456?revision=2&sub.subfield=foo`\n - gRPC: `GetMessage(message_id: \"123456\" revision: 2 sub:\n SubMessage(subfield: \"foo\"))`\n\n Note that fields which are mapped to URL query parameters must have a\n primitive type or a repeated primitive type or a non-repeated message type.\n In the case of a repeated type, the parameter can be repeated in the URL\n as `...?param=A&param=B`. In the case of a message type, each field of the\n message is mapped to a separate parameter, such as\n `...?foo.a=A&foo.b=B&foo.c=C`.\n\n For HTTP methods that allow a request body, the `body` field\n specifies the mapping. Consider a REST update method on the\n message resource collection:\n\n     service Messaging {\n       rpc UpdateMessage(UpdateMessageRequest) returns (Message) {\n         option (google.api.http) = {\n           patch: \"/v1/messages/{message_id}\"\n           body: \"message\"\n         };\n       }\n     }\n     message UpdateMessageRequest {\n       string message_id = 1; // mapped to the URL\n       Message message = 2;   // mapped to the body\n     }\n\n The following HTTP JSON to RPC mapping is enabled, where the\n representation of the JSON in the request body is determined by\n protos JSON encoding:\n\n - HTTP: `PATCH /v1/messages/123456 { \"text\": \"Hi!\" }`\n - gRPC: `UpdateMessage(message_id: \"123456\" message { text: \"Hi!\" })`\n\n The special name `*` can be used in the body mapping to define that\n every field not bound by the path template should be mapped to the\n request body.  This enables the following alternative definition of\n the update method:\n\n     service Messaging {\n       rpc UpdateMessage(Message) returns (Message) {\n         option (google.api.http) = {\n           patch: \"/v1/messages/{message_id}\"\n           body: \"*\"\n         };\n       }\n     }\n     message Message {\n       string message_id = 1;\n       string text = 2;\n     }\n\n\n The following HTTP JSON to RPC mapping is enabled:\n\n - HTTP: `PATCH /v1/messages/123456 { \"text\": \"Hi!\" }`\n - gRPC: `UpdateMessage(message_id: \"123456\" text: \"Hi!\")`\n\n Note that when using `*` in the body mapping, it is not possible to\n have HTTP parameters, as all fields not bound by the path end in\n the body. This makes this option more rarely used in practice when\n defining REST APIs. The common usage of `*` is in custom methods\n which don't use the URL at all for transferring data.\n\n It is possible to define multiple HTTP methods for one RPC by using\n the `additional_bindings` option. Example:\n\n     service Messaging {\n       rpc GetMessage(GetMessageRequest) returns (Message) {\n         option (google.api.http) = {\n           get: \"/v1/messages/{message_id}\"\n           additional_bindings {\n             get: \"/v1/users/{user_id}/messages/{message_id}\"\n           }\n         };\n       }\n     }\n     message GetMessageRequest {\n       string message_id = 1;\n       string user_id = 2;\n     }\n\n This enables the following two alternative HTTP JSON to RPC mappings:\n\n - HTTP: `GET /v1/messages/123456`\n - gRPC: `GetMessage(message_id: \"123456\")`\n\n - HTTP: `GET /v1/users/me/messages/123456`\n - gRPC: `GetMessage(user_id: \"me\" message_id: \"123456\")`\n\n Rules for HTTP mapping\n\n 1. Leaf request fields (recursive expansion nested messages in the request\n    message) are classified into three categories:\n    - Fields referred by the path template. They are passed via the URL path.\n    - Fields referred by the [HttpRule.body][google.api.HttpRule.body]. They\n    are passed via the HTTP\n      request body.\n    - All other fields are passed via the URL query parameters, and the\n      parameter name is the field path in the request message. A repeated\n      field can be represented as multiple query parameters under the same\n      name.\n  2. If [HttpRule.body][google.api.HttpRule.body] is \"*\", there is no URL\n  query parameter, all fields\n     are passed via URL path and HTTP request body.\n  3. If [HttpRule.body][google.api.HttpRule.body] is omitted, there is no HTTP\n  request body, all\n     fields are passed via URL path and URL query parameters.\n\n Path template syntax\n\n     Template = \"/\" Segments [ Verb ] ;\n     Segments = Segment { \"/\" Segment } ;\n     Segment  = \"*\" | \"**\" | LITERAL | Variable ;\n     Variable = \"{\" FieldPath [ \"=\" Segments ] \"}\" ;\n     FieldPath = IDENT { \".\" IDENT } ;\n     Verb     = \":\" LITERAL ;\n\n The syntax `*` matches a single URL path segment. The syntax `**` matches\n zero or more URL path segments, which must be the last part of the URL path\n except the `Verb`.\n\n The syntax `Variable` matches part of the URL path as specified by its\n template. A variable template must not contain other variables. If a variable\n matches a single path segment, its template may be omitted, e.g. `{var}`\n is equivalent to `{var=*}`.\n\n The syntax `LITERAL` matches literal text in the URL path. If the `LITERAL`\n contains any reserved character, such characters should be percent-encoded\n before the matching.\n\n If a variable contains exactly one path segment, such as `\"{var}\"` or\n `\"{var=*}\"`, when such a variable is expanded into a URL path on the client\n side, all characters except `[-_.~0-9a-zA-Z]` are percent-encoded. The\n server side does the reverse decoding. Such variables show up in the\n [Discovery\n Document](https://developers.google.com/discovery/v1/reference/apis) as\n `{var}`.\n\n If a variable contains multiple path segments, such as `\"{var=foo/*}\"`\n or `\"{var=**}\"`, when such a variable is expanded into a URL path on the\n client side, all characters except `[-_.~/0-9a-zA-Z]` are percent-encoded.\n The server side does the reverse decoding, except \"%2F\" and \"%2f\" are left\n unchanged. Such variables show up in the\n [Discovery\n Document](https://developers.google.com/discovery/v1/reference/apis) as\n `{+var}`.\n\n Using gRPC API Service Configuration\n\n gRPC API Service Configuration (service config) is a configuration language\n for configuring a gRPC service to become a user-facing product. The\n service config is simply the YAML representation of the `google.api.Service`\n proto message.\n\n As an alternative to annotating your proto file, you can configure gRPC\n transcoding in your service config YAML files. You do this by specifying a\n `HttpRule` that maps the gRPC method to a REST endpoint, achieving the same\n effect as the proto annotation. This can be particularly useful if you\n have a proto that is reused in multiple services. Note that any transcoding\n specified in the service config will override any matching transcoding\n configuration in the proto.\n\n The following example selects a gRPC method and applies an `HttpRule` to it:\n\n     http:\n       rules:\n         - selector: example.v1.Messaging.GetMessage\n           get: /v1/messages/{message_id}/{sub.subfield}\n\n Special notes\n\n When gRPC Transcoding is used to map a gRPC to JSON REST endpoints, the\n proto to JSON conversion must follow the [proto3\n specification](https://developers.google.com/protocol-buffers/docs/proto3#json).\n\n While the single segment variable follows the semantics of\n [RFC 6570](https://tools.ietf.org/html/rfc6570) Section 3.2.2 Simple String\n Expansion, the multi segment variable **does not** follow RFC 6570 Section\n 3.2.3 Reserved Expansion. The reason is that the Reserved Expansion\n does not expand special characters like `?` and `#`, which would lead\n to invalid URLs. As the result, gRPC Transcoding uses a custom encoding\n for multi segment variables.\n\n The path variables **must not** refer to any repeated or mapped field,\n because client libraries are not capable of handling such variable expansion.\n\n The path variables **must not** capture the leading \"/\" character. The reason\n is that the most common use case \"{var}\" does not capture the leading \"/\"\n character. For consistency, all path variables must share the same behavior.\n\n Repeated message fields must not be mapped to URL query parameters, because\n no client library can support such complicated mapping.\n\n If an API needs to use a JSON array for request or response body, it can map\n the request or response body to a repeated field. However, some gRPC\n Transcoding implementations may not support this feature.\n"
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 1
+      span: 307
+      span: 8
+      span: 16
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 0
+      span: 312
+      span: 2
+      span: 22
+      leading_comments: " Selects a method to which this rule applies.\n\n Refer to [selector][google.api.DocumentationRule.selector] for syntax\n details.\n"
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 0
+      path: 5
+      span: 312
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 0
+      path: 1
+      span: 312
+      span: 9
+      span: 17
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 0
+      path: 3
+      span: 312
+      span: 20
+      span: 21
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 8
+      path: 0
+      span: 317
+      span: 2
+      span: 339
+      span: 3
+      leading_comments: " Determines the URL pattern is matched by this rules. This pattern can be\n used with any of the {get|put|post|delete|patch} methods. A custom method\n can be defined using the 'custom' field.\n"
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 8
+      path: 0
+      path: 1
+      span: 317
+      span: 8
+      span: 15
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 1
+      span: 320
+      span: 4
+      span: 19
+      leading_comments: " Maps to HTTP GET. Used for listing and getting information about\n resources.\n"
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 1
+      path: 5
+      span: 320
+      span: 4
+      span: 10
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 1
+      path: 1
+      span: 320
+      span: 11
+      span: 14
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 1
+      path: 3
+      span: 320
+      span: 17
+      span: 18
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 2
+      span: 323
+      span: 4
+      span: 19
+      leading_comments: " Maps to HTTP PUT. Used for replacing a resource.\n"
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 2
+      path: 5
+      span: 323
+      span: 4
+      span: 10
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 2
+      path: 1
+      span: 323
+      span: 11
+      span: 14
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 2
+      path: 3
+      span: 323
+      span: 17
+      span: 18
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 3
+      span: 326
+      span: 4
+      span: 20
+      leading_comments: " Maps to HTTP POST. Used for creating a resource or performing an action.\n"
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 3
+      path: 5
+      span: 326
+      span: 4
+      span: 10
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 3
+      path: 1
+      span: 326
+      span: 11
+      span: 15
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 3
+      path: 3
+      span: 326
+      span: 18
+      span: 19
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 4
+      span: 329
+      span: 4
+      span: 22
+      leading_comments: " Maps to HTTP DELETE. Used for deleting a resource.\n"
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 4
+      path: 5
+      span: 329
+      span: 4
+      span: 10
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 4
+      path: 1
+      span: 329
+      span: 11
+      span: 17
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 4
+      path: 3
+      span: 329
+      span: 20
+      span: 21
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 5
+      span: 332
+      span: 4
+      span: 21
+      leading_comments: " Maps to HTTP PATCH. Used for updating a resource.\n"
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 5
+      path: 5
+      span: 332
+      span: 4
+      span: 10
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 5
+      path: 1
+      span: 332
+      span: 11
+      span: 16
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 5
+      path: 3
+      span: 332
+      span: 19
+      span: 20
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 6
+      span: 338
+      span: 4
+      span: 33
+      leading_comments: " The custom pattern is used for specifying an HTTP method that is not\n included in the `pattern` field, such as HEAD, or \"*\" to leave the\n HTTP method unspecified for this rule. The wild-card rule is useful\n for services that provide content to Web (HTML) clients.\n"
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 6
+      path: 6
+      span: 338
+      span: 4
+      span: 21
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 6
+      path: 1
+      span: 338
+      span: 22
+      span: 28
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 6
+      path: 3
+      span: 338
+      span: 31
+      span: 32
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 7
+      span: 347
+      span: 2
+      span: 18
+      leading_comments: " The name of the request field whose value is mapped to the HTTP request\n body, or `*` for mapping all request fields not captured by the path\n pattern to the HTTP body, or omitted for not having any HTTP request body.\n\n NOTE: the referred field must be present at the top-level of the request\n message type.\n"
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 7
+      path: 5
+      span: 347
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 7
+      path: 1
+      span: 347
+      span: 9
+      span: 13
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 7
+      path: 3
+      span: 347
+      span: 16
+      span: 17
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 8
+      span: 355
+      span: 2
+      span: 28
+      leading_comments: " Optional. The name of the response field whose value is mapped to the HTTP\n response body. When omitted, the entire response message will be used\n as the HTTP response body.\n\n NOTE: The referred field must be present at the top-level of the response\n message type.\n"
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 8
+      path: 5
+      span: 355
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 8
+      path: 1
+      span: 355
+      span: 9
+      span: 22
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 8
+      path: 3
+      span: 355
+      span: 25
+      span: 27
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 9
+      span: 360
+      span: 2
+      span: 45
+      leading_comments: " Additional HTTP bindings for the selector. Nested bindings must\n not contain an `additional_bindings` field themselves (that is,\n the nesting may only be one level deep).\n"
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 9
+      path: 4
+      span: 360
+      span: 2
+      span: 10
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 9
+      path: 6
+      span: 360
+      span: 11
+      span: 19
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 9
+      path: 1
+      span: 360
+      span: 20
+      span: 39
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 9
+      path: 3
+      span: 360
+      span: 42
+      span: 44
+    }
+    location: {
+      path: 4
+      path: 2
+      span: 364
+      span: 0
+      span: 370
+      span: 1
+      leading_comments: " A custom pattern is used for defining custom HTTP verb.\n"
+    }
+    location: {
+      path: 4
+      path: 2
+      path: 1
+      span: 364
+      span: 8
+      span: 25
+    }
+    location: {
+      path: 4
+      path: 2
+      path: 2
+      path: 0
+      span: 366
+      span: 2
+      span: 18
+      leading_comments: " The name of this custom HTTP verb.\n"
+    }
+    location: {
+      path: 4
+      path: 2
+      path: 2
+      path: 0
+      path: 5
+      span: 366
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 2
+      path: 2
+      path: 0
+      path: 1
+      span: 366
+      span: 9
+      span: 13
+    }
+    location: {
+      path: 4
+      path: 2
+      path: 2
+      path: 0
+      path: 3
+      span: 366
+      span: 16
+      span: 17
+    }
+    location: {
+      path: 4
+      path: 2
+      path: 2
+      path: 1
+      span: 369
+      span: 2
+      span: 18
+      leading_comments: " The path matched by this custom verb.\n"
+    }
+    location: {
+      path: 4
+      path: 2
+      path: 2
+      path: 1
+      path: 5
+      span: 369
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 2
+      path: 2
+      path: 1
+      path: 1
+      span: 369
+      span: 9
+      span: 13
+    }
+    location: {
+      path: 4
+      path: 2
+      path: 2
+      path: 1
+      path: 3
+      span: 369
+      span: 16
+      span: 17
+    }
+  }
+  syntax: "proto3"
+  buf_extension: {
+    is_import: true
+    module_info: {
+      name: {
+        remote: "buf.build"
+        owner: "googleapis"
+        repository: "googleapis"
+      }
+      commit: "e93e34f48be043dab55be31b4b47f458"
+    }
+    is_syntax_unspecified: false
+  }
+}
+file: {
   name: "google/api/annotations.proto"
   package: "google.api"
   dependency: "google/api/http.proto"
@@ -18677,6 +18893,7 @@ file: {
   name: "api/v1/example.proto"
   package: "api.v1"
   dependency: "google/api/annotations.proto"
+  dependency: "api/v1/access_control.proto"
   message_type: {
     name: "Example"
     field: {
@@ -18870,6 +19087,7 @@ file: {
       input_type: ".api.v1.ListExampleRequest"
       output_type: ".api.v1.ListExampleResponse"
       options: {
+        [api.v1.access_control]: {}
         [google.api.http]: {
           get: "/v1"
         }
@@ -18880,6 +19098,7 @@ file: {
       input_type: ".api.v1.GetExampleRequest"
       output_type: ".api.v1.GetExampleResponse"
       options: {
+        [api.v1.access_control]: {}
         [google.api.http]: {
           get: "/v1/{example_id}"
         }
@@ -18890,6 +19109,7 @@ file: {
       input_type: ".api.v1.UpdateExampleRequest"
       output_type: ".api.v1.UpdateExampleResponse"
       options: {
+        [api.v1.access_control]: {}
         [google.api.http]: {
           put: "/v1/{example_id}"
         }
@@ -18900,6 +19120,7 @@ file: {
       input_type: ".api.v1.CreateExampleRequest"
       output_type: ".api.v1.CreateExampleResponse"
       options: {
+        [api.v1.access_control]: {}
         [google.api.http]: {
           post: "/v1/{example_id}"
         }
@@ -18910,20 +19131,18 @@ file: {
       input_type: ".api.v1.DeleteExampleRequest"
       output_type: ".api.v1.DeleteExampleResponse"
       options: {
+        [api.v1.access_control]: {}
         [google.api.http]: {
           delete: "/v1/{example_id}"
         }
       }
     }
   }
-  options: {
-    go_package: "github.com/jumpaku/jumpaku-protobuf/api/v1"
-  }
   source_code_info: {
     location: {
       span: 0
       span: 0
-      span: 71
+      span: 76
       span: 20
     }
     location: {
@@ -18946,31 +19165,25 @@ file: {
       span: 38
     }
     location: {
-      path: 8
-      span: 5
+      path: 3
+      path: 1
+      span: 4
       span: 0
-      span: 65
-    }
-    location: {
-      path: 8
-      path: 11
-      span: 5
-      span: 0
-      span: 65
+      span: 37
     }
     location: {
       path: 6
       path: 0
-      span: 7
+      span: 6
       span: 0
-      span: 23
+      span: 27
       span: 1
     }
     location: {
       path: 6
       path: 0
       path: 1
-      span: 7
+      span: 6
       span: 8
       span: 22
     }
@@ -18979,7 +19192,7 @@ file: {
       path: 0
       path: 2
       path: 0
-      span: 8
+      span: 7
       span: 2
       span: 10
       span: 3
@@ -18990,7 +19203,7 @@ file: {
       path: 2
       path: 0
       path: 1
-      span: 8
+      span: 7
       span: 6
       span: 17
     }
@@ -19000,7 +19213,7 @@ file: {
       path: 2
       path: 0
       path: 2
-      span: 8
+      span: 7
       span: 18
       span: 36
     }
@@ -19010,7 +19223,7 @@ file: {
       path: 2
       path: 0
       path: 3
-      span: 8
+      span: 7
       span: 47
       span: 66
     }
@@ -19020,7 +19233,7 @@ file: {
       path: 2
       path: 0
       path: 4
-      span: 9
+      span: 8
       span: 4
       span: 44
     }
@@ -19031,7 +19244,7 @@ file: {
       path: 0
       path: 4
       path: 72295728
-      span: 9
+      span: 8
       span: 4
       span: 44
     }
@@ -19043,9 +19256,30 @@ file: {
       path: 4
       path: 72295728
       path: 2
-      span: 9
+      span: 8
       span: 32
       span: 42
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 0
+      path: 4
+      span: 9
+      span: 4
+      span: 40
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 0
+      path: 4
+      path: 50000
+      span: 9
+      span: 4
+      span: 40
     }
     location: {
       path: 6
@@ -19054,7 +19288,7 @@ file: {
       path: 1
       span: 11
       span: 2
-      span: 13
+      span: 14
       span: 3
     }
     location: {
@@ -19124,10 +19358,31 @@ file: {
       path: 6
       path: 0
       path: 2
+      path: 1
+      path: 4
+      span: 13
+      span: 4
+      span: 40
+    }
+    location: {
+      path: 6
+      path: 0
       path: 2
-      span: 14
+      path: 1
+      path: 4
+      path: 50000
+      span: 13
+      span: 4
+      span: 40
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 2
+      span: 15
       span: 2
-      span: 16
+      span: 18
       span: 3
     }
     location: {
@@ -19136,7 +19391,7 @@ file: {
       path: 2
       path: 2
       path: 1
-      span: 14
+      span: 15
       span: 6
       span: 19
     }
@@ -19146,7 +19401,7 @@ file: {
       path: 2
       path: 2
       path: 2
-      span: 14
+      span: 15
       span: 20
       span: 40
     }
@@ -19156,7 +19411,7 @@ file: {
       path: 2
       path: 2
       path: 3
-      span: 14
+      span: 15
       span: 51
       span: 72
     }
@@ -19166,7 +19421,7 @@ file: {
       path: 2
       path: 2
       path: 4
-      span: 15
+      span: 16
       span: 4
       span: 57
     }
@@ -19177,7 +19432,7 @@ file: {
       path: 2
       path: 4
       path: 72295728
-      span: 15
+      span: 16
       span: 4
       span: 57
     }
@@ -19189,7 +19444,7 @@ file: {
       path: 4
       path: 72295728
       path: 3
-      span: 15
+      span: 16
       span: 32
       span: 55
     }
@@ -19197,30 +19452,21 @@ file: {
       path: 6
       path: 0
       path: 2
-      path: 3
+      path: 2
+      path: 4
       span: 17
-      span: 2
-      span: 19
-      span: 3
+      span: 4
+      span: 40
     }
     location: {
       path: 6
       path: 0
       path: 2
-      path: 3
-      path: 1
-      span: 17
-      span: 6
-      span: 19
-    }
-    location: {
-      path: 6
-      path: 0
       path: 2
-      path: 3
-      path: 2
+      path: 4
+      path: 50000
       span: 17
-      span: 20
+      span: 4
       span: 40
     }
     location: {
@@ -19228,50 +19474,7 @@ file: {
       path: 0
       path: 2
       path: 3
-      path: 3
-      span: 17
-      span: 51
-      span: 72
-    }
-    location: {
-      path: 6
-      path: 0
-      path: 2
-      path: 3
-      path: 4
-      span: 18
-      span: 4
-      span: 58
-    }
-    location: {
-      path: 6
-      path: 0
-      path: 2
-      path: 3
-      path: 4
-      path: 72295728
-      span: 18
-      span: 4
-      span: 58
-    }
-    location: {
-      path: 6
-      path: 0
-      path: 2
-      path: 3
-      path: 4
-      path: 72295728
-      path: 4
-      span: 18
-      span: 32
-      span: 56
-    }
-    location: {
-      path: 6
-      path: 0
-      path: 2
-      path: 4
-      span: 20
+      span: 19
       span: 2
       span: 22
       span: 3
@@ -19280,9 +19483,103 @@ file: {
       path: 6
       path: 0
       path: 2
+      path: 3
+      path: 1
+      span: 19
+      span: 6
+      span: 19
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 3
+      path: 2
+      span: 19
+      span: 20
+      span: 40
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 3
+      path: 3
+      span: 19
+      span: 51
+      span: 72
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 3
+      path: 4
+      span: 20
+      span: 4
+      span: 58
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 3
+      path: 4
+      path: 72295728
+      span: 20
+      span: 4
+      span: 58
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 3
+      path: 4
+      path: 72295728
+      path: 4
+      span: 20
+      span: 32
+      span: 56
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 3
+      path: 4
+      span: 21
+      span: 4
+      span: 40
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 3
+      path: 4
+      path: 50000
+      span: 21
+      span: 4
+      span: 40
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 4
+      span: 23
+      span: 2
+      span: 26
+      span: 3
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
       path: 4
       path: 1
-      span: 20
+      span: 23
       span: 6
       span: 19
     }
@@ -19292,7 +19589,7 @@ file: {
       path: 2
       path: 4
       path: 2
-      span: 20
+      span: 23
       span: 20
       span: 40
     }
@@ -19302,7 +19599,7 @@ file: {
       path: 2
       path: 4
       path: 3
-      span: 20
+      span: 23
       span: 51
       span: 72
     }
@@ -19312,7 +19609,7 @@ file: {
       path: 2
       path: 4
       path: 4
-      span: 21
+      span: 24
       span: 4
       span: 60
     }
@@ -19323,7 +19620,7 @@ file: {
       path: 4
       path: 4
       path: 72295728
-      span: 21
+      span: 24
       span: 4
       span: 60
     }
@@ -19335,23 +19632,44 @@ file: {
       path: 4
       path: 72295728
       path: 5
-      span: 21
+      span: 24
       span: 32
       span: 58
     }
     location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 4
+      path: 4
+      span: 25
+      span: 4
+      span: 40
+    }
+    location: {
+      path: 6
+      path: 0
+      path: 2
+      path: 4
+      path: 4
+      path: 50000
+      span: 25
+      span: 4
+      span: 40
+    }
+    location: {
       path: 4
       path: 0
-      span: 24
+      span: 29
       span: 0
-      span: 32
+      span: 37
       span: 1
     }
     location: {
       path: 4
       path: 0
       path: 1
-      span: 24
+      span: 29
       span: 8
       span: 15
     }
@@ -19360,7 +19678,7 @@ file: {
       path: 0
       path: 2
       path: 0
-      span: 25
+      span: 30
       span: 2
       span: 24
     }
@@ -19370,7 +19688,7 @@ file: {
       path: 2
       path: 0
       path: 5
-      span: 25
+      span: 30
       span: 2
       span: 8
     }
@@ -19380,7 +19698,7 @@ file: {
       path: 2
       path: 0
       path: 1
-      span: 25
+      span: 30
       span: 9
       span: 19
     }
@@ -19390,7 +19708,7 @@ file: {
       path: 2
       path: 0
       path: 3
-      span: 25
+      span: 30
       span: 22
       span: 23
     }
@@ -19399,7 +19717,7 @@ file: {
       path: 0
       path: 2
       path: 1
-      span: 26
+      span: 31
       span: 2
       span: 26
     }
@@ -19409,7 +19727,7 @@ file: {
       path: 2
       path: 1
       path: 5
-      span: 26
+      span: 31
       span: 2
       span: 8
     }
@@ -19419,7 +19737,7 @@ file: {
       path: 2
       path: 1
       path: 1
-      span: 26
+      span: 31
       span: 9
       span: 21
     }
@@ -19429,7 +19747,7 @@ file: {
       path: 2
       path: 1
       path: 3
-      span: 26
+      span: 31
       span: 24
       span: 25
     }
@@ -19438,7 +19756,7 @@ file: {
       path: 0
       path: 2
       path: 2
-      span: 27
+      span: 32
       span: 2
       span: 29
     }
@@ -19448,7 +19766,7 @@ file: {
       path: 2
       path: 2
       path: 5
-      span: 27
+      span: 32
       span: 2
       span: 8
     }
@@ -19458,7 +19776,7 @@ file: {
       path: 2
       path: 2
       path: 1
-      span: 27
+      span: 32
       span: 9
       span: 24
     }
@@ -19468,7 +19786,7 @@ file: {
       path: 2
       path: 2
       path: 3
-      span: 27
+      span: 32
       span: 27
       span: 28
     }
@@ -19477,9 +19795,9 @@ file: {
       path: 0
       path: 3
       path: 0
-      span: 29
+      span: 34
       span: 2
-      span: 31
+      span: 36
       span: 3
     }
     location: {
@@ -19488,7 +19806,7 @@ file: {
       path: 3
       path: 0
       path: 1
-      span: 29
+      span: 34
       span: 10
       span: 15
     }
@@ -19499,7 +19817,7 @@ file: {
       path: 0
       path: 2
       path: 0
-      span: 30
+      span: 35
       span: 4
       span: 21
     }
@@ -19511,7 +19829,7 @@ file: {
       path: 2
       path: 0
       path: 5
-      span: 30
+      span: 35
       span: 4
       span: 10
     }
@@ -19523,7 +19841,7 @@ file: {
       path: 2
       path: 0
       path: 1
-      span: 30
+      span: 35
       span: 11
       span: 16
     }
@@ -19535,88 +19853,88 @@ file: {
       path: 2
       path: 0
       path: 3
-      span: 30
+      span: 35
       span: 19
       span: 20
     }
     location: {
       path: 4
       path: 1
-      span: 34
-      span: 0
-      span: 36
-      span: 1
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 1
-      span: 34
-      span: 8
-      span: 27
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 0
-      span: 35
-      span: 2
-      span: 36
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 0
-      path: 4
-      span: 35
-      span: 2
-      span: 10
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 0
-      path: 6
-      span: 35
-      span: 11
-      span: 18
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 0
-      path: 1
-      span: 35
-      span: 19
-      span: 31
-    }
-    location: {
-      path: 4
-      path: 1
-      path: 2
-      path: 0
-      path: 3
-      span: 35
-      span: 34
-      span: 35
-    }
-    location: {
-      path: 4
-      path: 2
-      span: 37
+      span: 39
       span: 0
       span: 41
       span: 1
     }
     location: {
       path: 4
+      path: 1
+      path: 1
+      span: 39
+      span: 8
+      span: 27
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 0
+      span: 40
+      span: 2
+      span: 36
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 0
+      path: 4
+      span: 40
+      span: 2
+      span: 10
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 0
+      path: 6
+      span: 40
+      span: 11
+      span: 18
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 0
+      path: 1
+      span: 40
+      span: 19
+      span: 31
+    }
+    location: {
+      path: 4
+      path: 1
+      path: 2
+      path: 0
+      path: 3
+      span: 40
+      span: 34
+      span: 35
+    }
+    location: {
+      path: 4
+      path: 2
+      span: 42
+      span: 0
+      span: 46
+      span: 1
+    }
+    location: {
+      path: 4
       path: 2
       path: 1
-      span: 37
+      span: 42
       span: 8
       span: 26
     }
@@ -19625,7 +19943,7 @@ file: {
       path: 2
       path: 2
       path: 0
-      span: 38
+      span: 43
       span: 2
       span: 16
     }
@@ -19635,7 +19953,7 @@ file: {
       path: 2
       path: 0
       path: 5
-      span: 38
+      span: 43
       span: 2
       span: 6
     }
@@ -19645,7 +19963,7 @@ file: {
       path: 2
       path: 0
       path: 1
-      span: 38
+      span: 43
       span: 7
       span: 11
     }
@@ -19655,7 +19973,7 @@ file: {
       path: 2
       path: 0
       path: 3
-      span: 38
+      span: 43
       span: 14
       span: 15
     }
@@ -19664,7 +19982,7 @@ file: {
       path: 2
       path: 2
       path: 1
-      span: 39
+      span: 44
       span: 2
       span: 18
     }
@@ -19674,7 +19992,7 @@ file: {
       path: 2
       path: 1
       path: 5
-      span: 39
+      span: 44
       span: 2
       span: 7
     }
@@ -19684,7 +20002,7 @@ file: {
       path: 2
       path: 1
       path: 1
-      span: 39
+      span: 44
       span: 8
       span: 13
     }
@@ -19694,7 +20012,7 @@ file: {
       path: 2
       path: 1
       path: 3
-      span: 39
+      span: 44
       span: 16
       span: 17
     }
@@ -19703,7 +20021,7 @@ file: {
       path: 2
       path: 2
       path: 2
-      span: 40
+      span: 45
       span: 2
       span: 19
     }
@@ -19713,7 +20031,7 @@ file: {
       path: 2
       path: 2
       path: 5
-      span: 40
+      span: 45
       span: 2
       span: 7
     }
@@ -19723,7 +20041,7 @@ file: {
       path: 2
       path: 2
       path: 1
-      span: 40
+      span: 45
       span: 8
       span: 14
     }
@@ -19733,23 +20051,23 @@ file: {
       path: 2
       path: 2
       path: 3
-      span: 40
+      span: 45
       span: 17
       span: 18
     }
     location: {
       path: 4
       path: 3
-      span: 42
+      span: 47
       span: 0
-      span: 44
+      span: 49
       span: 1
     }
     location: {
       path: 4
       path: 3
       path: 1
-      span: 42
+      span: 47
       span: 8
       span: 26
     }
@@ -19758,7 +20076,7 @@ file: {
       path: 3
       path: 2
       path: 0
-      span: 43
+      span: 48
       span: 2
       span: 22
     }
@@ -19768,7 +20086,7 @@ file: {
       path: 2
       path: 0
       path: 6
-      span: 43
+      span: 48
       span: 2
       span: 9
     }
@@ -19778,7 +20096,7 @@ file: {
       path: 2
       path: 0
       path: 1
-      span: 43
+      span: 48
       span: 10
       span: 17
     }
@@ -19788,23 +20106,23 @@ file: {
       path: 2
       path: 0
       path: 3
-      span: 43
+      span: 48
       span: 20
       span: 21
     }
     location: {
       path: 4
       path: 4
-      span: 45
+      span: 50
       span: 0
-      span: 47
+      span: 52
       span: 1
     }
     location: {
       path: 4
       path: 4
       path: 1
-      span: 45
+      span: 50
       span: 8
       span: 25
     }
@@ -19813,7 +20131,7 @@ file: {
       path: 4
       path: 2
       path: 0
-      span: 46
+      span: 51
       span: 2
       span: 24
     }
@@ -19823,7 +20141,7 @@ file: {
       path: 2
       path: 0
       path: 5
-      span: 46
+      span: 51
       span: 2
       span: 8
     }
@@ -19833,7 +20151,7 @@ file: {
       path: 2
       path: 0
       path: 1
-      span: 46
+      span: 51
       span: 9
       span: 19
     }
@@ -19843,23 +20161,23 @@ file: {
       path: 2
       path: 0
       path: 3
-      span: 46
+      span: 51
       span: 22
       span: 23
     }
     location: {
       path: 4
       path: 5
-      span: 48
+      span: 53
       span: 0
-      span: 50
+      span: 55
       span: 1
     }
     location: {
       path: 4
       path: 5
       path: 1
-      span: 48
+      span: 53
       span: 8
       span: 29
     }
@@ -19868,7 +20186,7 @@ file: {
       path: 5
       path: 2
       path: 0
-      span: 49
+      span: 54
       span: 2
       span: 22
     }
@@ -19878,7 +20196,7 @@ file: {
       path: 2
       path: 0
       path: 6
-      span: 49
+      span: 54
       span: 2
       span: 9
     }
@@ -19888,7 +20206,7 @@ file: {
       path: 2
       path: 0
       path: 1
-      span: 49
+      span: 54
       span: 10
       span: 17
     }
@@ -19898,23 +20216,23 @@ file: {
       path: 2
       path: 0
       path: 3
-      span: 49
+      span: 54
       span: 20
       span: 21
     }
     location: {
       path: 4
       path: 6
-      span: 51
+      span: 56
       span: 0
-      span: 57
+      span: 62
       span: 1
     }
     location: {
       path: 4
       path: 6
       path: 1
-      span: 51
+      span: 56
       span: 8
       span: 28
     }
@@ -19923,7 +20241,7 @@ file: {
       path: 6
       path: 2
       path: 0
-      span: 52
+      span: 57
       span: 2
       span: 24
     }
@@ -19933,7 +20251,7 @@ file: {
       path: 2
       path: 0
       path: 5
-      span: 52
+      span: 57
       span: 2
       span: 8
     }
@@ -19943,7 +20261,7 @@ file: {
       path: 2
       path: 0
       path: 1
-      span: 52
+      span: 57
       span: 9
       span: 19
     }
@@ -19953,7 +20271,7 @@ file: {
       path: 2
       path: 0
       path: 3
-      span: 52
+      span: 57
       span: 22
       span: 23
     }
@@ -19962,7 +20280,7 @@ file: {
       path: 6
       path: 2
       path: 1
-      span: 53
+      span: 58
       span: 2
       span: 28
     }
@@ -19972,7 +20290,7 @@ file: {
       path: 2
       path: 1
       path: 5
-      span: 53
+      span: 58
       span: 2
       span: 6
     }
@@ -19982,7 +20300,7 @@ file: {
       path: 2
       path: 1
       path: 1
-      span: 53
+      span: 58
       span: 7
       span: 23
     }
@@ -19992,7 +20310,7 @@ file: {
       path: 2
       path: 1
       path: 3
-      span: 53
+      span: 58
       span: 26
       span: 27
     }
@@ -20001,7 +20319,7 @@ file: {
       path: 6
       path: 2
       path: 2
-      span: 54
+      span: 59
       span: 2
       span: 26
     }
@@ -20011,7 +20329,7 @@ file: {
       path: 2
       path: 2
       path: 5
-      span: 54
+      span: 59
       span: 2
       span: 8
     }
@@ -20021,7 +20339,7 @@ file: {
       path: 2
       path: 2
       path: 1
-      span: 54
+      span: 59
       span: 9
       span: 21
     }
@@ -20031,7 +20349,7 @@ file: {
       path: 2
       path: 2
       path: 3
-      span: 54
+      span: 59
       span: 24
       span: 25
     }
@@ -20040,7 +20358,7 @@ file: {
       path: 6
       path: 2
       path: 3
-      span: 55
+      span: 60
       span: 2
       span: 31
     }
@@ -20050,7 +20368,7 @@ file: {
       path: 2
       path: 3
       path: 5
-      span: 55
+      span: 60
       span: 2
       span: 6
     }
@@ -20060,7 +20378,7 @@ file: {
       path: 2
       path: 3
       path: 1
-      span: 55
+      span: 60
       span: 7
       span: 26
     }
@@ -20070,7 +20388,7 @@ file: {
       path: 2
       path: 3
       path: 3
-      span: 55
+      span: 60
       span: 29
       span: 30
     }
@@ -20079,7 +20397,7 @@ file: {
       path: 6
       path: 2
       path: 4
-      span: 56
+      span: 61
       span: 2
       span: 29
     }
@@ -20089,7 +20407,7 @@ file: {
       path: 2
       path: 4
       path: 5
-      span: 56
+      span: 61
       span: 2
       span: 8
     }
@@ -20099,7 +20417,7 @@ file: {
       path: 2
       path: 4
       path: 1
-      span: 56
+      span: 61
       span: 9
       span: 24
     }
@@ -20109,23 +20427,23 @@ file: {
       path: 2
       path: 4
       path: 3
-      span: 56
+      span: 61
       span: 27
       span: 28
     }
     location: {
       path: 4
       path: 7
-      span: 58
+      span: 63
       span: 0
-      span: 60
+      span: 65
       span: 1
     }
     location: {
       path: 4
       path: 7
       path: 1
-      span: 58
+      span: 63
       span: 8
       span: 29
     }
@@ -20134,7 +20452,7 @@ file: {
       path: 7
       path: 2
       path: 0
-      span: 59
+      span: 64
       span: 2
       span: 22
     }
@@ -20144,7 +20462,7 @@ file: {
       path: 2
       path: 0
       path: 6
-      span: 59
+      span: 64
       span: 2
       span: 9
     }
@@ -20154,7 +20472,7 @@ file: {
       path: 2
       path: 0
       path: 1
-      span: 59
+      span: 64
       span: 10
       span: 17
     }
@@ -20164,23 +20482,23 @@ file: {
       path: 2
       path: 0
       path: 3
-      span: 59
+      span: 64
       span: 20
       span: 21
     }
     location: {
       path: 4
       path: 8
-      span: 61
+      span: 66
       span: 0
-      span: 64
+      span: 69
       span: 1
     }
     location: {
       path: 4
       path: 8
       path: 1
-      span: 61
+      span: 66
       span: 8
       span: 28
     }
@@ -20189,7 +20507,7 @@ file: {
       path: 8
       path: 2
       path: 0
-      span: 62
+      span: 67
       span: 2
       span: 26
     }
@@ -20199,7 +20517,7 @@ file: {
       path: 2
       path: 0
       path: 5
-      span: 62
+      span: 67
       span: 2
       span: 8
     }
@@ -20209,7 +20527,7 @@ file: {
       path: 2
       path: 0
       path: 1
-      span: 62
+      span: 67
       span: 9
       span: 21
     }
@@ -20219,7 +20537,7 @@ file: {
       path: 2
       path: 0
       path: 3
-      span: 62
+      span: 67
       span: 24
       span: 25
     }
@@ -20228,7 +20546,7 @@ file: {
       path: 8
       path: 2
       path: 1
-      span: 63
+      span: 68
       span: 2
       span: 29
     }
@@ -20238,7 +20556,7 @@ file: {
       path: 2
       path: 1
       path: 5
-      span: 63
+      span: 68
       span: 2
       span: 8
     }
@@ -20248,7 +20566,7 @@ file: {
       path: 2
       path: 1
       path: 1
-      span: 63
+      span: 68
       span: 9
       span: 24
     }
@@ -20258,14 +20576,14 @@ file: {
       path: 2
       path: 1
       path: 3
-      span: 63
+      span: 68
       span: 27
       span: 28
     }
     location: {
       path: 4
       path: 9
-      span: 65
+      span: 70
       span: 0
       span: 32
     }
@@ -20273,23 +20591,23 @@ file: {
       path: 4
       path: 9
       path: 1
-      span: 65
+      span: 70
       span: 8
       span: 29
     }
     location: {
       path: 4
       path: 10
-      span: 66
+      span: 71
       span: 0
-      span: 68
+      span: 73
       span: 1
     }
     location: {
       path: 4
       path: 10
       path: 1
-      span: 66
+      span: 71
       span: 8
       span: 28
     }
@@ -20298,7 +20616,7 @@ file: {
       path: 10
       path: 2
       path: 0
-      span: 67
+      span: 72
       span: 2
       span: 24
     }
@@ -20308,7 +20626,7 @@ file: {
       path: 2
       path: 0
       path: 5
-      span: 67
+      span: 72
       span: 2
       span: 8
     }
@@ -20318,7 +20636,7 @@ file: {
       path: 2
       path: 0
       path: 1
-      span: 67
+      span: 72
       span: 9
       span: 19
     }
@@ -20328,14 +20646,14 @@ file: {
       path: 2
       path: 0
       path: 3
-      span: 67
+      span: 72
       span: 22
       span: 23
     }
     location: {
       path: 4
       path: 11
-      span: 70
+      span: 75
       span: 0
       span: 14
     }
@@ -20343,14 +20661,14 @@ file: {
       path: 4
       path: 11
       path: 1
-      span: 70
+      span: 75
       span: 8
       span: 11
     }
     location: {
       path: 4
       path: 12
-      span: 71
+      span: 76
       span: 0
       span: 20
     }
@@ -20358,7 +20676,7 @@ file: {
       path: 4
       path: 12
       path: 1
-      span: 71
+      span: 76
       span: 8
       span: 17
     }

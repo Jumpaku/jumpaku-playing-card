@@ -1,15 +1,17 @@
-import {Injectable, Scope} from "@nestjs/common";
-import {RandomProviderToken} from "./random.provider";
+import {Injectable} from "@nestjs/common";
+import {RandomProvider} from "./random.provider";
+import {Request} from "express";
 
-@Injectable({scope: Scope.REQUEST})
+@Injectable()
 export class RequestIdProvider {
-    constructor(random: RandomProviderToken) {
-        this._requestId = random.uuid();
+    constructor(private readonly random: RandomProvider) {
     }
 
-    private readonly _requestId: string;
-
-    requestId(): string {
-        return this._requestId;
+    extract(req: Request): string {
+        let got = (req as any).requestId;
+        if (got == null) {
+            got = (req as any).requestId = this.random.uuid();
+        }
+        return got;
     }
 }

@@ -55,10 +55,15 @@ type Index struct {
 	Name string
 	Keys []TsColumn
 }
+type Unique struct {
+    Name string
+    Keys []TsColumn
+}
 type DAOData struct {
 	Name       string
 	Columns    []TsColumn
 	PrimaryKey []TsColumn
+	Unique  []Unique
 	Index      []Index
 }
 
@@ -145,6 +150,18 @@ export function setTypeParsers() {
 					Nullable: colMap[k].Nullable,
 				}
 			}),
+            Unique: lo.Map(schema.UniqueKeys, func(u postgres.UniqueKey, _ int) Unique {
+                return Unique{
+                    Name: u.Name,
+                    Keys: lo.Map(u.Key, func(k string, _ int) TsColumn {
+                        return TsColumn{
+                            Name:     k,
+                            TsType:   tsType(colMap[k]),
+                            Nullable: colMap[k].Nullable,
+                        }
+                    }),
+                }
+            }),
 			Index: lo.Map(schema.Indexes, func(i postgres.Index, _ int) Index {
 				return Index{
 					Name: i.Name,

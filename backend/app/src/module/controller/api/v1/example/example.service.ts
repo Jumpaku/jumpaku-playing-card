@@ -7,7 +7,7 @@ import {
     CreateExampleResponseSchema,
     DeleteExampleRequest,
     DeleteExampleResponse,
-    DeleteExampleResponseSchema, Example, ExampleSchema,
+    DeleteExampleResponseSchema, ExampleSchema,
     GetExampleRequest,
     GetExampleResponse,
     GetExampleResponseSchema,
@@ -20,25 +20,25 @@ import {
 } from "../../../../../gen/pb/api/v1/example/example_pb";
 import e from "express";
 import {create} from "@bufbuild/protobuf";
-import {RandomProviderToken} from "../../../../global/random.provider";
+import {RandomProvider} from "../../../../global/random.provider";
 import {PostgresProvider, selectAll} from "../../../../global/postgres.provider";
 import {Example$} from "../../../../../gen/pg/dao/dao_Example";
-import {RequestTimeProviderToken} from "../../../../global/request_time.provider";
+import {RequestTimeProvider} from "../../../../global/request_time.provider";
 import {Injectable} from "@nestjs/common";
 
 @Injectable()
 export class ExampleServiceService extends ExampleServiceServiceBase {
     constructor(
-        private readonly random: RandomProviderToken,
+        private readonly random: RandomProvider,
         private readonly postgres: PostgresProvider,
-        private readonly requestTime: RequestTimeProviderToken,
+        private readonly requestTime: RequestTimeProvider,
     ) {
         super();
     }
 
     async handleCreateExample(input: CreateExampleRequest, req: e.Request, res: e.Response): Promise<CreateExampleResponse> {
         const exampleId = this.random.uuid();
-        const now = this.requestTime.requestTime("");
+        const now = this.requestTime.extract(req);
         const example = {
             exampleId: exampleId,
             exampleName: input.exampleName,
@@ -106,7 +106,7 @@ export class ExampleServiceService extends ExampleServiceServiceBase {
     }
 
     async handleUpdateExample(input: UpdateExampleRequest, req: e.Request, res: e.Response): Promise<UpdateExampleResponse> {
-        const now = this.requestTime.requestTime("");
+        const now = this.requestTime.extract(req);
         let example :Example$|undefined;
         await this.postgres.transaction(async (tx) => {
             const found = await Example$.find(tx, {

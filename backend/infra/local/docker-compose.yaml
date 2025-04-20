@@ -23,6 +23,9 @@ services:
       - POSTGRES_USER=postgres
     ports:
       - "5432:5432"
+    volumes:
+      - ../../master-data/sql:/workspace/backend/master-data/sql
+    working_dir: /workspace/backend
   adminer:
     image: adminer
     ports:

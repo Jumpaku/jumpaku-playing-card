@@ -1,36 +1,25 @@
 import e from "express";
-import {RandomProviderToken} from "../../../../global/random.provider";
+import {RandomProvider} from "../../../../global/random.provider";
 import {Inject} from "@nestjs/common";
 import {RequestIdProvider} from "../../../../global/request_id.provider";
-import {RequestTimeProviderToken} from "../../../../global/request_time.provider";
+import {RequestTimeProvider} from "../../../../global/request_time.provider";
 import {ConfigProvider} from "../../../../global/config.provider";
 import {toJson} from "@bufbuild/protobuf";
 import {AppConfigSchema} from "../../../../../gen/pb/config/config_pb";
 import {LoggerProvider} from "../../../../global/logger.provider";
 import {PostgresProvider, selectAll} from "../../../../global/postgres.provider";
-import {throwBadRequest} from "../../../../../exception/exception";
 
-function f(){
-    throw new Error("playground error");
-}
 export class PlaygroundService {
     @Inject() private logger: LoggerProvider;
     @Inject() private config: ConfigProvider;
-    @Inject() private random: RandomProviderToken;
+    @Inject() private random: RandomProvider;
     @Inject() private requestId: RequestIdProvider;
-    @Inject() private requestTime: RequestTimeProviderToken;
+    @Inject() private requestTime: RequestTimeProvider;
     @Inject() private postgres: PostgresProvider;
 
     async playground(req: e.Request, res: e.Response): Promise<any> {
-        try {
-            f();
-        } catch (e) {
-            throwBadRequest("bad request", "bad request", {
-                responseData: {"key": "value"},
-                cause: e,
-            })
-        }
-        this.config.reload();
+
+        this.config.reload('config/local.json');
 
         this.logger.debug("playground debug log");
         this.logger.log("playground log log");
@@ -45,8 +34,8 @@ export class PlaygroundService {
         return {
             config: toJson(AppConfigSchema, this.config.get()),
             random: this.random.int32(10),
-            requestId: this.requestId.requestId(),
-            requestTime: this.requestTime.requestTime(""),
+            requestId: this.requestId.extract(req),
+            requestTime: this.requestTime.extract(req),
             message: "Hello, playground!",
         };
     }

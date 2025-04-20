@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package api.v1;
+
+import "google/api/annotations.proto";
+
+message JwtPayload {
+  int64 iat = 6;
+  int64 exp = 7;
+  string sub = 8;
+  string iss = 9;
+  string aud = 10;
+  string jti = 11;
+
+  enum JwtKind {
+    JWT_KIND_UNSPECIFIED = 0;
+    JWT_KIND_ACCESS = 20;
+    JWT_KIND_REFRESH = 21;
+  }
+  JwtKind kind = 20;
+
+  message AccessData {
+    string session_id = 20;
+    string user_id = 21;
+    string authentication_id = 22;
+    string role = 23;
+    repeated string scopes = 24;
+  }
+  AccessData access_data = 30;
+
+  message RefreshData {
+    string session_id = 20;
+    repeated string scopes = 23;
+  }
+  RefreshData refresh_data = 31;
+}

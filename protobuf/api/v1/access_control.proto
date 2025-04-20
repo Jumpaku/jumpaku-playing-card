@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package api.v1;
+
+import "google/protobuf/descriptor.proto";
+
+// AccessControl declares the following requirements:
+// - the client must be authenticated.
+// - the client must have the all of the required permissions associated with the scope path.
+message AccessControl {
+  // Scope path, which should be a dot-separated string, is the indentfier for the group of the required permissions.
+  // If not specified, "<package>.<service>.<method>" is used.
+  string scope_path = 1;
+  // Required permissions associated with the requirement.
+  // Each element, which is should be a string in format "<resource>:<action>", specifies a resource and the actions allowed on that resource.
+  // If not specified, the client may have no permissions.
+  repeated string require = 2;
+}
+
+extend google.protobuf.MethodOptions {
+  AccessControl access_control = 50000;
+}
