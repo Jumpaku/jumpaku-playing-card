@@ -26,6 +26,10 @@ master-data: ## make master-data VERSION=$(date +%s)
 		master-data/tsv \
 		master-data/sql/$${VERSION}
 	cat ../../master-data/sql/$${VERSION}/*.sql > ../../master-data/sql/$${VERSION}.sql
+	docker compose exec -w /workspace/backend/ postgres psql \
+		--username postgres \
+		--dbname app \
+		--file master-data/sql/$${VERSION}.sql
 
 
 .PHONY: master-data-docker

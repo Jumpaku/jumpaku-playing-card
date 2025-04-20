@@ -65,6 +65,8 @@ export class RoomService extends RoomServiceService {
                 throwPreconditionFailed("User not found", "User not found");
             }
 
+            const memberId = this.random.uuid();
+
             await Room$.insert(tx, {
                 room_id: room_id,
                 room_name: input.roomName,
@@ -72,7 +74,7 @@ export class RoomService extends RoomServiceService {
                 update_time: t,
             });
             await RoomMember$.insert(tx, {
-                room_member_id: this.random.uuid(),
+                room_member_id: memberId,
                 room_id: room_id,
                 user_id: u!.user_id,
                 role_id: "1",
@@ -96,7 +98,14 @@ export class RoomService extends RoomServiceService {
                     seatName: s.room_seat_name,
                     memberExists: false,
                 }))),
-                memberList: [],
+                memberList: [
+                    create(RoomMemberSchema, {
+                        memberId: memberId,
+                        memberRole: "1",
+                        userId: u.user_id,
+                        userName: u.display_name,
+                    })
+                ],
             });
         });
     }
@@ -122,11 +131,12 @@ export class RoomService extends RoomServiceService {
             return create(GetResponseSchema, {
                 roomId: r.room_id,
                 roomName: r.room_name,
-                seatList: seats.map((s) => (create(RoomSeatSchema, {
+                seatList: seats.map((s) => create(RoomSeatSchema, {
                     seatId: s.room_seat_id,
                     seatName: s.room_seat_name,
                     memberExists: s.room_member_id != null,
-                }))),
+                    memberId: s.room_member_id ?? undefined,
+                })),
                 memberList: members.map((m) => (create(RoomMemberSchema, {
                     memberId: m.room_member_id,
                     memberRole: m.role_id,
@@ -152,16 +162,16 @@ export class RoomService extends RoomServiceService {
             if (u == null) {
                 throwPreconditionFailed("User not found", "User not found");
             }
-            const member = await RoomMember$.findByUq_RoomMember_RoomUser(tx, {
+            let member = await RoomMember$.findByUq_RoomMember_RoomUser(tx, {
                 room_id: input.roomId,
                 user_id: u!.user_id,
             });
             if (member != null) {
-                throwPreconditionFailed("Already in room", "Already in room");
+                return create(EnterResponseSchema, {memberId: member.room_member_id});
             }
-
-            await RoomMember$.insert(tx, {
-                room_member_id: this.random.uuid(),
+            const memberId = this.random.uuid();
+            await RoomMember$.upsert(tx, {
+                room_member_id: memberId,
                 room_id: input.roomId,
                 user_id: u!.user_id,
                 role_id: "2",
@@ -169,7 +179,7 @@ export class RoomService extends RoomServiceService {
                 update_time: t,
             });
 
-            return create(EnterResponseSchema);
+            return create(EnterResponseSchema, {memberId: memberId});
         });
     }
 

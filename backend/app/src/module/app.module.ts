@@ -8,6 +8,7 @@ import {AccessControlGuard} from "./access_control.guard";
 import {LoggingInterceptor} from "./logging.interceptor";
 import {AppExceptionFilter} from "./exception.filter";
 import {UserModule} from "./controller/api/v1/app/user/user.module";
+import {RoomModule} from "./controller/api/v1/app/room/room.module";
 
 @Module({
     imports: [
@@ -16,6 +17,7 @@ import {UserModule} from "./controller/api/v1/app/user/user.module";
         ExampleModule,
         AuthenticationModule,
         UserModule,
+        RoomModule,
     ],
     providers: [
         {

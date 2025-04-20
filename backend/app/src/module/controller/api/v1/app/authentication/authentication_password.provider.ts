@@ -10,7 +10,7 @@ export class AuthenticationPasswordProvider {
     }
 
     async exists(tx: PgClient, loginId: string): Promise<boolean> {
-        const found = this.authenticationRepository.findByLoginId(tx, loginId);
+        const found = await this.authenticationRepository.findByLoginId(tx, loginId);
         return found != null;
     }
 

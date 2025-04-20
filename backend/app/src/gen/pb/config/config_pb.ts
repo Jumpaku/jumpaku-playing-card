@@ -10,7 +10,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file config/config.proto.
  */
 export const file_config_config: GenFile = /*@__PURE__*/
-  fileDesc("ChNjb25maWcvY29uZmlnLnByb3RvEgZjb25maWcimAQKCUFwcENvbmZpZxIQCghub2RlX2VudhgKIAEoCRIMCgRwb3J0GBQgASgFEhsKE3Bvc3RncmVzX2Nvbm5lY3Rpb24YHiABKAkSOAoOYXV0aGVudGljYXRpb24YKCABKAsyIC5jb25maWcuQXBwQ29uZmlnLkF1dGhlbnRpY2F0aW9uGpMDCg5BdXRoZW50aWNhdGlvbhISCgpzZWNyZXRfa2V5GAEgASgJEhIKCnB1YmxpY19rZXkYAiABKAkSDgoGaXNzdWVyGAMgASgJEhAKCGF1ZGllbmNlGAQgASgJEhEKCWFsZ29yaXRobRgFIAEoCRIdChVhY2Nlc3NfZXhwaXJlX3NlY29uZHMYCiABKAMSIgoacmVmcmVzaF9leHBpcmVfc2Vjb25kc193ZWIYCyABKAMSJQodcmVmcmVzaF9leHBpcmVfc2Vjb25kc19tb2JpbGUYDCABKAMSOwoIcGFzc3dvcmQYFCABKAsyKS5jb25maWcuQXBwQ29uZmlnLkF1dGhlbnRpY2F0aW9uLlBhc3N3b3JkEj0KCXRlbXBvcmFyeRgVIAEoCzIqLmNvbmZpZy5BcHBDb25maWcuQXV0aGVudGljYXRpb24uVGVtcG9yYXJ5GjEKCFBhc3N3b3JkEhIKCml0ZXJhdGlvbnMYAyABKAUSEQoJaGFzaF9zaXplGAQgASgFGgsKCVRlbXBvcmFyeUJRCgpjb20uY29uZmlnQgtDb25maWdQcm90b1ABogIDQ1hYqgIGQ29uZmlnygIGQ29uZmln4gISQ29uZmlnXEdQQk1ldGFkYXRh6gIGQ29uZmlnYgZwcm90bzM");
+  fileDesc("ChNjb25maWcvY29uZmlnLnByb3RvEgZjb25maWciugQKCUFwcENvbmZpZxIQCghub2RlX2VudhgKIAEoCRIMCgRwb3J0GBQgASgFEhsKE3Bvc3RncmVzX2Nvbm5lY3Rpb24YHiABKAkSIAoYcG9zdGdyZXNfdGltZW91dF9zZWNvbmRzGB8gASgFEjgKDmF1dGhlbnRpY2F0aW9uGCggASgLMiAuY29uZmlnLkFwcENvbmZpZy5BdXRoZW50aWNhdGlvbhqTAwoOQXV0aGVudGljYXRpb24SEgoKc2VjcmV0X2tleRgBIAEoCRISCgpwdWJsaWNfa2V5GAIgASgJEg4KBmlzc3VlchgDIAEoCRIQCghhdWRpZW5jZRgEIAEoCRIRCglhbGdvcml0aG0YBSABKAkSHQoVYWNjZXNzX2V4cGlyZV9zZWNvbmRzGAogASgDEiIKGnJlZnJlc2hfZXhwaXJlX3NlY29uZHNfd2ViGAsgASgDEiUKHXJlZnJlc2hfZXhwaXJlX3NlY29uZHNfbW9iaWxlGAwgASgDEjsKCHBhc3N3b3JkGBQgASgLMikuY29uZmlnLkFwcENvbmZpZy5BdXRoZW50aWNhdGlvbi5QYXNzd29yZBI9Cgl0ZW1wb3JhcnkYFSABKAsyKi5jb25maWcuQXBwQ29uZmlnLkF1dGhlbnRpY2F0aW9uLlRlbXBvcmFyeRoxCghQYXNzd29yZBISCgppdGVyYXRpb25zGAMgASgFEhEKCWhhc2hfc2l6ZRgEIAEoBRoLCglUZW1wb3JhcnlCUQoKY29tLmNvbmZpZ0ILQ29uZmlnUHJvdG9QAaICA0NYWKoCBkNvbmZpZ8oCBkNvbmZpZ+ICEkNvbmZpZ1xHUEJNZXRhZGF0YeoCBkNvbmZpZ2IGcHJvdG8z");
 
 /**
  * @generated from message config.AppConfig
@@ -30,6 +30,11 @@ export type AppConfig = Message<"config.AppConfig"> & {
    * @generated from field: string postgres_connection = 30;
    */
   postgresConnection: string;
+
+  /**
+   * @generated from field: int32 postgres_timeout_seconds = 31;
+   */
+  postgresTimeoutSeconds: number;
 
   /**
    * @generated from field: config.AppConfig.Authentication authentication = 40;
@@ -55,6 +60,11 @@ export type AppConfigJson = {
    * @generated from field: string postgres_connection = 30;
    */
   postgresConnection?: string;
+
+  /**
+   * @generated from field: int32 postgres_timeout_seconds = 31;
+   */
+  postgresTimeoutSeconds?: number;
 
   /**
    * @generated from field: config.AppConfig.Authentication authentication = 40;

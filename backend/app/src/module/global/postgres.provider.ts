@@ -9,13 +9,15 @@ export interface PgClient {
 
 @Injectable()
 export class PostgresProvider {
-    constructor(config: ConfigProvider, private readonly logger: LoggerProvider) {
+    constructor(private readonly config: ConfigProvider, private readonly logger: LoggerProvider) {
         logger.log(JSON.stringify({
             log: 'postgres',
             time: new Date(),
             message: 'open postgres pool connection',
         }));
-        this.pool = new Pool({connectionString: config.get().postgresConnection});
+        this.pool = new Pool({
+            connectionString: config.get().postgresConnection,
+        });
     }
 
     private pool: Pool
@@ -64,7 +66,7 @@ export class PostgresProvider {
                     stmt, params
                 },
             }));
-        }, 5000)
+        }, 1000 * this.config.get().postgresTimeoutSeconds);
         // monkey patch the query method to keep track of the last query executed
         // @ts-ignore
         client.query = ((...args: any[]) => {

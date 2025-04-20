@@ -1,5 +1,6 @@
 {
   "postgresConnection": "postgres://postgres:password@localhost:5432/app?sslmode=disable",
+  "postgresTimeoutSeconds": 300,
   "port": 80,
   "authentication": {
     "issuer": "http://localhost",

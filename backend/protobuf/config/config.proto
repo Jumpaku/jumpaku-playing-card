@@ -5,6 +5,7 @@ message AppConfig {
     string node_env = 10;
     int32 port = 20;
     string postgres_connection = 30;
+    int32 postgres_timeout_seconds = 31;
     message Authentication {
         string secret_key = 1;
         string public_key = 2;

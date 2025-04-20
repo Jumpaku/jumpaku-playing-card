@@ -155,7 +155,7 @@ export class AuthenticationService extends AuthenticationServiceService {
     private issueTokens(sessionId: string, t: Date, expireTime: Date) {
         const at = this.jwt.issueAccessToken(create(JwtPayload_AccessDataSchema, {
             sessionId,
-            scopes: ["user", "session:logout"],
+            scopes: ["user", "session:logout", "room"],
         }), t);
         const rt = this.jwt.issueRefreshToken(fromJson(JwtPayload_RefreshDataSchema, {
             sessionId,
