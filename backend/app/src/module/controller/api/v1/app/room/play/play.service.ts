@@ -133,7 +133,7 @@ export class PlayService extends PlayServiceService {
             if (u == null) {
                 throwPreconditionFailed("User not found", "User not found");
             }
-            const m = RoomMember$.findByUq_RoomMember_RoomUser(tx, {
+            const m = await RoomMember$.findByUq_RoomMember_RoomUser(tx, {
                 room_id: input.roomId,
                 user_id: u.user_id,
             });
@@ -179,7 +179,7 @@ export class PlayService extends PlayServiceService {
             if (u == null) {
                 throwPreconditionFailed("User not found", "User not found");
             }
-            const m = RoomMember$.findByUq_RoomMember_RoomUser(tx, {
+            const m = await RoomMember$.findByUq_RoomMember_RoomUser(tx, {
                 room_id: input.roomId,
                 user_id: u.user_id,
             });
@@ -212,7 +212,7 @@ export class PlayService extends PlayServiceService {
             if (u == null) {
                 throwPreconditionFailed("User not found", "User not found");
             }
-            const m = RoomMember$.findByUq_RoomMember_RoomUser(tx, {
+            const m = await RoomMember$.findByUq_RoomMember_RoomUser(tx, {
                 room_id: input.roomId,
                 user_id: u.user_id,
             });
@@ -259,7 +259,7 @@ export class PlayService extends PlayServiceService {
             if (u == null) {
                 throwPreconditionFailed("User not found", "User not found");
             }
-            const m = RoomMember$.findByUq_RoomMember_RoomUser(tx, {
+            const m = await RoomMember$.findByUq_RoomMember_RoomUser(tx, {
                 room_id: input.roomId,
                 user_id: u.user_id,
             });
