@@ -18,7 +18,7 @@ export type MasterPermissionPk$ = {
 
 
 
-export type MasterPermission_Finduk_masterpermission_nameKey$ = {
+export type MasterPermission_FindUk_MasterPermission_NameKey$ = {
     
     permission_name: string;
     
@@ -26,7 +26,7 @@ export type MasterPermission_Finduk_masterpermission_nameKey$ = {
 
 
 
-export type MasterPermission_Listuk_masterpermission_nameKey$ = {
+export type MasterPermission_ListUk_MasterPermission_NameKey$ = {
     
     permission_name?: string;
     
@@ -148,7 +148,7 @@ LIMIT 1`,
     }
 
 
-    static async findByuk_masterpermission_name(client: PgClient, key: MasterPermission_Finduk_masterpermission_nameKey$): Promise<MasterPermission$ | null> {
+    static async findByUk_MasterPermission_Name(client: PgClient, key: MasterPermission_FindUk_MasterPermission_NameKey$): Promise<MasterPermission$ | null> {
         const params: unknown[] = [];
         let stmt: string = `SELECT *
 FROM "MasterPermission"
@@ -170,7 +170,7 @@ WHERE `;
 
 
 
-    static async listByuk_masterpermission_name(client: PgClient, key: MasterPermission_Listuk_masterpermission_nameKey$): Promise<MasterPermission$[]> {
+    static async listByUk_MasterPermission_Name(client: PgClient, key: MasterPermission_ListUk_MasterPermission_NameKey$): Promise<MasterPermission$[]> {
         const params: unknown[] = [];
         let stmt: string = `SELECT *
 FROM "MasterPermission"

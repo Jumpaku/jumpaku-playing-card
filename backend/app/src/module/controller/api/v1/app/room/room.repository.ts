@@ -4,6 +4,7 @@ import {Room$} from "../../../../../../gen/pg/dao/dao_Room";
 import {RoomSeat$} from "../../../../../../gen/pg/dao/dao_RoomSeat";
 import {RoomMember$} from "../../../../../../gen/pg/dao/dao_RoomMember";
 import {panic} from "../../../../../../lib/panic";
+import {compareString} from "../../../../../../lib/compare";
 
 @Injectable()
 export class RoomRepository {
@@ -31,7 +32,9 @@ export class RoomRepository {
             return null;
         }
         const seatList = await RoomSeat$.listByUq_RoomSeat_RoomMember(tx, {room_id: roomId});
+        seatList.sort((a, b) => compareString(a.room_seat_id, b.room_seat_id))
         const memberList = await RoomMember$.listByUq_RoomMember_RoomUser(tx, {room_id: roomId});
+        memberList.sort((a, b) => compareString(a.room_member_id, b.room_member_id))
         return {room, seatList, memberList};
     }
 
@@ -62,6 +65,10 @@ export class RoomRepository {
         s.room_member_id = memberId;
         s.update_time = t;
         await RoomSeat$.upsert(tx, s);
+    }
+
+    async findSeatByMemberId(tx: PgClient, roomId: string, memberId: string): Promise<RoomSeat$ | null> {
+        return await RoomSeat$.findByUq_RoomSeat_RoomMember(tx, {room_id: roomId, room_member_id: memberId});
     }
 
     async createMember(tx: PgClient, roomId: string, userId: string, memberId: string, roleId: string, t: Date): Promise<void> {

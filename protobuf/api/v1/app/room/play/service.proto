@@ -41,7 +41,7 @@ message ListPlaceResponse {
 }
 message CreatePlaceRequest {
   string room_id = 1;
-  string room_name = 2;
+  string place_name = 2;
   Place.Type type = 3;
   bool owned = 4;
   string owner_seat_id = 5;
@@ -110,9 +110,9 @@ message Place {
 }
 message Card {
   enum Side {
-    STATUS_UNSPECIFIED = 0;
-    STATUS_BACK = 1;
-    STATUS_FRONT = 2;
+    SIDE_UNSPECIFIED = 0;
+    SIDE_BACK = 1;
+    SIDE_FRONT = 2;
   }
   Side side = 2;
 

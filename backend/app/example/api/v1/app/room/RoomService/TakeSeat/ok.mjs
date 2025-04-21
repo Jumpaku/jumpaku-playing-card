@@ -14,8 +14,16 @@ const room = await session.post({
     },
 });
 
+await session.get({
+    path: `/api/v1/app/room/${room.roomId}`,
+});
+
 await session.put({
     path: `/api/v1/app/room/${room.roomId}/seat/${room.seatList[0].seatId}/take`,
+});
+
+await session.put({
+    path: `/api/v1/app/room/${room.roomId}/seat/${room.seatList[1].seatId}/take`,
 });
 
 await session.get({

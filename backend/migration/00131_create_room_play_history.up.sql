@@ -12,9 +12,9 @@ CREATE TABLE "RoomPlayHistory"
     "destination_card_side" TEXT,
     "create_time"           TIMESTAMP WITH TIME ZONE NOT NULL,
     "update_time"           TIMESTAMP WITH TIME ZONE NOT NULL,
-    CONSTRAINT Fk_RoomPlayHistory_Room FOREIGN KEY ("room_id") REFERENCES "Room" ("room_id"),
-    CONSTRAINT Ck_RoomPlayHistory_Operation CHECK ("operation" IN ('CREATE_PLACE', 'DELETE_PLACE', 'MOVE')),
-    CONSTRAINT Ck_RoomPlayHistory_Side CHECK ("destination_card_side" IS NULL OR
+    CONSTRAINT "Fk_RoomPlayHistory_Room" FOREIGN KEY ("room_id") REFERENCES "Room" ("room_id"),
+    CONSTRAINT "Ck_RoomPlayHistory_Operation" CHECK ("operation" IN ('CREATE_PLACE', 'DELETE_PLACE', 'MOVE')),
+    CONSTRAINT "Ck_RoomPlayHistory_Side" CHECK ("destination_card_side" IS NULL OR
                                               "destination_card_side" IN ('FRONT', 'BACK')),
     PRIMARY KEY ("room_play_history_id")
 );

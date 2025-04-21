@@ -20732,11 +20732,11 @@ file: {
       json_name: "roomId"
     }
     field: {
-      name: "room_name"
+      name: "place_name"
       number: 2
       label: LABEL_OPTIONAL
       type: TYPE_STRING
-      json_name: "roomName"
+      json_name: "placeName"
     }
     field: {
       name: "type"
@@ -21081,15 +21081,15 @@ file: {
     enum_type: {
       name: "Side"
       value: {
-        name: "STATUS_UNSPECIFIED"
+        name: "SIDE_UNSPECIFIED"
         number: 0
       }
       value: {
-        name: "STATUS_BACK"
+        name: "SIDE_BACK"
         number: 1
       }
       value: {
-        name: "STATUS_FRONT"
+        name: "SIDE_FRONT"
         number: 2
       }
     }
@@ -22145,7 +22145,7 @@ file: {
       path: 1
       span: 43
       span: 2
-      span: 23
+      span: 24
     }
     location: {
       path: 4
@@ -22165,7 +22165,7 @@ file: {
       path: 1
       span: 43
       span: 9
-      span: 18
+      span: 19
     }
     location: {
       path: 4
@@ -22174,8 +22174,8 @@ file: {
       path: 1
       path: 3
       span: 43
-      span: 21
       span: 22
+      span: 23
     }
     location: {
       path: 4
@@ -24141,31 +24141,7 @@ file: {
       path: 0
       span: 112
       span: 4
-      span: 27
-    }
-    location: {
-      path: 4
-      path: 13
-      path: 4
-      path: 0
-      path: 2
-      path: 0
-      path: 1
-      span: 112
-      span: 4
-      span: 22
-    }
-    location: {
-      path: 4
-      path: 13
-      path: 4
-      path: 0
-      path: 2
-      path: 0
-      path: 2
-      span: 112
       span: 25
-      span: 26
     }
     location: {
       path: 4
@@ -24173,8 +24149,9 @@ file: {
       path: 4
       path: 0
       path: 2
+      path: 0
       path: 1
-      span: 113
+      span: 112
       span: 4
       span: 20
     }
@@ -24184,11 +24161,11 @@ file: {
       path: 4
       path: 0
       path: 2
-      path: 1
-      path: 1
-      span: 113
-      span: 4
-      span: 15
+      path: 0
+      path: 2
+      span: 112
+      span: 23
+      span: 24
     }
     location: {
       path: 4
@@ -24197,10 +24174,33 @@ file: {
       path: 0
       path: 2
       path: 1
-      path: 2
       span: 113
+      span: 4
       span: 18
-      span: 19
+    }
+    location: {
+      path: 4
+      path: 13
+      path: 4
+      path: 0
+      path: 2
+      path: 1
+      path: 1
+      span: 113
+      span: 4
+      span: 13
+    }
+    location: {
+      path: 4
+      path: 13
+      path: 4
+      path: 0
+      path: 2
+      path: 1
+      path: 2
+      span: 113
+      span: 16
+      span: 17
     }
     location: {
       path: 4
@@ -24211,7 +24211,7 @@ file: {
       path: 2
       span: 114
       span: 4
-      span: 21
+      span: 19
     }
     location: {
       path: 4
@@ -24223,7 +24223,7 @@ file: {
       path: 1
       span: 114
       span: 4
-      span: 16
+      span: 14
     }
     location: {
       path: 4
@@ -24234,8 +24234,8 @@ file: {
       path: 2
       path: 2
       span: 114
-      span: 19
-      span: 20
+      span: 17
+      span: 18
     }
     location: {
       path: 4

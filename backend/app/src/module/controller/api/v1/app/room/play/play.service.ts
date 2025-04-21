@@ -1,6 +1,6 @@
 import {Request, Response} from "express";
 import {Injectable} from "@nestjs/common";
-import {create, enumFromJson} from "@bufbuild/protobuf";
+import {create, enumFromJson, enumToJson} from "@bufbuild/protobuf";
 import {PlayServiceService} from "../../../../../../../gen/pb/api/v1/app/room/play/service/PlayService_rb.service";
 import {RandomProvider} from "../../../../../../global/random.provider";
 import {PostgresProvider, selectAll} from "../../../../../../global/postgres.provider";
@@ -33,7 +33,7 @@ import {
     CardSchema,
     Card_SideSchema, Card_SideJson
 } from "src/gen/pb/api/v1/app/room/play/service_pb";
-import {throwPreconditionFailed} from "../../../../../../../exception/exception";
+import {throwBadRequest, throwPreconditionFailed} from "../../../../../../../exception/exception";
 import {RoomMember$} from "../../../../../../../gen/pg/dao/dao_RoomMember";
 import {RoomPlace$} from "../../../../../../../gen/pg/dao/dao_RoomPlace";
 import {RoomSeat$} from "../../../../../../../gen/pg/dao/dao_RoomSeat";
@@ -64,24 +64,24 @@ export class PlayService extends PlayServiceService {
                 throwPreconditionFailed("User not found", "User not found");
             }
 
-            const member = (await RoomMember$.findByUq_RoomMember_RoomUser(tx, {
+            const m = (await RoomMember$.findByUq_RoomMember_RoomUser(tx, {
                 room_id: input.roomId,
                 user_id: u.user_id,
             }));
-            if (member == null) {
+            if (m == null) {
                 throwPreconditionFailed("Not a room member", "Not a room member");
             }
 
-            const seat = (await RoomSeat$.findByUq_RoomSeat_RoomMember(tx, {
+            const s = await RoomSeat$.findByUq_RoomSeat_RoomMember(tx, {
                 room_id: input.roomId,
-                room_member_id: member.room_member_id,
-            }));
+                room_member_id: m.room_member_id,
+            });
 
             const placeList = await RoomPlace$.listByIdx_RoomPlace_RoomIdAndPlaceId(tx, {room_id: input.roomId});
 
             const responsePlaceList = placeList.map(async (place) => {
-                const others = place.owner_seat_id !== seat?.room_seat_id;
-                const hand = place.type === Place_Type[Place_Type.HAND];
+                const others = place.owner_seat_id != null && place.owner_seat_id !== s?.room_seat_id;
+                const hand = place.type === enumToJson(Place_TypeSchema, Place_Type.HAND);
 
                 const cardList = await selectAll<RoomPlaceCard$ & {
                     rank: string,
@@ -98,9 +98,9 @@ export class PlayService extends PlayServiceService {
                 );
 
                 const responseCardList = cardList.map((card) => {
-                    const hide = (others && hand) || card.side === Card_Side[Card_Side.STATUS_BACK];
+                    const hide = (others && hand) || card.side === enumToJson(Card_SideSchema, Card_Side.BACK);
                     return hide ?
-                        create(CardSchema, {side: Card_Side.STATUS_BACK}) :
+                        create(CardSchema, {side: Card_Side.BACK}) :
                         create(CardSchema, {
                             side: enumFromJson(Card_SideSchema, card.side as Card_SideJson),
                             masterCardId: card.master_card_id,
@@ -123,6 +123,9 @@ export class PlayService extends PlayServiceService {
     }
 
     override async handleCreatePlace(input: CreatePlaceRequest, req: Request, res: Response): Promise<CreatePlaceResponse> {
+        if(input.type === Place_Type.HAND && !input.owned) {
+            throwBadRequest("Invalid owned place type", "Invalid owned place type: hand place must be owned");
+        }
         const t = this.requestTime.extract(req);
         const sessionId = this.requestSession.extract(req);
         if (sessionId == null) {
@@ -145,8 +148,8 @@ export class PlayService extends PlayServiceService {
                 create_time: t,
                 update_time: t,
                 room_place_id: this.random.uuid(),
-                display_name: input.roomName,
-                type: Place_Type[input.type],
+                display_name: input.placeName,
+                type: enumToJson(Place_TypeSchema, input.type),
                 owner_seat_id: null,
             };
             if (input.owned) {
@@ -239,7 +242,7 @@ export class PlayService extends PlayServiceService {
                 room_place_id: input.placeId,
                 room_id: input.roomId,
                 master_card_id: master.card_id,
-                side: Card_Side[Card_Side.STATUS_BACK],
+                side: enumToJson(Card_SideSchema, Card_Side.BACK),
                 create_time: t,
                 update_time: t,
             })));
@@ -291,7 +294,7 @@ export class PlayService extends PlayServiceService {
                 }
 
                 card.room_place_id = destinationPlaceId;
-                card.side = Card_Side[destinationCardSide];
+                card.side = enumToJson(Card_SideSchema, destinationCardSide);
                 card.update_time = t;
 
                 await RoomPlaceCard$.insert(tx, card);

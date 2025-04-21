@@ -18,7 +18,7 @@ export type MasterRolePk$ = {
 
 
 
-export type MasterRole_Finduk_masterrole_nameKey$ = {
+export type MasterRole_FindUk_MasterRole_NameKey$ = {
     
     role_name: string;
     
@@ -26,7 +26,7 @@ export type MasterRole_Finduk_masterrole_nameKey$ = {
 
 
 
-export type MasterRole_Listuk_masterrole_nameKey$ = {
+export type MasterRole_ListUk_MasterRole_NameKey$ = {
     
     role_name?: string;
     
@@ -148,7 +148,7 @@ LIMIT 1`,
     }
 
 
-    static async findByuk_masterrole_name(client: PgClient, key: MasterRole_Finduk_masterrole_nameKey$): Promise<MasterRole$ | null> {
+    static async findByUk_MasterRole_Name(client: PgClient, key: MasterRole_FindUk_MasterRole_NameKey$): Promise<MasterRole$ | null> {
         const params: unknown[] = [];
         let stmt: string = `SELECT *
 FROM "MasterRole"
@@ -170,7 +170,7 @@ WHERE `;
 
 
 
-    static async listByuk_masterrole_name(client: PgClient, key: MasterRole_Listuk_masterrole_nameKey$): Promise<MasterRole$[]> {
+    static async listByUk_MasterRole_Name(client: PgClient, key: MasterRole_ListUk_MasterRole_NameKey$): Promise<MasterRole$[]> {
         const params: unknown[] = [];
         let stmt: string = `SELECT *
 FROM "MasterRole"
