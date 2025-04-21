@@ -6,8 +6,7 @@ const session = new Session();
 
 await session.newUser();
 
-await session.post({
-    path: `/api/v1/app/room`,
+await session.post(`/api/v1/app/room`, {
     body: {
         roomName: 'my room name',
         seatCount: 4,

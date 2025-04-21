@@ -1,34 +1,39 @@
 export class Session {
-    accessToken;
+    /**
+     * @constructor
+     * @param ignoreError {boolean}
+     */
+    constructor(ignoreError = false) {
+        this.panicOnError = !ignoreError;
+        this.accessToken = null;
+    }
 
     async newUser() {
         const loginId = `${Date.now()}`;
-        await this.post({
-            path: `/api/v1/app/authentication/password/register`,
+        await this.post(`/api/v1/app/authentication/password/register`, {
             body: {loginId: loginId, password: 'password'},
         });
 
-        const body = await this.post({
-            path: `/api/v1/app/authentication/password/login`,
+        const body = await this.post(`/api/v1/app/authentication/password/login`, {
             body: {loginId: loginId, password: 'password'},
         });
         this.accessToken = body.accessToken;
 
-        await this.post({
-            path: `/api/v1/app/user`,
+        await this.post(`/api/v1/app/user`, {
             body: {displayName: 'my name'},
             headers: {'Authorization': `Bearer ${this.accessToken}`},
         });
     }
 
     /**
+     * @param path {string}
      * @param args {{
-     *     path: string,
      *     headers: Object,
      * }}
      * @return {Promise<{}>}
      */
-    async get({path, headers}) {
+    async get(path, args = undefined) {
+        const {headers} = args ?? {};
         console.log(JSON.stringify({GET: `http://localhost:3000${path}`}));
         const res = await fetch(`http://localhost:3000${path}`, {
             method: 'GET',
@@ -38,25 +43,27 @@ export class Session {
                 ...(headers ?? {}),
             },
         });
-        if (res.statusCode >= 400) {
-            throw new Error(JSON.stringify({"ERROR": {statusCode: res.statusCode, statusText: res.statusText}}));
-        }
 
         const resBody = await res.json();
         console.log(JSON.stringify({response: resBody}));
+
+        if (!res.ok && this.panicOnError) {
+            throw new Error(JSON.stringify({"ERROR": {statusCode: res.statusCode, statusText: res.statusText}}));
+        }
 
         return resBody;
     }
 
     /**
+     * @param path {string}
      * @param args {{
-     *     path: string,
      *     headers: Object,
      *     body: Object
      * }}
      * @return {Promise<{}>}
      */
-    async post({path, headers, body}) {
+    async post(path, args = undefined) {
+        const {headers, body} = args ?? {};
         console.log(JSON.stringify({POST: `http://localhost:3000${path}`}));
         console.log(JSON.stringify({request: body}));
         const res = await fetch(`http://localhost:3000${path}`, {
@@ -68,25 +75,27 @@ export class Session {
             },
             body: JSON.stringify(body),
         });
-        if (res.statusCode >= 400) {
-            throw new Error(JSON.stringify({"ERROR": {statusCode: res.statusCode, statusText: res.statusText}}));
-        }
 
         const resBody = await res.json();
         console.log(JSON.stringify({response: resBody}));
+
+        if (!res.ok && this.panicOnError) {
+            throw new Error(JSON.stringify({"ERROR": {statusCode: res.statusCode, statusText: res.statusText}}));
+        }
 
         return resBody;
     }
 
     /**
+     * @param path {string}
      * @param args {{
-     *     path: string,
      *     headers: Object,
      *     body: Object
      * }}
      * @return {Promise<{}>}
      */
-    async put({path, headers, body}) {
+    async put(path, args = undefined) {
+        const {headers, body} = args ?? {};
         console.log(JSON.stringify({PUT: `http://localhost:3000${path}`}));
         console.log(JSON.stringify({request: body}));
         const res = await fetch(`http://localhost:3000${path}`, {
@@ -98,26 +107,28 @@ export class Session {
             },
             body: JSON.stringify(body),
         });
-        if (res.statusCode >= 400) {
-            throw new Error(JSON.stringify({"ERROR": {statusCode: res.statusCode, statusText: res.statusText}}));
-        }
 
         const resBody = await res.json();
         console.log(JSON.stringify({response: resBody}));
+
+        if (!res.ok && this.panicOnError) {
+            throw new Error(JSON.stringify({"ERROR": {statusCode: res.statusCode, statusText: res.statusText}}));
+        }
 
         return resBody;
     }
 
 
     /**
+     * @param path {string}
      * @param args {{
-     *     path: string,
      *     headers: Object,
      *     body: Object
      * }}
      * @return {Promise<{}>}
      */
-    async patch({path, headers, body}) {
+    async patch(path, args = undefined) {
+        const {headers, body} = args ?? {};
         console.log(JSON.stringify({PATCH: `http://localhost:3000${path}`}));
         console.log(JSON.stringify({request: body}));
         const res = await fetch(`http://localhost:3000${path}`, {
@@ -129,26 +140,28 @@ export class Session {
             },
             body: JSON.stringify(body),
         });
-        if (res.statusCode >= 400) {
-            throw new Error(JSON.stringify({"ERROR": {statusCode: res.statusCode, statusText: res.statusText}}));
-        }
 
         const resBody = await res.json();
         console.log(JSON.stringify({response: resBody}));
+
+        if (!res.ok && this.panicOnError) {
+            throw new Error(JSON.stringify({"ERROR": {statusCode: res.statusCode, statusText: res.statusText}}));
+        }
 
         return resBody;
     }
 
 
     /**
+     * @param path {string}
      * @param args {{
-     *     path: string,
      *     headers: Object,
      *     body: Object
      * }}
      * @return {Promise<{}>}
      */
-    async delete({path, headers, body}) {
+    async delete(path, args = undefined) {
+        const {headers, body} = args ?? {};
         console.log(JSON.stringify({DELETE: `http://localhost:3000${path}`}));
         console.log(JSON.stringify({request: body}));
         const res = await fetch(`http://localhost:3000${path}`, {
@@ -160,12 +173,13 @@ export class Session {
             },
             body: JSON.stringify(body),
         });
-        if (res.statusCode >= 400) {
-            throw new Error(JSON.stringify({"ERROR": {statusCode: res.statusCode, statusText: res.statusText}}));
-        }
 
         const resBody = await res.json();
         console.log(JSON.stringify({response: resBody}));
+
+        if (!res.ok && this.panicOnError) {
+            throw new Error(JSON.stringify({"ERROR": {statusCode: res.statusCode, statusText: res.statusText}}));
+        }
 
         return resBody;
     }

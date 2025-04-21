@@ -3,7 +3,7 @@ import {Injectable} from "@nestjs/common";
 import {create, enumFromJson, enumToJson} from "@bufbuild/protobuf";
 import {PlayServiceService} from "../../../../../../../gen/pb/api/v1/app/room/play/service/PlayService_rb.service";
 import {RandomProvider} from "../../../../../../global/random.provider";
-import {PostgresProvider, selectAll} from "../../../../../../global/postgres.provider";
+import {PostgresProvider} from "../../../../../../global/postgres.provider";
 import {RequestTimeProvider} from "../../../../../../global/request_time.provider";
 import {RequestSessionProvider} from "../../../../../../global/request_session.provider";
 import {UserProvider} from "../../../../../../shared/user/user.provider";
@@ -34,12 +34,11 @@ import {
     Card_SideSchema, Card_SideJson
 } from "src/gen/pb/api/v1/app/room/play/service_pb";
 import {throwBadRequest, throwPreconditionFailed} from "../../../../../../../exception/exception";
-import {RoomMember$} from "../../../../../../../gen/pg/dao/dao_RoomMember";
-import {RoomPlace$} from "../../../../../../../gen/pg/dao/dao_RoomPlace";
-import {RoomSeat$} from "../../../../../../../gen/pg/dao/dao_RoomSeat";
-import {RoomPlaceCard$} from "../../../../../../../gen/pg/dao/dao_RoomPlaceCard";
-import {compareString} from "../../../../../../../lib/compare";
-import {MasterCard$} from "../../../../../../../gen/pg/dao/dao_MasterCard";
+import {MemberRepository} from "./member.repository";
+import {PlaceRepository} from "./place.repository";
+import {MasterCardRepository} from "./master_card.repository";
+import {CardRepository} from "./card.repository";
+import {SeatRepository} from "./seat.repository";
 
 @Injectable()
 export class PlayService extends PlayServiceService {
@@ -49,6 +48,11 @@ export class PlayService extends PlayServiceService {
         private readonly requestTime: RequestTimeProvider,
         private readonly requestSession: RequestSessionProvider,
         private readonly user: UserProvider,
+        private readonly member: MemberRepository,
+        private readonly seat: SeatRepository,
+        private readonly place: PlaceRepository,
+        private readonly card: CardRepository,
+        private readonly masterCard: MasterCardRepository,
     ) {
         super();
     }
@@ -63,40 +67,19 @@ export class PlayService extends PlayServiceService {
             if (u == null) {
                 throwPreconditionFailed("User not found", "User not found");
             }
-
-            const m = (await RoomMember$.findByUq_RoomMember_RoomUser(tx, {
-                room_id: input.roomId,
-                user_id: u.user_id,
-            }));
+            const m = await this.member.findByRoomIdAndUserId(tx, input.roomId, u.user_id);
             if (m == null) {
                 throwPreconditionFailed("Not a room member", "Not a room member");
             }
+            const s = await this.seat.findByRoomIdAndMemberId(tx, input.roomId, m.room_member_id);
 
-            const s = await RoomSeat$.findByUq_RoomSeat_RoomMember(tx, {
-                room_id: input.roomId,
-                room_member_id: m.room_member_id,
-            });
-
-            const placeList = await RoomPlace$.listByIdx_RoomPlace_RoomIdAndPlaceId(tx, {room_id: input.roomId});
+            const placeList = await this.place.list(tx, input.roomId);
 
             const responsePlaceList = placeList.map(async (place) => {
                 const others = place.owner_seat_id != null && place.owner_seat_id !== s?.room_seat_id;
                 const hand = place.type === enumToJson(Place_TypeSchema, Place_Type.HAND);
 
-                const cardList = await selectAll<RoomPlaceCard$ & {
-                    rank: string,
-                    suit: string,
-                }>(tx,
-                    `SELECT rpc.*,
-                            mc."rank" AS "rank",
-                            mc."suit" AS "suit"
-                     FROM "RoomPlaceCard" AS rpc
-                              JOIN "MasterCard" AS mc ON mc."card_id" = rpc."master_card_id"
-                     WHERE rpc."room_id" = $1
-                       AND rpc."room_place_id" = $2`,
-                    [input.roomId, place.room_place_id],
-                );
-
+                const cardList = await this.card.listByRoomIdAndPlaceId(tx, input.roomId, place.room_place_id);
                 const responseCardList = cardList.map((card) => {
                     const hide = (others && hand) || card.side === enumToJson(Card_SideSchema, Card_Side.BACK);
                     return hide ?
@@ -123,7 +106,7 @@ export class PlayService extends PlayServiceService {
     }
 
     override async handleCreatePlace(input: CreatePlaceRequest, req: Request, res: Response): Promise<CreatePlaceResponse> {
-        if(input.type === Place_Type.HAND && !input.owned) {
+        if (input.type === Place_Type.HAND && !input.owned) {
             throwBadRequest("Invalid owned place type", "Invalid owned place type: hand place must be owned");
         }
         const t = this.requestTime.extract(req);
@@ -136,36 +119,26 @@ export class PlayService extends PlayServiceService {
             if (u == null) {
                 throwPreconditionFailed("User not found", "User not found");
             }
-            const m = await RoomMember$.findByUq_RoomMember_RoomUser(tx, {
-                room_id: input.roomId,
-                user_id: u.user_id,
-            });
+            const m = await this.member.findByRoomIdAndUserId(tx, input.roomId, u.user_id);
             if (m == null) {
                 throwPreconditionFailed("Not a room member", "Not a room member");
             }
-            const p: RoomPlace$ = {
-                room_id: input.roomId,
-                create_time: t,
-                update_time: t,
-                room_place_id: this.random.uuid(),
-                display_name: input.placeName,
-                type: enumToJson(Place_TypeSchema, input.type),
-                owner_seat_id: null,
-            };
+
+            const placeId = this.random.uuid();
+            let ownerSeatId: string | null = null;
             if (input.owned) {
-                const s = await RoomSeat$.find(tx, {room_seat_id: input.ownerSeatId});
-                if (s == null) {
+                if (!await this.seat.existsInRoom(tx, input.roomId, input.ownerSeatId)) {
                     throwPreconditionFailed("Seat not found", "Seat not found");
                 }
-                p.owner_seat_id = input.ownerSeatId;
+                ownerSeatId = input.ownerSeatId;
             }
-            await RoomPlace$.insert(tx, p);
+            await this.place.create(tx, input.roomId, placeId, input.placeName, enumToJson(Place_TypeSchema, input.type), ownerSeatId, t);
 
             return create(CreatePlaceResponseSchema, {
                 place: create(PlaceSchema, {
-                    placeId: p.room_place_id,
+                    placeId: placeId,
                     owned: input.owned,
-                    ownerSeatId: p.owner_seat_id ?? undefined,
+                    ownerSeatId: input.owned ? ownerSeatId! : undefined,
                     type: input.type,
                 }),
             });
@@ -182,25 +155,18 @@ export class PlayService extends PlayServiceService {
             if (u == null) {
                 throwPreconditionFailed("User not found", "User not found");
             }
-            const m = await RoomMember$.findByUq_RoomMember_RoomUser(tx, {
-                room_id: input.roomId,
-                user_id: u.user_id,
-            });
+            const m = await this.member.findByRoomIdAndUserId(tx, input.roomId, u.user_id);
             if (m == null) {
                 throwPreconditionFailed("Not a room member", "Not a room member");
             }
 
-            const cards = await RoomPlaceCard$.listByIdx_RoomPlaceCard_RoomIdAndPlaceIdAndCardId(tx, {
-                room_id: input.roomId,
-                room_place_id: input.placeId
-            });
-            if (cards.length > 0) {
+            if (await this.card.existsInRoomPlace(tx, input.roomId, input.placeId)) {
                 throwPreconditionFailed("Place not empty", "Place not empty");
             }
 
-            await RoomPlace$.delete(tx, {room_place_id: input.placeId});
+            await this.place.delete(tx, input.roomId, input.placeId);
 
-            return create(DeletePlaceResponseSchema, {});
+            return create(DeletePlaceResponseSchema);
         });
     }
 
@@ -215,39 +181,22 @@ export class PlayService extends PlayServiceService {
             if (u == null) {
                 throwPreconditionFailed("User not found", "User not found");
             }
-            const m = await RoomMember$.findByUq_RoomMember_RoomUser(tx, {
-                room_id: input.roomId,
-                user_id: u.user_id,
-            });
+            const m = await this.member.findByRoomIdAndUserId(tx, input.roomId, u.user_id);
             if (m == null) {
                 throwPreconditionFailed("Not a room member", "Not a room member");
             }
-
-            const deck = await selectAll<MasterCard$>(tx,
-                `SELECT *
-                 FROM "MasterCard"`,
-                [],
-            );
-
-            const found = await RoomPlace$.listByIdx_RoomPlace_RoomIdAndPlaceId(tx, {
-                room_id: input.roomId,
-                room_place_id: input.placeId,
-            });
-            if (found.length === 0) {
+            if (!await this.place.exists(tx, input.roomId, input.placeId)) {
                 throwPreconditionFailed("Place not found", "Place not found");
             }
 
-            await RoomPlaceCard$.insert(tx, ...deck.map(master => ({
-                room_place_card_id: this.random.uuid(),
-                room_place_id: input.placeId,
-                room_id: input.roomId,
-                master_card_id: master.card_id,
+            const deck = await this.masterCard.deck(tx);
+            await this.card.createInRoomPlace(tx, input.roomId, input.placeId, deck.map(master => ({
+                cardId: this.random.uuid(),
+                masterCardId: master.card_id,
                 side: enumToJson(Card_SideSchema, Card_Side.BACK),
-                create_time: t,
-                update_time: t,
-            })));
+            })), t);
 
-            return create(AddDeckResponseSchema, {});
+            return create(AddDeckResponseSchema);
         });
     }
 
@@ -262,22 +211,14 @@ export class PlayService extends PlayServiceService {
             if (u == null) {
                 throwPreconditionFailed("User not found", "User not found");
             }
-            const m = await RoomMember$.findByUq_RoomMember_RoomUser(tx, {
-                room_id: input.roomId,
-                user_id: u.user_id,
-            });
+            const m = await this.member.findByRoomIdAndUserId(tx, input.roomId, u.user_id);
             if (m == null) {
                 throwPreconditionFailed("Not a room member", "Not a room member");
             }
 
-            const source_cards = await RoomPlaceCard$.listByIdx_RoomPlaceCard_RoomIdAndPlaceIdAndCardId(tx, {
-                room_id: input.roomId,
-                room_place_id: input.placeId,
-            });
-            source_cards.sort((a, b) => compareString(a.room_place_card_id, b.room_place_card_id));
-
+            const sourceCards = await this.card.listByRoomIdAndPlaceId(tx, input.roomId, input.placeId);
             const srcCardIndex = input.moveList.map(({sourceCardIndex}) => sourceCardIndex);
-            if (srcCardIndex.some(idx => idx >= source_cards.length)) {
+            if (srcCardIndex.some(idx => idx < 0 || idx >= sourceCards.length)) {
                 throwPreconditionFailed("Invalid source card index", "Invalid source card index");
             }
             if (new Set(srcCardIndex).size !== srcCardIndex.length) {
@@ -285,19 +226,15 @@ export class PlayService extends PlayServiceService {
             }
 
             const moves = input.moveList.map(async ({sourceCardIndex, destinationPlaceId, destinationCardSide}) => {
-                const card = source_cards[sourceCardIndex];
-                await RoomPlaceCard$.delete(tx, {room_place_card_id: card.room_place_card_id});
-
-                const dstPlace = await RoomPlace$.find(tx, {room_place_id: destinationPlaceId});
-                if (dstPlace == null) {
+                if (!await this.place.exists(tx, input.roomId, destinationPlaceId)) {
                     throwPreconditionFailed("Destination place not found", "Destination place not found");
                 }
-
-                card.room_place_id = destinationPlaceId;
-                card.side = enumToJson(Card_SideSchema, destinationCardSide);
-                card.update_time = t;
-
-                await RoomPlaceCard$.insert(tx, card);
+                await this.card.update(tx, {
+                    ...sourceCards[sourceCardIndex],
+                    room_place_id: destinationPlaceId,
+                    side: enumToJson(Card_SideSchema, destinationCardSide),
+                    update_time: t,
+                });
             });
 
             await Promise.all(moves);

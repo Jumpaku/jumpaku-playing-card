@@ -6,23 +6,17 @@ const session = new Session();
 
 await session.newUser();
 
-const room = await session.post({
-    path: `/api/v1/app/room`,
+const room = await session.post(`/api/v1/app/room`, {
     body: {
         roomName: 'my room name',
         seatCount: 4,
     },
 });
 
-await session.put({
-    path: `/api/v1/app/room/${room.roomId}/seat/${room.seatList[0].seatId}/take`,
-});
-await session.get({
-    path: `/api/v1/app/room/${room.roomId}`,
-});
+await session.put(`/api/v1/app/room/${room.roomId}/seat/${room.seatList[0].seatId}/take`);
+await session.get(`/api/v1/app/room/${room.roomId}`);
 
-const newPlaceResponse = await session.post({
-    path: `/api/v1/app/room/${room.roomId}/play/place`,
+const newPlaceResponse = await session.post(`/api/v1/app/room/${room.roomId}/play/place`, {
     body: {
         roomId: room.roomId,
         placeName: 'common deck place',
@@ -31,12 +25,8 @@ const newPlaceResponse = await session.post({
     },
 });
 
-await session.post({
-    path: `/api/v1/app/room/${room.roomId}/play/place/${newPlaceResponse.place.placeId}/deck`,
-});
+await session.post(`/api/v1/app/room/${room.roomId}/play/place/${newPlaceResponse.place.placeId}/deck`);
 
-await session.get({
-    path: `/api/v1/app/room/${room.roomId}/play/place`,
-});
+await session.get(`/api/v1/app/room/${room.roomId}/play/place`);
 
 
