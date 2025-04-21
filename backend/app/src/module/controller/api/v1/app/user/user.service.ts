@@ -14,14 +14,12 @@ import {
 import {RandomProvider} from "../../../../../global/random.provider";
 import {PostgresProvider} from "../../../../../global/postgres.provider";
 import {RequestTimeProvider} from "../../../../../global/request_time.provider";
-import {User$} from "../../../../../../gen/pg/dao/dao_User";
 import {throwPreconditionFailed} from "../../../../../../exception/exception";
 import {create} from "@bufbuild/protobuf";
-import {UserRepository} from "./user.repository";
-import {UserAuthentication$} from "../../../../../../gen/pg/dao/dao_UserAuthentication";
 import {RequestSessionProvider} from "../../../../../global/request_session.provider";
-import {SessionProvider} from "../../../../../shared/session/session.provider";
-import {UserProvider} from "../../../../../shared/user/user.provider";
+import {UserRepository as SharedUserRepository} from "../../../../../shared/user/user.repository";
+import {UserAuthenticationRepository} from "./user_authentication.repository";
+import {UserRepository} from "./user.repository";
 
 @Injectable()
 export class UserService extends UserServiceService {
@@ -30,9 +28,9 @@ export class UserService extends UserServiceService {
         private readonly postgres: PostgresProvider,
         private readonly requestTime: RequestTimeProvider,
         private readonly requestSession: RequestSessionProvider,
-        private readonly session: SessionProvider,
-        private readonly userRepository: UserRepository,
-        private readonly user: UserProvider,
+        private readonly user: UserRepository,
+        private readonly sharedUser: SharedUserRepository,
+        private readonly userAuthentication: UserAuthenticationRepository,
     ) {
         super();
     }
@@ -41,17 +39,15 @@ export class UserService extends UserServiceService {
         const sessionId = this.requestSession.mustExtract(req);
         const t = this.requestTime.extract(req);
         return this.postgres.transaction(async (tx) => {
-            const user = await this.user.findUserBySessionId(tx, sessionId);
-            if (user != null) {
+            if (await this.sharedUser.existsBySessionId(tx, sessionId)) {
                 throwPreconditionFailed("User already exists", "User already exists");
             }
-            const session = await this.session.findValid(tx, sessionId, t);
-            if (session == null) {
-                throwPreconditionFailed("Session not found", "Session not found");
+            const auth = await this.userAuthentication.findAuthenticationBySessionId(tx, sessionId);
+            if (auth == null) {
+                throwPreconditionFailed("Authentication not found", "Authentication not found");
             }
-
             const userId = this.random.uuid();
-            await this.userRepository.create(tx, userId, input.displayName, this.random.uuid(), session?.authentication_id, t);
+            await this.user.create(tx, userId, input.displayName, this.random.uuid(), auth.authentication_id, t);
             return create(CreateUserResponseSchema, {
                 userId: userId,
                 displayName: input.displayName,
@@ -62,7 +58,7 @@ export class UserService extends UserServiceService {
     handleGetUser(input: GetUserRequest, req: Request, res: Response): Promise<GetUserResponse> {
         const sessionId = this.requestSession.mustExtract(req);
         return this.postgres.transaction(async (tx) => {
-            const user = await this.user.findUserBySessionId(tx, sessionId);
+            const user = await this.sharedUser.findUserBySessionId(tx, sessionId);
             if (user == null) {
                 throwPreconditionFailed("User not found", "User not found");
             }

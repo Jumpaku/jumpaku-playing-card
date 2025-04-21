@@ -6,7 +6,7 @@ import {RandomProvider} from "../../../../../../global/random.provider";
 import {PostgresProvider} from "../../../../../../global/postgres.provider";
 import {RequestTimeProvider} from "../../../../../../global/request_time.provider";
 import {RequestSessionProvider} from "../../../../../../global/request_session.provider";
-import {UserProvider} from "../../../../../../shared/user/user.provider";
+import {UserRepository} from "../../../../../../shared/user/user.repository";
 import {
     ListPlaceRequest,
     ListPlaceResponse,
@@ -47,7 +47,7 @@ export class PlayService extends PlayServiceService {
         private readonly postgres: PostgresProvider,
         private readonly requestTime: RequestTimeProvider,
         private readonly requestSession: RequestSessionProvider,
-        private readonly user: UserProvider,
+        private readonly user: UserRepository,
         private readonly member: MemberRepository,
         private readonly seat: SeatRepository,
         private readonly place: PlaceRepository,

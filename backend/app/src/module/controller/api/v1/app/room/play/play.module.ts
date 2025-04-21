@@ -3,7 +3,6 @@ import {PlayServiceService} from "../../../../../../../gen/pb/api/v1/app/room/pl
 import {
     PlayServiceController
 } from "../../../../../../../gen/pb/api/v1/app/room/play/service/PlayService_rb.controller";
-import {SessionModule} from "../../../../../../shared/session/session.module";
 import {UserModule} from "../../../../../../shared/user/user.module";
 import {PlayService} from "./play.service";
 import {CardRepository} from "./card.repository";
@@ -26,7 +25,6 @@ import {SeatRepository} from "./seat.repository";
         SeatRepository,
     ],
     imports: [
-        SessionModule,
         UserModule,
     ],
 })

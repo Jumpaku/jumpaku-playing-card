@@ -3,8 +3,8 @@ import {UserServiceController} from "../../../../../../gen/pb/api/v1/app/user/se
 import {UserServiceService} from "../../../../../../gen/pb/api/v1/app/user/service/UserService_rb.service";
 import {UserService} from "./user.service";
 import {UserRepository} from "./user.repository";
-import {SessionModule} from "../../../../../shared/session/session.module";
 import {UserModule as SharedUserModule} from "../../../../../shared/user/user.module";
+import {UserAuthenticationRepository} from "./user_authentication.repository";
 
 @Module({
     controllers: [UserServiceController],
@@ -14,9 +14,9 @@ import {UserModule as SharedUserModule} from "../../../../../shared/user/user.mo
             useClass: UserService,
         },
         UserRepository,
+        UserAuthenticationRepository,
     ],
     imports: [
-        SessionModule,
         SharedUserModule,
     ],
 })
