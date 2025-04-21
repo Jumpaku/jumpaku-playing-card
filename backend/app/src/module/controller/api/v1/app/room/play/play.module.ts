@@ -6,6 +6,11 @@ import {
 import {SessionModule} from "../../../../../../shared/session/session.module";
 import {UserModule} from "../../../../../../shared/user/user.module";
 import {PlayService} from "./play.service";
+import {CardRepository} from "./card.repository";
+import {MasterCardRepository} from "./master_card.repository";
+import {PlaceRepository} from "./place.repository";
+import {MemberRepository} from "./member.repository";
+import {SeatRepository} from "./seat.repository";
 
 @Module({
     controllers: [PlayServiceController],
@@ -14,6 +19,11 @@ import {PlayService} from "./play.service";
             provide: PlayServiceService,
             useClass: PlayService,
         },
+        CardRepository,
+        MasterCardRepository,
+        PlaceRepository,
+        MemberRepository,
+        SeatRepository,
     ],
     imports: [
         SessionModule,

@@ -132,7 +132,7 @@ export class AuthenticationService extends AuthenticationServiceService {
 
     async handleRefresh(input: RefreshRequest, req: Request, res: Response): Promise<RefreshResponse> {
         const t = this.requestTime.extract(req);
-        const sessionId = this.requestSession.mustExtract(req);
+        const sessionId = this.requestSession.mustExtractRefresh(req);
         const configAuth = this.config.get().authentication!;
         const seconds = input.clientType === ClientType.MOBILE ?
             configAuth.refreshExpireSecondsMobile : configAuth.refreshExpireSecondsWeb;

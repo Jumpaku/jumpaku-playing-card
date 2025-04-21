@@ -10,8 +10,18 @@ export class RequestSessionProvider {
         return payload?.accessData?.sessionId ?? null;
     }
     mustExtract(req: Request): string {
+        const sessionId = this.extract(req);
+        if (sessionId == null) {
+            throwBadRequest("session id not found", "Session ID not found in JWT payload");
+        }
+        return sessionId;
+    }
+    extractRefresh(req: Request): string | null {
         const payload = (req as any).jwtPayload as JwtPayloadJson;
-        const sessionId = payload?.accessData?.sessionId;
+        return payload?.refreshData?.sessionId ?? null;
+    }
+    mustExtractRefresh(req: Request): string {
+        const sessionId = this.extractRefresh(req);
         if (sessionId == null) {
             throwBadRequest("session id not found", "Session ID not found in JWT payload");
         }
