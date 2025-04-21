@@ -47,7 +47,7 @@ export class UserService extends UserServiceService {
                 throwPreconditionFailed("Authentication not found", "Authentication not found");
             }
             const userId = this.random.uuid();
-            await this.user.create(tx, userId, input.displayName, this.random.uuid(), auth?.authentication_id, t);
+            await this.user.create(tx, userId, input.displayName, this.random.uuid(), auth.authentication_id, t);
             return create(CreateUserResponseSchema, {
                 userId: userId,
                 displayName: input.displayName,
