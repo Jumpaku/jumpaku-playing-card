@@ -29,7 +29,7 @@ import {
     TakeSeatResponseSchema
 } from "../../../../../../gen/pb/api/v1/app/room/service_pb";
 import {RoomServiceService} from "../../../../../../gen/pb/api/v1/app/room/service/RoomService_rb.service";
-import {UserProvider} from "../../../../../shared/user/user.provider";
+import {UserRepository} from "../../../../../shared/user/user.repository";
 import {range} from "../../../../../../lib/array";
 
 @Injectable()
@@ -40,7 +40,7 @@ export class RoomService extends RoomServiceService {
         private readonly requestTime: RequestTimeProvider,
         private readonly requestSession: RequestSessionProvider,
         private readonly room: RoomRepository,
-        private readonly user: UserProvider,
+        private readonly user: UserRepository,
     ) {
         super();
     }

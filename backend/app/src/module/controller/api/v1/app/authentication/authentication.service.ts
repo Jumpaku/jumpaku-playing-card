@@ -1,4 +1,4 @@
-import {Request,Response} from "express";
+import {Request, Response} from "express";
 import {
     LogoutRequest,
     LogoutResponse,
@@ -37,8 +37,8 @@ import {SessionRepository} from "./session.repository";
 import {ClientType} from "../../../../../../gen/pb/api/v1/client_pb";
 import {RandomProvider} from "../../../../../global/random.provider";
 import {date, duration, instant} from "../../../../../../lib/temporal";
-import {SessionProvider} from "../../../../../shared/session/session.provider";
 import {RequestSessionProvider} from "../../../../../global/request_session.provider";
+import {UserRepository} from "../../../../../shared/user/user.repository";
 
 @Injectable()
 export class AuthenticationService extends AuthenticationServiceService {
@@ -47,11 +47,11 @@ export class AuthenticationService extends AuthenticationServiceService {
         private readonly postgres: PostgresProvider,
         private readonly requestTime: RequestTimeProvider,
         private readonly requestSession: RequestSessionProvider,
-        private readonly sessionRepository: SessionRepository,
-        private readonly session: SessionProvider,
+        private readonly session: SessionRepository,
         private readonly password: AuthenticationPasswordProvider,
         private readonly temporary: AuthenticationTemporaryProvider,
         private readonly random: RandomProvider,
+        private readonly user: UserRepository,
         private readonly jwt: JwtProvider,
     ) {
         super();
@@ -71,10 +71,10 @@ export class AuthenticationService extends AuthenticationServiceService {
 
             // Create a new session
             const sessionId = this.random.uuid();
-            await this.sessionRepository.create(tx, sessionId, authenticationId, expireTime, t);
+            await this.session.create(tx, sessionId, authenticationId, expireTime, t);
 
             // Issue an access token and a refresh token
-            const {at, rt} = this.issueTokens(sessionId, t, expireTime);
+            const {at, rt} = this.issueTokens(sessionId, false, t, expireTime);
 
             return create(TemporaryRegisterLoginResponseSchema, {accessToken: at, refreshToken: rt});
         });
@@ -96,10 +96,10 @@ export class AuthenticationService extends AuthenticationServiceService {
 
             // Create a new session
             const sessionId = this.random.uuid();
-            await this.sessionRepository.create(tx, sessionId, authenticationId, expireTime, t);
+            await this.session.create(tx, sessionId, authenticationId, expireTime, t);
 
             // Issue an access token and a refresh token
-            const {at, rt} = this.issueTokens(sessionId, t, expireTime);
+            const {at, rt} = this.issueTokens(sessionId, false, t, expireTime);
 
             return create(PasswordLoginResponseSchema, {accessToken: at, refreshToken: rt});
         });
@@ -124,7 +124,7 @@ export class AuthenticationService extends AuthenticationServiceService {
         const sessionId = this.requestSession.mustExtract(req);
 
         await this.postgres.transaction(async (tx) => {
-            await this.sessionRepository.delete(tx, sessionId);
+            await this.session.delete(tx, sessionId);
         });
 
         return Promise.resolve(create(LogoutResponseSchema, {}));
@@ -138,21 +138,20 @@ export class AuthenticationService extends AuthenticationServiceService {
             configAuth.refreshExpireSecondsMobile : configAuth.refreshExpireSecondsWeb;
         const expireTime = date(instant(t).add(duration(seconds)));
         return await this.postgres.transaction(async (tx) => {
+            const userExists = await this.user.existsBySessionId(tx, sessionId);
             const session = await this.session.findValid(tx, sessionId, t);
             if (session == null) {
                 throwUnauthorized('session not found', 'valid session not found');
             }
+            await Session$.update(tx, {...session, expire_time: expireTime, update_time: t});
 
-            session.expire_time = expireTime;
-            session.update_time = t;
-            await Session$.update(tx, session);
             // Issue an access token and a refresh token
-            const {at, rt} = this.issueTokens(session.session_id, t, expireTime);
+            const {at, rt} = this.issueTokens(session.session_id, userExists, t, expireTime);
             return create(RefreshResponseSchema, {accessToken: at, refreshToken: rt});
         });
     }
 
-    private issueTokens(sessionId: string, t: Date, expireTime: Date) {
+    private issueTokens(sessionId: string, userExists: boolean, t: Date, expireTime: Date) {
         const at = this.jwt.issueAccessToken(create(JwtPayload_AccessDataSchema, {
             sessionId,
             scopes: ["user", "session:logout", "room", "play"],

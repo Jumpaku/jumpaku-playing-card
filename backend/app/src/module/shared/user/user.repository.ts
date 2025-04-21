@@ -1,12 +1,15 @@
 import {PgClient, selectOne} from "../../global/postgres.provider";
 import {User$} from "../../../gen/pg/dao/dao_User";
-import {Authentication$} from "../../../gen/pg/dao/dao_Authentication";
 
-export class UserProvider {
-    async findUserBySessionId(tx: PgClient, sessionId: string) {
-        return selectOne<User$ & Authentication$>(tx,
-            `SELECT "User".*,
-                    "Authentication".*
+export class UserRepository {
+    async existsBySessionId(tx: PgClient, sessionId: string): Promise<boolean> {
+        const found = await this.findUserBySessionId(tx, sessionId);
+        return found != null;
+    }
+
+    async findUserBySessionId(tx: PgClient, sessionId: string): Promise<User$ | null> {
+        return await selectOne<User$>(tx,
+            `SELECT "User".*
              FROM "Session"
                       JOIN "Authentication"
                            ON "Authentication".authentication_id = "Session".authentication_id
