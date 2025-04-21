@@ -5,6 +5,6 @@ CREATE TABLE "RoomSeat"
     "display_name"   TEXT                     NOT NULL,
     "create_time"    TIMESTAMP WITH TIME ZONE NOT NULL,
     "update_time"    TIMESTAMP WITH TIME ZONE NOT NULL,
-    CONSTRAINT Fk_RoomSeat_Room FOREIGN KEY ("room_id") REFERENCES "Room" ("room_id"),
+    CONSTRAINT "Fk_RoomSeat_Room" FOREIGN KEY ("room_id") REFERENCES "Room" ("room_id"),
     PRIMARY KEY ("room_seat_id")
 );

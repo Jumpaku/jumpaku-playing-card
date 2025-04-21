@@ -1,0 +1,1 @@
+CREATE INDEX "Idx_RoomPlace_RoomIdAndPlaceId" ON "RoomPlace" ("room_id", "room_place_id");

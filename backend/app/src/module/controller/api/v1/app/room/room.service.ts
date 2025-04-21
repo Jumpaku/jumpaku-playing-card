@@ -162,6 +162,12 @@ export class RoomService extends RoomServiceService {
             if (m == null) {
                 throwPreconditionFailed("Not in room", "Not in room");
             }
+
+            const prevSeat = await this.room.findSeatByMemberId(tx, input.roomId, m.room_member_id);
+            if (prevSeat != null) {
+                await this.room.updateSeatMember(tx, prevSeat.room_id, prevSeat.room_seat_id, null, t);
+            }
+
             if (!await this.room.existsSeat(tx, input.roomId, input.seatId)) {
                 throwPreconditionFailed("Seat not found", "Seat not found");
             }

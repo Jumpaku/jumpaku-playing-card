@@ -1,0 +1,148 @@
+syntax = "proto3";
+
+package api.v1.app.room;
+
+import "api/v1/access_control.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+service PlayService {
+  rpc ListPlace(ListPlaceRequest) returns (ListPlaceResponse) {
+    option (google.api.http) = {get: "/api/v1/app/room/{room_id}/play/place"};
+    option (api.v1.access_control) = {require: "play:place"};
+  }
+  rpc CreatePlace(CreatePlaceRequest) returns (CreatePlaceResponse) {
+    option (google.api.http) = {post: "/api/v1/app/room/{room_id}/play/place"};
+    option (api.v1.access_control) = {require: "play:place"};
+  }
+  rpc DeletePlace(DeletePlaceRequest) returns (DeletePlaceResponse) {
+    option (google.api.http) = {delete: "/api/v1/app/room/{room_id}/play/place/{place_id}"};
+    option (api.v1.access_control) = {require: "play:place"};
+  }
+  rpc AddDeck(AddDeckRequest) returns (AddDeckResponse) {
+    option (google.api.http) = {post: "/api/v1/app/room/{room_id}/play/place/{place_id}/deck"};
+    option (api.v1.access_control) = {require: "play:card"};
+  }
+  rpc MoveCard(MoveCardRequest) returns (MoveCardResponse) {
+    option (google.api.http) = {post: "/api/v1/app/room/{room_id}/play/place/{place_id}/card/move"};
+    option (api.v1.access_control) = {require: "play:card"};
+  }
+  rpc GetHistory(GetHistoryRequest) returns (GetHistoryResponse) {
+    option (google.api.http) = {get: "/api/v1/app/room/{room_id}/play/history"};
+    option (api.v1.access_control) = {require: "play:card"};
+  }
+}
+
+message ListPlaceRequest {
+  string room_id = 1;
+}
+message ListPlaceResponse {
+  repeated Place place_list = 1;
+}
+message CreatePlaceRequest {
+  string room_id = 1;
+  string place_name = 2;
+  Place.Type type = 3;
+  bool owned = 4;
+  string owner_seat_id = 5;
+}
+message CreatePlaceResponse {
+  Place place = 2;
+}
+message DeletePlaceRequest {
+  string room_id = 1;
+  string place_id = 2;
+}
+message DeletePlaceResponse {}
+message AddDeckRequest {
+  string room_id = 1;
+  string place_id = 2;
+}
+message AddDeckResponse {}
+message MoveCardRequest {
+  string room_id = 1;
+  string place_id = 2;
+  message Move {
+    int32 source_card_index = 1;
+    string destination_place_id = 2;
+    Card.Side destination_card_side = 3;
+  }
+  repeated Move move_list = 3;
+}
+message MoveCardResponse {}
+message GetHistoryRequest {
+  string room_id = 1;
+  string seek_history_entry_order = 2;
+  int32 limit = 3;
+}
+message GetHistoryResponse {
+  message HistoryEntry {
+    enum Operation {
+      OPERATION_UNSPECIFIED = 0;
+      OPERATION_CREATE_PLACE = 1;
+      OPERATION_DELETE_PLACE = 2;
+      OPERATION_MOVE_CARD = 3;
+    }
+    string history_entry_order = 1;
+    google.protobuf.Timestamp timestamp = 2;
+    string operator_seat_id = 3;
+    string operator_member_id = 4;
+    Operation operation = 5;
+    string place_id = 6;
+    string source_card_index = 7;
+    string destination_place_id = 8;
+    Card.Side destination_card_side = 9;
+  }
+  repeated HistoryEntry history = 1;
+}
+message Place {
+  string place_id = 1;
+  bool owned = 2;
+  string owner_seat_id = 3;
+  enum Type {
+    TYPE_UNSPECIFIED = 0;
+    TYPE_DECK = 1;
+    TYPE_HAND = 2;
+    TYPE_TABLE = 3;
+  }
+  Type type = 4;
+  repeated Card card_list = 10;
+}
+message Card {
+  enum Side {
+    SIDE_UNSPECIFIED = 0;
+    SIDE_BACK = 1;
+    SIDE_FRONT = 2;
+  }
+  Side side = 2;
+
+  string master_card_id = 3;
+  enum Rank {
+    RANK_UNSPECIFIED = 0;
+    RANK_ACE = 1;
+    RANK_2 = 2;
+    RANK_3 = 3;
+    RANK_4 = 4;
+    RANK_5 = 5;
+    RANK_6 = 6;
+    RANK_7 = 7;
+    RANK_8 = 8;
+    RANK_9 = 9;
+    RANK_10 = 10;
+    RANK_JACK = 11;
+    RANK_QUEEN = 12;
+    RANK_KING = 13;
+    RANK_JOKER = 14;
+  }
+  string card_rank = 10;
+
+  enum Suit {
+    SUIT_UNSPECIFIED = 0;
+    SUIT_HEART = 1;
+    SUIT_CLUB = 2;
+    SUIT_DIAMOND = 3;
+    SUIT_SPADE = 4;
+    SUIT_JOKER = 5;
+  }
+  string card_suit = 11;
+}
