@@ -2,6 +2,9 @@
 version: v2
 managed:
   enabled: true
+  override:
+    - file_option: go_package
+      value: .
 plugins:
   - remote: buf.build/bufbuild/es:v2.2.2
     out: ../app/src/gen/pb
@@ -14,3 +17,6 @@ plugins:
     opt:
       - target=ts
       - import_extension=js
+  - remote: buf.build/community/google-gnostic-openapi:v0.7.0
+    out: ../docs/gen/openapi
+

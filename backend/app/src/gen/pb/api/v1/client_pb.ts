@@ -9,7 +9,7 @@ import { enumDesc, fileDesc } from "@bufbuild/protobuf/codegenv1";
  * Describes the file api/v1/client.proto.
  */
 export const file_api_v1_client: GenFile = /*@__PURE__*/
-  fileDesc("ChNhcGkvdjEvY2xpZW50LnByb3RvEgZhcGkudjEqLgoKQ2xpZW50VHlwZRILCgdVTktOT1dOEAASBwoDV0VCEAESCgoGTU9CSUxFEAJCUgoKY29tLmFwaS52MUILQ2xpZW50UHJvdG9QAaICA0FYWKoCBkFwaS5WMcoCBkFwaVxWMeICEkFwaVxWMVxHUEJNZXRhZGF0YeoCB0FwaTo6VjFiBnByb3RvMw");
+  fileDesc("ChNhcGkvdjEvY2xpZW50LnByb3RvEgZhcGkudjEqLgoKQ2xpZW50VHlwZRILCgdVTktOT1dOEAASBwoDV0VCEAESCgoGTU9CSUxFEAJCVQoKY29tLmFwaS52MUILQ2xpZW50UHJvdG9QAVoBLqICA0FYWKoCBkFwaS5WMcoCBkFwaVxWMeICEkFwaVxWMVxHUEJNZXRhZGF0YeoCB0FwaTo6VjFiBnByb3RvMw");
 
 /**
  * @generated from enum api.v1.ClientType

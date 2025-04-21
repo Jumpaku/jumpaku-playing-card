@@ -1,0 +1,954 @@
+# Generated with protoc-gen-openapi
+# https://github.com/google/gnostic/tree/master/cmd/protoc-gen-openapi
+
+openapi: 3.0.3
+info:
+    title: ""
+    version: 0.0.1
+paths:
+    /api/v1/app/authentication/logout:
+        put:
+            tags:
+                - AuthenticationService
+            operationId: AuthenticationService_Logout
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/LogoutResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/v1/app/authentication/password/login:
+        post:
+            tags:
+                - AuthenticationService
+            operationId: AuthenticationService_PasswordLogin
+            parameters:
+                - name: clientType
+                  in: query
+                  schema:
+                    type: integer
+                    format: enum
+                - name: loginId
+                  in: query
+                  schema:
+                    type: string
+                - name: password
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/PasswordLoginResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/v1/app/authentication/password/register:
+        post:
+            tags:
+                - AuthenticationService
+            operationId: AuthenticationService_PasswordRegister
+            parameters:
+                - name: loginId
+                  in: query
+                  schema:
+                    type: string
+                - name: password
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/PasswordRegisterResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/v1/app/authentication/refresh:
+        post:
+            tags:
+                - AuthenticationService
+            operationId: AuthenticationService_Refresh
+            parameters:
+                - name: clientType
+                  in: query
+                  schema:
+                    type: integer
+                    format: enum
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/RefreshResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/v1/app/authentication/temporary/register-login:
+        post:
+            tags:
+                - AuthenticationService
+            operationId: AuthenticationService_TemporaryRegisterLogin
+            parameters:
+                - name: clientType
+                  in: query
+                  schema:
+                    type: integer
+                    format: enum
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/TemporaryRegisterLoginResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/v1/app/room:
+        post:
+            tags:
+                - RoomService
+            operationId: RoomService_Create
+            parameters:
+                - name: roomName
+                  in: query
+                  schema:
+                    type: string
+                - name: seatCount
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/CreateResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/v1/app/room/{roomId}:
+        get:
+            tags:
+                - RoomService
+            operationId: RoomService_Get
+            parameters:
+                - name: roomId
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/GetResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/v1/app/room/{roomId}/enter:
+        put:
+            tags:
+                - RoomService
+            operationId: RoomService_Enter
+            parameters:
+                - name: roomId
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/EnterResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/v1/app/room/{roomId}/member/{memberId}/ban:
+        put:
+            tags:
+                - RoomService
+            operationId: RoomService_BanMember
+            parameters:
+                - name: roomId
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+                - name: memberId
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/BanMemberResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/v1/app/room/{roomId}/play/history:
+        get:
+            tags:
+                - PlayService
+            operationId: PlayService_GetHistory
+            parameters:
+                - name: roomId
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+                - name: seekHistoryEntryOrder
+                  in: query
+                  schema:
+                    type: string
+                - name: limit
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/GetHistoryResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/v1/app/room/{roomId}/play/place:
+        get:
+            tags:
+                - PlayService
+            operationId: PlayService_ListPlace
+            parameters:
+                - name: roomId
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ListPlaceResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+        post:
+            tags:
+                - PlayService
+            operationId: PlayService_CreatePlace
+            parameters:
+                - name: roomId
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+                - name: placeName
+                  in: query
+                  schema:
+                    type: string
+                - name: type
+                  in: query
+                  schema:
+                    type: integer
+                    format: enum
+                - name: owned
+                  in: query
+                  schema:
+                    type: boolean
+                - name: ownerSeatId
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/CreatePlaceResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/v1/app/room/{roomId}/play/place/{placeId}:
+        delete:
+            tags:
+                - PlayService
+            operationId: PlayService_DeletePlace
+            parameters:
+                - name: roomId
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+                - name: placeId
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/DeletePlaceResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/v1/app/room/{roomId}/play/place/{placeId}/card/move:
+        post:
+            tags:
+                - PlayService
+            operationId: PlayService_MoveCard
+            parameters:
+                - name: roomId
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+                - name: placeId
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/MoveCardResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/v1/app/room/{roomId}/play/place/{placeId}/deck:
+        post:
+            tags:
+                - PlayService
+            operationId: PlayService_AddDeck
+            parameters:
+                - name: roomId
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+                - name: placeId
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/AddDeckResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/v1/app/room/{roomId}/seat/{seatId}/leave:
+        put:
+            tags:
+                - RoomService
+            operationId: RoomService_LeaveSeat
+            parameters:
+                - name: roomId
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+                - name: seatId
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/LeaveSeatResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/v1/app/room/{roomId}/seat/{seatId}/take:
+        put:
+            tags:
+                - RoomService
+            operationId: RoomService_TakeSeat
+            parameters:
+                - name: roomId
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+                - name: seatId
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/TakeSeatResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/v1/app/user:
+        post:
+            tags:
+                - UserService
+            operationId: UserService_CreateUser
+            parameters:
+                - name: displayName
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/CreateUserResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/v1/app/user/{userId}:
+        get:
+            tags:
+                - UserService
+            operationId: UserService_GetUser
+            parameters:
+                - name: userId
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/GetUserResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/v1/app/user/{userId}/authentication:
+        put:
+            tags:
+                - UserService
+            operationId: UserService_RemoveUserAuthentication
+            parameters:
+                - name: userId
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+                - name: authenticationId
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/RegisterUserAuthenticationResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/v1/example:
+        get:
+            tags:
+                - ExampleService
+            operationId: ExampleService_ListExample
+            parameters:
+                - name: desc
+                  in: query
+                  schema:
+                    type: boolean
+                - name: limit
+                  in: query
+                  schema:
+                    type: string
+                - name: offset
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ListExampleResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+        post:
+            tags:
+                - ExampleService
+            operationId: ExampleService_CreateExample
+            parameters:
+                - name: exampleName
+                  in: query
+                  schema:
+                    type: string
+                - name: exampleContent
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/CreateExampleResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/v1/example/{exampleId}:
+        get:
+            tags:
+                - ExampleService
+            operationId: ExampleService_GetExample
+            parameters:
+                - name: exampleId
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/GetExampleResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+        put:
+            tags:
+                - ExampleService
+            operationId: ExampleService_UpdateExample
+            parameters:
+                - name: exampleId
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+                - name: setExampleName
+                  in: query
+                  schema:
+                    type: boolean
+                - name: exampleName
+                  in: query
+                  schema:
+                    type: string
+                - name: setExampleContent
+                  in: query
+                  schema:
+                    type: boolean
+                - name: exampleContent
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/UpdateExampleResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+        delete:
+            tags:
+                - ExampleService
+            operationId: ExampleService_DeleteExample
+            parameters:
+                - name: exampleId
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/DeleteExampleResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+components:
+    schemas:
+        AddDeckResponse:
+            type: object
+            properties: {}
+        BanMemberResponse:
+            type: object
+            properties: {}
+        Card:
+            type: object
+            properties:
+                side:
+                    type: integer
+                    format: enum
+                masterCardId:
+                    type: string
+                cardRank:
+                    type: string
+                cardSuit:
+                    type: string
+        CreateExampleResponse:
+            type: object
+            properties:
+                example:
+                    $ref: '#/components/schemas/Example'
+        CreatePlaceResponse:
+            type: object
+            properties:
+                place:
+                    $ref: '#/components/schemas/Place'
+        CreateResponse:
+            type: object
+            properties:
+                roomId:
+                    type: string
+                roomName:
+                    type: string
+                seatList:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/RoomSeat'
+                memberList:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/RoomMember'
+        CreateUserResponse:
+            type: object
+            properties:
+                userId:
+                    type: string
+                displayName:
+                    type: string
+        DeleteExampleResponse:
+            type: object
+            properties: {}
+        DeletePlaceResponse:
+            type: object
+            properties: {}
+        EnterResponse:
+            type: object
+            properties:
+                memberId:
+                    type: string
+        Example:
+            type: object
+            properties:
+                exampleId:
+                    type: string
+                exampleName:
+                    type: string
+                exampleContent:
+                    type: string
+        GetExampleResponse:
+            type: object
+            properties:
+                example:
+                    $ref: '#/components/schemas/Example'
+        GetHistoryResponse:
+            type: object
+            properties:
+                history:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/GetHistoryResponse_HistoryEntry'
+        GetHistoryResponse_HistoryEntry:
+            type: object
+            properties:
+                historyEntryOrder:
+                    type: string
+                timestamp:
+                    type: string
+                    format: date-time
+                operatorSeatId:
+                    type: string
+                operatorMemberId:
+                    type: string
+                operation:
+                    type: integer
+                    format: enum
+                placeId:
+                    type: string
+                sourceCardIndex:
+                    type: string
+                destinationPlaceId:
+                    type: string
+                destinationCardSide:
+                    type: integer
+                    format: enum
+        GetResponse:
+            type: object
+            properties:
+                roomId:
+                    type: string
+                roomName:
+                    type: string
+                seatList:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/RoomSeat'
+                memberList:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/RoomMember'
+        GetUserResponse:
+            type: object
+            properties:
+                userId:
+                    type: string
+                displayName:
+                    type: string
+        GoogleProtobufAny:
+            type: object
+            properties:
+                '@type':
+                    type: string
+                    description: The type of the serialized message.
+            additionalProperties: true
+            description: Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+        LeaveSeatResponse:
+            type: object
+            properties: {}
+        ListExampleResponse:
+            type: object
+            properties:
+                exampleList:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/Example'
+        ListPlaceResponse:
+            type: object
+            properties:
+                placeList:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/Place'
+        LogoutResponse:
+            type: object
+            properties: {}
+        MoveCardResponse:
+            type: object
+            properties: {}
+        PasswordLoginResponse:
+            type: object
+            properties:
+                accessToken:
+                    type: string
+                refreshToken:
+                    type: string
+        PasswordRegisterResponse:
+            type: object
+            properties: {}
+        Place:
+            type: object
+            properties:
+                placeId:
+                    type: string
+                owned:
+                    type: boolean
+                ownerSeatId:
+                    type: string
+                type:
+                    type: integer
+                    format: enum
+                cardList:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/Card'
+        RefreshResponse:
+            type: object
+            properties:
+                accessToken:
+                    type: string
+                refreshToken:
+                    type: string
+        RegisterUserAuthenticationResponse:
+            type: object
+            properties: {}
+        RoomMember:
+            type: object
+            properties:
+                memberId:
+                    type: string
+                memberRole:
+                    type: string
+                userId:
+                    type: string
+                userName:
+                    type: string
+        RoomSeat:
+            type: object
+            properties:
+                seatId:
+                    type: string
+                seatName:
+                    type: string
+                memberExists:
+                    type: boolean
+                memberId:
+                    type: string
+        Status:
+            type: object
+            properties:
+                code:
+                    type: integer
+                    description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
+                    format: int32
+                message:
+                    type: string
+                    description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+                details:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/GoogleProtobufAny'
+                    description: A list of messages that carry the error details.  There is a common set of message types for APIs to use.
+            description: 'The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).'
+        TakeSeatResponse:
+            type: object
+            properties: {}
+        TemporaryRegisterLoginResponse:
+            type: object
+            properties:
+                accessToken:
+                    type: string
+                refreshToken:
+                    type: string
+        UpdateExampleResponse:
+            type: object
+            properties:
+                example:
+                    $ref: '#/components/schemas/Example'
+tags:
+    - name: AuthenticationService
+    - name: ExampleService
+    - name: PlayService
+    - name: RoomService
+    - name: UserService
