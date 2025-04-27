@@ -1,3 +1,4 @@
+using App.Script.Shared.Dialog;
 using UnityEngine;
 
 namespace App.Script.Setting
@@ -32,6 +33,9 @@ namespace App.Script.Setting
         public void OnClickSeatStartPlay()
         {
             Debug.Log("OnClickSeatStartPlay");
+            Dialog.Instance.Open("Title", "Message", "Cancel", "Confirm",
+                () => { Dialog.Instance.Close(); },
+                () => { Dialog.Instance.Close(); });
         }
 
         public void OnClickSeatSelectSeat(int index)
