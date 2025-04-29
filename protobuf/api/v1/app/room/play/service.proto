@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package api.v1.app.room;
+package api.v1.app.room.play;
 
 import "api/v1/access_control.proto";
 import "google/api/annotations.proto";
