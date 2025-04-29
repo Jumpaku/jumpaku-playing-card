@@ -696,6 +696,24 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+    /api/v1/health:
+        post:
+            tags:
+                - HealthService
+            operationId: HealthService_Check
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/CheckResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
 components:
     schemas:
         AddDeckResponse:
@@ -716,6 +734,9 @@ components:
                     type: string
                 cardSuit:
                     type: string
+        CheckResponse:
+            type: object
+            properties: {}
         CreateExampleResponse:
             type: object
             properties:
@@ -949,6 +970,7 @@ components:
 tags:
     - name: AuthenticationService
     - name: ExampleService
+    - name: HealthService
     - name: PlayService
     - name: RoomService
     - name: UserService
