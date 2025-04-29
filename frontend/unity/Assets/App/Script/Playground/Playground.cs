@@ -5,6 +5,8 @@ using Api_PB.V1_PB.App_PB.Authentication_PB;
 using Api_PB.V1_PB.App_PB.Authentication_PB.AuthenticationService_PB;
 using Api_PB.V1_PB.App_PB.User_PB;
 using Api_PB.V1_PB.App_PB.User_PB.UserService_PB;
+using Api_PB.V1_PB.Health_PB;
+using Api_PB.V1_PB.Health_PB.HealthService_PB;
 using App.Script.Shared.Api;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
@@ -18,6 +20,8 @@ public class Playground : MonoBehaviour
         var password = "password";
         var s = new Session();
         s.SetBaseUrl("http://localhost:3000");
+        await HealthService.Check(s, new CheckRequest());
+        
         await AuthenticationService.PasswordRegister(s, new PasswordRegisterRequest
         {
             loginId = loginId,
