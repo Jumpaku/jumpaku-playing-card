@@ -55,7 +55,7 @@ func (p HttpInfo) UrlPathTemplate(inputVariable string) string {
 		variableFieldPath := lo.Map(s.Variable.FieldPath, func(f string, _ int) string {
 			return name.New(f).LowerCamel()
 		})
-		return `{` + inputVariable + `?.` + strings.Join(variableFieldPath, "?.") + `}`
+		return `{(global::UnityEngine.Networking.UnityWebRequest.EscapeURL(` + inputVariable + `?.` + strings.Join(variableFieldPath, "?.") + `))}`
 	})
 	return `$"/` + strings.Join(segments, "/") + `"`
 }
@@ -91,7 +91,7 @@ func (p HttpInfo) UrlQueryTemplate(inputVariable string) string {
 	queries := lo.Map(queryParamFieldPaths, func(fp []string, _ int) string {
 		key := strings.Join(fp, ".")
 		value := inputVariable + `?.` + strings.Join(fp, "?.")
-		return fmt.Sprintf(`{(%s == null ? "" : $"%s={%s}")}`, value, key, value)
+		return fmt.Sprintf(`{(%s == null ? "" : global::UnityEngine.Networking.UnityWebRequest.EscapeURL($"%s={%s}"))}`, value, key, value)
 	})
 	return `$"?` + strings.Join(queries, "&") + `"`
 }

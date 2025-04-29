@@ -22,8 +22,8 @@ namespace Api_PB.V1_PB.App_PB.Room_PB.Play_PB.PlayService_PB {
             global::System.Collections.Generic.Dictionary<string, string> requestHeaders = null
         )
         {
-            string urlPath = $"/api/v1/app/room/{input?.roomId}/play/history";
-            string urlQuery = $"?{(input?.seekHistoryEntryOrder == null ? "" : $"seekHistoryEntryOrder={input?.seekHistoryEntryOrder}")}&{(input?.limit == null ? "" : $"limit={input?.limit}")}";
+            string urlPath = $"/api/v1/app/room/{(global::UnityEngine.Networking.UnityWebRequest.EscapeURL(input?.roomId))}/play/history";
+            string urlQuery = $"?{(input?.seekHistoryEntryOrder == null ? "" : global::UnityEngine.Networking.UnityWebRequest.EscapeURL($"seekHistoryEntryOrder={input?.seekHistoryEntryOrder}"))}&{(input?.limit == null ? "" : global::UnityEngine.Networking.UnityWebRequest.EscapeURL($"limit={input?.limit}"))}";
             var requestUrl = $"{session.GetBaseUrl()}{urlPath}{urlQuery}";
 
             var inputJson = "";

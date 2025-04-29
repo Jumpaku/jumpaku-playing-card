@@ -22,7 +22,7 @@ namespace Api_PB.V1_PB.Example_PB.ExampleService_PB {
             global::System.Collections.Generic.Dictionary<string, string> requestHeaders = null
         )
         {
-            string urlPath = $"/api/v1/example/{input?.exampleId}";
+            string urlPath = $"/api/v1/example/{(global::UnityEngine.Networking.UnityWebRequest.EscapeURL(input?.exampleId))}";
             string urlQuery = "";
             var requestUrl = $"{session.GetBaseUrl()}{urlPath}{urlQuery}";
 

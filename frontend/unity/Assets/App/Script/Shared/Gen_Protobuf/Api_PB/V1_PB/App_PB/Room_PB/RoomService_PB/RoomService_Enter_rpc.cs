@@ -22,7 +22,7 @@ namespace Api_PB.V1_PB.App_PB.Room_PB.RoomService_PB {
             global::System.Collections.Generic.Dictionary<string, string> requestHeaders = null
         )
         {
-            string urlPath = $"/api/v1/app/room/{input?.roomId}/enter";
+            string urlPath = $"/api/v1/app/room/{(global::UnityEngine.Networking.UnityWebRequest.EscapeURL(input?.roomId))}/enter";
             string urlQuery = "";
             var requestUrl = $"{session.GetBaseUrl()}{urlPath}{urlQuery}";
 

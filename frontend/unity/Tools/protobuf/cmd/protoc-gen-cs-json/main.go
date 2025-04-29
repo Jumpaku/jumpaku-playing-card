@@ -10,6 +10,8 @@ import (
 	"text/template"
 )
 
+// go build -o bin/protoc-gen-cs-json ./cmd/protoc-gen-cs-json && buf build -o bufimage.txtpb && buf generate --include-imports --include-wkt bufimage.txtpb
+
 func main() {
 	err := protocplugin.Run(os.Stdin, os.Stdout, handle)
 	if err != nil {

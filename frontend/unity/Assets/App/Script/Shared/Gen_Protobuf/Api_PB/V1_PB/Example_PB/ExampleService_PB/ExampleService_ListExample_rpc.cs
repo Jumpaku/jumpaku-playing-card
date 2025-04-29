@@ -23,7 +23,7 @@ namespace Api_PB.V1_PB.Example_PB.ExampleService_PB {
         )
         {
             string urlPath = $"/api/v1/example";
-            string urlQuery = $"?{(input?.desc == null ? "" : $"desc={input?.desc}")}&{(input?.limit == null ? "" : $"limit={input?.limit}")}&{(input?.offset == null ? "" : $"offset={input?.offset}")}";
+            string urlQuery = $"?{(input?.desc == null ? "" : global::UnityEngine.Networking.UnityWebRequest.EscapeURL($"desc={input?.desc}"))}&{(input?.limit == null ? "" : global::UnityEngine.Networking.UnityWebRequest.EscapeURL($"limit={input?.limit}"))}&{(input?.offset == null ? "" : global::UnityEngine.Networking.UnityWebRequest.EscapeURL($"offset={input?.offset}"))}";
             var requestUrl = $"{session.GetBaseUrl()}{urlPath}{urlQuery}";
 
             var inputJson = "";
