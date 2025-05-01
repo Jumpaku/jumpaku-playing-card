@@ -1,11 +1,5 @@
 using System.Collections.Generic;
-using System.Linq;
-using Cysharp.Threading.Tasks;
-using NUnit.Framework;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
 
 namespace App.Script.Setting

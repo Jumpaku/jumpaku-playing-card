@@ -14,6 +14,7 @@ namespace Api_PB.V1_PB.App_PB.User_PB.UserService_PB {
             public global::UnityEngine.Networking.UnityWebRequest.Result result;
             public global::Api_PB.V1_PB.App_PB.User_PB.RegisterUserAuthenticationResponse responseBody;
             public global::Api_PB.V1_PB.ErrorResponse errorResponseBody;
+            public string errorMessage;
         }
 
         public static async global::Cysharp.Threading.Tasks.UniTask<AddUserAuthentication_Result> AddUserAuthentication(
@@ -27,44 +28,79 @@ namespace Api_PB.V1_PB.App_PB.User_PB.UserService_PB {
             var requestUrl = $"{session.GetBaseUrl()}{urlPath}{urlQuery}";
 
             var inputJson = global::UnityEngine.JsonUtility.ToJson(input);
-            var uwr = new global::UnityEngine.Networking.UnityWebRequest(
-                requestUrl,
-                "PUT",
-                new global::UnityEngine.Networking.DownloadHandlerBuffer(),
-                new global::UnityEngine.Networking.UploadHandlerRaw(global::System.Text.Encoding.UTF8.GetBytes(inputJson))
-            );
-            uwr.SetRequestHeader("Content-Type", "application/json");
-            requestHeaders = requestHeaders ?? new ();
-            requestHeaders = session.AddAuthorization(requestHeaders ?? new ());
-            foreach (var header in requestHeaders)
-            {
-                uwr.SetRequestHeader(header.Key, header.Value);
-            }
+            global::UnityEngine.Networking.UnityWebRequest uwr;
 
-            session.OnSend(uwr.method, uwr.url, requestHeaders, global::System.Text.Encoding.UTF8.GetString(uwr.uploadHandler.data));
-            await uwr.SendWebRequest();
+            try
+            {
+                uwr = new global::UnityEngine.Networking.UnityWebRequest(
+                    requestUrl,
+                    "PUT",
+                    new global::UnityEngine.Networking.DownloadHandlerBuffer(),
+                    new global::UnityEngine.Networking.UploadHandlerRaw(global::System.Text.Encoding.UTF8.GetBytes(inputJson))
+                );
+                uwr.SetRequestHeader("Content-Type", "application/json");
+                requestHeaders = requestHeaders ?? new ();
+                requestHeaders = session.AddAuthorization(requestHeaders ?? new ());
+                foreach (var header in requestHeaders)
+                {
+                    uwr.SetRequestHeader(header.Key, header.Value);
+                }
+
+                session.OnSend(uwr.method, uwr.url, requestHeaders, global::System.Text.Encoding.UTF8.GetString(uwr.uploadHandler.data));
+                await uwr.SendWebRequest();
+            }
+            catch (System.Exception e)
+            {
+                return new AddUserAuthentication_Result
+                {
+                    result = global::UnityEngine.Networking.UnityWebRequest.Result.ConnectionError,
+                    errorMessage = e.Message,
+                };
+            }
             var outputJson = uwr.downloadHandler.text;
             session.OnReceive(uwr.responseCode, uwr.GetResponseHeaders(), outputJson);
 
             switch (uwr.result)
             {
                 case global::UnityEngine.Networking.UnityWebRequest.Result.Success:
-                    return new AddUserAuthentication_Result
+                {
+                    try
                     {
-                        result = uwr.result,
-                        responseBody = global::UnityEngine.JsonUtility.FromJson<global::Api_PB.V1_PB.App_PB.User_PB.RegisterUserAuthenticationResponse>(outputJson),
-                    };
+                        return new AddUserAuthentication_Result {
+                            result = uwr.result,
+                            responseBody = global::UnityEngine.JsonUtility.FromJson<global::Api_PB.V1_PB.App_PB.User_PB.RegisterUserAuthenticationResponse>(outputJson)
+                        };
+                    }
+                    catch (System.Exception e)
+                    {
+                        return new AddUserAuthentication_Result
+                        {
+                            result = global::UnityEngine.Networking.UnityWebRequest.Result.DataProcessingError,
+                            errorMessage = e.Message,
+                        };
+                    }
+                }
                 case global::UnityEngine.Networking.UnityWebRequest.Result.ProtocolError:
-                    return new AddUserAuthentication_Result
+                {
+                    try
                     {
-                        result = uwr.result,
-                        errorResponseBody = global::UnityEngine.JsonUtility.FromJson<global::Api_PB.V1_PB.ErrorResponse>(outputJson),
-                    };
+                        return new AddUserAuthentication_Result {
+                            result = uwr.result,
+                            errorResponseBody = global::UnityEngine.JsonUtility.FromJson<global::Api_PB.V1_PB.ErrorResponse>(outputJson),
+                            errorMessage = uwr.error,
+                        };
+                    }
+                    catch (System.Exception e)
+                    {
+                        return new AddUserAuthentication_Result
+                        {
+                            result = global::UnityEngine.Networking.UnityWebRequest.Result.DataProcessingError,
+                            errorMessage = e.Message,
+                        };
+                    }
+                }
                 default:
-                    return new AddUserAuthentication_Result
-                    {
-                        result = uwr.result,
-                    };
+                    return new AddUserAuthentication_Result { result = uwr.result, errorMessage = uwr.error };
             }
         }
     }

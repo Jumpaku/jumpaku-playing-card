@@ -7,6 +7,11 @@ namespace App.Script.Shared.Dialog
 {
     public class Dialog : MonoBehaviour
     {
+        public enum DialogAction
+        {
+            Cancel,
+            Confirm,
+        }
         public static Dialog Instance => GameObject.Find("Dialog").GetComponent<Dialog>();
 
         private GameObject _dialogPanel;
@@ -29,8 +34,7 @@ namespace App.Script.Shared.Dialog
             _confirmButton = _dialogPanel.transform.Find("ConfirmButton").gameObject;
         }
 
-        public void Open(string title, string message, string cancelText, string confirmText, Action onCancel,
-            Action onConfirm)
+        public void Open(string title, string message, string cancelText, string confirmText, Action<DialogAction> onAction)
         {
             _dialogPanel.SetActive(true);
 
@@ -42,7 +46,7 @@ namespace App.Script.Shared.Dialog
             {
                 Debug.Log("Dialog.Cancel");
                 cancelButton.onClick.RemoveAllListeners();
-                onCancel();
+                onAction(DialogAction.Cancel);
             });
             cancelButton.GetComponentInChildren<TextMeshProUGUI>().text = cancelText;
 
@@ -51,7 +55,7 @@ namespace App.Script.Shared.Dialog
             {
                 Debug.Log("Dialog.Confirm");
                 confirmButton.onClick.RemoveAllListeners();
-                onConfirm();
+                onAction(DialogAction.Confirm);
             });
             confirmButton.GetComponentInChildren<TextMeshProUGUI>().text = confirmText;
         }

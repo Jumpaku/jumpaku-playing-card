@@ -1,16 +1,51 @@
+using System;
+using Api_PB.V1_PB.Health_PB.HealthService_PB;
+using App.Script.Setting.Logic.Server;
+using App.Script.Setting.Logic.User;
+using App.Script.Shared;
+using App.Script.Shared.Api;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class SettingService : MonoBehaviour
+namespace App.Script.Setting
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public class SettingService
     {
-        
-    }
+        public interface IView
+        {
+            public void OnError(ErrorBehaviour errorBehaviour, string title, string message);
+            public void OnServerCheckDone();
+            public void OnUserCreateDone(string userId);
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        private readonly IView _view;
+        private readonly Session _session = new();
+
+        public SettingService(IView view)
+        {
+            _view = view;
+        }
+
+        public async UniTask ServerCheck(string serverUrl)
+        {
+            _session.SetBaseUrl(serverUrl);
+            var r = await new Check().Do(_session);
+            if (r.IsError)
+            {
+                _view.OnError(ErrorBehaviour.DialogNotice, r.ErrorTitle, r.ErrorMessage);
+            }
+            else
+            {
+                _view.OnServerCheckDone();
+            }
+        }
+
+        public void UserCreate(string serverUrl, string loginId, string password, string displayName)
+        {
+            _session.SetBaseUrl(serverUrl);
+            var a = new Create().Do(_session, loginId, password, displayName).GetAwaiter();
+            a.OnCompleted(() => { _view.OnUserCreateDone(a.GetResult()); });
+        }
     }
 }

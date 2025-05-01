@@ -20,7 +20,6 @@ public class Playground : MonoBehaviour
         var password = "password";
         var s = new Session();
         s.SetBaseUrl("http://localhost:3000");
-        await HealthService.Check(s, new CheckRequest());
         
         await AuthenticationService.PasswordRegister(s, new PasswordRegisterRequest
         {
