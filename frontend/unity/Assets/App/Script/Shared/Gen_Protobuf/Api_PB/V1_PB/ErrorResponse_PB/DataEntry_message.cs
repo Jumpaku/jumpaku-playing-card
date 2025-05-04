@@ -5,6 +5,7 @@
 
 namespace Api_PB.V1_PB.ErrorResponse_PB {
 
+    [System.Serializable]
     public class DataEntry {
     
         public string key;

@@ -5,6 +5,7 @@
 
 namespace Google_PB.Protobuf_PB.FeatureSetDefaults_PB {
 
+    [System.Serializable]
     public class FeatureSetEditionDefault {
     
         public string edition;

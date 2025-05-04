@@ -6,6 +6,7 @@
 
 namespace {{.Namespace.Join}} {
 
+    [System.Serializable]
     public class {{.ClassName}} {
     {{range .Fields}}
         public {{.FieldType.Type}} {{.FieldName}};

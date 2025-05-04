@@ -5,6 +5,7 @@
 
 namespace Google_PB.Protobuf_PB {
 
+    [System.Serializable]
     public class SourceCodeInfo {
     
         public global::System.Collections.Generic.List<global::Google_PB.Protobuf_PB.SourceCodeInfo_PB.Location> location;

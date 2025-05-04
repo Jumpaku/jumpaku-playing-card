@@ -5,6 +5,7 @@
 
 namespace Google_PB.Protobuf_PB.FieldOptions_PB {
 
+    [System.Serializable]
     public class EditionDefault {
     
         public string edition;

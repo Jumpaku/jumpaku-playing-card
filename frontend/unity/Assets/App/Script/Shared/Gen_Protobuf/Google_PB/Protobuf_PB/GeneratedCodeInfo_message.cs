@@ -5,6 +5,7 @@
 
 namespace Google_PB.Protobuf_PB {
 
+    [System.Serializable]
     public class GeneratedCodeInfo {
     
         public global::System.Collections.Generic.List<global::Google_PB.Protobuf_PB.GeneratedCodeInfo_PB.Annotation> annotation;

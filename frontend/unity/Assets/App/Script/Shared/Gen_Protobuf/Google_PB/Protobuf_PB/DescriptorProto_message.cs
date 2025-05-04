@@ -5,6 +5,7 @@
 
 namespace Google_PB.Protobuf_PB {
 
+    [System.Serializable]
     public class DescriptorProto {
     
         public string name;

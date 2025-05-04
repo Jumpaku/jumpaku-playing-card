@@ -5,6 +5,7 @@
 
 namespace Google_PB.Protobuf_PB.DescriptorProto_PB {
 
+    [System.Serializable]
     public class ReservedRange {
     
         public long start;

@@ -5,6 +5,7 @@
 
 namespace Api_PB.V1_PB.Example_PB {
 
+    [System.Serializable]
     public class CreateExampleResponse {
     
         public global::Api_PB.V1_PB.Example_PB.Example example;

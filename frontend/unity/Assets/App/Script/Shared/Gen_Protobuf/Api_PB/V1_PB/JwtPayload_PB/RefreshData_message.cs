@@ -5,6 +5,7 @@
 
 namespace Api_PB.V1_PB.JwtPayload_PB {
 
+    [System.Serializable]
     public class RefreshData {
     
         public string sessionId;

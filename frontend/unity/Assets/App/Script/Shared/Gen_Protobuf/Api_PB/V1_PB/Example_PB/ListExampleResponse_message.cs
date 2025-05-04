@@ -5,6 +5,7 @@
 
 namespace Api_PB.V1_PB.Example_PB {
 
+    [System.Serializable]
     public class ListExampleResponse {
     
         public global::System.Collections.Generic.List<global::Api_PB.V1_PB.Example_PB.Example> exampleList;

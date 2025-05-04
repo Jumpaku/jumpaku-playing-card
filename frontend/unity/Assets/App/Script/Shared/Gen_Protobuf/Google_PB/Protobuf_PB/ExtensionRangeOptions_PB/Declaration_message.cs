@@ -5,6 +5,7 @@
 
 namespace Google_PB.Protobuf_PB.ExtensionRangeOptions_PB {
 
+    [System.Serializable]
     public class Declaration {
     
         public long number;

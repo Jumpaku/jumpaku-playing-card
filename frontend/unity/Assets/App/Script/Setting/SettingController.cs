@@ -1,11 +1,7 @@
-using System;
-using System.Collections;
-using App.Script.Setting.Logic;
 using App.Script.Shared.Dialog;
 using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Networking;
 
 namespace App.Script.Setting
 {
@@ -14,6 +10,7 @@ namespace App.Script.Setting
         private SettingService _service;
 
         private TMP_InputField _serverUrlInput;
+        private TMP_InputField _displayNameInput;
 
         private void Start()
         {
@@ -22,19 +19,21 @@ namespace App.Script.Setting
 
         public void Init()
         {
-            _service = new(new SettingView(Dialog.Instance));
             _serverUrlInput = GameObject.Find("ServerUrlInput").GetComponent<TMP_InputField>();
+            _displayNameInput = GameObject.Find("DisplayNameInput").GetComponent<TMP_InputField>();
+            _service = new(new SettingView_tmp(Dialog.Instance, _serverUrlInput));
         }
 
         public void OnClickServerCheck()
         {
             Debug.Log("OnClickServerCheck");
-            _service.ServerCheck(_serverUrlInput.text).Forget();
+            //_service.ServerCheck(_serverUrlInput.text).Forget();
         }
 
         public void OnClickUserCreate()
         {
             Debug.Log("OnClickUserCreate");
+            //_service.UserCreate(_serverUrlInput.text, _displayNameInput.text).Forget();
         }
 
         public void OnClickRoomCreate()

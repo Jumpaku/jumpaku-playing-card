@@ -10,11 +10,16 @@ namespace Api_PB.V1_PB.App_PB.Room_PB.Play_PB.PlayService_PB {
     public partial class PlayService
     {
 
-        public class GetHistory_Result {
+        public class GetHistory_Result : global::App.Script.Shared.Api.IResultError {
             public global::UnityEngine.Networking.UnityWebRequest.Result result;
             public global::Api_PB.V1_PB.App_PB.Room_PB.Play_PB.GetHistoryResponse responseBody;
             public global::Api_PB.V1_PB.ErrorResponse errorResponseBody;
             public string errorMessage;
+            public global::UnityEngine.Networking.UnityWebRequest.Result ErrorKind { get => result; }
+            public bool IsError { get => result != global::UnityEngine.Networking.UnityWebRequest.Result.Success; }
+            public string ErrorTitle { get => result.ToString(); }
+            public string ErrorMessage { get => errorMessage; }
+            public global::Api_PB.V1_PB.ErrorResponse ErrorDetail { get => errorResponseBody; }
         }
 
         public static async global::Cysharp.Threading.Tasks.UniTask<GetHistory_Result> GetHistory(

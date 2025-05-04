@@ -5,6 +5,7 @@
 
 namespace Api_PB.V1_PB.Example_PB {
 
+    [System.Serializable]
     public class UpdateExampleRequest {
     
         public string exampleId;

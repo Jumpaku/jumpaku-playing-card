@@ -11,11 +11,16 @@ namespace {{.Namespace.Join}} {
     public partial class {{.ClassName}}
     {
 
-        public class {{.MethodName}}_Result {
+        public class {{.MethodName}}_Result : global::App.Script.Shared.Api.IResultError {
             public global::UnityEngine.Networking.UnityWebRequest.Result result;
             public global::{{.Output.Namespace.Join}}.{{.Output.ClassName}} responseBody;
             public global::Api_PB.V1_PB.ErrorResponse errorResponseBody;
             public string errorMessage;
+            public global::UnityEngine.Networking.UnityWebRequest.Result ErrorKind { get => result; }
+            public bool IsError { get => result != global::UnityEngine.Networking.UnityWebRequest.Result.Success; }
+            public string ErrorTitle { get => result.ToString(); }
+            public string ErrorMessage { get => errorMessage; }
+            public global::Api_PB.V1_PB.ErrorResponse ErrorDetail { get => errorResponseBody; }
         }
 
         public static async global::Cysharp.Threading.Tasks.UniTask<{{.MethodName}}_Result> {{.MethodName}}(

@@ -5,6 +5,7 @@
 
 namespace Google_PB.Protobuf_PB {
 
+    [System.Serializable]
     public class ServiceOptions {
     
         public global::Google_PB.Protobuf_PB.FeatureSet features;

@@ -5,6 +5,7 @@
 
 namespace Google_PB.Protobuf_PB {
 
+    [System.Serializable]
     public class FeatureSetDefaults {
     
         public global::System.Collections.Generic.List<global::Google_PB.Protobuf_PB.FeatureSetDefaults_PB.FeatureSetEditionDefault> defaults;

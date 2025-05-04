@@ -5,6 +5,7 @@
 
 namespace Google_PB.Api_PB {
 
+    [System.Serializable]
     public class HttpRule {
     
         public string selector;

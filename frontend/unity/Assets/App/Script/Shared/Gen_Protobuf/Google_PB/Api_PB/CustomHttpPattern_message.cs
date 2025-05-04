@@ -5,6 +5,7 @@
 
 namespace Google_PB.Api_PB {
 
+    [System.Serializable]
     public class CustomHttpPattern {
     
         public string kind;

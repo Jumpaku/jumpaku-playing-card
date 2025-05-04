@@ -5,6 +5,7 @@
 
 namespace Google_PB.Protobuf_PB.EnumDescriptorProto_PB {
 
+    [System.Serializable]
     public class EnumReservedRange {
     
         public long start;

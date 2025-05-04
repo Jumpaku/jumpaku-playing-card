@@ -31812,3 +31812,477 @@ file: {
     unused_dependency: 0
   }
 }
+file: {
+  name: "localdata/localdata.proto"
+  package: "localdata"
+  message_type: {
+    name: "LocalData"
+    field: {
+      name: "server"
+      number: 1
+      label: LABEL_OPTIONAL
+      type: TYPE_MESSAGE
+      type_name: ".localdata.LocalData.Server"
+      json_name: "server"
+    }
+    field: {
+      name: "auth"
+      number: 2
+      label: LABEL_OPTIONAL
+      type: TYPE_MESSAGE
+      type_name: ".localdata.LocalData.Authentication"
+      json_name: "auth"
+    }
+    field: {
+      name: "user"
+      number: 3
+      label: LABEL_OPTIONAL
+      type: TYPE_MESSAGE
+      type_name: ".localdata.LocalData.User"
+      json_name: "user"
+    }
+    nested_type: {
+      name: "Server"
+      field: {
+        name: "baseUrl"
+        number: 1
+        label: LABEL_OPTIONAL
+        type: TYPE_STRING
+        json_name: "baseUrl"
+      }
+    }
+    nested_type: {
+      name: "Authentication"
+      field: {
+        name: "access_token"
+        number: 1
+        label: LABEL_OPTIONAL
+        type: TYPE_STRING
+        json_name: "accessToken"
+      }
+      field: {
+        name: "refresh_token"
+        number: 2
+        label: LABEL_OPTIONAL
+        type: TYPE_STRING
+        json_name: "refreshToken"
+      }
+    }
+    nested_type: {
+      name: "User"
+      field: {
+        name: "user_id"
+        number: 1
+        label: LABEL_OPTIONAL
+        type: TYPE_STRING
+        json_name: "userId"
+      }
+    }
+  }
+  source_code_info: {
+    location: {
+      span: 0
+      span: 0
+      span: 18
+      span: 1
+    }
+    location: {
+      path: 12
+      span: 0
+      span: 0
+      span: 18
+    }
+    location: {
+      path: 2
+      span: 2
+      span: 0
+      span: 18
+    }
+    location: {
+      path: 4
+      path: 0
+      span: 4
+      span: 0
+      span: 18
+      span: 1
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 1
+      span: 4
+      span: 8
+      span: 17
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      span: 5
+      span: 2
+      span: 7
+      span: 3
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 1
+      span: 5
+      span: 10
+      span: 16
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 2
+      path: 0
+      span: 6
+      span: 4
+      span: 22
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 2
+      path: 0
+      path: 5
+      span: 6
+      span: 4
+      span: 10
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 2
+      path: 0
+      path: 1
+      span: 6
+      span: 11
+      span: 18
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 0
+      path: 2
+      path: 0
+      path: 3
+      span: 6
+      span: 20
+      span: 21
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 0
+      span: 8
+      span: 2
+      span: 20
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 0
+      path: 6
+      span: 8
+      span: 2
+      span: 8
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 0
+      path: 1
+      span: 8
+      span: 9
+      span: 15
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 0
+      path: 3
+      span: 8
+      span: 18
+      span: 19
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 1
+      span: 9
+      span: 2
+      span: 12
+      span: 3
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 1
+      path: 1
+      span: 9
+      span: 10
+      span: 24
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 1
+      path: 2
+      path: 0
+      span: 10
+      span: 4
+      span: 28
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 1
+      path: 2
+      path: 0
+      path: 5
+      span: 10
+      span: 4
+      span: 10
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 1
+      path: 2
+      path: 0
+      path: 1
+      span: 10
+      span: 11
+      span: 23
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 1
+      path: 2
+      path: 0
+      path: 3
+      span: 10
+      span: 26
+      span: 27
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 1
+      path: 2
+      path: 1
+      span: 11
+      span: 4
+      span: 29
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 1
+      path: 2
+      path: 1
+      path: 5
+      span: 11
+      span: 4
+      span: 10
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 1
+      path: 2
+      path: 1
+      path: 1
+      span: 11
+      span: 11
+      span: 24
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 1
+      path: 2
+      path: 1
+      path: 3
+      span: 11
+      span: 27
+      span: 28
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 1
+      span: 13
+      span: 2
+      span: 26
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 1
+      path: 6
+      span: 13
+      span: 2
+      span: 16
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 1
+      path: 1
+      span: 13
+      span: 17
+      span: 21
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 1
+      path: 3
+      span: 13
+      span: 24
+      span: 25
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 2
+      span: 14
+      span: 2
+      span: 16
+      span: 3
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 2
+      path: 1
+      span: 14
+      span: 10
+      span: 14
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 2
+      path: 2
+      path: 0
+      span: 15
+      span: 4
+      span: 23
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 2
+      path: 2
+      path: 0
+      path: 5
+      span: 15
+      span: 4
+      span: 10
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 2
+      path: 2
+      path: 0
+      path: 1
+      span: 15
+      span: 11
+      span: 18
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 3
+      path: 2
+      path: 2
+      path: 0
+      path: 3
+      span: 15
+      span: 21
+      span: 22
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 2
+      span: 17
+      span: 2
+      span: 16
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 2
+      path: 6
+      span: 17
+      span: 2
+      span: 6
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 2
+      path: 1
+      span: 17
+      span: 7
+      span: 11
+    }
+    location: {
+      path: 4
+      path: 0
+      path: 2
+      path: 2
+      path: 3
+      span: 17
+      span: 14
+      span: 15
+    }
+  }
+  syntax: "proto3"
+  buf_extension: {
+    is_import: false
+    is_syntax_unspecified: false
+  }
+}

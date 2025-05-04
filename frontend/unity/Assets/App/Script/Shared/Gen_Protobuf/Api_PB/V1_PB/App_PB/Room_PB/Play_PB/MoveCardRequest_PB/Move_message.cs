@@ -5,6 +5,7 @@
 
 namespace Api_PB.V1_PB.App_PB.Room_PB.Play_PB.MoveCardRequest_PB {
 
+    [System.Serializable]
     public class Move {
     
         public long sourceCardIndex;

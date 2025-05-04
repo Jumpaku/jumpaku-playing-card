@@ -5,6 +5,7 @@
 
 namespace Google_PB.Protobuf_PB.UninterpretedOption_PB {
 
+    [System.Serializable]
     public class NamePart {
     
         public string namePart;

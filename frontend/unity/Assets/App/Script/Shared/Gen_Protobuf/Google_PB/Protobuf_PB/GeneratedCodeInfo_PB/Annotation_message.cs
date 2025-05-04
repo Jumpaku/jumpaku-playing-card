@@ -5,6 +5,7 @@
 
 namespace Google_PB.Protobuf_PB.GeneratedCodeInfo_PB {
 
+    [System.Serializable]
     public class Annotation {
     
         public global::System.Collections.Generic.List<long> path;

@@ -5,6 +5,7 @@
 
 namespace Api_PB.V1_PB {
 
+    [System.Serializable]
     public class AccessControl {
     
         public string scopePath;

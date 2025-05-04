@@ -5,6 +5,7 @@
 
 namespace Google_PB.Protobuf_PB {
 
+    [System.Serializable]
     public class UninterpretedOption {
     
         public global::System.Collections.Generic.List<global::Google_PB.Protobuf_PB.UninterpretedOption_PB.NamePart> name;

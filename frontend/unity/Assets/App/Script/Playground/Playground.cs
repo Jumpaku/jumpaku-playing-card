@@ -1,44 +1,31 @@
 using System;
+using App.Script.Shared;
+using Localdata_PB.LocalData_PB;
 using UnityEngine;
-using Api_PB.V1_PB;
-using Api_PB.V1_PB.App_PB.Authentication_PB;
-using Api_PB.V1_PB.App_PB.Authentication_PB.AuthenticationService_PB;
-using Api_PB.V1_PB.App_PB.User_PB;
-using Api_PB.V1_PB.App_PB.User_PB.UserService_PB;
-using Api_PB.V1_PB.Health_PB;
-using Api_PB.V1_PB.Health_PB.HealthService_PB;
-using App.Script.Shared.Api;
-using UnityEngine.Networking;
-using UnityEngine.SceneManagement;
 
-public class Playground : MonoBehaviour
+namespace App.Script.Playground
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    async void Start()
+    [Serializable]
+    public class Inner
     {
-        var loginId = DateTime.Now.Ticks.ToString();
-        var password = "password";
-        var s = new Session();
-        s.SetBaseUrl("http://localhost:3000");
-        
-        await AuthenticationService.PasswordRegister(s, new PasswordRegisterRequest
-        {
-            loginId = loginId,
-            password = password,
-        });
+        public string value;
+    }
 
-        var r = await AuthenticationService.PasswordLogin(s, new PasswordLoginRequest
-        {
-            clientType = ClientType_String.Mobile,
-            loginId = loginId,
-            password = password,
-        });
+    [Serializable]
+    public class Outer
+    {
+        public Inner inner;
+    }
 
-        s.SetAuthorization(r.responseBody.accessToken);
-
-        await UserService.CreateUser(s, new CreateUserRequest
+    public class Playground : MonoBehaviour
+    {
+        async void Start()
         {
-            displayName = "my name"
-        });
+            var v = new Outer();
+            v.inner = new Inner();
+            v.inner.value = "abc";
+            Debug.Log(JsonUtility.ToJson(v));
+            Debug.Log(JsonUtility.ToJson(v.inner));
+        }
     }
 }

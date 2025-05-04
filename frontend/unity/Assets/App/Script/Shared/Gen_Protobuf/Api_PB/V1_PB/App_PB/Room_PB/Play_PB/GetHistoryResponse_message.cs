@@ -5,6 +5,7 @@
 
 namespace Api_PB.V1_PB.App_PB.Room_PB.Play_PB {
 
+    [System.Serializable]
     public class GetHistoryResponse {
     
         public global::System.Collections.Generic.List<global::Api_PB.V1_PB.App_PB.Room_PB.Play_PB.GetHistoryResponse_PB.HistoryEntry> history;

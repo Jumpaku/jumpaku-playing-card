@@ -5,6 +5,7 @@
 
 namespace Google_PB.Api_PB {
 
+    [System.Serializable]
     public class Http {
     
         public global::System.Collections.Generic.List<global::Google_PB.Api_PB.HttpRule> rules;
