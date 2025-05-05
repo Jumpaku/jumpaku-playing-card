@@ -4,7 +4,7 @@ package localdata;
 
 message LocalData {
   message Server {
-    string baseUrl= 1;
+    string base_url= 1;
   }
   Server server = 1;
   message Authentication {
