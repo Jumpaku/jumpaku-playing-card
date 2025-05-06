@@ -22,6 +22,10 @@ namespace App.Script.Shared.Error
             };
         }
 
+        private AppError()
+        {
+        }
+
         public Behaviour Behaviour { get; private set; }
         public string Title { get; private set; }
         public string Message { get; private set; }

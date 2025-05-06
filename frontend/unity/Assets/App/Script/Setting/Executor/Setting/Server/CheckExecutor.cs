@@ -13,9 +13,9 @@ namespace App.Script.Setting.Executor.Setting.Server
             public string messageText;
         }
 
-        public async UniTask<Result> Execute(Session session)
+        public async UniTask<Result> Execute(ISession session)
         {
-            var r = await HealthService.Check(session, new CheckRequest());
+            var r = await session.Call(new HealthService.Check(new CheckRequest()));
             if (r.IsError)
             {
                 return new Result

@@ -1,5 +1,4 @@
 using App.Script.Shared.Dialog;
-using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 
@@ -7,7 +6,6 @@ namespace App.Script.Setting
 {
     public class SettingController : MonoBehaviour
     {
-        private SettingService _service;
 
         private TMP_InputField _serverUrlInput;
         private TMP_InputField _displayNameInput;
@@ -21,19 +19,6 @@ namespace App.Script.Setting
         {
             _serverUrlInput = GameObject.Find("ServerUrlInput").GetComponent<TMP_InputField>();
             _displayNameInput = GameObject.Find("DisplayNameInput").GetComponent<TMP_InputField>();
-            _service = new(new SettingView_tmp(Dialog.Instance, _serverUrlInput));
-        }
-
-        public void OnClickServerCheck()
-        {
-            Debug.Log("OnClickServerCheck");
-            //_service.ServerCheck(_serverUrlInput.text).Forget();
-        }
-
-        public void OnClickUserCreate()
-        {
-            Debug.Log("OnClickUserCreate");
-            //_service.UserCreate(_serverUrlInput.text, _displayNameInput.text).Forget();
         }
 
         public void OnClickRoomCreate()

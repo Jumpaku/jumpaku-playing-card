@@ -13,9 +13,11 @@ namespace Api_PB.V1_PB.ErrorResponse_PB {
     
         BadRequest = 1,
     
-        Unauthorized = 2,
-    
         PreconditionFailed = 3,
+    
+        AccessTokenExpired = 4,
+    
+        RefreshTokenExpired = 5,
     
     }
     public class ErrorCode_String {
@@ -28,11 +30,14 @@ namespace Api_PB.V1_PB.ErrorResponse_PB {
                 case global::Api_PB.V1_PB.ErrorResponse_PB.ErrorCode.BadRequest:
                     return "BAD_REQUEST";
             
-                case global::Api_PB.V1_PB.ErrorResponse_PB.ErrorCode.Unauthorized:
-                    return "UNAUTHORIZED";
-            
                 case global::Api_PB.V1_PB.ErrorResponse_PB.ErrorCode.PreconditionFailed:
                     return "PRECONDITION_FAILED";
+            
+                case global::Api_PB.V1_PB.ErrorResponse_PB.ErrorCode.AccessTokenExpired:
+                    return "ACCESS_TOKEN_EXPIRED";
+            
+                case global::Api_PB.V1_PB.ErrorResponse_PB.ErrorCode.RefreshTokenExpired:
+                    return "REFRESH_TOKEN_EXPIRED";
             
                 default:
                     throw new global::System.ArgumentOutOfRangeException(nameof(enumValue), enumValue, null);
@@ -47,11 +52,14 @@ namespace Api_PB.V1_PB.ErrorResponse_PB {
                 case 1:
                     return "BAD_REQUEST";
             
-                case 2:
-                    return "UNAUTHORIZED";
-            
                 case 3:
                     return "PRECONDITION_FAILED";
+            
+                case 4:
+                    return "ACCESS_TOKEN_EXPIRED";
+            
+                case 5:
+                    return "REFRESH_TOKEN_EXPIRED";
             
                 default:
                     throw new global::System.ArgumentOutOfRangeException(nameof(longValue), longValue, null);
@@ -66,11 +74,14 @@ namespace Api_PB.V1_PB.ErrorResponse_PB {
                 case "BAD_REQUEST":
                     return global::Api_PB.V1_PB.ErrorResponse_PB.ErrorCode.BadRequest;
             
-                case "UNAUTHORIZED":
-                    return global::Api_PB.V1_PB.ErrorResponse_PB.ErrorCode.Unauthorized;
-            
                 case "PRECONDITION_FAILED":
                     return global::Api_PB.V1_PB.ErrorResponse_PB.ErrorCode.PreconditionFailed;
+            
+                case "ACCESS_TOKEN_EXPIRED":
+                    return global::Api_PB.V1_PB.ErrorResponse_PB.ErrorCode.AccessTokenExpired;
+            
+                case "REFRESH_TOKEN_EXPIRED":
+                    return global::Api_PB.V1_PB.ErrorResponse_PB.ErrorCode.RefreshTokenExpired;
             
                 default:
                     throw new global::System.ArgumentOutOfRangeException(nameof(stringValue), stringValue, null);
@@ -85,11 +96,14 @@ namespace Api_PB.V1_PB.ErrorResponse_PB {
                 case "BAD_REQUEST":
                     return 1;
             
-                case "UNAUTHORIZED":
-                    return 2;
-            
                 case "PRECONDITION_FAILED":
                     return 3;
+            
+                case "ACCESS_TOKEN_EXPIRED":
+                    return 4;
+            
+                case "REFRESH_TOKEN_EXPIRED":
+                    return 5;
             
                 default:
                     throw new global::System.ArgumentOutOfRangeException(nameof(stringValue), stringValue, null);
@@ -100,9 +114,11 @@ namespace Api_PB.V1_PB.ErrorResponse_PB {
     
         public const string BadRequest = "BAD_REQUEST";
     
-        public const string Unauthorized = "UNAUTHORIZED";
-    
         public const string PreconditionFailed = "PRECONDITION_FAILED";
+    
+        public const string AccessTokenExpired = "ACCESS_TOKEN_EXPIRED";
+    
+        public const string RefreshTokenExpired = "REFRESH_TOKEN_EXPIRED";
     
     }
 
@@ -116,11 +132,14 @@ namespace Api_PB.V1_PB.ErrorResponse_PB {
                 case global::Api_PB.V1_PB.ErrorResponse_PB.ErrorCode.BadRequest:
                     return 1;
             
-                case global::Api_PB.V1_PB.ErrorResponse_PB.ErrorCode.Unauthorized:
-                    return 2;
-            
                 case global::Api_PB.V1_PB.ErrorResponse_PB.ErrorCode.PreconditionFailed:
                     return 3;
+            
+                case global::Api_PB.V1_PB.ErrorResponse_PB.ErrorCode.AccessTokenExpired:
+                    return 4;
+            
+                case global::Api_PB.V1_PB.ErrorResponse_PB.ErrorCode.RefreshTokenExpired:
+                    return 5;
             
                 default:
                     throw new global::System.ArgumentOutOfRangeException(nameof(enumValue), enumValue, null);
@@ -135,11 +154,14 @@ namespace Api_PB.V1_PB.ErrorResponse_PB {
                 case "BAD_REQUEST":
                     return 1;
             
-                case "UNAUTHORIZED":
-                    return 2;
-            
                 case "PRECONDITION_FAILED":
                     return 3;
+            
+                case "ACCESS_TOKEN_EXPIRED":
+                    return 4;
+            
+                case "REFRESH_TOKEN_EXPIRED":
+                    return 5;
             
                 default:
                     throw new global::System.ArgumentOutOfRangeException(nameof(stringValue), stringValue, null);
@@ -154,11 +176,14 @@ namespace Api_PB.V1_PB.ErrorResponse_PB {
                 case 1:
                     return global::Api_PB.V1_PB.ErrorResponse_PB.ErrorCode.BadRequest;
             
-                case 2:
-                    return global::Api_PB.V1_PB.ErrorResponse_PB.ErrorCode.Unauthorized;
-            
                 case 3:
                     return global::Api_PB.V1_PB.ErrorResponse_PB.ErrorCode.PreconditionFailed;
+            
+                case 4:
+                    return global::Api_PB.V1_PB.ErrorResponse_PB.ErrorCode.AccessTokenExpired;
+            
+                case 5:
+                    return global::Api_PB.V1_PB.ErrorResponse_PB.ErrorCode.RefreshTokenExpired;
             
                 default:
                     throw new global::System.ArgumentOutOfRangeException(nameof(longValue), longValue, null);
@@ -173,11 +198,14 @@ namespace Api_PB.V1_PB.ErrorResponse_PB {
                 case 1:
                     return "BAD_REQUEST";
             
-                case 2:
-                    return "UNAUTHORIZED";
-            
                 case 3:
                     return "PRECONDITION_FAILED";
+            
+                case 4:
+                    return "ACCESS_TOKEN_EXPIRED";
+            
+                case 5:
+                    return "REFRESH_TOKEN_EXPIRED";
             
                 default:
                     throw new global::System.ArgumentOutOfRangeException(nameof(longValue), longValue, null);
@@ -188,9 +216,11 @@ namespace Api_PB.V1_PB.ErrorResponse_PB {
     
         public const long BadRequest = 1;
     
-        public const long Unauthorized = 2;
-    
         public const long PreconditionFailed = 3;
+    
+        public const long AccessTokenExpired = 4;
+    
+        public const long RefreshTokenExpired = 5;
     
     }
 }

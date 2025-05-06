@@ -1,9 +1,7 @@
-using System.Collections.Generic;
 using App.Script.Lib.Reference;
 using App.Script.Setting.Executor.Setting.Server;
 using App.Script.Shared;
 using Cysharp.Threading.Tasks;
-using R3;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,30 +10,26 @@ namespace App.Script.Setting.Component
 {
     public class ServerSettingPanel : MonoBehaviour
     {
+        private SessionManager _sessionManager;
+
         private TMP_InputField _serverUrlInput;
-        public IReadonlyReference<string> ServerUrl { get; private set; }
+        public IReadonlyReference<string> ServerUrl => new FactoryReference<string>(() => _serverUrlInput.text);
 
         private readonly Handler<CheckResult> _onCheck = new();
         public IAddHandler<CheckResult> OnCheck => _onCheck;
-        
-        private CheckExecutorFunc _doCheck;
-
-        public delegate UniTask<CheckResult> CheckExecutorFunc(ServerSettingPanel component);
 
         public class CheckResult
         {
             public CheckExecutor.Result Result;
         }
 
-        public void Init(CheckExecutorFunc doCheck)
+        public void Init(SessionManager sessionManager)
         {
             Debug.Log("ServerSettingPanel/Init");
 
-            _doCheck = doCheck;
+            _sessionManager = sessionManager;
 
             _serverUrlInput = transform.Find("ServerUrl").Find("ServerUrlInput").GetComponent<TMP_InputField>();
-
-            ServerUrl = new FactoryReference<string>(() => _serverUrlInput.text);
 
             transform.Find("CheckButton").GetComponent<Button>()
                 .onClick
@@ -48,11 +42,11 @@ namespace App.Script.Setting.Component
         {
             Debug.Log("ServerSettingPanel/Check");
 
-            var r = await _doCheck(this);
+            var r = await new CheckExecutor().Execute(_sessionManager.Session);
 
-            await _onCheck.Handle(r);
-
-            return r;
+            var result = new CheckResult { Result = r };
+            await _onCheck.Handle(result);
+            return result;
         }
     }
 }

@@ -8,107 +8,121 @@ using UnityEngine;
 
 namespace {{.Namespace.Join}} {
 
-    public partial class {{.ClassName}}
-    {
-
-        public class {{.MethodName}}_Result : global::App.Script.Shared.Api.IResultError {
-            public global::UnityEngine.Networking.UnityWebRequest.Result result;
-            public global::{{.Output.Namespace.Join}}.{{.Output.ClassName}} responseBody;
-            public global::Api_PB.V1_PB.ErrorResponse errorResponseBody;
-            public string errorMessage;
-            public global::UnityEngine.Networking.UnityWebRequest.Result ErrorKind { get => result; }
-            public bool IsError { get => result != global::UnityEngine.Networking.UnityWebRequest.Result.Success; }
-            public string ErrorTitle { get => result.ToString(); }
-            public string ErrorMessage { get => errorMessage; }
-            public global::Api_PB.V1_PB.ErrorResponse ErrorDetail { get => errorResponseBody; }
-        }
-
-        public static async global::Cysharp.Threading.Tasks.UniTask<{{.MethodName}}_Result> {{.MethodName}}(
-            global::App.Script.Shared.Api.ISession session,
-            global::{{.Input.Namespace.Join}}.{{.Input.ClassName}} input,
-            global::System.Collections.Generic.Dictionary<string, string> requestHeaders = null
-        )
-        {
-            string urlPath = {{.HttpInfo.UrlPathTemplate "input"}};
-            string urlQuery = {{.HttpInfo.UrlQueryTemplate "input"}};
-            var requestUrl = $"{session.GetBaseUrl()}{urlPath}{urlQuery}";
-
-            var inputJson = {{if eq .HttpInfo.Method "GET"}}""{{else}}global::UnityEngine.JsonUtility.ToJson(input){{end}};
-            global::UnityEngine.Networking.UnityWebRequest uwr;
-
-            try
+    public partial class {{.ClassName}} {
+        public class {{.MethodName}} : global::App.Script.Shared.Api.ICaller<global::{{.Output.Namespace.Join}}.{{.Output.ClassName}}> {
+            public {{.MethodName}}(
+                global::{{.Input.Namespace.Join}}.{{.Input.ClassName}} input,
+                global::System.Collections.Generic.Dictionary<string, string> requestHeaders = null
+            )
             {
-                uwr = new global::UnityEngine.Networking.UnityWebRequest(
-                    requestUrl,
-                    "{{.HttpInfo.Method}}",
-                    new global::UnityEngine.Networking.DownloadHandlerBuffer(),
-                    new global::UnityEngine.Networking.UploadHandlerRaw(global::System.Text.Encoding.UTF8.GetBytes(inputJson))
-                );
-                uwr.SetRequestHeader("Content-Type", "application/json");
-                requestHeaders = requestHeaders ?? new ();
-                requestHeaders = session.AddAuthorization(requestHeaders ?? new ());
-                foreach (var header in requestHeaders)
-                {
-                    uwr.SetRequestHeader(header.Key, header.Value);
-                }
-
-                session.OnSend(uwr.method, uwr.url, requestHeaders, global::System.Text.Encoding.UTF8.GetString(uwr.uploadHandler.data));
-                await uwr.SendWebRequest();
+                RequestHeaders = requestHeaders ?? new();
+                _input = input;
             }
-            catch (System.Exception e)
+            private global::{{.Input.Namespace.Join}}.{{.Input.ClassName}} _input;
+            public global::System.Collections.Generic.Dictionary<string, string> RequestHeaders { get; private set; }
+            public string RequestUrl(string baseUrl)
             {
-                return new {{.MethodName}}_Result
-                {
-                    result = global::UnityEngine.Networking.UnityWebRequest.Result.ConnectionError,
-                    errorMessage = e.Message,
-                };
+                string urlPath = {{.HttpInfo.UrlPathTemplate "_input"}};
+                string urlQuery = {{.HttpInfo.UrlQueryTemplate "_input"}};
+                return $"{baseUrl}{urlPath}{urlQuery}";
             }
-            var outputJson = uwr.downloadHandler.text;
-            session.OnReceive(uwr.responseCode, uwr.GetResponseHeaders(), outputJson);
+            public string RequestBody => global::UnityEngine.JsonUtility.ToJson(_input);
+            public global::UnityEngine.Networking.UnityWebRequest.Result CallResult { get; private set; }
+            public global::System.Collections.Generic.Dictionary<string, string> ResponseHeaders { get; private set; }
+            public long ResponseCode { get; private set; }
+            public string ResponseBody { get; private set; }
 
-            switch (uwr.result)
+            public async global::Cysharp.Threading.Tasks.UniTask<global::App.Script.Shared.Api.CallResult<global::{{.Output.Namespace.Join}}.{{.Output.ClassName}}>> Call(string baseUrl)
             {
-                case global::UnityEngine.Networking.UnityWebRequest.Result.Success:
+                global::UnityEngine.Networking.UnityWebRequest uwr;
+
+                try
                 {
-                    try
+                    uwr = new global::UnityEngine.Networking.UnityWebRequest(
+                        RequestUrl(baseUrl),
+                        "{{.HttpInfo.Method}}",
+                        new global::UnityEngine.Networking.DownloadHandlerBuffer(),
+                        new global::UnityEngine.Networking.UploadHandlerRaw(
+                            global::System.Text.Encoding.UTF8.GetBytes(RequestBody))
+                    );
+                    uwr.SetRequestHeader("Content-Type", "application/json");
+                    foreach (var header in RequestHeaders)
                     {
-                        return new {{.MethodName}}_Result {
-                            result = uwr.result,
-                            responseBody = global::UnityEngine.JsonUtility.FromJson<global::{{.Output.Namespace.Join}}.{{.Output.ClassName}}>(outputJson)
-                        };
+                        uwr.SetRequestHeader(header.Key, header.Value);
                     }
-                    catch (System.Exception e)
-                    {
-                        return new {{.MethodName}}_Result
-                        {
-                            result = global::UnityEngine.Networking.UnityWebRequest.Result.DataProcessingError,
-                            errorMessage = e.Message,
-                        };
-                    }
+
+                    await uwr.SendWebRequest();
                 }
-                case global::UnityEngine.Networking.UnityWebRequest.Result.ProtocolError:
+                catch (System.Exception e)
                 {
-                    try
+                    return new global::App.Script.Shared.Api.CallResult<global::{{.Output.Namespace.Join}}.{{.Output.ClassName}}>()
                     {
-                        return new {{.MethodName}}_Result {
-                            result = uwr.result,
-                            errorResponseBody = global::UnityEngine.JsonUtility.FromJson<global::Api_PB.V1_PB.ErrorResponse>(outputJson),
-                            errorMessage = uwr.error,
-                        };
-                    }
-                    catch (System.Exception e)
-                    {
-                        return new {{.MethodName}}_Result
-                        {
-                            result = global::UnityEngine.Networking.UnityWebRequest.Result.DataProcessingError,
-                            errorMessage = e.Message,
-                        };
-                    }
+                        Result = global::UnityEngine.Networking.UnityWebRequest.Result.ConnectionError,
+                        ErrorTitle = "Connection Error",
+                        ErrorMessage = e.Message,
+                    };
                 }
-                default:
-                    return new {{.MethodName}}_Result { result = uwr.result, errorMessage = uwr.error };
+
+                ResponseHeaders = uwr.GetResponseHeaders();
+                ResponseCode = uwr.responseCode;
+                ResponseBody = uwr.downloadHandler.text;
+                switch (uwr.result)
+                {
+                    case global::UnityEngine.Networking.UnityWebRequest.Result.Success:
+                    {
+                        try
+                        {
+                            return new global::App.Script.Shared.Api.CallResult<global::{{.Output.Namespace.Join}}.{{.Output.ClassName}}>()
+                            {
+                                Result = uwr.result,
+                                Response = global::UnityEngine.JsonUtility
+                                    .FromJson<global::{{.Output.Namespace.Join}}.{{.Output.ClassName}}>(
+                                        ResponseBody)
+                            };
+                        }
+                        catch (System.Exception e)
+                        {
+                            return new global::App.Script.Shared.Api.CallResult<global::{{.Output.Namespace.Join}}.{{.Output.ClassName}}>()
+                            {
+                                Result = global::UnityEngine.Networking.UnityWebRequest.Result.DataProcessingError,
+                                ErrorTitle = "Invalid Server Response",
+                                ErrorMessage = e.Message,
+                            };
+                        }
+                    }
+                    case global::UnityEngine.Networking.UnityWebRequest.Result.ProtocolError:
+                    {
+                        try
+                        {
+                            return new global::App.Script.Shared.Api.CallResult<global::{{.Output.Namespace.Join}}.{{.Output.ClassName}}>()
+                            {
+                                Result = uwr.result,
+                                ErrorTitle = "Server Return Error",
+                                ErrorMessage = uwr.error,
+                                ErrorResponse =
+                                    global::UnityEngine.JsonUtility.FromJson<global::Api_PB.V1_PB.ErrorResponse>(
+                                        ResponseBody),
+                            };
+                        }
+                        catch (System.Exception e)
+                        {
+                            return new global::App.Script.Shared.Api.CallResult<global::{{.Output.Namespace.Join}}.{{.Output.ClassName}}>()
+                            {
+                                Result = global::UnityEngine.Networking.UnityWebRequest.Result.DataProcessingError,
+                                ErrorTitle = "Invalid Server Response",
+                                ErrorMessage = e.Message,
+                            };
+                        }
+                    }
+                    default:
+                        return new global::App.Script.Shared.Api.CallResult<global::{{.Output.Namespace.Join}}.{{.Output.ClassName}}>()
+                        {
+                            Result = uwr.result,
+                            ErrorTitle = "Unexpected Error",
+                            ErrorMessage = uwr.error
+                        };
+                }
             }
         }
     }
-
 }

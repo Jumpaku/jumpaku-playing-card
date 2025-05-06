@@ -1,13 +1,8 @@
-using Api_PB.V1_PB;
-using Api_PB.V1_PB.App_PB.Authentication_PB;
-using Api_PB.V1_PB.App_PB.Authentication_PB.AuthenticationService_PB;
 using Api_PB.V1_PB.App_PB.User_PB;
 using Api_PB.V1_PB.App_PB.User_PB.UserService_PB;
 using App.Script.Shared;
 using App.Script.Shared.Api;
 using Cysharp.Threading.Tasks;
-using UnityEngine.Networking;
-using Random = UnityEngine.Random;
 
 namespace App.Script.Setting.Executor.Setting.User
 {
@@ -17,42 +12,30 @@ namespace App.Script.Setting.Executor.Setting.User
         {
             public string DisplayName;
             public string UserId;
-            public string AccessToken;
-            public string RefreshToken;
         }
 
-        public async UniTask<Result<UserData>> Execute(Session session, string displayName)
+        public async UniTask<Result<UserData>> Execute(ISession session, string displayName)
         {
-            string accessToken;
-            string refreshToken;
+            var createResult = await session.Create();
+            if (createResult.IsError)
             {
-                var r = await AuthenticationService.TemporaryRegisterLogin(session, new TemporaryRegisterLoginRequest
-                {
-                    clientType = ClientType_String.Mobile,
-                });
-                if (r.IsError)
-                {
-                    return Result<UserData>.Error(r.ErrorTitle, r.errorMessage);
-                }
-
-                accessToken = r.responseBody.accessToken;
-                refreshToken = r.responseBody.refreshToken;
+                return Result<UserData>.Error(createResult.ErrorTitle, createResult.ErrorMessage);
             }
+
+            var r = await session.Call(new UserService.CreateUser(new CreateUserRequest
             {
-                session.SetAuthorization(accessToken);
-                var r = await UserService.CreateUser(session, new CreateUserRequest
-                {
-                    displayName = displayName,
-                });
-
-                return Result<UserData>.Ok(new UserData
-                {
-                    DisplayName = displayName,
-                    UserId = r.responseBody.userId,
-                    AccessToken = accessToken,
-                    RefreshToken = refreshToken,
-                });
+                displayName = displayName,
+            }));
+            if (r.IsError)
+            {
+                return Result<UserData>.Error(r.ErrorTitle, r.ErrorMessage);
             }
+
+            return Result<UserData>.Ok(new UserData
+            {
+                DisplayName = displayName,
+                UserId = r.Response.userId,
+            });
         }
     }
 }

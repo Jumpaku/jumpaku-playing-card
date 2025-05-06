@@ -1,14 +1,16 @@
-using System.Collections.Generic;
+using Api_PB.V1_PB.App_PB.Authentication_PB;
+using Cysharp.Threading.Tasks;
 
 namespace App.Script.Shared.Api
 {
     public interface ISession
     {
-        public Dictionary<string, string> AddAuthorization(Dictionary<string, string> requestHeaders);
-        public string GetBaseUrl();
+        public UniTask<CallResult<TOut>> Call<TOut>(ICaller<TOut> caller);
 
-        public void OnSend(string method, string url, Dictionary<string, string> headers, string body);
+        public UniTask<CallResult<LogoutResponse>> Invalidate();
 
-        public void OnReceive(long statusCode, Dictionary<string, string> headers, string body);
+        public UniTask<CallResult<TemporaryRegisterLoginResponse>> Create();
+
+        public UniTask<CallResult<RefreshResponse>> Refresh();
     }
 }
