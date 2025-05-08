@@ -11,7 +11,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file api/v1/error.proto.
  */
 export const file_api_v1_error: GenFile = /*@__PURE__*/
-  fileDesc("ChJhcGkvdjEvZXJyb3IucHJvdG8SBmFwaS52MSKRAgoNRXJyb3JSZXNwb25zZRIzCgplcnJvcl9jb2RlGAEgASgOMh8uYXBpLnYxLkVycm9yUmVzcG9uc2UuRXJyb3JDb2RlEhkKEWVycm9yX2Rlc2NyaXB0aW9uGAIgASgJEi0KBGRhdGEYAyADKAsyHy5hcGkudjEuRXJyb3JSZXNwb25zZS5EYXRhRW50cnkaKwoJRGF0YUVudHJ5EgsKA2tleRgBIAEoCRINCgV2YWx1ZRgCIAEoCToCOAEiVAoJRXJyb3JDb2RlEgsKB1VOS05PV04QABIPCgtCQURfUkVRVUVTVBABEhAKDFVOQVVUSE9SSVpFRBACEhcKE1BSRUNPTkRJVElPTl9GQUlMRUQQA0JUCgpjb20uYXBpLnYxQgpFcnJvclByb3RvUAFaAS6iAgNBWFiqAgZBcGkuVjHKAgZBcGlcVjHiAhJBcGlcVjFcR1BCTWV0YWRhdGHqAgdBcGk6OlYxYgZwcm90bzM", [file_google_protobuf_timestamp]);
+  fileDesc("ChJhcGkvdjEvZXJyb3IucHJvdG8SBmFwaS52MSK0AgoNRXJyb3JSZXNwb25zZRIzCgplcnJvcl9jb2RlGAEgASgOMh8uYXBpLnYxLkVycm9yUmVzcG9uc2UuRXJyb3JDb2RlEhkKEWVycm9yX2Rlc2NyaXB0aW9uGAIgASgJEi0KBGRhdGEYAyADKAsyHy5hcGkudjEuRXJyb3JSZXNwb25zZS5EYXRhRW50cnkaKwoJRGF0YUVudHJ5EgsKA2tleRgBIAEoCRINCgV2YWx1ZRgCIAEoCToCOAEidwoJRXJyb3JDb2RlEgsKB1VOS05PV04QABIPCgtCQURfUkVRVUVTVBABEhcKE1BSRUNPTkRJVElPTl9GQUlMRUQQAxIYChRBQ0NFU1NfVE9LRU5fRVhQSVJFRBAEEhkKFVJFRlJFU0hfVE9LRU5fRVhQSVJFRBAFQlQKCmNvbS5hcGkudjFCCkVycm9yUHJvdG9QAVoBLqICA0FYWKoCBkFwaS5WMcoCBkFwaVxWMeICEkFwaVxWMVxHUEJNZXRhZGF0YeoCB0FwaTo6VjFiBnByb3RvMw", [file_google_protobuf_timestamp]);
 
 /**
  * @generated from message api.v1.ErrorResponse
@@ -75,20 +75,27 @@ export enum ErrorResponse_ErrorCode {
   BAD_REQUEST = 1,
 
   /**
-   * @generated from enum value: UNAUTHORIZED = 2;
-   */
-  UNAUTHORIZED = 2,
-
-  /**
+   * UNAUTHORIZED = 2;
+   *
    * @generated from enum value: PRECONDITION_FAILED = 3;
    */
   PRECONDITION_FAILED = 3,
+
+  /**
+   * @generated from enum value: ACCESS_TOKEN_EXPIRED = 4;
+   */
+  ACCESS_TOKEN_EXPIRED = 4,
+
+  /**
+   * @generated from enum value: REFRESH_TOKEN_EXPIRED = 5;
+   */
+  REFRESH_TOKEN_EXPIRED = 5,
 }
 
 /**
  * @generated from enum api.v1.ErrorResponse.ErrorCode
  */
-export type ErrorResponse_ErrorCodeJson = "UNKNOWN" | "BAD_REQUEST" | "UNAUTHORIZED" | "PRECONDITION_FAILED";
+export type ErrorResponse_ErrorCodeJson = "UNKNOWN" | "BAD_REQUEST" | "PRECONDITION_FAILED" | "ACCESS_TOKEN_EXPIRED" | "REFRESH_TOKEN_EXPIRED";
 
 /**
  * Describes the enum api.v1.ErrorResponse.ErrorCode.

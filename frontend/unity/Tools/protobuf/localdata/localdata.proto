@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package localdata;
+
+message LocalData {
+  message Server {
+    string base_url= 1;
+  }
+  Server server = 1;
+  message Authentication {
+    string access_token = 1;
+    string refresh_token = 2;
+  }
+  Authentication auth = 2;
+  message User {
+    string user_id = 1;
+  }
+  User user = 3;
+}

@@ -1,5 +1,13 @@
-import {Algorithm, sign, verify, VerifyOptions} from "jsonwebtoken";
+import {Algorithm, sign, verify, decode, VerifyOptions} from "jsonwebtoken";
 import {instant} from "./temporal";
+
+export function decodeJWT<P extends {}>(jwt: string): P {
+    const payload = decode(jwt,);
+    if (typeof payload === 'string') {
+        throw new Error('string payload not supported');
+    }
+    return payload as P;
+}
 
 export function verifyJWT<P extends {}>(jwt: string, pubKey: string, params: {
     timestamp: Date,

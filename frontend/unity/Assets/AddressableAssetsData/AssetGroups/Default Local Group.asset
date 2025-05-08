@@ -1,0 +1,323 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_GUID: 701c4f1fe85e148ba9f999237c4ab160
+  m_SerializeEntries:
+  - m_GUID: 03a7cc14928864975b92de7d6fe03fbf
+    m_Address: Assets/App/Texture/Play/cards/cards.006.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 118f91c9ee90f44ec986f654152731d4
+    m_Address: Assets/App/Prefab/Play/Card.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1845023b3512c4578b83691ea7cc9951
+    m_Address: Assets/App/Texture/Play/cards/cards.024.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 19b5f4281ad9144cba122d8e1df54e68
+    m_Address: Assets/App/Texture/Play/cards/cards.034.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1f1541830050b4ee68fa4904742ab5ea
+    m_Address: Assets/App/Texture/Play/cards/cards.044.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 213bb3f94a3734da59b60c3b7aad1a7d
+    m_Address: Assets/App/Texture/Play/cards/cards.021.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 23fd5cf71ef394cb58dcb7e02f9ff225
+    m_Address: Assets/App/Texture/Play/cards/cards.030.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 268f90f29c522402bb294a7bb8832417
+    m_Address: Assets/App/Texture/Play/cards/cards.036.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 274dc905f4149467ca59691276fb6e17
+    m_Address: Assets/App/Texture/Play/cards/cards.004.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 29203da9ba0d540c58187fa603f7e856
+    m_Address: Assets/App/Texture/Play/cards/cards.003.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2a3e754a262d944ba8160e4cf38aac81
+    m_Address: Assets/App/Texture/Play/cards/cards.047.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2a6f47ff2120743839d92a8cda83a0cb
+    m_Address: Assets/App/Texture/Play/cards/cards.012.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 30af210d6579e4b20a9938478468657d
+    m_Address: Assets/App/Texture/Play/cards/cards.015.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 36dc3df11536b4f638da288971b7418a
+    m_Address: Assets/App/Texture/Play/cards/cards.026.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3ef75064ac5c84f91a41373a7999e89a
+    m_Address: Assets/App/Texture/Play/cards/cards.050.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 471c9df720f89483ea52e05332f34f36
+    m_Address: Assets/App/Texture/Play/cards/cards.013.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4b3c77cfe53434c55a30719f4bfd9403
+    m_Address: Assets/App/Texture/Play/cards/cards.019.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 522d9b8b606644fcf91fa45e547cad58
+    m_Address: Assets/App/Texture/Play/cards/cards.039.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 55ddbdffa5ba44c52963a6c2ab4ed670
+    m_Address: Assets/App/Texture/Play/cards/cards.055.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5c06425c61bf446cbb4c055afaf12345
+    m_Address: Assets/App/Texture/Play/cards/cards.007.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 64a79704921fb41ecb31042dc41d70a2
+    m_Address: Assets/App/Texture/Play/cards/cards.048.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 660499ad3dd254f7daf8aaa184068d1a
+    m_Address: Assets/App/Texture/Play/cards/cards.049.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 674f772740f574356bdcc0e10bdeba9c
+    m_Address: Assets/App/Texture/Play/cards/cards.052.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6833a9ab61912497b8c7b4d4944f6ce4
+    m_Address: Assets/App/Texture/Play/cards/cards.011.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 69d98e683d71d4c8aa8c6a96766f12d5
+    m_Address: Assets/App/Texture/Play/cards/cards.025.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6a4dfa24653b8425e8c8ea0f1cfeb025
+    m_Address: Assets/App/Texture/Play/cards/cards.046.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6b9281c06a9594a199e2b5ecf79a1a11
+    m_Address: Assets/App/Texture/Play/cards/cards.040.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6e55005d3f83847c3a0aab8188005aaa
+    m_Address: Assets/App/Texture/Play/cards/cards.016.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 750bd9cc652f64281b1fe8aed8489712
+    m_Address: Assets/App/Texture/Play/cards/cards.027.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7eb69846aa774480aade8a1e1b88f01c
+    m_Address: Assets/App/Texture/Play/cards/cards.020.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7f2bb3cde9ccf420a8e5d2b602f30d4e
+    m_Address: Assets/App/Texture/Play/cards/cards.023.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 832022716c5604e8785362865fe18049
+    m_Address: Assets/App/Texture/Play/cards/cards.043.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 849815c9ad723499ea14a166a96ee8d0
+    m_Address: Assets/Scenes/SettingScene.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 92c0d6b0aec5f4f08bedd9e065d1bb6e
+    m_Address: Assets/App/Texture/Play/cards/cards.001.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 939302832e9d94ff281fab05284122b3
+    m_Address: Assets/App/Texture/Play/cards/cards.029.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 96e86a8b6c73a4b8da8c19520f4680cb
+    m_Address: Assets/App/Texture/Play/cards/cards.008.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9cb74968a001b444c92e29faa38ea949
+    m_Address: Assets/App/Texture/Play/cards/cards.038.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9fd44dab6a96847bd942250978d6cf28
+    m_Address: Assets/App/Texture/Play/cards/cards.032.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a719e60e7249745c7ac46030ce4b580a
+    m_Address: Assets/App/Texture/Play/cards/cards.017.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a74e8dc3a8b5f486b965293f3ff80ab9
+    m_Address: Assets/App/Prefab/Setting/Seat.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ad371cb0025084cbd88bc3352879886c
+    m_Address: Assets/Scenes/PlayScene.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: aec153be4b63a4eada485d5ec814f513
+    m_Address: Assets/App/Texture/Play/cards/cards.010.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b2d0a65bed6c249c18768f8d59f2419f
+    m_Address: Assets/App/Texture/Play/cards/cards.014.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bb75908f231ff4d94982e5a3f3f694cd
+    m_Address: Assets/App/Texture/Play/cards/cards.042.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bd9866b5532f94de98a4499ff726e789
+    m_Address: Assets/App/Texture/Play/cards/cards.041.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bf1b135a9d0a346ada6b0b6e735e8b2a
+    m_Address: Assets/App/Texture/Play/cards/cards.009.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bfc56007532c0467a80d6f9674ecbeee
+    m_Address: Assets/App/Texture/Play/cards/cards.028.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c4ed4aa6e31894235962222f359a0079
+    m_Address: Assets/App/Texture/Play/cards/cards.037.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c81b8942af9474f4baa5759ea1bd624a
+    m_Address: Assets/App/Texture/Play/cards/cards.033.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cd8927b45287641659682cb6a4ba9321
+    m_Address: Assets/App/Texture/Play/cards/cards.035.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cf4a2edeb92224e1691ab33524bbaeac
+    m_Address: Assets/App/Texture/Play/cards/cards.053.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dd9084ae121ea4543b6af60164fad760
+    m_Address: Assets/App/ScriptableObject/Setting/SettingConstant.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e7fe70b6ea87c486bab4a08b214ddfdc
+    m_Address: Assets/App/Texture/Play/cards/cards.022.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ea055e0c8c945486e9e90319328ed1e4
+    m_Address: Assets/App/Texture/Play/cards/cards.002.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ebcd68fdc1f8a4069b87d7e799e18a49
+    m_Address: Assets/App/Texture/Play/cards/cards.045.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: edc6ae4cc38f447019a389cb81d26451
+    m_Address: Assets/App/Texture/Play/cards/cards.005.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f707f9543a4f3453fa563ab76d5e09c2
+    m_Address: Assets/App/Texture/Play/cards/cards.018.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fb753442a6cb54e5cb9ee7d162c19b0f
+    m_Address: Assets/App/Texture/Play/cards/cards.051.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fed6dfb7e435d4ceba3fdd51e2d15266
+    m_Address: Assets/App/Texture/Play/cards/cards.054.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ff6b8a9078f6b41feb7d513abcfb5321
+    m_Address: Assets/App/Texture/Play/cards/cards.031.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 93337bf857cbb4b76be5ba523a33e728, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 703923982855b4647b6f462e4cf6f704, type: 2}
+    - {fileID: 11400000, guid: 58ee3996f785b4a948fd1f6d75a43ac5, type: 2}

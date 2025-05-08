@@ -10,6 +10,7 @@ import {AppExceptionFilter} from "./exception.filter";
 import {UserModule} from "./controller/api/v1/app/user/user.module";
 import {RoomModule} from "./controller/api/v1/app/room/room.module";
 import {PlayModule} from "./controller/api/v1/app/room/play/play.module";
+import {HealthModule} from "./controller/api/v1/health/health.module";
 
 @Module({
     imports: [
@@ -20,6 +21,7 @@ import {PlayModule} from "./controller/api/v1/app/room/play/play.module";
         UserModule,
         RoomModule,
         PlayModule,
+        HealthModule,
     ],
     providers: [
         {
