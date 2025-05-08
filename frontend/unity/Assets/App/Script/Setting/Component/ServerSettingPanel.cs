@@ -1,5 +1,5 @@
 using App.Script.Lib.Reference;
-using App.Script.Setting.Executor.Setting.Server;
+using App.Script.Setting.Logic.Setting.Server;
 using App.Script.Shared;
 using Cysharp.Threading.Tasks;
 using TMPro;
@@ -15,13 +15,8 @@ namespace App.Script.Setting.Component
         private TMP_InputField _serverUrlInput;
         public IReadonlyReference<string> ServerUrl => new FactoryReference<string>(() => _serverUrlInput.text);
 
-        private readonly Handler<CheckResult> _onCheck = new();
-        public IAddHandler<CheckResult> OnCheck => _onCheck;
-
-        public class CheckResult
-        {
-            public CheckExecutor.Result Result;
-        }
+        private readonly Handler<CheckExecutor.CheckResult> _onCheck = new();
+        public IAddHandler<CheckExecutor.CheckResult> OnCheck => _onCheck;
 
         public void Init(SessionManager sessionManager)
         {
@@ -38,13 +33,12 @@ namespace App.Script.Setting.Component
             _onCheck.Clear();
         }
 
-        public async UniTask<CheckResult> Check()
+        public async UniTask<CheckExecutor.CheckResult> Check()
         {
             Debug.Log("ServerSettingPanel/Check");
 
-            var r = await new CheckExecutor().Execute(_sessionManager.Session);
+            var result = await new CheckExecutor().Execute(_sessionManager.Session);
 
-            var result = new CheckResult { Result = r };
             await _onCheck.Handle(result);
             return result;
         }

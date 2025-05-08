@@ -74,7 +74,7 @@ namespace Api_PB.V1_PB.App_PB.Room_PB.RoomService_PB {
                             return new global::App.Script.Shared.Api.CallResult<global::Api_PB.V1_PB.App_PB.Room_PB.EnterResponse>()
                             {
                                 Result = uwr.result,
-                                Response = global::UnityEngine.JsonUtility
+                                Value = global::UnityEngine.JsonUtility
                                     .FromJson<global::Api_PB.V1_PB.App_PB.Room_PB.EnterResponse>(
                                         ResponseBody)
                             };

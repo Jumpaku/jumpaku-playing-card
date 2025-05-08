@@ -1,7 +1,7 @@
 namespace App.Script.Lib.Reference
 {
-    public interface IReference<T> : IReadonlyReference<T>
+    public interface IReference<T>
     {
-        public new T Value { set; }
+        public T Value { get; set; }
     }
 }

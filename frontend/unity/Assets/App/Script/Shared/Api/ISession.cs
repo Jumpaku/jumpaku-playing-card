@@ -1,4 +1,5 @@
 using Api_PB.V1_PB.App_PB.Authentication_PB;
+using App.Script.Lib;
 using Cysharp.Threading.Tasks;
 
 namespace App.Script.Shared.Api
@@ -7,10 +8,10 @@ namespace App.Script.Shared.Api
     {
         public UniTask<CallResult<TOut>> Call<TOut>(ICaller<TOut> caller);
 
-        public UniTask<CallResult<LogoutResponse>> Invalidate();
+        public UniTask<CallResult<Unit>> Invalidate();
 
-        public UniTask<CallResult<TemporaryRegisterLoginResponse>> Create();
+        public UniTask<CallResult<TokenData>> Create();
 
-        public UniTask<CallResult<RefreshResponse>> Refresh();
+        public UniTask<CallResult<TokenData>> Refresh();
     }
 }

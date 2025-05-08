@@ -74,7 +74,7 @@ namespace Api_PB.V1_PB.Health_PB.HealthService_PB {
                             return new global::App.Script.Shared.Api.CallResult<global::Api_PB.V1_PB.Health_PB.CheckResponse>()
                             {
                                 Result = uwr.result,
-                                Response = global::UnityEngine.JsonUtility
+                                Value = global::UnityEngine.JsonUtility
                                     .FromJson<global::Api_PB.V1_PB.Health_PB.CheckResponse>(
                                         ResponseBody)
                             };

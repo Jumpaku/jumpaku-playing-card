@@ -75,7 +75,7 @@ namespace {{.Namespace.Join}} {
                             return new global::App.Script.Shared.Api.CallResult<global::{{.Output.Namespace.Join}}.{{.Output.ClassName}}>()
                             {
                                 Result = uwr.result,
-                                Response = global::UnityEngine.JsonUtility
+                                Value = global::UnityEngine.JsonUtility
                                     .FromJson<global::{{.Output.Namespace.Join}}.{{.Output.ClassName}}>(
                                         ResponseBody)
                             };

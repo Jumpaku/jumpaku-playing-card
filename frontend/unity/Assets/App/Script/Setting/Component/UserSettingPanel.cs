@@ -1,7 +1,6 @@
 using App.Script.Lib.Reference;
-using App.Script.Setting.Executor.Setting.User;
+using App.Script.Setting.Logic.Setting.User;
 using App.Script.Shared;
-using App.Script.Shared.Error;
 using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
@@ -14,23 +13,13 @@ namespace App.Script.Setting.Component
         private TMP_InputField _displayNameInput;
         public IReadonlyReference<string> DisplayName => new FactoryReference<string>(() => _displayNameInput.text);
         public SessionManager _session;
-        private readonly Handler<CreateResult> _onCreate = new();
-        public IAddHandler<CreateResult> OnCreate => _onCreate;
+        private readonly Handler<CreateExecutor.CreateResult> _onCreate = new();
+        public IAddHandler<CreateExecutor.CreateResult> OnCreate => _onCreate;
 
 
-        public delegate UniTask<CreateResult> CreateExecutorFunc(UserSettingPanel component);
+        public delegate UniTask<CreateExecutor.CreateResult> CreateExecutorFunc(UserSettingPanel component);
 
         private CreateExecutorFunc _createExecutor;
-
-        public class CreateResult
-        {
-            public bool isError;
-            public AppError error;
-            public string userId;
-            public string displayName;
-            public string accessToken;
-            public string refreshToken;
-        }
 
         public void Init(SessionManager session)
         {
@@ -45,24 +34,13 @@ namespace App.Script.Setting.Component
             _onCreate.Clear();
         }
 
-        public async UniTask<CreateResult> Create()
+        public async UniTask<CreateExecutor.CreateResult> Create()
         {
             Debug.Log("UserSettingPanel/Create");
 
 
-            var r = await new CreateExecutor().Execute(_session.Session, DisplayName.Value);
+            var result = await new CreateExecutor().Execute(_session.Session, DisplayName.Value);
 
-            var result = r.IsError
-                ? new CreateResult
-                {
-                    isError = true,
-                    error = AppError.NewDialogNotice(r.ErrorTitle, r.ErrorMessage)
-                }
-                : new CreateResult()
-                {
-                    displayName = r.Value.DisplayName,
-                    userId = r.Value.UserId
-                };
             await _onCreate.Handle(result);
             return result;
         }

@@ -74,7 +74,7 @@ namespace Api_PB.V1_PB.Example_PB.ExampleService_PB {
                             return new global::App.Script.Shared.Api.CallResult<global::Api_PB.V1_PB.Example_PB.DeleteExampleResponse>()
                             {
                                 Result = uwr.result,
-                                Response = global::UnityEngine.JsonUtility
+                                Value = global::UnityEngine.JsonUtility
                                     .FromJson<global::Api_PB.V1_PB.Example_PB.DeleteExampleResponse>(
                                         ResponseBody)
                             };

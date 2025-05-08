@@ -1,11 +1,12 @@
 namespace App.Script.Lib.Reference
 {
-    public class ValueReference<T> : IReference<T>
+    public class ValueReference<T> : IReference<T>, IReadonlyReference<T>
     {
         public ValueReference(T initValue)
         {
             _value = initValue;
         }
+
         private T _value;
 
         public T Value

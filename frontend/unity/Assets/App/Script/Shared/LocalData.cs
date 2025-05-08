@@ -5,7 +5,7 @@ namespace App.Script.Shared
 {
     public static class LocalData
     {
-        public static string LocalDataKey => "localData";
+        private static string LocalDataKey => "localData";
 
         public static void Clear()
         {

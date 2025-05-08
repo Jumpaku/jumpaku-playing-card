@@ -14,8 +14,8 @@ namespace App.Script.Setting.Component
     class Session : ISession
     {
         public IReadonlyReference<string> BaseUrl;
-        public ValueReference<string> AccessToken;
-        public ValueReference<string> RefreshToken;
+        public IReference<string> AccessToken;
+        public IReference<string> RefreshToken;
 
         public async UniTask<CallResult<TOut>> Call<TOut>(ICaller<TOut> caller)
         {
@@ -43,23 +43,23 @@ namespace App.Script.Setting.Component
             return r;
         }
 
-        public async UniTask<CallResult<LogoutResponse>> Invalidate()
+        public async UniTask<CallResult<Unit>> Invalidate()
         {
             var caller = new AuthenticationService.Logout(new LogoutRequest());
             caller.RequestHeaders.Add("Authorization", $"Bearer {AccessToken.Value}");
             var r = await caller.Call(BaseUrl.Value);
             if (r.IsError)
             {
-                return r;
+                return r.MapResponse<Unit>();
             }
 
             AccessToken.Value = "";
             RefreshToken.Value = "";
 
-            return r;
+            return r.MapResponse(_ => Unit.Instance);
         }
 
-        public async UniTask<CallResult<TemporaryRegisterLoginResponse>> Create()
+        public async UniTask<CallResult<TokenData>> Create()
         {
             var caller = new AuthenticationService.TemporaryRegisterLogin(new TemporaryRegisterLoginRequest
             {
@@ -68,42 +68,59 @@ namespace App.Script.Setting.Component
             var r = await caller.Call(BaseUrl.Value);
             if (r.IsError)
             {
-                return r;
+                return r.MapResponse<TokenData>();
             }
 
-            AccessToken.Value = r.Response.accessToken;
-            RefreshToken.Value = r.Response.refreshToken;
+            AccessToken.Value = r.Value.accessToken;
+            RefreshToken.Value = r.Value.refreshToken;
 
-            return r;
+            return r.MapResponse(_ => new TokenData
+            {
+                AccessToken = r.Value.accessToken,
+                RefreshToken = r.Value.refreshToken
+            });
         }
 
-        public async UniTask<CallResult<RefreshResponse>> Refresh()
+        public async UniTask<CallResult<TokenData>> Refresh()
         {
             var caller = new AuthenticationService.Refresh(new RefreshRequest());
             caller.RequestHeaders.Add("Authorization", $"Bearer {RefreshToken.Value}");
             var r = await caller.Call(BaseUrl.Value);
             if (r.IsError)
             {
-                return r;
+                return r.MapResponse<TokenData>();
             }
 
-            AccessToken.Value = r.Response.accessToken;
-            RefreshToken.Value = r.Response.refreshToken;
-
-            return r;
+            return r.MapResponse(_ => new TokenData
+            {
+                AccessToken = r.Value.accessToken,
+                RefreshToken = r.Value.refreshToken
+            });
         }
     }
 
     public class SessionManager
     {
-        public class TokenData
+        public class TokenResult
         {
             public string AccessToken;
             public string RefreshToken;
+            public bool IsError;
+            public string ErrorTitle;
+            public string ErrorMessage;
+            public ErrorResponse ErrorResponse;
         }
 
-        private readonly ValueReference<string> _accessToken = new("");
-        private readonly ValueReference<string> _refreshToken = new("");
+        public class InvalidateResult
+        {
+            public bool IsError;
+            public string ErrorTitle;
+            public string ErrorMessage;
+            public ErrorResponse ErrorResponse;
+        }
+
+        private readonly IReference<string> _accessToken = new ValueReference<string>("");
+        private readonly IReference<string> _refreshToken = new ValueReference<string>("");
         private readonly IReadonlyReference<string> _baseUrl;
 
         public ISession Session => new Session
@@ -118,47 +135,67 @@ namespace App.Script.Setting.Component
             _baseUrl = baseUrl;
         }
 
-        private Handler<Result<TokenData>> _onRefresh = new();
-        public IAddHandler<Result<TokenData>> OnRefresh => _onRefresh;
-        private Handler<Result<TokenData>> _onCreate = new();
-        public IAddHandler<Result<TokenData>> OnCreate => _onCreate;
-        private Handler<Result<Unit>> _onInvalidate = new();
-        public IAddHandler<Result<Unit>> OnInvalidate => _onInvalidate;
+        private Handler<TokenResult> _onRefresh = new();
+        public IAddHandler<TokenResult> OnRefresh => _onRefresh;
+        private Handler<TokenResult> _onCreate = new();
+        public IAddHandler<TokenResult> OnCreate => _onCreate;
+        private Handler<InvalidateResult> _onInvalidate = new();
+        public IAddHandler<InvalidateResult> OnInvalidate => _onInvalidate;
 
-        public async UniTask<Result<TokenData>> Refresh()
+        public async UniTask<TokenResult> Refresh()
         {
             var r = await Session.Refresh();
-            var result = r.IsError
-                ? Result<TokenData>.Error(r.ErrorTitle, r.ErrorMessage)
-                : Result<TokenData>.Ok(new TokenData
+            var tokenResult = r.IsError
+                ? new TokenResult
                 {
-                    AccessToken = r.Response.accessToken,
-                    RefreshToken = r.Response.refreshToken,
-                });
-            await _onRefresh.Handle(result);
-            return result;
+                    IsError = true,
+                    ErrorTitle = r.ErrorTitle,
+                    ErrorMessage = r.ErrorMessage,
+                    ErrorResponse = r.ErrorResponse,
+                }
+                : new TokenResult
+                {
+                    AccessToken = r.Value.AccessToken,
+                    RefreshToken = r.Value.RefreshToken,
+                };
+            await _onRefresh.Handle(tokenResult);
+            return tokenResult;
         }
 
-        public async UniTask<Result<TokenData>> Create()
+        public async UniTask<TokenResult> Create()
         {
             var r = await Session.Create();
-            var result = r.IsError
-                ? Result<TokenData>.Error(r.ErrorTitle, r.ErrorMessage)
-                : Result<TokenData>.Ok(new TokenData
+            var tokenResult = r.IsError
+                ? new TokenResult
                 {
-                    AccessToken = r.Response.accessToken,
-                    RefreshToken = r.Response.refreshToken,
-                });
-            await _onCreate.Handle(result);
-            return result;
+                    IsError = true,
+                    ErrorTitle = r.ErrorTitle,
+                    ErrorMessage = r.ErrorMessage,
+                    ErrorResponse = r.ErrorResponse,
+                }
+                : new TokenResult
+                {
+                    AccessToken = r.Value.AccessToken,
+                    RefreshToken = r.Value.RefreshToken,
+                };
+            await _onCreate.Handle(tokenResult);
+            return tokenResult;
         }
 
-        public async UniTask<Result<Unit>> Invalidate()
+        public async UniTask<InvalidateResult> Invalidate()
         {
             var r = await Session.Invalidate();
-            var result = r.IsError ? Result<Unit>.Error(r.ErrorTitle, r.ErrorMessage) : Result<Unit>.Ok(Unit.Instance);
-            await _onInvalidate.Handle(result);
-            return result;
+            var invalidateResult = r.IsError
+                ? new InvalidateResult
+                {
+                    IsError = true,
+                    ErrorTitle = r.ErrorTitle,
+                    ErrorMessage = r.ErrorMessage,
+                    ErrorResponse = r.ErrorResponse,
+                }
+                : new InvalidateResult { };
+            await _onInvalidate.Handle(invalidateResult);
+            return invalidateResult;
         }
     }
 }

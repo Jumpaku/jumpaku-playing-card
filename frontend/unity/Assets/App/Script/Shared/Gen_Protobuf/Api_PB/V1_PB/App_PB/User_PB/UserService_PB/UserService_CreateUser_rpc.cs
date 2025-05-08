@@ -74,7 +74,7 @@ namespace Api_PB.V1_PB.App_PB.User_PB.UserService_PB {
                             return new global::App.Script.Shared.Api.CallResult<global::Api_PB.V1_PB.App_PB.User_PB.CreateUserResponse>()
                             {
                                 Result = uwr.result,
-                                Response = global::UnityEngine.JsonUtility
+                                Value = global::UnityEngine.JsonUtility
                                     .FromJson<global::Api_PB.V1_PB.App_PB.User_PB.CreateUserResponse>(
                                         ResponseBody)
                             };

@@ -1,6 +1,5 @@
 using App.Script.Lib.Reference;
 using App.Script.Setting.Component;
-using App.Script.Setting.Handler.Setting.Server;
 using App.Script.Shared;
 using App.Script.Shared.Dialog;
 using UnityEngine;
@@ -21,7 +20,8 @@ namespace App.Script.Setting
 
         public void Init()
         {
-            _sessionManager = new SessionManager(new FactoryReference<string>(() => _serverSettingPanel.ServerUrl.Value));
+            _sessionManager =
+                new SessionManager(new FactoryReference<string>(() => _serverSettingPanel.ServerUrl.Value));
 
             _serverSettingPanel = GameObject.Find("ServerSettingPanel").GetComponent<ServerSettingPanel>();
 
@@ -38,8 +38,8 @@ namespace App.Script.Setting
                 else
                 {
                     var d = LocalData.Load();
-                    d.auth.accessToken = v.Value.AccessToken;
-                    d.auth.refreshToken = v.Value.RefreshToken;
+                    d.auth.accessToken = v.AccessToken;
+                    d.auth.refreshToken = v.RefreshToken;
                     LocalData.Save(d);
                 }
             });
@@ -52,21 +52,32 @@ namespace App.Script.Setting
                 else
                 {
                     var d = LocalData.Load();
-                    d.auth.accessToken = v.Value.AccessToken;
-                    d.auth.refreshToken = v.Value.RefreshToken;
+                    d.auth.accessToken = v.AccessToken;
+                    d.auth.refreshToken = v.RefreshToken;
                     LocalData.Save(d);
                 }
             });
 
             _serverSettingPanel.Init(_sessionManager);
-            _serverSettingPanel.OnCheck.Add(async r => new OnCheckHandler(_dialog).Handle(r));
+            _serverSettingPanel.OnCheck.Add(async r =>
+            {
+                if (r.IsError)
+                {
+                    _dialog.Open(r.ErrorTitle, r.ErrorMessage, "close", "ok", _ => _dialog.Close());
+                }
+                else
+                {
+                    _dialog.Open("Server check succeeded", "Server is valid", "close", "ok",
+                        _ => _dialog.Close());
+                }
+            });
 
             _userSettingPanel.Init(_sessionManager);
             _userSettingPanel.OnCreate.Add(async r =>
             {
-                if (r.isError)
+                if (r.IsError)
                 {
-                    _dialog.Open(r.error.Title, r.error.Message, "close", "ok", _ => _dialog.Close());
+                    _dialog.Open(r.ErrorTitle, r.ErrorMessage, "close", "ok", _ => _dialog.Close());
                 }
                 else
                 {
@@ -76,9 +87,7 @@ namespace App.Script.Setting
 
                 var d = LocalData.Load();
                 d.server.baseUrl = _serverSettingPanel.ServerUrl.Value;
-                d.user.userId = r.userId;
-                d.auth.accessToken = r.accessToken;
-                d.auth.refreshToken = r.refreshToken;
+                d.user.userId = r.UserId;
                 LocalData.Save(d);
             });
         }
