@@ -1,10 +1,21 @@
 import {Injectable} from "@nestjs/common";
-import {PgClient} from "../../../../../global/postgres.provider";
+import {PgClient, selectAll} from "../../../../../global/postgres.provider";
 import {Room$} from "../../../../../../gen/pg/dao/dao_Room";
 import {RoomSeat$} from "../../../../../../gen/pg/dao/dao_RoomSeat";
 import {RoomMember$} from "../../../../../../gen/pg/dao/dao_RoomMember";
 import {panic} from "../../../../../../lib/panic";
 import {compareString} from "../../../../../../lib/compare";
+
+export type RoomSeatMemberUser = RoomSeat$ & {
+    room_member_id: string | null;
+    user_id: string | null;
+    display_name: string | null;
+};
+
+export type RoomMemberUser = RoomMember$ & {
+    user_id: string | null;
+    display_name: string | null;
+};
 
 @Injectable()
 export class RoomRepository {
@@ -24,16 +35,36 @@ export class RoomRepository {
 
     async find(tx: PgClient, roomId: string): Promise<{
         room: Room$,
-        seatList: RoomSeat$[],
-        memberList: RoomMember$[],
+        seatList: RoomSeatMemberUser[],
+        memberList: RoomMemberUser[],
     } | null> {
         const room = await Room$.find(tx, {room_id: roomId});
         if (room == null) {
             return null;
         }
-        const seatList = await RoomSeat$.listByUq_RoomSeat_RoomMember(tx, {room_id: roomId});
+
+        const seatList = await selectAll<RoomSeatMemberUser>(tx,
+            `SELECT "RoomSeat".*,
+                    "RoomMember"."room_member_id",
+                    "User"."user_id",
+                    "User"."display_name"
+             FROM "RoomSeat"
+                      LEFT OUTER JOIN "RoomMember" ON "RoomSeat"."room_member_id" = "RoomMember"."room_member_id"
+                      LEFT OUTER JOIN "User" on "RoomMember".user_id = "User".user_id
+             WHERE "RoomSeat"."room_id" = $1`,
+            [roomId],
+        );
         seatList.sort((a, b) => compareString(a.room_seat_id, b.room_seat_id))
-        const memberList = await RoomMember$.listByUq_RoomMember_RoomUser(tx, {room_id: roomId});
+
+        const memberList = await selectAll<RoomMemberUser>(tx,
+            `SELECT "RoomMember".*,
+                    "User"."user_id",
+                    "User"."display_name"
+             FROM "RoomMember"
+                      LEFT OUTER JOIN "User" on "RoomMember".user_id = "User".user_id
+             WHERE "RoomMember"."room_id" = $1`,
+            [roomId],
+        );
         memberList.sort((a, b) => compareString(a.room_member_id, b.room_member_id))
         return {room, seatList, memberList};
     }
