@@ -1,13 +1,16 @@
+using System;
 using Localdata_PB.LocalData_PB;
 using UnityEngine;
 
 namespace App.Script.Shared
 {
-    public static class LocalData
+    public class LocalData
     {
         private static string LocalDataKey => "localData";
 
-        public static void Clear()
+        private Localdata_PB.LocalData _cache;
+
+        private void _clear()
         {
             Save(new Localdata_PB.LocalData
             {
@@ -17,21 +20,41 @@ namespace App.Script.Shared
             });
         }
 
-        public static Localdata_PB.LocalData Load()
+        public Localdata_PB.LocalData Load()
         {
+            if (_cache != null)
+            {
+                return _cache;
+            }
+
             if (!PlayerPrefs.HasKey(LocalDataKey))
             {
-                Clear();
+                _clear();
             }
 
             var json = PlayerPrefs.GetString(LocalDataKey);
             Debug.Log($"LocalData.Load: {json}");
-            return JsonUtility.FromJson<Localdata_PB.LocalData>(json);
+            return _cache = JsonUtility.FromJson<Localdata_PB.LocalData>(json);
         }
 
-        public static void Save(Localdata_PB.LocalData localData)
+        public void Save(Localdata_PB.LocalData localData)
         {
-            var json = JsonUtility.ToJson(localData);
+            if (localData.user == null)
+            {
+                throw new ArgumentNullException(nameof(localData.user), "localData.user == null");
+            }
+
+            if (localData.auth == null)
+            {
+                throw new ArgumentNullException(nameof(localData.auth), "localData.auth == null");
+            }
+
+            if (localData.server == null)
+            {
+                throw new ArgumentNullException(nameof(localData.server), "localData.server == null");
+            }
+
+            var json = JsonUtility.ToJson(_cache = localData);
             Debug.Log($"LocalData.Save: {json}");
             PlayerPrefs.SetString(LocalDataKey, json);
             PlayerPrefs.Save();

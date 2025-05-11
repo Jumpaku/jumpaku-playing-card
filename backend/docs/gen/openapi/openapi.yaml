@@ -750,18 +750,8 @@ components:
         CreateResponse:
             type: object
             properties:
-                roomId:
-                    type: string
-                roomName:
-                    type: string
-                seatList:
-                    type: array
-                    items:
-                        $ref: '#/components/schemas/RoomSeat'
-                memberList:
-                    type: array
-                    items:
-                        $ref: '#/components/schemas/RoomMember'
+                room:
+                    $ref: '#/components/schemas/Room'
         CreateUserResponse:
             type: object
             properties:
@@ -780,6 +770,8 @@ components:
             properties:
                 memberId:
                     type: string
+                room:
+                    $ref: '#/components/schemas/Room'
         Example:
             type: object
             properties:
@@ -828,18 +820,8 @@ components:
         GetResponse:
             type: object
             properties:
-                roomId:
-                    type: string
-                roomName:
-                    type: string
-                seatList:
-                    type: array
-                    items:
-                        $ref: '#/components/schemas/RoomSeat'
-                memberList:
-                    type: array
-                    items:
-                        $ref: '#/components/schemas/RoomMember'
+                room:
+                    $ref: '#/components/schemas/Room'
         GetUserResponse:
             type: object
             properties:
@@ -914,6 +896,21 @@ components:
         RegisterUserAuthenticationResponse:
             type: object
             properties: {}
+        Room:
+            type: object
+            properties:
+                roomId:
+                    type: string
+                roomName:
+                    type: string
+                seatList:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/RoomSeat'
+                memberList:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/RoomMember'
         RoomMember:
             type: object
             properties:
@@ -934,8 +931,8 @@ components:
                     type: string
                 memberExists:
                     type: boolean
-                memberId:
-                    type: string
+                member:
+                    $ref: '#/components/schemas/RoomMember'
         Status:
             type: object
             properties:

@@ -8,13 +8,7 @@ namespace Api_PB.V1_PB.App_PB.Room_PB {
     [System.Serializable]
     public class GetResponse {
     
-        public string roomId;
-        
-        public string roomName;
-        
-        public global::System.Collections.Generic.List<global::Api_PB.V1_PB.App_PB.Room_PB.RoomSeat> seatList;
-        
-        public global::System.Collections.Generic.List<global::Api_PB.V1_PB.App_PB.Room_PB.RoomMember> memberList;
+        public global::Api_PB.V1_PB.App_PB.Room_PB.Room room;
         
     }
 

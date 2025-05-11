@@ -30,6 +30,7 @@ namespace Api_PB.V1_PB.Example_PB.ExampleService_PB {
             public global::System.Collections.Generic.Dictionary<string, string> ResponseHeaders { get; private set; }
             public long ResponseCode { get; private set; }
             public string ResponseBody { get; private set; }
+            public string Method => "GET";
 
             public async global::Cysharp.Threading.Tasks.UniTask<global::App.Script.Shared.Api.CallResult<global::Api_PB.V1_PB.Example_PB.ListExampleResponse>> Call(string baseUrl)
             {

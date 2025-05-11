@@ -30,6 +30,7 @@ namespace Api_PB.V1_PB.App_PB.Room_PB.Play_PB.PlayService_PB {
             public global::System.Collections.Generic.Dictionary<string, string> ResponseHeaders { get; private set; }
             public long ResponseCode { get; private set; }
             public string ResponseBody { get; private set; }
+            public string Method => "DELETE";
 
             public async global::Cysharp.Threading.Tasks.UniTask<global::App.Script.Shared.Api.CallResult<global::Api_PB.V1_PB.App_PB.Room_PB.Play_PB.DeletePlaceResponse>> Call(string baseUrl)
             {

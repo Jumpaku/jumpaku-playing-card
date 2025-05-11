@@ -1,3 +1,4 @@
+using System.Linq;
 using Api_PB.V1_PB;
 using Api_PB.V1_PB.App_PB.Authentication_PB;
 using Api_PB.V1_PB.App_PB.Authentication_PB.AuthenticationService_PB;
@@ -7,6 +8,7 @@ using App.Script.Lib.Reference;
 using App.Script.Shared;
 using App.Script.Shared.Api;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.Networking;
 
 namespace App.Script.Setting.Component
@@ -19,8 +21,12 @@ namespace App.Script.Setting.Component
 
         public async UniTask<CallResult<TOut>> Call<TOut>(ICaller<TOut> caller)
         {
-            caller.RequestHeaders.Add("Authorization", $"Bearer {AccessToken.Value}");
+            caller.RequestHeaders["Authorization"] = $"Bearer {AccessToken.Value}";
+
+            _logRequest(caller);
             var r = await caller.Call(BaseUrl.Value);
+            _logResponse(caller);
+
             if (r.Result == UnityWebRequest.Result.ProtocolError &&
                 r.ErrorResponse.errorCode == ErrorCode_String.AccessTokenExpired)
             {
@@ -36,7 +42,7 @@ namespace App.Script.Setting.Component
                     };
                 }
 
-                caller.RequestHeaders.Add("Authorization", $"Bearer {AccessToken.Value}");
+                caller.RequestHeaders["Authorization"] = $"Bearer {AccessToken.Value}";
                 r = await caller.Call(BaseUrl.Value);
             }
 
@@ -46,8 +52,10 @@ namespace App.Script.Setting.Component
         public async UniTask<CallResult<Unit>> Invalidate()
         {
             var caller = new AuthenticationService.Logout(new LogoutRequest());
-            caller.RequestHeaders.Add("Authorization", $"Bearer {AccessToken.Value}");
+            caller.RequestHeaders["Authorization"] = $"Bearer {AccessToken.Value}";
+            _logRequest(caller);
             var r = await caller.Call(BaseUrl.Value);
+            _logResponse(caller);
             if (r.IsError)
             {
                 return r.MapResponse<Unit>();
@@ -65,7 +73,10 @@ namespace App.Script.Setting.Component
             {
                 clientType = ClientType_String.Mobile
             });
+
+            _logRequest(caller);
             var r = await caller.Call(BaseUrl.Value);
+            _logResponse(caller);
             if (r.IsError)
             {
                 return r.MapResponse<TokenData>();
@@ -83,9 +94,13 @@ namespace App.Script.Setting.Component
 
         public async UniTask<CallResult<TokenData>> Refresh()
         {
-            var caller = new AuthenticationService.Refresh(new RefreshRequest());
-            caller.RequestHeaders.Add("Authorization", $"Bearer {RefreshToken.Value}");
+            var caller =
+                new AuthenticationService.Refresh(new RefreshRequest { clientType = ClientType_String.Mobile });
+            caller.RequestHeaders["Authorization"] = $"Bearer {RefreshToken.Value}";
+
+            _logRequest(caller);
             var r = await caller.Call(BaseUrl.Value);
+            _logResponse(caller);
             if (r.IsError)
             {
                 return r.MapResponse<TokenData>();
@@ -96,6 +111,20 @@ namespace App.Script.Setting.Component
                 AccessToken = r.Value.accessToken,
                 RefreshToken = r.Value.refreshToken
             });
+        }
+
+        private void _logRequest<TOut>(ICaller<TOut> caller)
+        {
+            var s = caller.RequestHeaders.ToList().Select(e => $"{e.Key}: {e.Value}");
+            Debug.Log(
+                $"{caller.Method}: {caller.RequestUrl(BaseUrl.Value)}\n{caller.RequestBody}\n{string.Join("\n", s.ToArray())}");
+        }
+
+        private void _logResponse<TOut>(ICaller<TOut> caller)
+        {
+            var s = caller.ResponseHeaders.ToList().Select(e => $"{e.Key}: {e.Value}");
+            Debug.Log(
+                $"{caller.ResponseCode}\n{caller.ResponseBody}\n{string.Join("\n", s.ToArray())}");
         }
     }
 
@@ -119,15 +148,16 @@ namespace App.Script.Setting.Component
             public ErrorResponse ErrorResponse;
         }
 
-        private readonly IReference<string> _accessToken = new ValueReference<string>("");
-        private readonly IReference<string> _refreshToken = new ValueReference<string>("");
+        public readonly IReference<string> AccessToken = new ValueReference<string>("");
+        public readonly IReference<string> RefreshToken = new ValueReference<string>("");
         private readonly IReadonlyReference<string> _baseUrl;
+        public bool Available => _baseUrl != null && _baseUrl.Value != "";
 
         public ISession Session => new Session
         {
             BaseUrl = _baseUrl,
-            AccessToken = _accessToken,
-            RefreshToken = _refreshToken,
+            AccessToken = AccessToken,
+            RefreshToken = RefreshToken,
         };
 
         public SessionManager(IReadonlyReference<string> baseUrl)
@@ -135,11 +165,11 @@ namespace App.Script.Setting.Component
             _baseUrl = baseUrl;
         }
 
-        private Handler<TokenResult> _onRefresh = new();
+        private readonly Handler<TokenResult> _onRefresh = new();
         public IAddHandler<TokenResult> OnRefresh => _onRefresh;
-        private Handler<TokenResult> _onCreate = new();
+        private readonly Handler<TokenResult> _onCreate = new();
         public IAddHandler<TokenResult> OnCreate => _onCreate;
-        private Handler<InvalidateResult> _onInvalidate = new();
+        private readonly Handler<InvalidateResult> _onInvalidate = new();
         public IAddHandler<InvalidateResult> OnInvalidate => _onInvalidate;
 
         public async UniTask<TokenResult> Refresh()

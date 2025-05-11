@@ -11,8 +11,11 @@ namespace App.Script.Setting.Component
     public class UserSettingPanel : MonoBehaviour
     {
         private TMP_InputField _displayNameInput;
-        public IReadonlyReference<string> DisplayName => new FactoryReference<string>(() => _displayNameInput.text);
-        public SessionManager _session;
+
+        public IReference<string> DisplayName =>
+            new PropertyReference<string>(() => _displayNameInput.text, v => _displayNameInput.text = v);
+
+        private SessionManager _session;
         private readonly Handler<CreateExecutor.CreateResult> _onCreate = new();
         public IAddHandler<CreateExecutor.CreateResult> OnCreate => _onCreate;
 

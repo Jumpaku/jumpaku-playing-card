@@ -8,6 +8,7 @@ namespace App.Script.Shared.Api
     {
         public Dictionary<string, string> RequestHeaders { get; }
         public string RequestUrl(string baseUrl);
+        public string Method { get; }
         public string RequestBody { get; }
         public UnityWebRequest.Result CallResult { get; }
         public Dictionary<string, string> ResponseHeaders { get; }

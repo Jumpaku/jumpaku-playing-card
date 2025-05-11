@@ -10,6 +10,8 @@ namespace Api_PB.V1_PB.App_PB.Room_PB {
     
         public string memberId;
         
+        public global::Api_PB.V1_PB.App_PB.Room_PB.Room room;
+        
     }
 
 }

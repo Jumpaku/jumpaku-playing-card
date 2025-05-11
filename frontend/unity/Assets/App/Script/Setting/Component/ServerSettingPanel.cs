@@ -13,10 +13,15 @@ namespace App.Script.Setting.Component
         private SessionManager _sessionManager;
 
         private TMP_InputField _serverUrlInput;
-        public IReadonlyReference<string> ServerUrl => new FactoryReference<string>(() => _serverUrlInput.text);
+
+        public IReference<string> ServerUrl =>
+            new PropertyReference<string>(() => _serverUrlInput.text, v => _serverUrlInput.text = v);
 
         private readonly Handler<CheckExecutor.CheckResult> _onCheck = new();
         public IAddHandler<CheckExecutor.CheckResult> OnCheck => _onCheck;
+
+        private readonly Handler<string> _onServerUrlChange = new();
+        public IAddHandler<string> OnServerUrlChange => _onServerUrlChange;
 
         public void Init(SessionManager sessionManager)
         {
@@ -25,6 +30,7 @@ namespace App.Script.Setting.Component
             _sessionManager = sessionManager;
 
             _serverUrlInput = transform.Find("ServerUrl").Find("ServerUrlInput").GetComponent<TMP_InputField>();
+            _serverUrlInput.onEndEdit.AddListener(t => _ = _onServerUrlChange.Handle(t));
 
             transform.Find("CheckButton").GetComponent<Button>()
                 .onClick
