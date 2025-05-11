@@ -21,6 +21,7 @@ namespace App.Script.Setting.Component
             public GameObject SeatObject;
             public Button SelectButton;
             public Button LeaveButton;
+            public string SeatId;
         }
 
         private List<Seat> _seatList = new List<Seat>()
@@ -33,13 +34,17 @@ namespace App.Script.Setting.Component
             new Seat()
         };
 
-        public void Init(IReadonlyReference<string> userId, IReadonlyReference<string> roomId)
+        public void Init(SessionManager sessionManager,
+            IReadonlyReference<string> userId,
+            IReadonlyReference<string> roomId)
         {
-            var seatList = transform.Find("SeatList");
+            _sessionManager = sessionManager;
 
             _userId = userId;
 
             _roomId = roomId;
+
+            var seatList = transform.Find("SeatSettingList");
 
             for (int i = 0; i < seatList.childCount; i++)
             {
@@ -81,6 +86,7 @@ namespace App.Script.Setting.Component
                 s.UserName.text = memberExists ? seatList[i].member.userName : "User Name";
                 s.SelectButton.interactable = !memberExists;
                 s.LeaveButton.interactable = memberExists && seatList[i].member.userId == _userId.Value;
+                s.SeatId = seatList[i].seatId;
             }
         }
 
@@ -90,16 +96,34 @@ namespace App.Script.Setting.Component
             return new EnterExecutor.EnterResult();
         }
 
-        public async UniTask<EnterExecutor.EnterResult> SelectSeat(int seatIndex)
+        public async UniTask<SelectSeatExecutor.SelectSeatResult> SelectSeat(int seatIndex)
         {
-            Debug.Log("SeatSettingSection/SelectSeat");
-            return new EnterExecutor.EnterResult();
+            Debug.Log($"SeatSettingSection/SelectSeat({seatIndex})");
+            var result =
+                await new SelectSeatExecutor()
+                    .Execute(_sessionManager.Session, _roomId.Value, _seatList[seatIndex].SeatId);
+
+            if (!result.IsError)
+            {
+                Prepare(result.Value.seatList);
+            }
+
+            return result;
         }
 
-        public async UniTask<EnterExecutor.EnterResult> LeaveSeat(int seatIndex)
+        public async UniTask<LeaveSeatExecutor.LeaveSeatResult> LeaveSeat(int seatIndex)
         {
-            Debug.Log("SeatSettingSection/LeaveSeat");
-            return new EnterExecutor.EnterResult();
+            Debug.Log($"SeatSettingSection/LeaveSeat({seatIndex})");
+            var result =
+                await new LeaveSeatExecutor()
+                    .Execute(_sessionManager.Session, _roomId.Value, _seatList[seatIndex].SeatId);
+
+            if (!result.IsError)
+            {
+                Prepare(result.Value.seatList);
+            }
+
+            return result;
         }
     }
 }

@@ -47,7 +47,7 @@ namespace App.Script.Setting.Component
             _roomIdInput = transform.Find("RoomId").Find("RoomIdInput").GetComponent<TMP_InputField>();
 
             _seatSettingSection = transform.Find("SeatSettingSection").GetComponent<SeatSettingSection>();
-            _seatSettingSection.Init(userId, new FactoryReference<string>(() => _roomIdInput.text));
+            _seatSettingSection.Init(_sessionManager, userId, new FactoryReference<string>(() => _roomIdInput.text));
 
             transform.Find("CreateButton").GetComponent<Button>()
                 .onClick
