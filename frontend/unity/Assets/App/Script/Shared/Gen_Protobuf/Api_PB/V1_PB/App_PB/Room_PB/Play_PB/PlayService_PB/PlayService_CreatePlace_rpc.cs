@@ -38,6 +38,7 @@ namespace Api_PB.V1_PB.App_PB.Room_PB.Play_PB.PlayService_PB {
 
                 try
                 {
+
                     uwr = new global::UnityEngine.Networking.UnityWebRequest(
                         RequestUrl(baseUrl),
                         "POST",
@@ -45,6 +46,7 @@ namespace Api_PB.V1_PB.App_PB.Room_PB.Play_PB.PlayService_PB {
                         new global::UnityEngine.Networking.UploadHandlerRaw(
                             global::System.Text.Encoding.UTF8.GetBytes(RequestBody))
                     );
+
                     uwr.SetRequestHeader("Content-Type", "application/json");
                     foreach (var header in RequestHeaders)
                     {

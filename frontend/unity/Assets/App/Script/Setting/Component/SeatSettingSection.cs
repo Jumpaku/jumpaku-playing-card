@@ -5,6 +5,7 @@ using App.Script.Setting.Logic.Setting.Room;
 using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace App.Script.Setting.Component
@@ -34,9 +35,11 @@ namespace App.Script.Setting.Component
             new Seat()
         };
 
-        public void Init(SessionManager sessionManager,
+        public void Init(
+            SessionManager sessionManager,
             IReadonlyReference<string> userId,
-            IReadonlyReference<string> roomId)
+            IReadonlyReference<string> roomId
+        )
         {
             _sessionManager = sessionManager;
 
@@ -64,7 +67,7 @@ namespace App.Script.Setting.Component
             }
 
             transform.Find("StartPlayButton").GetComponent<Button>()
-                .onClick.AddListener(async () => await StartPlay());
+                .onClick.AddListener(StartPlay);
         }
 
         public void Prepare(List<RoomSeat> seatList)
@@ -90,10 +93,10 @@ namespace App.Script.Setting.Component
             }
         }
 
-        public async UniTask<EnterExecutor.EnterResult> StartPlay()
+        public void StartPlay()
         {
             Debug.Log("SeatSettingSection/StartPlay");
-            return new EnterExecutor.EnterResult();
+            SceneManager.LoadScene("Scenes/PlayScene");
         }
 
         public async UniTask<SelectSeatExecutor.SelectSeatResult> SelectSeat(int seatIndex)

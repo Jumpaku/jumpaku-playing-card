@@ -39,6 +39,14 @@ namespace {{.Namespace.Join}} {
 
                 try
                 {
+{{if eq .HttpInfo.Method "GET" }}
+                    uwr = new global::UnityEngine.Networking.UnityWebRequest(
+                        RequestUrl(baseUrl),
+                        "{{.HttpInfo.Method}}",
+                        new global::UnityEngine.Networking.DownloadHandlerBuffer(),
+                        null
+                    );
+{{ else }}
                     uwr = new global::UnityEngine.Networking.UnityWebRequest(
                         RequestUrl(baseUrl),
                         "{{.HttpInfo.Method}}",
@@ -46,6 +54,7 @@ namespace {{.Namespace.Join}} {
                         new global::UnityEngine.Networking.UploadHandlerRaw(
                             global::System.Text.Encoding.UTF8.GetBytes(RequestBody))
                     );
+{{ end}}
                     uwr.SetRequestHeader("Content-Type", "application/json");
                     foreach (var header in RequestHeaders)
                     {
