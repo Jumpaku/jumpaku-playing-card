@@ -27,7 +27,10 @@ import {AuthenticationPasswordProvider} from "./authentication_password.provider
 import {ConfigProvider} from "../../../../../global/config.provider";
 import {AuthenticationTemporaryProvider} from "./authentication_temporary.provider";
 import {JwtProvider} from "./jwt.provider";
-import {throwPreconditionFailed, throwUnauthorized} from "../../../../../../exception/exception";
+import {
+    throwAuthenticationFailed,
+    throwPreconditionFailed
+} from "../../../../../../exception/exception";
 import {Session$} from "../../../../../../gen/pg/dao/dao_Session";
 import {
     JwtPayload_AccessDataSchema,
@@ -90,7 +93,7 @@ export class AuthenticationService extends AuthenticationServiceService {
             // Check the password
             const auth = await this.password.verify(tx, input.loginId, input.password);
             if (auth == null) {
-                throwUnauthorized('password incorrect', 'password incorrect');
+                throwAuthenticationFailed('password incorrect', 'password incorrect');
             }
             const authenticationId = auth!.authentication_id;
 
@@ -141,7 +144,7 @@ export class AuthenticationService extends AuthenticationServiceService {
             const userExists = await this.user.existsBySessionId(tx, sessionId);
             const session = await this.session.findValid(tx, sessionId, t);
             if (session == null) {
-                throwUnauthorized('session not found', 'valid session not found');
+                throwPreconditionFailed('session not found', 'valid session not found');
             }
             await Session$.update(tx, {...session, expire_time: expireTime, update_time: t});
 

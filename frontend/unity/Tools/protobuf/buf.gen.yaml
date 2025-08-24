@@ -1,0 +1,14 @@
+# buf.gen.yaml
+version: v2
+managed:
+  enabled: true
+  override:
+    - file_option: go_package
+      value: .
+plugins:
+  - local: ./bin/protoc-gen-cs-json
+    out: ../../Assets/App/Script/Shared/Gen_Protobuf
+#  - remote: buf.build/protocolbuffers/csharp:v30.2
+#    out: ../../Assets/App/Script/Shared/Gen_Protobuf
+#    opt:
+#      - base_namespace=

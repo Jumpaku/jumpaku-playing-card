@@ -8,8 +8,10 @@ message ErrorResponse {
     enum ErrorCode {
         UNKNOWN = 0;
         BAD_REQUEST = 1;
-        UNAUTHORIZED = 2;
+        //UNAUTHORIZED = 2;
         PRECONDITION_FAILED = 3;
+        ACCESS_TOKEN_EXPIRED = 4;
+        REFRESH_TOKEN_EXPIRED = 5;
     }
     ErrorCode error_code = 1;
     string error_description = 2;

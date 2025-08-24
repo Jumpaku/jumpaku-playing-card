@@ -22,7 +22,7 @@ import {
     LeaveSeatRequest,
     LeaveSeatResponse,
     LeaveSeatResponseSchema,
-    RoomMemberSchema,
+    RoomMemberSchema, RoomSchema,
     RoomSeatSchema,
     TakeSeatRequest,
     TakeSeatResponse,
@@ -70,19 +70,26 @@ export class RoomService extends RoomServiceService {
 
             const {room, seatList, memberList} = (await this.room.find(tx, room_id))!;
             return create(CreateResponseSchema, {
-                roomId: room.room_id,
-                roomName: room.room_name,
-                seatList: seatList.map((s) => create(RoomSeatSchema, {
-                    seatId: s.room_seat_id,
-                    seatName: s.room_seat_name,
-                    memberExists: s.room_member_id != null,
-                    memberId: s.room_member_id ?? undefined,
-                })),
-                memberList: memberList.map((m) => create(RoomMemberSchema, {
-                    memberId: m.room_member_id,
-                    memberRole: m.role_id,
-                    userId: m.user_id,
-                }))
+                room: create(RoomSchema, {
+                    roomId: room.room_id,
+                    roomName: room.room_name,
+                    seatList: seatList.map((s) => create(RoomSeatSchema, {
+                        seatId: s.room_seat_id,
+                        seatName: s.room_seat_name,
+                        memberExists: s.room_member_id != null,
+                        member: s.room_member_id == null ? undefined : create(RoomMemberSchema, {
+                            memberId: s.room_member_id,
+                            userId: s.user_id ?? undefined,
+                            userName: s.display_name ?? undefined,
+                        }),
+                    })),
+                    memberList: memberList.map((m) => create(RoomMemberSchema, {
+                        memberId: m.room_member_id,
+                        memberRole: m.role_id,
+                        userId: m.user_id,
+                        userName: m.display_name ?? undefined,
+                    }))
+                }),
             });
         });
     }
@@ -100,19 +107,26 @@ export class RoomService extends RoomServiceService {
             }
             const {room, seatList, memberList} = found;
             return create(GetResponseSchema, {
-                roomId: room.room_id,
-                roomName: room.room_name,
-                seatList: seatList.map((s) => create(RoomSeatSchema, {
-                    seatId: s.room_seat_id,
-                    seatName: s.room_seat_name,
-                    memberExists: s.room_member_id != null,
-                    memberId: s.room_member_id ?? undefined,
-                })),
-                memberList: memberList.map((m) => create(RoomMemberSchema, {
-                    memberId: m.room_member_id,
-                    memberRole: m.role_id,
-                    userId: m.user_id,
-                }))
+                room: create(RoomSchema, {
+                    roomId: room.room_id,
+                    roomName: room.room_name,
+                    seatList: seatList.map((s) => create(RoomSeatSchema, {
+                        seatId: s.room_seat_id,
+                        seatName: s.room_seat_name,
+                        memberExists: s.room_member_id != null,
+                        member: s.room_member_id == null ? undefined : create(RoomMemberSchema, {
+                            memberId: s.room_member_id,
+                            userId: s.user_id ?? undefined,
+                            userName: s.display_name ?? undefined,
+                        }),
+                    })),
+                    memberList: memberList.map((m) => create(RoomMemberSchema, {
+                        memberId: m.room_member_id,
+                        memberRole: m.role_id,
+                        userId: m.user_id,
+                        userName: m.display_name ?? undefined,
+                    }))
+                }),
             });
         });
     }
@@ -129,17 +143,46 @@ export class RoomService extends RoomServiceService {
             if (u == null) {
                 throwPreconditionFailed("User not found", "User not found");
             }
-            if (!await this.room.exists(tx, input.roomId)) {
+            const found = await this.room.find(tx, input.roomId);
+            if (found == null) {
                 throwPreconditionFailed("Room not found", "Room not found");
             }
+            const {room, seatList, memberList} = found;
+            const resRoom = create(RoomSchema, {
+                roomId: room.room_id,
+                roomName: room.room_name,
+                seatList: seatList.map((s) => create(RoomSeatSchema, {
+                    seatId: s.room_seat_id,
+                    seatName: s.room_seat_name,
+                    memberExists: s.room_member_id != null,
+                    member: s.room_member_id == null ? undefined : create(RoomMemberSchema, {
+                        memberId: s.room_member_id,
+                        userId: s.user_id ?? undefined,
+                        userName: s.display_name ?? undefined,
+                    }),
+                })),
+                memberList: memberList.map((m) => create(RoomMemberSchema, {
+                    memberId: m.room_member_id,
+                    memberRole: m.role_id,
+                    userId: m.user_id,
+                    userName: m.display_name ?? undefined,
+                }))
+            });
+
             let member = await this.room.findMemberByUserId(tx, input.roomId, u!.user_id);
             if (member != null) {
-                return create(EnterResponseSchema, {memberId: member.room_member_id});
+                return create(EnterResponseSchema, {
+                    memberId: member.room_member_id,
+                    room: resRoom,
+                });
             }
             const memberId = this.random.uuid();
             await this.room.createMember(tx, input.roomId, u.user_id, memberId, "2", t);
 
-            return create(EnterResponseSchema, {memberId: memberId});
+            return create(EnterResponseSchema, {
+                memberId: memberId,
+                room: resRoom,
+            });
         });
     }
 

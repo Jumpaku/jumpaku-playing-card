@@ -12,7 +12,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file api/v1/app/room/service.proto.
  */
 export const file_api_v1_app_room_service: GenFile = /*@__PURE__*/
-  fileDesc("Ch1hcGkvdjEvYXBwL3Jvb20vc2VydmljZS5wcm90bxIPYXBpLnYxLmFwcC5yb29tIjYKDUNyZWF0ZVJlcXVlc3QSEQoJcm9vbV9uYW1lGAEgASgJEhIKCnNlYXRfY291bnQYAiABKAUilAEKDkNyZWF0ZVJlc3BvbnNlEg8KB3Jvb21faWQYASABKAkSEQoJcm9vbV9uYW1lGAIgASgJEiwKCXNlYXRfbGlzdBgDIAMoCzIZLmFwaS52MS5hcHAucm9vbS5Sb29tU2VhdBIwCgttZW1iZXJfbGlzdBgEIAMoCzIbLmFwaS52MS5hcHAucm9vbS5Sb29tTWVtYmVyIlgKCFJvb21TZWF0Eg8KB3NlYXRfaWQYASABKAkSEQoJc2VhdF9uYW1lGAIgASgJEhUKDW1lbWJlcl9leGlzdHMYAyABKAgSEQoJbWVtYmVyX2lkGAQgASgJIlgKClJvb21NZW1iZXISEQoJbWVtYmVyX2lkGAEgASgJEhMKC21lbWJlcl9yb2xlGAMgASgJEg8KB3VzZXJfaWQYBCABKAkSEQoJdXNlcl9uYW1lGAUgASgJIh0KCkdldFJlcXVlc3QSDwoHcm9vbV9pZBgBIAEoCSKRAQoLR2V0UmVzcG9uc2USDwoHcm9vbV9pZBgBIAEoCRIRCglyb29tX25hbWUYAiABKAkSLAoJc2VhdF9saXN0GAMgAygLMhkuYXBpLnYxLmFwcC5yb29tLlJvb21TZWF0EjAKC21lbWJlcl9saXN0GAQgAygLMhsuYXBpLnYxLmFwcC5yb29tLlJvb21NZW1iZXIiHwoMRW50ZXJSZXF1ZXN0Eg8KB3Jvb21faWQYASABKAkiIgoNRW50ZXJSZXNwb25zZRIRCgltZW1iZXJfaWQYASABKAkiMwoPVGFrZVNlYXRSZXF1ZXN0Eg8KB3Jvb21faWQYASABKAkSDwoHc2VhdF9pZBgCIAEoCSISChBUYWtlU2VhdFJlc3BvbnNlIjQKEExlYXZlU2VhdFJlcXVlc3QSDwoHcm9vbV9pZBgBIAEoCRIPCgdzZWF0X2lkGAIgASgJIhMKEUxlYXZlU2VhdFJlc3BvbnNlIjYKEEJhbk1lbWJlclJlcXVlc3QSDwoHcm9vbV9pZBgBIAEoCRIRCgltZW1iZXJfaWQYAiABKAkiEwoRQmFuTWVtYmVyUmVzcG9uc2Uy0QYKC1Jvb21TZXJ2aWNlEnQKBkNyZWF0ZRIeLmFwaS52MS5hcHAucm9vbS5DcmVhdGVSZXF1ZXN0Gh8uYXBpLnYxLmFwcC5yb29tLkNyZWF0ZVJlc3BvbnNlIimCtRgNEgtyb29tOmNyZWF0ZYLT5JMCEiIQL2FwaS92MS9hcHAvcm9vbRJyCgNHZXQSGy5hcGkudjEuYXBwLnJvb20uR2V0UmVxdWVzdBocLmFwaS52MS5hcHAucm9vbS5HZXRSZXNwb25zZSIwgrUYChIIcm9vbTpnZXSC0+STAhwSGi9hcGkvdjEvYXBwL3Jvb20ve3Jvb21faWR9EoABCgVFbnRlchIdLmFwaS52MS5hcHAucm9vbS5FbnRlclJlcXVlc3QaHi5hcGkudjEuYXBwLnJvb20uRW50ZXJSZXNwb25zZSI4grUYDBIKcm9vbTplbnRlcoLT5JMCIhogL2FwaS92MS9hcHAvcm9vbS97cm9vbV9pZH0vZW50ZXISlgEKCFRha2VTZWF0EiAuYXBpLnYxLmFwcC5yb29tLlRha2VTZWF0UmVxdWVzdBohLmFwaS52MS5hcHAucm9vbS5UYWtlU2VhdFJlc3BvbnNlIkWCtRgLEglyb29tOnNlYXSC0+STAjAaLi9hcGkvdjEvYXBwL3Jvb20ve3Jvb21faWR9L3NlYXQve3NlYXRfaWR9L3Rha2USmgEKCUxlYXZlU2VhdBIhLmFwaS52MS5hcHAucm9vbS5MZWF2ZVNlYXRSZXF1ZXN0GiIuYXBpLnYxLmFwcC5yb29tLkxlYXZlU2VhdFJlc3BvbnNlIkaCtRgLEglyb29tOnNlYXSC0+STAjEaLy9hcGkvdjEvYXBwL3Jvb20ve3Jvb21faWR9L3NlYXQve3NlYXRfaWR9L2xlYXZlEp4BCglCYW5NZW1iZXISIS5hcGkudjEuYXBwLnJvb20uQmFuTWVtYmVyUmVxdWVzdBoiLmFwaS52MS5hcHAucm9vbS5CYW5NZW1iZXJSZXNwb25zZSJKgrUYDRILcm9vbTptZW1iZXKC0+STAjMaMS9hcGkvdjEvYXBwL3Jvb20ve3Jvb21faWR9L21lbWJlci97bWVtYmVyX2lkfS9iYW5ChgEKE2NvbS5hcGkudjEuYXBwLnJvb21CDFNlcnZpY2VQcm90b1ABWgEuogIEQVZBUqoCD0FwaS5WMS5BcHAuUm9vbcoCD0FwaVxWMVxBcHBcUm9vbeICG0FwaVxWMVxBcHBcUm9vbVxHUEJNZXRhZGF0YeoCEkFwaTo6VjE6OkFwcDo6Um9vbWIGcHJvdG8z", [file_api_v1_access_control, file_google_api_annotations]);
+  fileDesc("Ch1hcGkvdjEvYXBwL3Jvb20vc2VydmljZS5wcm90bxIPYXBpLnYxLmFwcC5yb29tIjYKDUNyZWF0ZVJlcXVlc3QSEQoJcm9vbV9uYW1lGAEgASgJEhIKCnNlYXRfY291bnQYAiABKAUiNQoOQ3JlYXRlUmVzcG9uc2USIwoEcm9vbRgBIAEoCzIVLmFwaS52MS5hcHAucm9vbS5Sb29tIooBCgRSb29tEg8KB3Jvb21faWQYASABKAkSEQoJcm9vbV9uYW1lGAIgASgJEiwKCXNlYXRfbGlzdBgDIAMoCzIZLmFwaS52MS5hcHAucm9vbS5Sb29tU2VhdBIwCgttZW1iZXJfbGlzdBgEIAMoCzIbLmFwaS52MS5hcHAucm9vbS5Sb29tTWVtYmVyInIKCFJvb21TZWF0Eg8KB3NlYXRfaWQYASABKAkSEQoJc2VhdF9uYW1lGAIgASgJEhUKDW1lbWJlcl9leGlzdHMYAyABKAgSKwoGbWVtYmVyGAQgASgLMhsuYXBpLnYxLmFwcC5yb29tLlJvb21NZW1iZXIiWAoKUm9vbU1lbWJlchIRCgltZW1iZXJfaWQYASABKAkSEwoLbWVtYmVyX3JvbGUYAyABKAkSDwoHdXNlcl9pZBgEIAEoCRIRCgl1c2VyX25hbWUYBSABKAkiHQoKR2V0UmVxdWVzdBIPCgdyb29tX2lkGAEgASgJIjIKC0dldFJlc3BvbnNlEiMKBHJvb20YASABKAsyFS5hcGkudjEuYXBwLnJvb20uUm9vbSIfCgxFbnRlclJlcXVlc3QSDwoHcm9vbV9pZBgBIAEoCSJHCg1FbnRlclJlc3BvbnNlEhEKCW1lbWJlcl9pZBgBIAEoCRIjCgRyb29tGAIgASgLMhUuYXBpLnYxLmFwcC5yb29tLlJvb20iMwoPVGFrZVNlYXRSZXF1ZXN0Eg8KB3Jvb21faWQYASABKAkSDwoHc2VhdF9pZBgCIAEoCSISChBUYWtlU2VhdFJlc3BvbnNlIjQKEExlYXZlU2VhdFJlcXVlc3QSDwoHcm9vbV9pZBgBIAEoCRIPCgdzZWF0X2lkGAIgASgJIhMKEUxlYXZlU2VhdFJlc3BvbnNlIjYKEEJhbk1lbWJlclJlcXVlc3QSDwoHcm9vbV9pZBgBIAEoCRIRCgltZW1iZXJfaWQYAiABKAkiEwoRQmFuTWVtYmVyUmVzcG9uc2Uy0QYKC1Jvb21TZXJ2aWNlEnQKBkNyZWF0ZRIeLmFwaS52MS5hcHAucm9vbS5DcmVhdGVSZXF1ZXN0Gh8uYXBpLnYxLmFwcC5yb29tLkNyZWF0ZVJlc3BvbnNlIimCtRgNEgtyb29tOmNyZWF0ZYLT5JMCEiIQL2FwaS92MS9hcHAvcm9vbRJyCgNHZXQSGy5hcGkudjEuYXBwLnJvb20uR2V0UmVxdWVzdBocLmFwaS52MS5hcHAucm9vbS5HZXRSZXNwb25zZSIwgrUYChIIcm9vbTpnZXSC0+STAhwSGi9hcGkvdjEvYXBwL3Jvb20ve3Jvb21faWR9EoABCgVFbnRlchIdLmFwaS52MS5hcHAucm9vbS5FbnRlclJlcXVlc3QaHi5hcGkudjEuYXBwLnJvb20uRW50ZXJSZXNwb25zZSI4grUYDBIKcm9vbTplbnRlcoLT5JMCIhogL2FwaS92MS9hcHAvcm9vbS97cm9vbV9pZH0vZW50ZXISlgEKCFRha2VTZWF0EiAuYXBpLnYxLmFwcC5yb29tLlRha2VTZWF0UmVxdWVzdBohLmFwaS52MS5hcHAucm9vbS5UYWtlU2VhdFJlc3BvbnNlIkWCtRgLEglyb29tOnNlYXSC0+STAjAaLi9hcGkvdjEvYXBwL3Jvb20ve3Jvb21faWR9L3NlYXQve3NlYXRfaWR9L3Rha2USmgEKCUxlYXZlU2VhdBIhLmFwaS52MS5hcHAucm9vbS5MZWF2ZVNlYXRSZXF1ZXN0GiIuYXBpLnYxLmFwcC5yb29tLkxlYXZlU2VhdFJlc3BvbnNlIkaCtRgLEglyb29tOnNlYXSC0+STAjEaLy9hcGkvdjEvYXBwL3Jvb20ve3Jvb21faWR9L3NlYXQve3NlYXRfaWR9L2xlYXZlEp4BCglCYW5NZW1iZXISIS5hcGkudjEuYXBwLnJvb20uQmFuTWVtYmVyUmVxdWVzdBoiLmFwaS52MS5hcHAucm9vbS5CYW5NZW1iZXJSZXNwb25zZSJKgrUYDRILcm9vbTptZW1iZXKC0+STAjMaMS9hcGkvdjEvYXBwL3Jvb20ve3Jvb21faWR9L21lbWJlci97bWVtYmVyX2lkfS9iYW5ChgEKE2NvbS5hcGkudjEuYXBwLnJvb21CDFNlcnZpY2VQcm90b1ABWgEuogIEQVZBUqoCD0FwaS5WMS5BcHAuUm9vbcoCD0FwaVxWMVxBcHBcUm9vbeICG0FwaVxWMVxBcHBcUm9vbVxHUEJNZXRhZGF0YeoCEkFwaTo6VjE6OkFwcDo6Um9vbWIGcHJvdG8z", [file_api_v1_access_control, file_google_api_annotations]);
 
 /**
  * @generated from message api.v1.app.room.CreateRequest
@@ -56,6 +56,33 @@ export const CreateRequestSchema: GenMessage<CreateRequest, CreateRequestJson> =
  */
 export type CreateResponse = Message<"api.v1.app.room.CreateResponse"> & {
   /**
+   * @generated from field: api.v1.app.room.Room room = 1;
+   */
+  room?: Room;
+};
+
+/**
+ * @generated from message api.v1.app.room.CreateResponse
+ */
+export type CreateResponseJson = {
+  /**
+   * @generated from field: api.v1.app.room.Room room = 1;
+   */
+  room?: RoomJson;
+};
+
+/**
+ * Describes the message api.v1.app.room.CreateResponse.
+ * Use `create(CreateResponseSchema)` to create a new message.
+ */
+export const CreateResponseSchema: GenMessage<CreateResponse, CreateResponseJson> = /*@__PURE__*/
+  messageDesc(file_api_v1_app_room_service, 1);
+
+/**
+ * @generated from message api.v1.app.room.Room
+ */
+export type Room = Message<"api.v1.app.room.Room"> & {
+  /**
    * @generated from field: string room_id = 1;
    */
   roomId: string;
@@ -77,9 +104,9 @@ export type CreateResponse = Message<"api.v1.app.room.CreateResponse"> & {
 };
 
 /**
- * @generated from message api.v1.app.room.CreateResponse
+ * @generated from message api.v1.app.room.Room
  */
-export type CreateResponseJson = {
+export type RoomJson = {
   /**
    * @generated from field: string room_id = 1;
    */
@@ -102,11 +129,11 @@ export type CreateResponseJson = {
 };
 
 /**
- * Describes the message api.v1.app.room.CreateResponse.
- * Use `create(CreateResponseSchema)` to create a new message.
+ * Describes the message api.v1.app.room.Room.
+ * Use `create(RoomSchema)` to create a new message.
  */
-export const CreateResponseSchema: GenMessage<CreateResponse, CreateResponseJson> = /*@__PURE__*/
-  messageDesc(file_api_v1_app_room_service, 1);
+export const RoomSchema: GenMessage<Room, RoomJson> = /*@__PURE__*/
+  messageDesc(file_api_v1_app_room_service, 2);
 
 /**
  * @generated from message api.v1.app.room.RoomSeat
@@ -128,9 +155,9 @@ export type RoomSeat = Message<"api.v1.app.room.RoomSeat"> & {
   memberExists: boolean;
 
   /**
-   * @generated from field: string member_id = 4;
+   * @generated from field: api.v1.app.room.RoomMember member = 4;
    */
-  memberId: string;
+  member?: RoomMember;
 };
 
 /**
@@ -153,9 +180,9 @@ export type RoomSeatJson = {
   memberExists?: boolean;
 
   /**
-   * @generated from field: string member_id = 4;
+   * @generated from field: api.v1.app.room.RoomMember member = 4;
    */
-  memberId?: string;
+  member?: RoomMemberJson;
 };
 
 /**
@@ -163,7 +190,7 @@ export type RoomSeatJson = {
  * Use `create(RoomSeatSchema)` to create a new message.
  */
 export const RoomSeatSchema: GenMessage<RoomSeat, RoomSeatJson> = /*@__PURE__*/
-  messageDesc(file_api_v1_app_room_service, 2);
+  messageDesc(file_api_v1_app_room_service, 3);
 
 /**
  * @generated from message api.v1.app.room.RoomMember
@@ -220,7 +247,7 @@ export type RoomMemberJson = {
  * Use `create(RoomMemberSchema)` to create a new message.
  */
 export const RoomMemberSchema: GenMessage<RoomMember, RoomMemberJson> = /*@__PURE__*/
-  messageDesc(file_api_v1_app_room_service, 3);
+  messageDesc(file_api_v1_app_room_service, 4);
 
 /**
  * @generated from message api.v1.app.room.GetRequest
@@ -247,31 +274,16 @@ export type GetRequestJson = {
  * Use `create(GetRequestSchema)` to create a new message.
  */
 export const GetRequestSchema: GenMessage<GetRequest, GetRequestJson> = /*@__PURE__*/
-  messageDesc(file_api_v1_app_room_service, 4);
+  messageDesc(file_api_v1_app_room_service, 5);
 
 /**
  * @generated from message api.v1.app.room.GetResponse
  */
 export type GetResponse = Message<"api.v1.app.room.GetResponse"> & {
   /**
-   * @generated from field: string room_id = 1;
+   * @generated from field: api.v1.app.room.Room room = 1;
    */
-  roomId: string;
-
-  /**
-   * @generated from field: string room_name = 2;
-   */
-  roomName: string;
-
-  /**
-   * @generated from field: repeated api.v1.app.room.RoomSeat seat_list = 3;
-   */
-  seatList: RoomSeat[];
-
-  /**
-   * @generated from field: repeated api.v1.app.room.RoomMember member_list = 4;
-   */
-  memberList: RoomMember[];
+  room?: Room;
 };
 
 /**
@@ -279,24 +291,9 @@ export type GetResponse = Message<"api.v1.app.room.GetResponse"> & {
  */
 export type GetResponseJson = {
   /**
-   * @generated from field: string room_id = 1;
+   * @generated from field: api.v1.app.room.Room room = 1;
    */
-  roomId?: string;
-
-  /**
-   * @generated from field: string room_name = 2;
-   */
-  roomName?: string;
-
-  /**
-   * @generated from field: repeated api.v1.app.room.RoomSeat seat_list = 3;
-   */
-  seatList?: RoomSeatJson[];
-
-  /**
-   * @generated from field: repeated api.v1.app.room.RoomMember member_list = 4;
-   */
-  memberList?: RoomMemberJson[];
+  room?: RoomJson;
 };
 
 /**
@@ -304,7 +301,7 @@ export type GetResponseJson = {
  * Use `create(GetResponseSchema)` to create a new message.
  */
 export const GetResponseSchema: GenMessage<GetResponse, GetResponseJson> = /*@__PURE__*/
-  messageDesc(file_api_v1_app_room_service, 5);
+  messageDesc(file_api_v1_app_room_service, 6);
 
 /**
  * @generated from message api.v1.app.room.EnterRequest
@@ -331,7 +328,7 @@ export type EnterRequestJson = {
  * Use `create(EnterRequestSchema)` to create a new message.
  */
 export const EnterRequestSchema: GenMessage<EnterRequest, EnterRequestJson> = /*@__PURE__*/
-  messageDesc(file_api_v1_app_room_service, 6);
+  messageDesc(file_api_v1_app_room_service, 7);
 
 /**
  * @generated from message api.v1.app.room.EnterResponse
@@ -341,6 +338,11 @@ export type EnterResponse = Message<"api.v1.app.room.EnterResponse"> & {
    * @generated from field: string member_id = 1;
    */
   memberId: string;
+
+  /**
+   * @generated from field: api.v1.app.room.Room room = 2;
+   */
+  room?: Room;
 };
 
 /**
@@ -351,6 +353,11 @@ export type EnterResponseJson = {
    * @generated from field: string member_id = 1;
    */
   memberId?: string;
+
+  /**
+   * @generated from field: api.v1.app.room.Room room = 2;
+   */
+  room?: RoomJson;
 };
 
 /**
@@ -358,7 +365,7 @@ export type EnterResponseJson = {
  * Use `create(EnterResponseSchema)` to create a new message.
  */
 export const EnterResponseSchema: GenMessage<EnterResponse, EnterResponseJson> = /*@__PURE__*/
-  messageDesc(file_api_v1_app_room_service, 7);
+  messageDesc(file_api_v1_app_room_service, 8);
 
 /**
  * @generated from message api.v1.app.room.TakeSeatRequest
@@ -395,7 +402,7 @@ export type TakeSeatRequestJson = {
  * Use `create(TakeSeatRequestSchema)` to create a new message.
  */
 export const TakeSeatRequestSchema: GenMessage<TakeSeatRequest, TakeSeatRequestJson> = /*@__PURE__*/
-  messageDesc(file_api_v1_app_room_service, 8);
+  messageDesc(file_api_v1_app_room_service, 9);
 
 /**
  * @generated from message api.v1.app.room.TakeSeatResponse
@@ -414,7 +421,7 @@ export type TakeSeatResponseJson = {
  * Use `create(TakeSeatResponseSchema)` to create a new message.
  */
 export const TakeSeatResponseSchema: GenMessage<TakeSeatResponse, TakeSeatResponseJson> = /*@__PURE__*/
-  messageDesc(file_api_v1_app_room_service, 9);
+  messageDesc(file_api_v1_app_room_service, 10);
 
 /**
  * @generated from message api.v1.app.room.LeaveSeatRequest
@@ -451,7 +458,7 @@ export type LeaveSeatRequestJson = {
  * Use `create(LeaveSeatRequestSchema)` to create a new message.
  */
 export const LeaveSeatRequestSchema: GenMessage<LeaveSeatRequest, LeaveSeatRequestJson> = /*@__PURE__*/
-  messageDesc(file_api_v1_app_room_service, 10);
+  messageDesc(file_api_v1_app_room_service, 11);
 
 /**
  * @generated from message api.v1.app.room.LeaveSeatResponse
@@ -470,7 +477,7 @@ export type LeaveSeatResponseJson = {
  * Use `create(LeaveSeatResponseSchema)` to create a new message.
  */
 export const LeaveSeatResponseSchema: GenMessage<LeaveSeatResponse, LeaveSeatResponseJson> = /*@__PURE__*/
-  messageDesc(file_api_v1_app_room_service, 11);
+  messageDesc(file_api_v1_app_room_service, 12);
 
 /**
  * @generated from message api.v1.app.room.BanMemberRequest
@@ -507,7 +514,7 @@ export type BanMemberRequestJson = {
  * Use `create(BanMemberRequestSchema)` to create a new message.
  */
 export const BanMemberRequestSchema: GenMessage<BanMemberRequest, BanMemberRequestJson> = /*@__PURE__*/
-  messageDesc(file_api_v1_app_room_service, 12);
+  messageDesc(file_api_v1_app_room_service, 13);
 
 /**
  * @generated from message api.v1.app.room.BanMemberResponse
@@ -526,7 +533,7 @@ export type BanMemberResponseJson = {
  * Use `create(BanMemberResponseSchema)` to create a new message.
  */
 export const BanMemberResponseSchema: GenMessage<BanMemberResponse, BanMemberResponseJson> = /*@__PURE__*/
-  messageDesc(file_api_v1_app_room_service, 13);
+  messageDesc(file_api_v1_app_room_service, 14);
 
 /**
  * @generated from service api.v1.app.room.RoomService

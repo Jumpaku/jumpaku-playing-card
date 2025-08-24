@@ -30,6 +30,7 @@ export class AppException extends Error {
         this.name = this.constructor.name;
         this.stack = appendStack(this, cause);
     }
+
 }
 
 export function throwBadRequest(description: string, details: string, options?: {
@@ -49,7 +50,24 @@ export function throwBadRequest(description: string, details: string, options?: 
     );
 }
 
-export function throwUnauthorized(description: string, details: string, options?: {
+export function throwAuthenticationFailed(description: string, details: string, options?: {
+    responseData?: Record<string, string>;
+    cause?: unknown;
+}): never {
+    throw new AppException(
+        HttpStatus.BAD_REQUEST,
+        'Bad request',
+        toJson(ErrorResponseSchema, create(ErrorResponseSchema, {
+            errorCode: ErrorResponse_ErrorCode.BAD_REQUEST,
+            errorDescription: description,
+            data: options?.responseData,
+        })),
+        details,
+        options?.cause,
+    );
+}
+
+export function throwAccessTokenExpired(description: string, details: string, options?: {
     responseData?: Record<string, string>;
     cause?: unknown;
 }): never {
@@ -57,7 +75,24 @@ export function throwUnauthorized(description: string, details: string, options?
         HttpStatus.UNAUTHORIZED,
         'Unauthorized',
         toJson(ErrorResponseSchema, create(ErrorResponseSchema, {
-            errorCode: ErrorResponse_ErrorCode.UNAUTHORIZED,
+            errorCode: ErrorResponse_ErrorCode.ACCESS_TOKEN_EXPIRED,
+            errorDescription: description,
+            data: options?.responseData,
+        })),
+        details,
+        options?.cause,
+    );
+}
+
+export function throwRefreshTokenExpired(description: string, details: string, options?: {
+    responseData?: Record<string, string>;
+    cause?: unknown;
+}): never {
+    throw new AppException(
+        HttpStatus.UNAUTHORIZED,
+        'Unauthorized',
+        toJson(ErrorResponseSchema, create(ErrorResponseSchema, {
+            errorCode: ErrorResponse_ErrorCode.REFRESH_TOKEN_EXPIRED,
             errorDescription: description,
             data: options?.responseData,
         })),

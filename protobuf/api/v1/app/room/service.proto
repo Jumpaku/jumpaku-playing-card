@@ -37,6 +37,9 @@ message CreateRequest {
   int32 seat_count = 2;
 }
 message CreateResponse {
+  Room room = 1;
+}
+message Room {
   string room_id = 1;
   string room_name = 2;
   repeated RoomSeat seat_list = 3;
@@ -46,7 +49,7 @@ message RoomSeat {
   string seat_id = 1;
   string seat_name = 2;
   bool member_exists = 3;
-  string member_id = 4;
+  RoomMember member = 4;
 }
 message RoomMember {
   string member_id = 1;
@@ -58,16 +61,14 @@ message GetRequest {
   string room_id = 1;
 }
 message GetResponse {
-  string room_id = 1;
-  string room_name = 2;
-  repeated RoomSeat seat_list = 3;
-  repeated RoomMember member_list = 4;
+  Room room = 1;
 }
 message EnterRequest {
   string room_id = 1;
 }
 message EnterResponse {
   string member_id = 1;
+  Room room = 2;
 }
 message TakeSeatRequest {
   string room_id = 1;
