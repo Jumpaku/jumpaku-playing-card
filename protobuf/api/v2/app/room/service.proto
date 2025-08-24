@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+package api.v2.app.room;
+
+//import "api/v1/access_control.proto";
+import "google/api/annotations.proto";
+
+service RoomService {
+  rpc CreateRoom(CreateRoomRequest) returns (CreateRoomResponse) {
+    option (google.api.http) = {post: "/api/v1/app/room"};
+  }
+  rpc GetRoom(GetRoomRequest) returns (GetRoomResponse) {
+    option (google.api.http) = {get: "/api/v1/app/room/{room_id}"};
+  }
+  rpc ResetRoom(ResetRoomRequest) returns (ResetRoomResponse) {
+    option (google.api.http) = {post: "/api/v1/app/room/{room_id}/reset"};
+  }
+  rpc EnterRoom(EnterRoomRequest) returns (EnterRoomResponse) {
+    option (google.api.http) = {put: "/api/v1/app/room/{room_id}/enter"};
+  }
+  rpc ExitRoom(ExitRoomRequest) returns (ExitRoomResponse) {
+    option (google.api.http) = {put: "/api/v1/app/room/{room_id}/exit"};
+  }
+}
+
+message CreateRoomRequest {
+}
+message CreateRoomResponse {
+  string room_id = 1;
+}
+message GetRoomRequest {
+  string room_id = 1;
+}
+message GetRoomResponse {
+  string room_id = 1;
+  repeated RoomMemberUser member_list = 2;
+}
+message ResetRoomRequest {
+  string room_id = 1;
+}
+message ResetRoomResponse {}
+message EnterRoomRequest {
+  string room_id = 1;
+}
+message EnterRoomResponse {
+}
+message ExitRoomRequest {
+  string room_id = 1;
+}
+message ExitRoomResponse {
+}
+message RoomMemberUser {
+  string user_id = 1;
+  string display_name = 2;
+}

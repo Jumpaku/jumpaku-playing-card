@@ -1,0 +1,77 @@
+syntax = "proto3";
+package api.v1;
+
+import "google/api/annotations.proto";
+import "api/v1/access_control.proto";
+
+service ExampleService {
+  rpc ListExample(ListExampleRequest) returns (ListExampleResponse) {
+    option (google.api.http) = {get: "/v1"};
+    option (api.v1.access_control) = {};
+  }
+  rpc GetExample(GetExampleRequest) returns (GetExampleResponse) {
+    option (google.api.http) = {get: "/v1/{example_id}"};
+    option (api.v1.access_control) = {};
+  }
+  rpc UpdateExample(UpdateExampleRequest) returns (UpdateExampleResponse) {
+    option (google.api.http) = {put: "/v1/{example_id}"};
+    option (api.v1.access_control) = {};
+  }
+  rpc CreateExample(CreateExampleRequest) returns (CreateExampleResponse) {
+    option (google.api.http) = {post: "/v1/{example_id}"};
+    option (api.v1.access_control) = {};
+  }
+  rpc DeleteExample(DeleteExampleRequest) returns (DeleteExampleResponse) {
+    option (google.api.http) = {delete: "/v1/{example_id}"};
+    option (api.v1.access_control) = {};
+  }
+}
+
+message Example {
+  string example_id = 1;
+  string example_name = 2;
+  string example_content = 3;
+
+  message Inner {
+    string inner = 1;
+  }
+}
+
+message ListExampleResponse {
+  repeated Example example_list = 1;
+}
+message ListExampleRequest {
+  bool desc = 1;
+  int64 limit = 2;
+  int64 offset = 3;
+}
+message GetExampleResponse {
+  Example example = 1;
+}
+message GetExampleRequest {
+  string example_id = 1;
+}
+message UpdateExampleResponse {
+  Example example = 1;
+}
+message UpdateExampleRequest {
+  string example_id = 1;
+  bool set_example_name = 2;
+  string example_name = 3;
+  bool set_example_content = 4;
+  string example_content = 5;
+}
+message CreateExampleResponse {
+  Example example = 1;
+}
+message CreateExampleRequest {
+  string example_name = 2;
+  string example_content = 3;
+}
+message DeleteExampleResponse {}
+message DeleteExampleRequest {
+  string example_id = 1;
+}
+
+message Abc {}
+message AbcSchema {}
