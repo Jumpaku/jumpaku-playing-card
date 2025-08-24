@@ -1,0 +1,96 @@
+syntax = "proto3";
+
+package api.v2.app.room.play;
+
+import "google/api/annotations.proto";
+
+service PlayService {
+  rpc ListPlace(ListPlaceRequest) returns (ListPlaceResponse) {
+    option (google.api.http) = {get: "/api/v1/app/room/{room_id}/play/place"};
+  }
+  rpc AddPlace(AddPlaceRequest) returns (AddPlaceResponse) {
+    option (google.api.http) = {post: "/api/v1/app/room/{room_id}/play/place"};
+  }
+  rpc Shuffle(ShuffleRequest) returns (ShuffleResponse) {
+    option (google.api.http) = {post: "/api/v1/app/room/{room_id}/play/place/{place_id}/shuffle"};
+  }
+  rpc MoveCard(MoveCardRequest) returns (MoveCardResponse) {
+    option (google.api.http) = {post: "/api/v1/app/room/{room_id}/play/card/move"};
+  }
+}
+
+message ListPlaceRequest {
+  string room_id = 1;
+}
+message ListPlaceResponse {
+  repeated Place place_list = 1;
+}
+message AddPlaceRequest {
+  string room_id = 1;
+  Place.Type type = 3;
+  bool owned = 4;
+  string owner_user_id = 5;
+}
+message AddPlaceResponse {
+  Place place = 2;
+}
+message ShuffleRequest {
+  string room_id = 1;
+  string place_id = 2;
+}
+message ShuffleResponse {}
+message MoveCardRequest {
+  message CardMove {
+    string card_id = 1;
+    string place_id = 4;
+  }
+  string room_id = 1;
+  repeated CardMove card_move_list = 2;
+}
+message MoveCardResponse {}
+
+message Place {
+  enum Type {
+    TYPE_UNSPECIFIED = 0;
+    TYPE_HAND = 1;
+    TYPE_DECK = 2;
+    TYPE_TABLE = 3;
+  }
+  string place_id = 1;
+  Type type = 3;
+  string owner_user_id = 5;
+  repeated Card card_list = 6;
+}
+
+message Card {
+  enum Suit {
+    SUIT_UNSPECIFIED = 0;
+    SUIT_SPADE = 1;
+    SUIT_HEART = 2;
+    SUIT_DIAMOND = 3;
+    SUIT_CLUB = 4;
+    SUIT_JOKER = 5;
+  }
+  enum Rank {
+    RANK_UNSPECIFIED = 0;
+    RANK_ACE = 1;
+    RANK_TWO = 2;
+    RANK_THREE = 3;
+    RANK_FOUR = 4;
+    RANK_FIVE = 5;
+    RANK_SIX = 6;
+    RANK_SEVEN = 7;
+    RANK_EIGHT = 8;
+    RANK_NINE = 9;
+    RANK_TEN = 10;
+    RANK_JACK = 11;
+    RANK_QUEEN = 12;
+    RANK_KING = 13;
+    RANK_JOKER_1 = 14;
+    RANK_JOKER_2 = 15;
+  }
+  string card_id = 1;
+  bool open = 2;
+  Suit suit = 3;
+  Rank rank = 4;
+}

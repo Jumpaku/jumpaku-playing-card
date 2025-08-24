@@ -15,19 +15,22 @@ services:
     tty: true
     command: [ "sleep", "infinity" ]
 
-  firebase:
-    build:
-      context: .
-      dockerfile: ../Dockerfile.firebase
-    platform: linux/amd64
+  postgres:
+    image: postgres:17.2-alpine3.20
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=app
+      - POSTGRES_USER=postgres
     ports:
-      - "4000:4000"
-      - "9099:9099"
-      - "9150:9150"
-      - "8080:8080"
+      - "5432:5432"
     volumes:
-      - .:/workspace
-    working_dir: /workspace
+      - ../../master-data/sql:/workspace/backend/master-data/sql
+    working_dir: /workspace/backend
+  adminer:
+    image: adminer
+    ports:
+      - "8080:8080"
+
 
 volumes:
   app-node_modules:

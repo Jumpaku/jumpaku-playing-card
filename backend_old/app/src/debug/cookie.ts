@@ -1,0 +1,1 @@
+const COOKIE_NAME_DEBUG_ID = 'debug-id';

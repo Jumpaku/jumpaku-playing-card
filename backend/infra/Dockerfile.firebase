@@ -1,0 +1,10 @@
+FROM --platform=linux/amd64 ubuntu:25.04
+
+RUN DEBIAN_FRONTEND=noninteractive apt update -y \
+    && DEBIAN_FRONTEND=noninteractive apt install -y npm curl openjdk-17-jdk
+
+RUN curl -sL https://firebase.tools | bash
+
+WORKDIR /workspace
+
+CMD [ "firebase", "emulators:start", "--project", "emulator" ]
