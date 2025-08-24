@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -6,29 +7,26 @@ namespace App.Script.Play
 {
     public class CardPool : MonoBehaviour
     {
-        private Dictionary<string, Card> _cardMap = new();
+        private readonly Dictionary<string, Card> _cardMap = new();
 
-        void Start()
+        async void Start()
         {
-            Init();
+            await Init();
         }
 
-        private void Init()
+        private async UniTask Init()
         {
-            var cardHandle = Addressables.LoadAssetAsync<GameObject>("Assets/App/Prefab/Play/Card.prefab");
-            cardHandle.Completed += p =>
+            var prefab = await Addressables.LoadAssetAsync<GameObject>("Assets/App/Prefab/Play/Card.prefab");
+            for (int i = 0; i < 54; i++)
             {
-                for (int i = 0; i < 54; i++)
-                {
-                    var cardId = i + 1;
-                    var card = Instantiate(p.Result, transform);
+                var cardId = i + 1;
+                var card = Instantiate(prefab, transform);
 
-                    card.transform.position = new Vector3(-(i % 13), -(i / 13), 0);
-                    var c = card.GetComponent<Card>();
-                    c.Init($"{cardId}", Card.Side.Back);
-                    _cardMap.Add($"{cardId}", c);
-                }
-            };
+                card.transform.position = new Vector3(0, 0, 0);
+                var c = card.GetComponent<Card>();
+                await c.Init($"{cardId}", Card.Side.Back);
+                _cardMap.Add($"{cardId}", c);
+            }
         }
 
         public Card New(string masterCardId)

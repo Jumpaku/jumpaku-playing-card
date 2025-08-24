@@ -18,46 +18,40 @@ namespace App.Script.Setting.Component
         private ServerSettingPanel _serverSettingPanel;
         private UserSettingPanel _userSettingPanel;
         private RoomSettingPanel _roomSettingPanel;
-
-
-        private async UniTask Start()
+        private StartPlayPanel _startPlayPanel;
+        public async UniTask Init(SettingEntryPoint.InitData initData)
         {
-            await Init();
-        }
-
-
-        public async UniTask Init()
-        {
-            var init = GameObject.Find("SettingInitialize").GetComponent<SettingInitialize>();
-
             _localData = new LocalData();
             
             _state = new SettingState();
-            _state.UserId.Value = init.Data.UserId;
+            _state.UserId.Value = initData.UserId;
 
             _dialog = GameObject.Find("Dialog").GetComponent<Dialog>();
 
             _sessionManager = new(new FactoryReference<string>(() => _serverSettingPanel.ServerUrl.Value));
             _sessionManager.OnCreate.Add(_handleTokenChange);
             _sessionManager.OnRefresh.Add(_handleTokenChange);
-            _sessionManager.RefreshToken.Value = init.Data.RefreshToken;
-            _sessionManager.AccessToken.Value = init.Data.AccessToken;
+            _sessionManager.RefreshToken.Value = initData.RefreshToken;
+            _sessionManager.AccessToken.Value = initData.AccessToken;
 
             _serverSettingPanel = GameObject.Find("ServerSettingPanel").GetComponent<ServerSettingPanel>();
             _serverSettingPanel.Init(_sessionManager);
             _serverSettingPanel.OnCheck.Add(_handleServerCheck);
             _serverSettingPanel.OnServerUrlChange.Add(_handleServerUrlChange);
-            _serverSettingPanel.ServerUrl.Value = init.Data.ServerUrl;
+            _serverSettingPanel.ServerUrl.Value = initData.ServerUrl;
 
             _userSettingPanel = GameObject.Find("UserSettingPanel").GetComponent<UserSettingPanel>();
             _userSettingPanel.Init(_sessionManager);
             _userSettingPanel.OnCreate.Add(_handleUserCreate);
-            _userSettingPanel.DisplayName.Value = init.Data.DisplayName;
+            _userSettingPanel.DisplayName.Value = initData.DisplayName;
 
             _roomSettingPanel = GameObject.Find("RoomSettingPanel").GetComponent<RoomSettingPanel>();
-            _roomSettingPanel.Init(_sessionManager, _state.UserId);
+            _roomSettingPanel.Init(_sessionManager, _state.UserId, initData.RoomId);
             _roomSettingPanel.OnCreate.Add(_handleRoomCreate);
             _roomSettingPanel.OnEnter.Add(_handleRoomEnter);
+
+            _startPlayPanel = GameObject.Find("StartPlayPanel").GetComponent<StartPlayPanel>();
+            _startPlayPanel.Init(_roomSettingPanel.RoomId);
         }
 
         private async UniTask _handleServerUrlChange(string serverUrl)

@@ -1,3 +1,4 @@
+using System;
 using Api_PB.V1_PB.App_PB.User_PB;
 using Api_PB.V1_PB.App_PB.User_PB.UserService_PB;
 using App.Script.Shared;
@@ -5,7 +6,7 @@ using UnityEngine;
 
 namespace App.Script.Setting.Component
 {
-    public class SettingInitialize : MonoBehaviour
+    public class SettingEntryPoint : MonoBehaviour
     {
         public class InitData
         {
@@ -14,9 +15,15 @@ namespace App.Script.Setting.Component
             public string RefreshToken;
             public string UserId;
             public string DisplayName;
+            public string RoomId;
         }
 
-        public readonly InitData Data = new InitData();
+        public readonly InitData Data = new();
+
+        public void SetRoomId(string roomId)
+        {
+            Data.RoomId = roomId;
+        }
 
         public async void Awake()
         {
@@ -45,6 +52,12 @@ namespace App.Script.Setting.Component
             Data.RefreshToken = d.auth.refreshToken;
             Data.UserId = d.user.userId;
             Data.DisplayName = r.Value.displayName;
+        }
+
+        private async void Start()
+        {
+            var v = GameObject.Find("SettingView").GetComponent<SettingView>();
+            await v.Init(Data);
         }
     }
 }

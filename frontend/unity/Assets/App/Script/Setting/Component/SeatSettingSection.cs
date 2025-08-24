@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using Api_PB.V1_PB.App_PB.Room_PB;
+using App.Script.Lib;
 using App.Script.Lib.Reference;
 using App.Script.Setting.Logic.Setting.Room;
+using App.Script.Shared;
 using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
@@ -15,7 +17,6 @@ namespace App.Script.Setting.Component
         private SessionManager _sessionManager;
         private IReadonlyReference<string> _userId;
         private IReadonlyReference<string> _roomId;
-
         private class Seat
         {
             public TMP_Text UserName;
@@ -25,15 +26,7 @@ namespace App.Script.Setting.Component
             public string SeatId;
         }
 
-        private List<Seat> _seatList = new List<Seat>()
-        {
-            new Seat(),
-            new Seat(),
-            new Seat(),
-            new Seat(),
-            new Seat(),
-            new Seat()
-        };
+        private readonly List<Seat> _seatList = new() { new(), new(), new(), new(), new(), new() };
 
         public void Init(
             SessionManager sessionManager,
@@ -65,9 +58,6 @@ namespace App.Script.Setting.Component
                 _seatList[i].SeatObject = seat.gameObject;
                 _seatList[i].SeatObject.SetActive(false);
             }
-
-            transform.Find("StartPlayButton").GetComponent<Button>()
-                .onClick.AddListener(StartPlay);
         }
 
         public void Prepare(List<RoomSeat> seatList)
@@ -92,13 +82,6 @@ namespace App.Script.Setting.Component
                 s.SeatId = seatList[i].seatId;
             }
         }
-
-        public void StartPlay()
-        {
-            Debug.Log("SeatSettingSection/StartPlay");
-            SceneManager.LoadScene("Scenes/PlayScene");
-        }
-
         public async UniTask<SelectSeatExecutor.SelectSeatResult> SelectSeat(int seatIndex)
         {
             Debug.Log($"SeatSettingSection/SelectSeat({seatIndex})");

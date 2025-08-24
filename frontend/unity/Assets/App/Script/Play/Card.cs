@@ -2,66 +2,67 @@ using System;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.Serialization;
 
 namespace App.Script.Play
 {
-    [Serializable]
     public class Card : MonoBehaviour
     {
-        [SerializeField] private string masterCardId;
-        [SerializeField] private Side side;
-        [SerializeField] private Texture2D frontTexture;
-        [SerializeField] private Texture2D backTexture;
-
+        private string _masterCardId;
+        private Side _side;
+        private Texture2D _frontTexture;
+        private Texture2D _backTexture;
+        private SpriteRenderer _spriteRenderer;
+        
         public enum Side
         {
-            Unspecified,
-            Front,
             Back,
+            Front,
         }
 
 
-        public void Init(string masterCardId, Side side)
+        public async UniTask Init(string masterCardId, Side side)
         {
-            this.masterCardId = masterCardId;
+            _masterCardId = masterCardId;
             gameObject.name = "Card" + masterCardId;
 
-            var handleFront = Addressables.LoadAssetAsync<Texture2D>(GetFrontTextureKey());
-            handleFront.Completed += s => { frontTexture = s.Result; };
-            var handleBack = Addressables.LoadAssetAsync<Texture2D>(GetBackTextureKey());
-            handleBack.Completed += s => { backTexture = s.Result; };
+            var handleFront = Addressables.LoadAssetAsync<Texture2D>(_getFrontTextureKey());
+            var handleBack = Addressables.LoadAssetAsync<Texture2D>(_getBackTextureKey());
 
-            UniTask.WhenAll(handleFront.ToUniTask(), handleBack.ToUniTask()).GetAwaiter()
-                .OnCompleted(() => SetSide(side));
+            await UniTask.WhenAll(handleFront.ToUniTask(), handleBack.ToUniTask());
+
+            _frontTexture = handleFront.Result;
+            _backTexture = handleBack.Result;
+            _spriteRenderer = transform.Find("CardSprite").GetComponent<SpriteRenderer>();
+            SetSide(side);
         }
 
-        private string GetBackTextureKey()
+        private string _getBackTextureKey()
         {
             return "Assets/App/Texture/Play/cards/cards.055.png";
         }
 
-        private string GetFrontTextureKey()
+        private string _getFrontTextureKey()
         {
-            var cardName = $"000{masterCardId}";
+            var cardName = $"000{_masterCardId}";
             cardName = cardName.Substring(cardName.Length - 3);
             return $"Assets/App/Texture/Play/cards/cards.{cardName}.png";
         }
 
-        void SetSide(Side side)
+        public void SetSide(Side side)
         {
-            this.side = side;
-            var spriteRenderer = transform.Find("CardSprite").GetComponent<SpriteRenderer>();
-            var sprite = spriteRenderer.sprite;
-            switch (this.side)
+            _side = side;
+            var sprite = _spriteRenderer.sprite;
+            switch (_side)
             {
                 case Side.Front:
                 {
-                    spriteRenderer.sprite = Sprite.Create(frontTexture, sprite.rect, sprite.pivot);
+                    _spriteRenderer.sprite = Sprite.Create(_frontTexture, sprite.rect, sprite.pivot);
                 }
                     break;
                 case Side.Back:
                 {
-                    spriteRenderer.sprite = Sprite.Create(backTexture, sprite.rect, sprite.pivot);
+                    _spriteRenderer.sprite = Sprite.Create(_backTexture, sprite.rect, sprite.pivot);
                 }
                     break;
             }

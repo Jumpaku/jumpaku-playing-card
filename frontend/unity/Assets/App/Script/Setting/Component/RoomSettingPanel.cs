@@ -24,6 +24,8 @@ namespace App.Script.Setting.Component
 
         private TMP_InputField _roomIdInput;
 
+        public IReadonlyReference<string> RoomId => new FactoryReference<string>(() => _roomIdInput.text);
+
         private SeatSettingSection _seatSettingSection;
 
         private readonly Handler<CreateExecutor.CreateResult> _onCreate = new();
@@ -32,7 +34,7 @@ namespace App.Script.Setting.Component
         private readonly Handler<EnterExecutor.EnterResult> _onEnter = new();
         public IAddHandler<EnterExecutor.EnterResult> OnEnter => _onEnter;
 
-        public void Init(SessionManager sessionManager, IReadonlyReference<string> userId)
+        public void Init(SessionManager sessionManager, IReadonlyReference<string> userId, string roomId)
         {
             Debug.Log("RoomSettingPanel/Init");
 
@@ -45,6 +47,7 @@ namespace App.Script.Setting.Component
             _roomSeatsInput = transform.Find("RoomSetting").Find("SeatsInput").GetComponent<TMP_Dropdown>();
 
             _roomIdInput = transform.Find("RoomId").Find("RoomIdInput").GetComponent<TMP_InputField>();
+            _roomIdInput.text = roomId;
 
             _seatSettingSection = transform.Find("SeatSettingSection").GetComponent<SeatSettingSection>();
             _seatSettingSection.Init(_sessionManager, userId, new FactoryReference<string>(() => _roomIdInput.text));
