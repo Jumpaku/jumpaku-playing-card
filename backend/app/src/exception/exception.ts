@@ -1,119 +1,153 @@
-import {HttpStatus} from "@nestjs/common";
+import { HttpStatus } from '@nestjs/common';
 import {
-    ErrorResponse_ErrorCode,
-    ErrorResponseJson,
-    ErrorResponseSchema
-} from "../gen/pb/api/v1/error_pb";
-import {create, toJson} from "@bufbuild/protobuf";
-
+  ErrorResponse_ErrorCode,
+  ErrorResponseJson,
+  ErrorResponseSchema,
+} from '../gen/pb/api/v1/error_pb';
+import { create, toJson } from '@bufbuild/protobuf';
 
 function appendStack(err: Error, cause?: unknown): string {
-    const thisStack = err.stack ?? `${this.name}: ${this.message}\n No stacktrace.`;
-    if (cause == null || cause === '') {
-        return thisStack;
-    }
-    if (cause instanceof Error) {
-        return thisStack + `\nCaused by: ${cause.stack}`
-    }
-    return thisStack + `\nCaused by: ${cause}`
+  const thisStack =
+    err.stack ?? `${this.name}: ${this.message}\n No stacktrace.`;
+  if (cause == null || cause === '') {
+    return thisStack;
+  }
+  if (cause instanceof Error) {
+    return thisStack + `\nCaused by: ${cause.stack}`;
+  }
+  return thisStack + `\nCaused by: ${cause}`;
 }
 
 export class AppException extends Error {
-    constructor(
-        readonly statusCode: number,
-        readonly statusMessage: string,
-        readonly resBody: ErrorResponseJson,
-        readonly logDetails: string,
-        readonly cause?: unknown,
-    ) {
-        super(statusMessage);
-        this.name = this.constructor.name;
-        this.stack = appendStack(this, cause);
-    }
-
+  constructor(
+    readonly statusCode: number,
+    readonly statusMessage: string,
+    readonly resBody: ErrorResponseJson,
+    readonly logDetails: string,
+    readonly cause?: unknown,
+  ) {
+    super(statusMessage);
+    this.name = this.constructor.name;
+    this.stack = appendStack(this, cause);
+  }
 }
 
-export function throwBadRequest(description: string, details: string, options?: {
+export function throwBadRequest(
+  description: string,
+  details: string,
+  options?: {
     responseData?: Record<string, string>;
     cause?: unknown;
-}): never {
-    throw new AppException(
-        HttpStatus.BAD_REQUEST,
-        'Bad request',
-        toJson(ErrorResponseSchema, create(ErrorResponseSchema, {
-            errorCode: ErrorResponse_ErrorCode.BAD_REQUEST,
-            errorDescription: description,
-            data: options?.responseData,
-        })),
-        details,
-        options?.cause,
-    );
+  },
+): never {
+  throw new AppException(
+    HttpStatus.BAD_REQUEST,
+    'Bad request',
+    toJson(
+      ErrorResponseSchema,
+      create(ErrorResponseSchema, {
+        errorCode: ErrorResponse_ErrorCode.BAD_REQUEST,
+        errorDescription: description,
+        data: options?.responseData,
+      }),
+    ),
+    details,
+    options?.cause,
+  );
 }
 
-export function throwAuthenticationFailed(description: string, details: string, options?: {
+export function throwAuthenticationFailed(
+  description: string,
+  details: string,
+  options?: {
     responseData?: Record<string, string>;
     cause?: unknown;
-}): never {
-    throw new AppException(
-        HttpStatus.BAD_REQUEST,
-        'Bad request',
-        toJson(ErrorResponseSchema, create(ErrorResponseSchema, {
-            errorCode: ErrorResponse_ErrorCode.BAD_REQUEST,
-            errorDescription: description,
-            data: options?.responseData,
-        })),
-        details,
-        options?.cause,
-    );
+  },
+): never {
+  throw new AppException(
+    HttpStatus.BAD_REQUEST,
+    'Bad request',
+    toJson(
+      ErrorResponseSchema,
+      create(ErrorResponseSchema, {
+        errorCode: ErrorResponse_ErrorCode.BAD_REQUEST,
+        errorDescription: description,
+        data: options?.responseData,
+      }),
+    ),
+    details,
+    options?.cause,
+  );
 }
 
-export function throwAccessTokenExpired(description: string, details: string, options?: {
+export function throwAccessTokenExpired(
+  description: string,
+  details: string,
+  options?: {
     responseData?: Record<string, string>;
     cause?: unknown;
-}): never {
-    throw new AppException(
-        HttpStatus.UNAUTHORIZED,
-        'Unauthorized',
-        toJson(ErrorResponseSchema, create(ErrorResponseSchema, {
-            errorCode: ErrorResponse_ErrorCode.ACCESS_TOKEN_EXPIRED,
-            errorDescription: description,
-            data: options?.responseData,
-        })),
-        details,
-        options?.cause,
-    );
+  },
+): never {
+  throw new AppException(
+    HttpStatus.UNAUTHORIZED,
+    'Unauthorized',
+    toJson(
+      ErrorResponseSchema,
+      create(ErrorResponseSchema, {
+        errorCode: ErrorResponse_ErrorCode.ACCESS_TOKEN_EXPIRED,
+        errorDescription: description,
+        data: options?.responseData,
+      }),
+    ),
+    details,
+    options?.cause,
+  );
 }
 
-export function throwRefreshTokenExpired(description: string, details: string, options?: {
+export function throwRefreshTokenExpired(
+  description: string,
+  details: string,
+  options?: {
     responseData?: Record<string, string>;
     cause?: unknown;
-}): never {
-    throw new AppException(
-        HttpStatus.UNAUTHORIZED,
-        'Unauthorized',
-        toJson(ErrorResponseSchema, create(ErrorResponseSchema, {
-            errorCode: ErrorResponse_ErrorCode.REFRESH_TOKEN_EXPIRED,
-            errorDescription: description,
-            data: options?.responseData,
-        })),
-        details,
-        options?.cause,
-    );
+  },
+): never {
+  throw new AppException(
+    HttpStatus.UNAUTHORIZED,
+    'Unauthorized',
+    toJson(
+      ErrorResponseSchema,
+      create(ErrorResponseSchema, {
+        errorCode: ErrorResponse_ErrorCode.REFRESH_TOKEN_EXPIRED,
+        errorDescription: description,
+        data: options?.responseData,
+      }),
+    ),
+    details,
+    options?.cause,
+  );
 }
 
-export function throwPreconditionFailed(description: string, details: string, options?: {
+export function throwPreconditionFailed(
+  description: string,
+  details: string,
+  options?: {
     responseData?: Record<string, string>;
     cause?: unknown;
-}): never {
-    throw new AppException(
-        HttpStatus.PRECONDITION_FAILED,
-        'Precondition failed',
-        toJson(ErrorResponseSchema, create(ErrorResponseSchema, {
-            errorCode: ErrorResponse_ErrorCode.PRECONDITION_FAILED,
-            errorDescription: description,
-            data: options?.responseData,
-        })),
-        details,
-        options?.cause,
-    );
+  },
+): never {
+  throw new AppException(
+    HttpStatus.PRECONDITION_FAILED,
+    'Precondition failed',
+    toJson(
+      ErrorResponseSchema,
+      create(ErrorResponseSchema, {
+        errorCode: ErrorResponse_ErrorCode.PRECONDITION_FAILED,
+        errorDescription: description,
+        data: options?.responseData,
+      }),
+    ),
+    details,
+    options?.cause,
+  );
 }

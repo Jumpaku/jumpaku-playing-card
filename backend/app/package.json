@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@bufbuild/protobuf": "^2.2.3",
+    "@google-cloud/firestore": "^7.11.3",
     "@js-temporal/polyfill": "^0.4.4",
     "@nestjs/common": "^10.0.0",
     "@nestjs/config": "^4.0.0",

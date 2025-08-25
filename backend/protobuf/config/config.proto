@@ -1,6 +1,9 @@
 syntax = "proto3";
 package config;
 
+message AppEnv {
+    string NODE_ENV = 1;
+}
 message AppConfig {
     string node_env = 10;
     int32 port = 20;

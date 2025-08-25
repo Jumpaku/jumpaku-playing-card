@@ -10,7 +10,34 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file config/config.proto.
  */
 export const file_config_config: GenFile = /*@__PURE__*/
-  fileDesc("ChNjb25maWcvY29uZmlnLnByb3RvEgZjb25maWciugQKCUFwcENvbmZpZxIQCghub2RlX2VudhgKIAEoCRIMCgRwb3J0GBQgASgFEhsKE3Bvc3RncmVzX2Nvbm5lY3Rpb24YHiABKAkSIAoYcG9zdGdyZXNfdGltZW91dF9zZWNvbmRzGB8gASgFEjgKDmF1dGhlbnRpY2F0aW9uGCggASgLMiAuY29uZmlnLkFwcENvbmZpZy5BdXRoZW50aWNhdGlvbhqTAwoOQXV0aGVudGljYXRpb24SEgoKc2VjcmV0X2tleRgBIAEoCRISCgpwdWJsaWNfa2V5GAIgASgJEg4KBmlzc3VlchgDIAEoCRIQCghhdWRpZW5jZRgEIAEoCRIRCglhbGdvcml0aG0YBSABKAkSHQoVYWNjZXNzX2V4cGlyZV9zZWNvbmRzGAogASgDEiIKGnJlZnJlc2hfZXhwaXJlX3NlY29uZHNfd2ViGAsgASgDEiUKHXJlZnJlc2hfZXhwaXJlX3NlY29uZHNfbW9iaWxlGAwgASgDEjsKCHBhc3N3b3JkGBQgASgLMikuY29uZmlnLkFwcENvbmZpZy5BdXRoZW50aWNhdGlvbi5QYXNzd29yZBI9Cgl0ZW1wb3JhcnkYFSABKAsyKi5jb25maWcuQXBwQ29uZmlnLkF1dGhlbnRpY2F0aW9uLlRlbXBvcmFyeRoxCghQYXNzd29yZBISCgppdGVyYXRpb25zGAMgASgFEhEKCWhhc2hfc2l6ZRgEIAEoBRoLCglUZW1wb3JhcnlCVAoKY29tLmNvbmZpZ0ILQ29uZmlnUHJvdG9QAVoBLqICA0NYWKoCBkNvbmZpZ8oCBkNvbmZpZ+ICEkNvbmZpZ1xHUEJNZXRhZGF0YeoCBkNvbmZpZ2IGcHJvdG8z");
+  fileDesc("ChNjb25maWcvY29uZmlnLnByb3RvEgZjb25maWciGgoGQXBwRW52EhAKCE5PREVfRU5WGAEgASgJIroECglBcHBDb25maWcSEAoIbm9kZV9lbnYYCiABKAkSDAoEcG9ydBgUIAEoBRIbChNwb3N0Z3Jlc19jb25uZWN0aW9uGB4gASgJEiAKGHBvc3RncmVzX3RpbWVvdXRfc2Vjb25kcxgfIAEoBRI4Cg5hdXRoZW50aWNhdGlvbhgoIAEoCzIgLmNvbmZpZy5BcHBDb25maWcuQXV0aGVudGljYXRpb24akwMKDkF1dGhlbnRpY2F0aW9uEhIKCnNlY3JldF9rZXkYASABKAkSEgoKcHVibGljX2tleRgCIAEoCRIOCgZpc3N1ZXIYAyABKAkSEAoIYXVkaWVuY2UYBCABKAkSEQoJYWxnb3JpdGhtGAUgASgJEh0KFWFjY2Vzc19leHBpcmVfc2Vjb25kcxgKIAEoAxIiChpyZWZyZXNoX2V4cGlyZV9zZWNvbmRzX3dlYhgLIAEoAxIlCh1yZWZyZXNoX2V4cGlyZV9zZWNvbmRzX21vYmlsZRgMIAEoAxI7CghwYXNzd29yZBgUIAEoCzIpLmNvbmZpZy5BcHBDb25maWcuQXV0aGVudGljYXRpb24uUGFzc3dvcmQSPQoJdGVtcG9yYXJ5GBUgASgLMiouY29uZmlnLkFwcENvbmZpZy5BdXRoZW50aWNhdGlvbi5UZW1wb3JhcnkaMQoIUGFzc3dvcmQSEgoKaXRlcmF0aW9ucxgDIAEoBRIRCgloYXNoX3NpemUYBCABKAUaCwoJVGVtcG9yYXJ5QlQKCmNvbS5jb25maWdCC0NvbmZpZ1Byb3RvUAFaAS6iAgNDWFiqAgZDb25maWfKAgZDb25maWfiAhJDb25maWdcR1BCTWV0YWRhdGHqAgZDb25maWdiBnByb3RvMw");
+
+/**
+ * @generated from message config.AppEnv
+ */
+export type AppEnv = Message<"config.AppEnv"> & {
+  /**
+   * @generated from field: string NODE_ENV = 1;
+   */
+  NODEENV: string;
+};
+
+/**
+ * @generated from message config.AppEnv
+ */
+export type AppEnvJson = {
+  /**
+   * @generated from field: string NODE_ENV = 1;
+   */
+  NODEENV?: string;
+};
+
+/**
+ * Describes the message config.AppEnv.
+ * Use `create(AppEnvSchema)` to create a new message.
+ */
+export const AppEnvSchema: GenMessage<AppEnv, AppEnvJson> = /*@__PURE__*/
+  messageDesc(file_config_config, 0);
 
 /**
  * @generated from message config.AppConfig
@@ -77,7 +104,7 @@ export type AppConfigJson = {
  * Use `create(AppConfigSchema)` to create a new message.
  */
 export const AppConfigSchema: GenMessage<AppConfig, AppConfigJson> = /*@__PURE__*/
-  messageDesc(file_config_config, 0);
+  messageDesc(file_config_config, 1);
 
 /**
  * @generated from message config.AppConfig.Authentication
@@ -194,7 +221,7 @@ export type AppConfig_AuthenticationJson = {
  * Use `create(AppConfig_AuthenticationSchema)` to create a new message.
  */
 export const AppConfig_AuthenticationSchema: GenMessage<AppConfig_Authentication, AppConfig_AuthenticationJson> = /*@__PURE__*/
-  messageDesc(file_config_config, 0, 0);
+  messageDesc(file_config_config, 1, 0);
 
 /**
  * @generated from message config.AppConfig.Authentication.Password
@@ -231,7 +258,7 @@ export type AppConfig_Authentication_PasswordJson = {
  * Use `create(AppConfig_Authentication_PasswordSchema)` to create a new message.
  */
 export const AppConfig_Authentication_PasswordSchema: GenMessage<AppConfig_Authentication_Password, AppConfig_Authentication_PasswordJson> = /*@__PURE__*/
-  messageDesc(file_config_config, 0, 0, 0);
+  messageDesc(file_config_config, 1, 0, 0);
 
 /**
  * @generated from message config.AppConfig.Authentication.Temporary
@@ -250,5 +277,5 @@ export type AppConfig_Authentication_TemporaryJson = {
  * Use `create(AppConfig_Authentication_TemporarySchema)` to create a new message.
  */
 export const AppConfig_Authentication_TemporarySchema: GenMessage<AppConfig_Authentication_Temporary, AppConfig_Authentication_TemporaryJson> = /*@__PURE__*/
-  messageDesc(file_config_config, 0, 0, 1);
+  messageDesc(file_config_config, 1, 0, 1);
 
