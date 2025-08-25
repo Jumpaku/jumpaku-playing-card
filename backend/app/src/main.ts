@@ -1,16 +1,16 @@
-import {NestFactory} from '@nestjs/core';
-import {AppModule} from './module/app.module';
-import {mustGetEnv} from "./lib/env";
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './module/app.module';
+import { mustGetEnv } from './lib/env';
 
 const options = {
-    port: mustGetEnv("PORT"),
-}
+  port: mustGetEnv('PORT'),
+};
 
 async function bootstrap() {
-    const app = await NestFactory.create(AppModule);
-    app.enableCors();
+  const app = await NestFactory.create(AppModule);
+  app.enableCors();
 
-    await app.listen(options.port);
+  await app.listen(options.port);
 }
 
 bootstrap();
